@@ -16,13 +16,13 @@
     padding: 8px;
 }
 
-#parts {
+#partTypes {
     height: 780px;
     padding: 20px;
     margin: 20px;
 }
 
-.part {
+.partType {
     float: left;
     width: 250px;
     height: 180px;
@@ -32,36 +32,32 @@
     border-radius: 5px;
 }
 
-.part span {
+.partType span {
     display: block;
     float: left;
     clear: both;
 }
 
-.part .details {
+.partType .details {
     padding: 5px;
-    height: 120px;
+    height: 130px;
     overflow: hidden;
 }
 
-.part .name {
+.partType .name {
     font-size: 1.5em;
     font-weight: bold;
 }
 
-.part .sku {
-    font-style: italic;
-}
-
-.part .description {
+.partType .description {
     margin: 10px 0px 0px 0px;
 }
 
-.part .buttons {
+.partType .buttons {
     clear: both;
 }
 
-.part .btnAddToCart {
+.partType .btnAddToCart {
     display: block;
     float: right;
     width: 50px;

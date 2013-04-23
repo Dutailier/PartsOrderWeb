@@ -4,7 +4,7 @@
 
     <!-- Feuilles de style. -->
     <style><?php require_once 'public/css/default.css' ?></style>
-    <style><?php require_once 'public/css/parts.css' ?></style>
+    <style><?php require_once 'public/css/partTypes.css' ?></style>
     <!-- Fin -->
 </head>
 <body>
@@ -12,6 +12,7 @@
     <?php require_once '_header.php' ?>
     <div id="content">
 
+        <!-- Entrée du numéro de série d'une chaise. -->
         <form id="frmSerialGlider" method="get" onsubmit="return validSerialGlider();">
             <p>
                 <label>Serial glider</label>
@@ -23,8 +24,10 @@
                 <label id="lblWarning" name="lblWarning" class="warning"/>
             </p>
         </form>
+        <!-- Fin -->
+
         <!-- Liste des pièces. -->
-        <div id="parts">
+        <div id="partTypes">
         </div>
         <!-- Fin -->
 
@@ -34,8 +37,7 @@
 
 <!-- Scripts. -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-<script><?php require_once 'public/scripts/parts.js' ?></script>
+<script><?php require_once 'public/scripts/partTypes.js' ?></script>
 <!-- Fin -->
 </body>
 </html>

@@ -3,7 +3,7 @@ $(document).ready(function () {
     // Affichage des catégories.
     $.ajax({
         type: 'GET',
-        url: 'protected/get_categories.php',
+        url: 'protected/getCategories.php',
         dataType: 'json',
         success: function (data) {
 		
@@ -14,7 +14,7 @@ $(document).ready(function () {
 
 				// Gère le clic sur une catégorie.
 				$('.category').click(function () {
-					window.location = 'parts.php?category_id=' + this.id;
+					window.location = 'partTypes.php?category_id=' + this.id;
 				});
 			}
 			else {
@@ -22,7 +22,7 @@ $(document).ready(function () {
 			}
         },
 		error: function() {
-			alert('Communication to the database failed.');
+			alert('Communication to the server failed.');
 		}
     });
 });

@@ -11,7 +11,7 @@ if(empty($conn)) {
 } else {
 	
 	// Exécute la procédure stockée.
-	$result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[get_categories]}');
+	$result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[getCategories]}');
 	
 	if(empty($result)) {
 		$data['success'] = false;
@@ -23,14 +23,14 @@ if(empty($conn)) {
 		
 		if(empty($count)) {
 			$data['success'] = false;
-			$data['message'] = 'Username or password incorrect.';
+			$data['message'] = 'No categories available.';
 		} else {
 			
 			// La requête est un succès.
 			$data['success'] = true;
 			
 			// Récupère le nombre de ligne pour de futures utilisations.
-			$data['lenght'] = odbc_num_rows($result);
+			$data['lenght'] = $count;
 			
 			// Inscrire chaque ligne dans l'objet JSON qui sera retourné.
 			for($i = 0; $i < $data['lenght']; $i++) {

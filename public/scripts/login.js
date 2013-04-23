@@ -34,7 +34,7 @@ function login() {
 
         $.ajax({
             type: 'POST',
-            url: 'protected/try_login.php',
+            url: 'protected/tryLogin.php',
             data: credentials,
             async: false,
             dataType: 'json',
@@ -50,7 +50,7 @@ function login() {
                 }
             },
             error: function () {
-                alert('Communication with the database failed.');
+                alert('Communication with the server failed.');
             }
         });
     }
