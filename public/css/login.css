@@ -1,0 +1,22 @@
+#background {
+    background: url(public/images/backgrounds/login.png) no-repeat;
+    height: 780px;
+}
+
+#login {
+    position: relative;
+    margin: 0px auto;
+    width: 250px;
+    top: 73%;
+}
+
+#login p {
+    clear: both;
+    margin: 10px 0px;
+}
+
+#login input {
+    width: 100%;
+    margin: 0px;
+    padding: 8px;
+}

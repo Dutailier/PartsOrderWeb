@@ -1,0 +1,27 @@
+#categories {
+    height: 780px;
+    margin: 20px;
+}
+
+.category {
+    float:left;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+}
+
+.category span {
+    display: block;
+    font-size: 2.5em;
+    width: 300px;
+    margin: 3px auto;
+    text-align: center;
+}
+
+.category img {
+    display: block;
+    width: 250px;
+    height: 250px;
+    margin: auto;
+    border: 2px dotted black;
+}

@@ -1,0 +1,68 @@
+﻿/* _Layout */
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    font-family: Arial;
+}
+
+#wrapper {
+    position: relative;
+    min-width: 1080px;
+    min-height: 100%;
+}
+
+#header_band, #footer_band {
+    background-color: #484848;
+}
+
+#header_band {
+    top: 0;
+}
+
+#footer_band {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+#header_wrapper, #footer_wrapper {
+    margin: 0px auto;
+    height: 100px;
+    width: 80%;
+}
+
+#logo_dutailier {
+    float: left;
+    padding: 5px;
+    height: 90%;
+}
+
+#logo_babiesRus {
+    float: right;
+    padding: 5px;
+    height: 90%;
+}
+
+#copyright {
+    float: right;
+    padding: 5px;
+    color: white;
+}
+
+#content {
+    width: 960px;
+    margin: 10px auto;
+    padding-bottom: 110px;
+}
+
+/* Warning */
+
+label.warning {
+    color: red;
+}
+
+input.warning {
+    border: 2px solid red;
+}

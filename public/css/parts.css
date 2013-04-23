@@ -1,0 +1,68 @@
+#frmSerialGlider {
+    width: 600px;
+    margin: 10px auto;
+}
+
+#txtSerialGlider {
+    width: 70%;
+}
+
+#frmSerialGlider p {
+    margin: 20px auto;
+}
+
+#frmSerialGlider input {
+    margin: 0px;
+    padding: 8px;
+}
+
+#parts {
+    height: 780px;
+    padding: 20px;
+    margin: 20px;
+}
+
+.part {
+    float: left;
+    width: 250px;
+    height: 180px;
+    margin: 10px;
+    padding: 8px;
+    border: 2px solid #484848;
+    border-radius: 5px;
+}
+
+.part span {
+    display: block;
+    float: left;
+    clear: both;
+}
+
+.part .details {
+    padding: 5px;
+    height: 120px;
+    overflow: hidden;
+}
+
+.part .name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.part .sku {
+    font-style: italic;
+}
+
+.part .description {
+    margin: 10px 0px 0px 0px;
+}
+
+.part .buttons {
+    clear: both;
+}
+
+.part .btnAddToCart {
+    display: block;
+    float: right;
+    width: 50px;
+}
