@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="wrapper">
-    <?php require '_header.php' ?>
+    <?php require_once '_header.php' ?>
     <div id="content">
 
         <!-- Formulaire de connexion. -->
