@@ -16,7 +16,7 @@
         <!-- Entrée du numéro de série d'une chaise. -->
         <form id="frmSerialGlider" method="get" onsubmit="return validSerialGlider();">
             <p>
-                <label>Serial glider</label>
+                <label for="txtSerialGlider">Serial glider</label>
                 <input id="txtSerialGlider" name="txtSerialGlider" type="text"/>
                 <input id="btnSubmit" name="btnSubmit" type="submit" value="Search"/>
             </p>

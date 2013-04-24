@@ -45,8 +45,12 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
                 $data['success'] = true;
                 $data['role_name'] = $row['role_name'];
 
+				// Démarre une session si celle-ci n'est pas déjà active.
+				if (!$_SESSION) {
+					session_start();
+				}
+
                 // Stocke les informations de l'utilisateur pour la durée de la session.
-                session_start();
                 $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['role_name'] = $row['role_name'];
                 $_SESSION['retailer_name'] = $row['retailier_name'];

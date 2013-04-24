@@ -10,10 +10,10 @@ class Cart
      */
     public static function Add($serial_glider, $partType_id)
     {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if (session_status() != PHP_SESSION_ACTIVE) {
-            session_start();
-        }
+		// Démarre une session si celle-ci n'est pas déjà active.
+		if (!$_SESSION) {
+			session_start();
+		}
 
         // S'ils ne sont pas déjà créés, nous créons 3 tableaux qui travaillerons
         // en parallèle pour garder les informations du panier d'achats.
@@ -49,10 +49,10 @@ class Cart
      */
     public static function Remove($serial_glider, $partType_id)
     {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if (session_status() != PHP_SESSION_ACTIVE) {
-            session_start();
-        }
+		// Démarre une session si celle-ci n'est pas déjà active.
+		if (!$_SESSION) {
+			session_start();
+		}
 
         // Si le panier d'achat n'est pas instancié, c'est parce qu'il
         // est vide.
@@ -84,10 +84,10 @@ class Cart
      */
     public static function getQuantity($serial_glider, $partType_id)
     {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if (session_status() != PHP_SESSION_ACTIVE) {
-            session_start();
-        }
+		// Démarre une session si celle-ci n'est pas déjà active.
+		if (!$_SESSION) {
+			session_start();
+		}
 
         // Si le panier d'achat n'est pas instancié, c'est parce qu'il
         // est vide.
@@ -135,10 +135,10 @@ class Cart
      */
     public static function Clear()
     {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if (session_status() != PHP_SESSION_ACTIVE) {
-            session_start();
-        }
+		// Démarre une session si celle-ci n'est pas déjà active.
+		if (!$_SESSION) {
+			session_start();
+		}
 
         unset($_SESSION['serials']);
         unset($_SESSION['partTypes']);

@@ -17,12 +17,12 @@
             <div id="login">
                 <form id="frmLogin" method="post" onsubmit="return login();">
                     <p>
-                        <label>Username</label>
+                        <label for="txtUsername">Username</label>
                         <input id="txtUsername" name="txtUsername" type="text"/>
                     </p>
 
                     <p>
-                        <label>Password</label>
+                        <label for="txtPassword">Password</label>
                         <input id="txtPassword" name="txtPassword" type="password"/>
                     </p>
 
