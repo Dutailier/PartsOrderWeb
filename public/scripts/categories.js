@@ -6,24 +6,26 @@ $(document).ready(function () {
         url: 'protected/getCategories.php',
         dataType: 'json',
         success: function (data) {
-		
-			if(data['success']) {
-				for (var i = 0; i < data['lenght']; i++) {
-					add_category(data[i]['category_id'], data[i]['category_name']);
-				}
 
-				// Gère le clic sur une catégorie.
-				$('.category').click(function () {
-					window.location = 'partTypes.php?category_id=' + this.id;
-				});
-			}
-			else {
-				alert(data['message']);
-			}
+            if (data['success']) {
+                for (var i in data['categories']) {
+                    add_category(
+                        data['categories'][i]['category_id'],
+                        data['categories'][i]['category_name']);
+                }
+
+                // Gère le clic sur une catégorie.
+                $('.category').click(function () {
+                    window.location = 'partTypes.php?category_id=' + this.id;
+                });
+            }
+            else {
+                alert(data['message']);
+            }
         },
-		error: function() {
-			alert('Communication to the server failed.');
-		}
+        error: function () {
+            alert('Communication to the server failed.');
+        }
     });
 });
 
@@ -37,6 +39,6 @@ function add_category(id, name) {
         '<div id="' + id + '" class="category">' +
             '<span>' + name + '</span>' +
             '<img src="public/images/categories/' + id + '.png" />' +
-        '</div>'
+            '</div>'
     )
 }

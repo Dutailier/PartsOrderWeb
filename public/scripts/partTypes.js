@@ -50,12 +50,12 @@ function validSerialGlider() {
                 if (data['success']) {
 
                     // Crée une nouvelle liste de pièces.
-                    for (var i = 0; i < data['lenght']; i++) {
+                    for (var i in data['partTypes']) {
                         addPartType(
-                            data[i]['partType_id'],
-                            data[i]['partType_name'],
-                            data[i]['partType_description'],
-                            data[i]['partType_quantity']);
+                            data['partTypes'][i]['partType_id'],
+                            data['partTypes'][i]['partType_name'],
+                            data['partTypes'][i]['partType_description'],
+                            data['partTypes'][i]['partType_quantity']);
                     }
 
                     // Gère le click sur un bouton ajouter au panier d'achat.

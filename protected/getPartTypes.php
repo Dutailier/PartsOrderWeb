@@ -28,29 +28,19 @@ if (empty($_GET['category_id']) || empty($_GET['serial_glider'])) {
             $data['message'] = 'The execution of the query failed.';
         } else {
 
-            // Récupère la nombre de lignes résultantes.
-            $lenght = odbc_num_rows($result);
+            // La requête est un succès.
+            $data['success'] = true;
 
-            if (empty($lenght)) {
-                $data['success'] = false;
-                $data['message'] = 'No parts available.';
-            } else {
+            $i = 0;
+            // Inscrire chaque ligne dans l'objet JSON qui sera retourné.
+            while (odbc_fetch_row($result)) {
+                $id = odbc_result($result, 'partType_id');
+                $data['partTypes'][$i]['partType_id'] = $id;
+                $data['partTypes'][$i]['partType_name'] = odbc_result($result, 'partType_name');
+                $data['partTypes'][$i]['partType_description'] = odbc_result($result, 'partType_description');
 
-                // La requête est un succès.
-                $data['success'] = true;
-
-                // Récupère le nombre de ligne pour de futures utilisations.
-                $data['lenght'] = $lenght;
-
-                // Inscrire chaque ligne dans l'objet JSON qui sera retourné.
-                for ($i = 0; $i < $data['lenght']; $i++) {
-                    odbc_fetch_row($result);
-                    $data[$i]['partType_id'] = odbc_result($result, 'partType_id');
-                    $data[$i]['partType_name'] = odbc_result($result, 'partType_name');
-                    $data[$i]['partType_description'] = odbc_result($result, 'partType_description');
-
-                    $data[$i]['partType_quantity'] = Cart::getQuantity($serial_glider, $data[$i]['partType_id']);
-                }
+                $data['partTypes'][$i]['partType_quantity'] = Cart::getQuantity($serial_glider, $id);
+                $i++;
             }
         }
     }
