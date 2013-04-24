@@ -6,7 +6,7 @@ class Cart
      * Ajoute une type de pièce au panier d'achat.
      * @param $serial_glider
      * @param $partType_id
-     * @param $Qty
+     * @return mixed
      */
     public static function Add($serial_glider, $partType_id)
     {
@@ -44,8 +44,7 @@ class Cart
      * n'est inscrite, on retire la quantité actuelle.
      * @param $serial_glider
      * @param $partType_id
-     * @param null $Qty
-     * @return bool
+     * @return int
      */
     public static function Remove($serial_glider, $partType_id)
     {
@@ -108,27 +107,37 @@ class Cart
     }
 
     /**
-     * Permet de retrouver l'index d'un type de pièce commandé.
+     * Permet de spécifier la quantité de type de pièce dans le panier d'achats.
      * @param $serial_glider
      * @param $partType_id
+     * @param $qty
+     * @return bool
      */
-    private static function getIndex($serial_glider, $partType_id)
+    public static function setQuantity($serial_glider, $partType_id, $qty)
     {
-        $max = count($_SESSION['partTypes']);
-
-        // Parcours tous les types de pièces afin de trouvé
-        // s'il figure dans le panier d'achats.
-        for ($i = 0; $i < $max; $i++) {
-            if ($_SESSION['serials'][$i] == $serial_glider &&
-                $_SESSION['partTypes'][$i] == $partType_id
-            ) {
-                return $i;
-            }
+        // Démarre une session si celle-ci n'est pas déjà active.
+        if (!isset($_SESSION)) {
+            session_start();
         }
 
-        return $max;
-    }
+        // Vérifie que les tableaux ont bien été instancié,
+        // sinon on retourne false pour signaler l'erreur.
+        if (!isset($_SESSION['partTypes'])) {
+            return false;
+        }
 
+        $i = Cart::getIndex($serial_glider, $partType_id);
+
+        // Si le type de pièce figure déjà dans le panier d'achats, sa quantité
+        // est modifiée. Autrement, on retourne false pour signaler l'erreur.
+        if ($i < count($_SESSION['partTypes'])) {
+            $_SESSION['quantities'][$i] = $qty;
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Efface le contenu d'un panier d'achats.
@@ -143,5 +152,27 @@ class Cart
         unset($_SESSION['serials']);
         unset($_SESSION['partTypes']);
         unset($_SESSION['quantities']);
+    }
+
+    /**
+     * Permet de retrouver l'index d'un type de pièce commandé.
+     * @param $serial_glider
+     * @param $partType_id
+     * @return int
+     */
+    private static function getIndex($serial_glider, $partType_id)
+    {
+        $max = count($_SESSION['partTypes']);
+
+        // Parcours tous les types de pièces afin de trouvé
+        // s'il figure dans le panier d'achats.
+        for ($i = 0; $i < $max; $i++) {
+            if ($_SESSION['serials'][$i] == $serial_glider &&
+                $_SESSION['partTypes'][$i] == $partType_id
+            ) {
+                return $i;
+            }
+        }
+        return $max;
     }
 }

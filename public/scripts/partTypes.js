@@ -47,15 +47,30 @@ function validSerialGlider() {
             data: parameters,
             dataType: 'json',
             success: function (data) {
-                if (data['success']) {
 
-                    // Crée une nouvelle liste de pièces.
+                // Vérifie que les propriétés de l'objet JSON ont bien été créés et
+                // vérifié si la requête fut un succès.
+                if (data.hasOwnProperty('success') &&
+                    data['success'] &&
+                    data.hasOwnProperty('partTypes')) {
+
+                    // Parcours tous les types de pièce retournés par la requête.
                     for (var i in data['partTypes']) {
-                        addPartType(
-                            data['partTypes'][i]['partType_id'],
-                            data['partTypes'][i]['partType_name'],
-                            data['partTypes'][i]['partType_description'],
-                            data['partTypes'][i]['partType_quantity']);
+
+                        // // Vérifie que les propriétés de l'objet JSON ont bien été créés.
+                        if (data['partTypes'].hasOwnProperty(i) &&
+                            data['partTypes'][i].hasOwnProperty('partType_id') &&
+                            data['partTypes'][i].hasOwnProperty('partType_name') &&
+                            data['partTypes'][i].hasOwnProperty('partType_description') &&
+                            data['partTypes'][i].hasOwnProperty('partType_quantity')) {
+
+                            // Ajoute le type de pièce à la liste.
+                            addPartType(
+                                data['partTypes'][i]['partType_id'],
+                                data['partTypes'][i]['partType_name'],
+                                data['partTypes'][i]['partType_description'],
+                                data['partTypes'][i]['partType_quantity']);
+                        }
                     }
 
                     // Gère le click sur un bouton ajouter au panier d'achat.
@@ -72,7 +87,12 @@ function validSerialGlider() {
                 alert('Communication with the server failed.');
             }
         });
+
+    } else {
+        txtSerialGlider.focus();
     }
+
+    // Retient le postback automatique.
     return false;
 }
 
@@ -85,21 +105,21 @@ function validSerialGlider() {
  */
 function addPartType(id, name, description, quantity) {
 
+    var partTypes = $('#partTypes');
     // Ajout du type de pièce.
-    $('#partTypes').append(
+    partTypes.append(
         '<div class="partType" data-partType_id="' + id + '">' +
             '<div class="details">' +
-                '<span class="name">' + name + '</span>' +
-                '<span class="description">' + (description ? description : '') + '</span>' +
+            '<span class="name">' + name + '</span>' +
+            '<span class="description">' + (description ? description : '') + '</span>' +
             '</div>' +
             '<div class="buttons"> ' +
             '</div>' +
-        '</div>'
+            '</div>'
     );
 
-    // Récupère l'élément précédemment ajouté et y ajoute les bouttons.
-    var last = $('#partTypes').children('.partType').last();
-    addButtons(quantity, last.find('.buttons'));
+    // Ajoute les bouttons appropriés au dernier éléments ajouté.
+    addButtons(quantity, partTypes.children('.partType').last().find('.buttons'));
 }
 
 /**
@@ -129,7 +149,6 @@ function handlerClick() {
     $('.addCart').click(function () {
 
         // Récupère le partType sélectionné.
-        var btn = $(this);
         var partType = $(this).closest('.partType');
 
         var parameters = {
@@ -158,7 +177,6 @@ function handlerClick() {
     $('.removeCart').click(function () {
 
         // Récupère le partType sélectionné.
-        var btn = $(this);
         var partType = $(this).closest('.partType');
 
         var parameters = {

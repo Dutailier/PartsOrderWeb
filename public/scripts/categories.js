@@ -7,16 +7,30 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data) {
 
-            if (data['success']) {
+            // Vérifie que les propriétés de l'objet JSON ont bien été créés et
+            // vérifie si la requête fut un succès.
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('categories')) {
+
+                // Parcours tous les categories retournées par la requête.
                 for (var i in data['categories']) {
-                    add_category(
-                        data['categories'][i]['category_id'],
-                        data['categories'][i]['category_name']);
+
+                    // Vérifie que les propriétés de l'objet JSON ont bien été créés.
+                    if (data['categories'].hasOwnProperty(i) &&
+                        data['categories'][i].hasOwnProperty('category_id') &&
+                        data['categories'][i].hasOwnProperty('category_name')) {
+
+                        // Ajouter la catégorie à la liste.
+                        add_category(
+                            data['categories'][i]['category_id'],
+                            data['categories'][i]['category_name']);
+                    }
                 }
 
                 // Gère le clic sur une catégorie.
                 $('.category').click(function () {
-                    window.location = 'partTypes.php?category_id=' + this.id;
+                    window.location = 'partTypes.php?category_id=' + $(this).data('category_id');
                 });
             }
             else {
@@ -36,7 +50,7 @@ $(document).ready(function () {
  */
 function add_category(id, name) {
     $('#categories').append(
-        '<div id="' + id + '" class="category">' +
+        '<div class="category" data-category_id="' + id + '" >' +
             '<span>' + name + '</span>' +
             '<img src="public/images/categories/' + id + '.png" />' +
             '</div>'
