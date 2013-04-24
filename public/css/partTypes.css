@@ -1,6 +1,6 @@
 #frmSerialGlider {
     width: 600px;
-    margin: 10px auto;
+    margin: 20px auto;
 }
 
 #frmSerialGlider label {
@@ -13,7 +13,7 @@
 }
 
 #frmSerialGlider p {
-    margin: 20px auto;
+    margin: 10px auto;
 }
 
 #frmSerialGlider input {
@@ -23,13 +23,13 @@
 
 #partTypes {
     padding: 20px;
-    margin: 20px;
+    margin: 10px;
 }
 
 .partType {
     float: left;
     width: 250px;
-    height: 180px;
+    height: auto;
     margin: 10px;
     padding: 8px;
     border: 2px solid #484848;
@@ -43,7 +43,7 @@
 
 .partType .details {
     padding: 5px;
-    height: 130px;
+    height: 140px;
     overflow: hidden;
 }
 
@@ -53,16 +53,28 @@
 }
 
 .partType .description {
+    height: auto;
     margin-top: 10px;
-}
-
-.partType .buttons {
-    float: right;
+    margin-bottom: 5px;
     clear: both;
 }
 
-.partType .btnAddToCart {
+.partType .buttons {
+    float: left;
+    border: 2px solid #484848;
+    width: 236px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.partType .quantity {
     display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    float: left;
+    margin: 0px 5px;
+}
+
+.partType .buttons  .addCart, .removeCart {
     float: right;
-    width: 50px;
 }

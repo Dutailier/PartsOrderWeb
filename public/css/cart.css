@@ -1,12 +1,15 @@
-.addCart, .alreadyCart, .removeCart {
-    display: block;
-    float:right;
+.addCart,
+.alreadyCart,
+.removeCart {
     width: 42px;
     height: 32px;
     margin: 0px 5px;
+    border: 0px;
 }
 
-.addCart:hover, .alreadyCart:hover, .removeCart:hover {
+.addCart:hover,
+.alreadyCart:hover,
+.removeCart:hover {
     cursor: hand;
 }
 

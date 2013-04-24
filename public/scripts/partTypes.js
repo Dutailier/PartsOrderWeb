@@ -110,16 +110,17 @@ function addPartType(id, name, description, quantity) {
     partTypes.append(
         '<div class="partType" data-partType_id="' + id + '">' +
             '<div class="details">' +
-            '<span class="name">' + name + '</span>' +
-            '<span class="description">' + (description ? description : '') + '</span>' +
+                '<span class="name">' + name + '</span>' +
+                '<span class="description">' + (description ? description : '') + '</span>' +
             '</div>' +
             '<div class="buttons"> ' +
+            '<span class="quantity">' + quantity + '</span>' +
             '</div>' +
-            '</div>'
+        '</div>'
     );
 
     // Ajoute les bouttons appropriés au dernier éléments ajouté.
-    addButtons(quantity, partTypes.children('.partType').last().find('.buttons'));
+    changeButtons(quantity, partTypes.children('.partType').last().find('.buttons'));
 }
 
 /**
@@ -127,19 +128,23 @@ function addPartType(id, name, description, quantity) {
  * @param quantity
  * @param element
  */
-function addButtons(quantity, element) {
+function changeButtons(quantity, element) {
 
-    var btnRemoveFromCart = $('<a class="removeCart" />');
-    var btnAddToCart = $('<a class="addCart" />');
+    var btnRemoveFromCart = $('<input class="removeCart" type="button" />');
+    var btnAddToCart = $('<input class="addCart" type="button" />');
+    var spanQuantity = $(element).children('.quantity');
+
+    // Change la quantité affichée.
+    spanQuantity.text(quantity);
 
     // Supprimer les bouttons déjà ajoutés.
-    $(element).children().remove();
-
-    $(element).append(btnAddToCart);
+    $(element).children('input').remove();
 
     if (quantity > 0) {
         $(element).append(btnRemoveFromCart);
     }
+
+    $(element).append(btnAddToCart);
 
     // Prends en charge les clicks.
     handlerClick();
@@ -163,7 +168,7 @@ function handlerClick() {
             dataType: 'json',
             success: function (data) {
                 if (data['success']) {
-                    addButtons(data['partType_quantity'], partType.find('.buttons'));
+                    changeButtons(data['partType_quantity'], partType.find('.buttons'));
                 } else {
                     alert(data['message']);
                 }
@@ -191,7 +196,7 @@ function handlerClick() {
             dataType: 'json',
             success: function (data) {
                 if (data['success']) {
-                    addButtons(data['partType_quantity'], partType.find('.buttons'));
+                    changeButtons(data['partType_quantity'], partType.find('.buttons'));
                 } else {
                     alert(data['message']);
                 }

@@ -16,6 +16,14 @@
 
         <!-- Liste de pièces dans le panier. -->
         <div id="items">
+            <div class="item" data-item_id="23">
+                <img src="public/images/partTypes/123.png" />
+                <span>Reclining Handle</span> -
+                <span>13453432675</span>
+                <input type="text" value="2" />
+                <a class="addCart"></a>
+                <a class="removeAdd"></a>
+            </div>
         </div>
         <!-- Fin -->
 
