@@ -46,7 +46,7 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
                 $data['role_name'] = $row['role_name'];
 
 				// Démarre une session si celle-ci n'est pas déjà active.
-				if (!$_SESSION) {
+				if (!isset($_SESSION)) {
 					session_start();
 				}
 
@@ -55,6 +55,9 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
                 $_SESSION['role_name'] = $row['role_name'];
                 $_SESSION['retailer_name'] = $row['retailier_name'];
                 $_SESSION['username'] = $username;
+
+                // Confirme l'authentification de l'utilisateur
+                $_SESSION['authenticated'] = true;
             }
         }
     }

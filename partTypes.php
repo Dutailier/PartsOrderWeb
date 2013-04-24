@@ -1,3 +1,5 @@
+<?php require_once 'protected/authentication.php' ?>
+
 <html>
 <head>
     <title>BabiesRus Parts Order - Parts</title>

@@ -89,17 +89,40 @@ function addPartType(id, name, description, quantity) {
     $('#partTypes').append(
         '<div class="partType" data-partType_id="' + id + '">' +
             '<div class="details">' +
-            '<span class="name">' + name + '</span>' +
-            '<span class="description">' + (description ? description : '') + '</span>' +
+                '<span class="name">' + name + '</span>' +
+                '<span class="description">' + (description ? description : '') + '</span>' +
             '</div>' +
             '<div class="buttons"> ' +
             '</div>' +
-            '</div>'
+        '</div>'
     );
 
     // Récupère l'élément précédemment ajouté et y ajoute les bouttons.
     var last = $('#partTypes').children('.partType').last();
     addButtons(quantity, last.find('.buttons'));
+}
+
+/**
+ * Ajoute les bouttons appropriés à l'éléments spécifié.
+ * @param quantity
+ * @param element
+ */
+function addButtons(quantity, element) {
+
+    var btnRemoveFromCart = $('<a class="removeCart" />');
+    var btnAddToCart = $('<a class="addCart" />');
+
+    // Supprimer les bouttons déjà ajoutés.
+    $(element).children().remove();
+
+    $(element).append(btnAddToCart);
+
+    if (quantity > 0) {
+        $(element).append(btnRemoveFromCart);
+    }
+
+    // Prends en charge les clicks.
+    handlerClick();
 }
 
 function handlerClick() {
@@ -160,24 +183,6 @@ function handlerClick() {
             }
         });
     });
-}
-
-function addButtons(quantity, element) {
-
-    var btnRemoveFromCart = $('<div class="removeCart" />');
-    var btnAddToCart = $('<div class="addCart" />');
-
-    // Supprimer les bouttons déjà ajoutés.
-    $(element).children().remove();
-
-    $(element).append(btnAddToCart);
-
-    if (quantity > 0) {
-        $(element).append(btnRemoveFromCart);
-    }
-
-    // Prends en charge les clicks.
-    handlerClick();
 }
 
 /**
