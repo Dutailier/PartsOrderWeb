@@ -5,6 +5,7 @@
     <!-- Feuilles de style. -->
     <style><?php require_once 'public/css/default.css' ?></style>
     <style><?php require_once 'public/css/partTypes.css' ?></style>
+    <style><?php require_once 'public/css/cart.css' ?></style>
     <!-- Fin -->
 </head>
 <body>

@@ -1,0 +1,23 @@
+.addCart, .alreadyCart, .removeCart {
+    display: block;
+    float:right;
+    width: 42px;
+    height: 32px;
+    margin: 0px 5px;
+}
+
+.addCart:hover, .alreadyCart:hover, .removeCart:hover {
+    cursor: hand;
+}
+
+.addCart {
+    background: url('public/images/buttons/cart.png') no-repeat -5px -10px;
+}
+
+.alreadyCart {
+    background: url('public/images/buttons/cart.png') no-repeat -61px -10px;
+}
+
+.removeCart {
+    background: url('public/images/buttons/cart.png') no-repeat -117px -10px;
+}

@@ -29,18 +29,18 @@ if (empty($_GET['category_id']) || empty($_GET['serial_glider'])) {
         } else {
 
             // Récupère la nombre de lignes résultantes.
-            $count = odbc_num_rows($result);
+            $lenght = odbc_num_rows($result);
 
-            if (empty($count)) {
+            if (empty($lenght)) {
                 $data['success'] = false;
-                $data['message'] = 'No partTypes available.';
+                $data['message'] = 'No parts available.';
             } else {
 
                 // La requête est un succès.
                 $data['success'] = true;
 
                 // Récupère le nombre de ligne pour de futures utilisations.
-                $data['lenght'] = $count;
+                $data['lenght'] = $lenght;
 
                 // Inscrire chaque ligne dans l'objet JSON qui sera retourné.
                 for ($i = 0; $i < $data['lenght']; $i++) {
@@ -48,6 +48,7 @@ if (empty($_GET['category_id']) || empty($_GET['serial_glider'])) {
                     $data[$i]['partType_id'] = odbc_result($result, 'partType_id');
                     $data[$i]['partType_name'] = odbc_result($result, 'partType_name');
                     $data[$i]['partType_description'] = odbc_result($result, 'partType_description');
+
                     $data[$i]['partType_quantity'] = Cart::getQuantity($serial_glider, $data[$i]['partType_id']);
                 }
             }

@@ -3,8 +3,13 @@
     margin: 10px auto;
 }
 
+#frmSerialGlider label {
+    margin: 0px 5px;
+    font-weight: bold;
+}
+
 #txtSerialGlider {
-    width: 70%;
+    width: 65%;
 }
 
 #frmSerialGlider p {
@@ -12,12 +17,11 @@
 }
 
 #frmSerialGlider input {
-    margin: 0px;
+    margin: 0px 5px;
     padding: 8px;
 }
 
 #partTypes {
-    height: 780px;
     padding: 20px;
     margin: 20px;
 }
@@ -29,7 +33,9 @@
     margin: 10px;
     padding: 8px;
     border: 2px solid #484848;
-    border-radius: 5px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 
 .partType span {
@@ -54,6 +60,7 @@
 }
 
 .partType .buttons {
+    float: right;
     clear: both;
 }
 
