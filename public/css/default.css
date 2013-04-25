@@ -1,6 +1,7 @@
-﻿/* _Layout */
+﻿/* Mise en page */
 
-html, body {
+html,
+body {
     margin: 0px;
     padding: 0px;
     height: 100%;
@@ -9,12 +10,13 @@ html, body {
 
 #wrapper {
     position: relative;
-    min-width: 1080px;
+    min-width: 1280px;
     min-height: 100%;
     overflow: auto;
 }
 
-#header_band, #footer_band {
+#header-band,
+#footer-band {
     background-color: #484848;
 }
 
@@ -22,37 +24,84 @@ html, body {
     width: 960px;
     margin: 10px auto;
     padding-bottom: 110px;
-    [lte IE 6] height: 100%;
+[ lte IE 6 ] height : 100 %;
     overflow: auto;
 }
 
-#header_band {
+#header-band {
     top: 0;
 }
 
-#footer_band {
+#footer-band {
     position: absolute;
     width: 100%;
     bottom: 0;
 }
 
-#header_wrapper, #footer_wrapper {
+#header-wrapper,
+#footer-wrapper {
     margin: 0px auto;
     height: 100px;
-    width: 80%;
+    width: 1280px;;
+    overflow: hidden;
 }
 
-#logo_dutailier {
+/* En-tête */
+
+#logo-dutailier,
+#menu,
+#logo-babiesRus {
+    display: block;
     float: left;
-    padding: 5px;
-    height: 90%;
+    margin: 5px auto;
 }
 
-#logo_babiesRus {
-    float: right;
-    padding: 5px;
-    height: 90%;
+#logo-dutailier {
+    width: 324px;
+    height: 86px;
+    margin: 7px 0px;
 }
+
+#menu {
+
+    height: 90px;
+    overflow: hidden;
+    padding: 0px;
+    width: 577px;
+    text-align: center;
+}
+
+#menu li {
+    display: inline-block;
+    margin: 26px 10px;
+    background-color: #A0A0A0;
+    border: 1px solid white;
+    text-align: center;
+}
+
+#menu a {
+    display: block;
+    line-height: 20px;
+    width: 100px;
+    font-weight: bold;
+    list-style: none;
+    color: black;
+    padding: 8px;
+    text-decoration: none;
+}
+
+#menu a:hover {
+    cursor: hand;
+    background-color: #808080;
+}
+
+#logo-babiesRus {
+    width: 379px;
+    height: 80px;
+    margin: 10px 0px;
+}
+
+/* Pied de page */
 
 #copyright {
     float: right;
@@ -60,7 +109,7 @@ html, body {
     color: white;
 }
 
-/* Warning */
+/* Global */
 
 label.warning {
     color: red;

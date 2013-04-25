@@ -1,6 +1,15 @@
-<div id="header_band">
-    <div id="header_wrapper">
-        <img id="logo_dutailier" src="public/images/dutailier.png">
-        <img id="logo_babiesRus" src="public/images/babiesrus.png">
+<div id="header-band">
+    <div id="header-wrapper">
+        <img id="logo-dutailier" src="public/images/dutailier.png">
+        <ul id="menu">
+
+            <li><a href="categories.php">Home</a></li>
+
+            <?php if (isAuthenticated()) : ?>
+                <li><a href="cart.php">Cart</a></li>
+                <li><a>Log off</a></li>
+            <?php endif ?>
+        </ul>
+        <img id="logo-babiesRus" src="public/images/babiesrus.png">
     </div>
 </div>

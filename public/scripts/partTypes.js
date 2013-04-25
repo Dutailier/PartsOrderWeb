@@ -140,11 +140,11 @@ function changeButtons(quantity, element) {
     // Supprimer les bouttons déjà ajoutés.
     $(element).children('input').remove();
 
+    $(element).append(btnAddToCart);
+
     if (quantity > 0) {
         $(element).append(btnRemoveFromCart);
     }
-
-    $(element).append(btnAddToCart);
 
     // Prends en charge les clicks.
     handlerClick();
