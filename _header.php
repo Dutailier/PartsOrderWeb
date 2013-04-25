@@ -1,3 +1,5 @@
+<?php require_once 'protected/authentication.php' ?>
+
 <div id="header-band">
     <div id="header-wrapper">
         <img id="logo-dutailier" src="public/images/dutailier.png">
@@ -8,7 +10,7 @@
             <?php if (isAuthenticated()) : ?>
                 <li><a href="cart.php">Cart</a></li>
                 <li><a>Log off</a></li>
-            <?php endif ?>
+            <?php endif; ?>
         </ul>
         <img id="logo-babiesRus" src="public/images/babiesrus.png">
     </div>

@@ -13,5 +13,5 @@ function isAuthenticated()
 
     // Si l'utilisateur n'est pas authentifié, on le redirige
     // vers la page de connexion.
-    return !(empty($_SESSION['authenticated']));
+    return $_SESSION['authenticated'];
 }
