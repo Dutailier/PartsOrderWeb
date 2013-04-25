@@ -2,10 +2,10 @@
 
 html,
 body {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     height: 100%;
-    font-family: Arial;
+    font-family: "Arial", sans-serif;
 }
 
 #wrapper {
@@ -40,7 +40,7 @@ body {
 
 #header-wrapper,
 #footer-wrapper {
-    margin: 0px auto;
+    margin: 0 auto;
     height: 100px;
     width: 1280px;;
     overflow: hidden;
@@ -59,14 +59,14 @@ body {
 #logo-dutailier {
     width: 324px;
     height: 86px;
-    margin: 7px 0px;
+    margin: 7px 0;
 }
 
 #menu {
 
     height: 90px;
     overflow: hidden;
-    padding: 0px;
+    padding: 0;
     width: 577px;
     text-align: center;
 }
@@ -74,7 +74,7 @@ body {
 #menu li {
     display: inline-block;
     margin: 26px 10px;
-    background-color: #A0A0A0;
+    background-color: #D0D0D0;
     border: 1px solid white;
     text-align: center;
 }
@@ -98,7 +98,7 @@ body {
 #logo-babiesRus {
     width: 379px;
     height: 80px;
-    margin: 10px 0px;
+    margin: 10px, 0;
 }
 
 /* Pied de page */

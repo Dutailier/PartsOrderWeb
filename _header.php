@@ -5,7 +5,9 @@
         <img id="logo-dutailier" src="public/images/dutailier.png">
         <ul id="menu">
 
-            <li><a href="categories.php">Home</a></li>
+            <?php if (basename($_SERVER['PHP_SELF']) != 'index.php') : ?>
+                <li><a href="categories.php">Home</a></li>
+            <?php endif; ?>
 
             <?php if (isAuthenticated()) : ?>
                 <li><a href="cart.php">Cart</a></li>

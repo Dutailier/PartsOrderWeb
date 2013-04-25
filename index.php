@@ -1,3 +1,13 @@
+<?php
+
+require_once 'protected/authentication.php';
+
+if(isAuthenticated()) {
+    header('location: categories.php');
+}
+
+?>
+
 <html>
 <head>
     <title>BabiesRus Parts Order - Home</title>
