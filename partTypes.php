@@ -1,6 +1,6 @@
 <?php
 
-require_once 'protected/authentication.php';
+require_once 'authentication.php';
 
 if (!isAuthenticated()) {
     header('location: index.php');

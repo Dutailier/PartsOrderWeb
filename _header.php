@@ -1,4 +1,4 @@
-<?php require_once 'protected/authentication.php' ?>
+<?php require_once 'authentication.php' ?>
 
 <div id="header-band">
     <div id="header-wrapper">
@@ -11,7 +11,7 @@
 
             <?php if (isAuthenticated()) : ?>
                 <li><a href="cart.php">Cart</a></li>
-                <li><a href="protected/logout.php">Log out</a></li>
+                <li><a href="logout.php">Log out</a></li>
             <?php endif; ?>
         </ul>
         <img id="logo-babiesRus" src="public/images/babiesrus.png">

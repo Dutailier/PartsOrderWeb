@@ -75,8 +75,14 @@ function validSerialGlider() {
                                 data['partTypes'][i]['partType_quantity']);
                         }
                     }
-                } else {
+
+                    // Vérifie que la propriété de l'objet JSON a bien été créée.
+                } else if (data.hasOwnProperty('message')) {
+
+                    // Affiche un message d'erreur expliquant l'échec de la requête.
                     alert(data['message']);
+                } else {
+                    alert('Communication with the server failed.');
                 }
             },
             error: function () {
@@ -137,6 +143,7 @@ function updatePartType(quantity, buttons) {
         .append('<input class="addCart" type="button" />')
         .click(function () {
 
+            // TODO : Pourquoi $(this) est undefined?
             // Récupère le partType sélectionné.
             var partType = $(this).closest('.partType');
 
@@ -181,7 +188,7 @@ function updatePartType(quantity, buttons) {
             .append('<input class="removeCart" type="button" />')
             .click(function () {
 
-                alert('inner click');
+                // TODO : Pourquoi $(this) est undefined?
                 // Récupère le partType sélectionné.
                 var partType = $(this).closest('.partType');
 
