@@ -15,7 +15,7 @@
     width: 300px;
     margin: 3px auto;
     text-align: center;
-    cursor: hand;
+    cursor: pointer;
 }
 
 .category img {
@@ -23,5 +23,5 @@
     width: 250px;
     height: 250px;
     margin: auto;
-    cursor: hand;
+    cursor: pointer;
 }

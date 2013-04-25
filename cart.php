@@ -2,7 +2,7 @@
 
 require_once 'protected/authentication.php';
 
-if(!isAuthenticated()) {
+if (!isAuthenticated()) {
     header('location: index.php');
 }
 
@@ -13,8 +13,8 @@ if(!isAuthenticated()) {
     <title>BabiesRus Parts Order - Cart</title>
 
     <!-- Feuilles de style. -->
-    <style><?php require_once 'public/css/default.css' ?></style>
-    <style><?php require_once 'public/css/cart.css' ?></style>
+    <link rel="stylesheet" type="text/css" href="public/css/default.css"/>
+    <link rel="stylesheet" type="text/css" href="public/css/cart.css"/>
     <!-- Fin -->
 </head>
 <body>
@@ -25,10 +25,10 @@ if(!isAuthenticated()) {
         <!-- Liste de pièces dans le panier. -->
         <div id="items">
             <div class="item" data-item_id="23">
-                <img src="public/images/partTypes/123.png" />
+                <img src="public/images/partTypes/.png"/>
                 <span>Reclining Handle</span> -
                 <span>13453432675</span>
-                <input type="text" value="2" />
+                <input type="text" value="2"/>
                 <a class="addCart"></a>
                 <a class="removeAdd"></a>
             </div>
@@ -40,8 +40,8 @@ if(!isAuthenticated()) {
 </div>
 
 <!-- Scripts. -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script><?php require_once 'public/scripts/cart.js' ?></script>
+<script src="public/scripts/jquery.min.js"></script>
+<script src="public/scripts/cart.js"></script>
 <!-- Fin -->
 </body>
 </html>

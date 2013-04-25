@@ -72,13 +72,6 @@ function validSerialGlider() {
                                 data['partTypes'][i]['partType_quantity']);
                         }
                     }
-
-                    // Gère le click sur un bouton ajouter au panier d'achat.
-                    handlerClickAddToCart();
-
-                    // Gère le click sur un bouton retirer du panier d'achat.
-                    handlerClickRemoveFromCart();
-
                 } else {
                     alert(data['message']);
                 }
@@ -114,13 +107,13 @@ function addPartType(id, name, description, quantity) {
                 '<span class="description">' + (description ? description : '') + '</span>' +
             '</div>' +
             '<div class="buttons"> ' +
-            '<span class="quantity">' + quantity + '</span>' +
+                '<span class="quantity">' + quantity + '</span>' +
             '</div>' +
         '</div>'
     );
 
     // Ajoute les bouttons appropriés au dernier éléments ajouté.
-    changeButtons(quantity, partTypes.children('.partType').last().find('.buttons'));
+    changeButtons(quantity, partTypes.find('.partType').last().find('.buttons'));
 }
 
 /**
@@ -132,13 +125,13 @@ function changeButtons(quantity, element) {
 
     var btnRemoveFromCart = $('<input class="removeCart" type="button" />');
     var btnAddToCart = $('<input class="addCart" type="button" />');
-    var spanQuantity = $(element).children('.quantity');
+    var spanQuantity = $(element).find('.quantity');
 
     // Change la quantité affichée.
     spanQuantity.text(quantity);
 
     // Supprimer les bouttons déjà ajoutés.
-    $(element).children('input').remove();
+    $(element).find('input').remove();
 
     $(element).append(btnAddToCart);
 
@@ -146,7 +139,7 @@ function changeButtons(quantity, element) {
         $(element).append(btnRemoveFromCart);
     }
 
-    // Prends en charge les clicks.
+    // Prends en charge les clics.
     handlerClick();
 }
 

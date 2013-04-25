@@ -2,7 +2,7 @@
 
 require_once 'protected/authentication.php';
 
-if(!isAuthenticated()) {
+if (!isAuthenticated()) {
     header('location: index.php');
 }
 
@@ -13,9 +13,9 @@ if(!isAuthenticated()) {
     <title>BabiesRus Parts Order - Parts</title>
 
     <!-- Feuilles de style. -->
-    <style><?php require_once 'public/css/default.css' ?></style>
-    <style><?php require_once 'public/css/partTypes.css' ?></style>
-    <style><?php require_once 'public/css/cart.css' ?></style>
+    <link rel="stylesheet" type="text/css" href="public/css/default.css"/>
+    <link rel="stylesheet" type="text/css" href="public/css/partTypes.css"/>
+    <link rel="stylesheet" type="text/css" href="public/css/cart.css"/>
     <!-- Fin -->
 </head>
 <body>
@@ -32,7 +32,7 @@ if(!isAuthenticated()) {
             </p>
 
             <p>
-                <label id="lblWarning" name="lblWarning" class="warning"/>
+                <label id="lblWarning" class="warning"></label>
             </p>
         </form>
         <!-- Fin -->
@@ -47,8 +47,8 @@ if(!isAuthenticated()) {
 </div>
 
 <!-- Scripts. -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script><?php require_once 'public/scripts/partTypes.js' ?></script>
+<script src="public/scripts/jquery.min.js"></script>
+<script src="public/scripts/partTypes.js"></script>
 <!-- Fin -->
 </body>
 </html>

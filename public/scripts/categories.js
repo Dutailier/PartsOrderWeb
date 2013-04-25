@@ -52,7 +52,7 @@ function add_category(id, name) {
     $('#categories').append(
         '<div class="category" data-category_id="' + id + '" >' +
             '<span>' + name + '</span>' +
-            '<img src="public/images/categories/' + id + '.png" />' +
+            '<img src="../images/categories/' + id + '.png" />' +
             '</div>'
     )
 }
