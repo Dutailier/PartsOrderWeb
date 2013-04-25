@@ -7,7 +7,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data) {
 
-            // Vérifie que les propriétés de l'objet JSON ont bien été créés et
+            // Vérifie que les propriétés de l'objet JSON ont bien été créées et
             // vérifie si la requête fut un succès.
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
@@ -32,13 +32,18 @@ $(document).ready(function () {
                 $('.category').click(function () {
                     window.location = 'partTypes.php?category_id=' + $(this).data('category_id');
                 });
-            }
-            else {
+
+                // Vérifie que la propriété de l'objet JSON a bien été créée.
+            } else if (data.hasOwnProperty('message')) {
+
+                // Affiche un message d'erreur expliquant l'échec de la requête.
                 alert(data['message']);
+            } else {
+                alert('Communication with the server failed.');
             }
         },
         error: function () {
-            alert('Communication to the server failed.');
+            alert('Communication with the server failed.');
         }
     });
 });

@@ -4,7 +4,7 @@ require_once 'cart.php';
 
 if (empty($_GET['partType_id']) || empty($_GET['serial_glider'])) {
     $data['success'] = false;
-    $data['message'] = 'A partType must be selected or a serial number must be entered.';
+    $data['message'] = 'A part must be selected or a serial number must be entered.';
 } else {
 
     // Récupère les informations passées en GET.

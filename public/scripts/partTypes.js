@@ -1,5 +1,5 @@
 // Définit le numéro de série de chaise inscrit.
-var serialGlider = '';
+var serial = '';
 
 /**
  * Valide le numéro de série de la chaise et envoie une requête au serveur
@@ -7,7 +7,7 @@ var serialGlider = '';
  * @returns {boolean}
  */
 function validSerialGlider() {
-    // Récupère les champs à valider.
+    // Récupère le champ à valider.
     var txtSerialGlider = $('#txtSerialGlider');
 
     // Récupère les valeurs passées en GET.
@@ -24,7 +24,10 @@ function validSerialGlider() {
 
     if (txtSerialGlider.val()) {
         if (serialGliderRegex.test(txtSerialGlider.val())) {
-            serialGlider = txtSerialGlider.val();
+
+            // Récupère le numéro de série pour de futures utilisations.
+            serial = txtSerialGlider.val();
+
             txtSerialGlider.removeClass('warning');
         } else {
             txtSerialGlider.addClass('warning');
@@ -37,7 +40,7 @@ function validSerialGlider() {
 
     if (isValid) {
         var parameters = {
-            "serial_glider": txtSerialGlider.val(),
+            "serial_glider": serial,
             "category_id": $_GET['category_id']
         };
 
@@ -49,7 +52,7 @@ function validSerialGlider() {
             success: function (data) {
 
                 // Vérifie que les propriétés de l'objet JSON ont bien été créés et
-                // vérifié si la requête fut un succès.
+                // vérifie si la requête fut un succès.
                 if (data.hasOwnProperty('success') &&
                     data['success'] &&
                     data.hasOwnProperty('partTypes')) {
@@ -103,102 +106,120 @@ function addPartType(id, name, description, quantity) {
     partTypes.append(
         '<div class="partType" data-partType_id="' + id + '">' +
             '<div class="details">' +
-                '<span class="name">' + name + '</span>' +
-                '<span class="description">' + (description ? description : '') + '</span>' +
+            '<span class="name">' + name + '</span>' +
+            '<span class="description">' + (description ? description : '') + '</span>' +
             '</div>' +
             '<div class="buttons"> ' +
-                '<span class="quantity">' + quantity + '</span>' +
+            '<span class="quantity">' + quantity + '</span>' +
             '</div>' +
-        '</div>'
+            '</div>'
     );
 
-    // Ajoute les bouttons appropriés au dernier éléments ajouté.
-    changeButtons(quantity, partTypes.find('.partType').last().find('.buttons'));
+    // Ajoute les bouttons appropriés au dernier élément ajouté.
+    updatePartType(quantity, partTypes.children().last().find('.buttons'));
 }
 
 /**
  * Ajoute les bouttons appropriés à l'éléments spécifié.
  * @param quantity
- * @param element
+ * @param buttons
  */
-function changeButtons(quantity, element) {
+function updatePartType(quantity, buttons) {
 
-    var btnRemoveFromCart = $('<input class="removeCart" type="button" />');
-    var btnAddToCart = $('<input class="addCart" type="button" />');
-    var spanQuantity = $(element).find('.quantity');
+    // Efface les présents bouttons.
+    $(buttons).find('input').remove();
 
-    // Change la quantité affichée.
-    spanQuantity.text(quantity);
+    // Ajuste la quantité commandée.
+    $(buttons).find('.quantity').text(quantity);
 
-    // Supprimer les bouttons déjà ajoutés.
-    $(element).find('input').remove();
+    // Crée un bouton pour ajouter la pièce au panier d'achats.
+    $(buttons)
+        .append('<input class="addCart" type="button" />')
+        .click(function () {
 
-    $(element).append(btnAddToCart);
+            // Récupère le partType sélectionné.
+            var partType = $(this).closest('.partType');
 
-    if (quantity > 0) {
-        $(element).append(btnRemoveFromCart);
+            var parameters = {
+                "serial_glider": serial,
+                "partType_id": partType.data('partType_id')
+            };
+
+            $.ajax({
+                type: 'GET',
+                url: 'protected/addToCart.php',
+                data: parameters,
+                dataType: 'json',
+                success: function (data) {
+
+                    // Vérifie que les propriétés de l'objet JSON ont bien été créées et
+                    // vérifie si la requête fut un succès.
+                    if (data.hasOwnProperty('success') &&
+                        data['success'] &&
+                        data.hasOwnProperty('partType_quantity')) {
+                        updatePartType(data['partType_quantity'], partType.find('.buttons'));
+
+                        // Vérifie que la propriété de l'objet JSON a bien été créée.
+                    } else if (data.hasOwnProperty('message')) {
+
+                        // Affiche un message d'erreur expliquant l'échec de la requête.
+                        alert(data['message']);
+                    } else {
+                        alert('Communication with the server failed.');
+                    }
+                },
+                error: function () {
+                    alert('Communication with the server failed.');
+                }
+            });
+        });
+
+    // Crée un bouton pour retirer la pièce du panier d'achats.
+    // Si au moins une pièce est commandée.
+    if (quantity) {
+        $(buttons)
+            .append('<input class="removeCart" type="button" />')
+            .click(function () {
+
+                alert('inner click');
+                // Récupère le partType sélectionné.
+                var partType = $(this).closest('.partType');
+
+                var parameters = {
+                    "serial_glider": serial,
+                    "partType_id": partType.data('partType_id')
+                };
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'protected/removeFromCart.php',
+                    data: parameters,
+                    dataType: 'json',
+                    success: function (data) {
+
+                        // Vérifie que les propriétés de l'objet JSON ont bien été créés et
+                        // vérifie si la requête fut un succès.
+                        if (data.hasOwnProperty('success') &&
+                            data['success'] &&
+                            data.hasOwnProperty('partType_quantity')) {
+                            updatePartType(data['partType_quantity'], partType.find('.buttons'));
+
+                            // Vérifie que la propriété de l'objet JSON a bien été créée.
+                        } else if (data.hasOwnProperty('message')) {
+
+                            // Affiche un message d'erreur expliquant l'échec de la requête.
+                            alert(data['message']);
+                        } else {
+
+                            alert('Communication with the server failed.');
+                        }
+                    },
+                    error: function () {
+                        alert('Communication with the server failed.');
+                    }
+                });
+            });
     }
-
-    // Prends en charge les clics.
-    handlerClick();
-}
-
-function handlerClick() {
-    $('.addCart').click(function () {
-
-        // Récupère le partType sélectionné.
-        var partType = $(this).closest('.partType');
-
-        var parameters = {
-            "serial_glider": serialGlider,
-            "partType_id": partType.data('partType_id')
-        };
-
-        $.ajax({
-            type: 'GET',
-            url: 'protected/addToCart.php',
-            data: parameters,
-            dataType: 'json',
-            success: function (data) {
-                if (data['success']) {
-                    changeButtons(data['partType_quantity'], partType.find('.buttons'));
-                } else {
-                    alert(data['message']);
-                }
-            },
-            error: function () {
-                alert('Communication with the server failed.');
-            }
-        });
-    });
-
-    $('.removeCart').click(function () {
-
-        // Récupère le partType sélectionné.
-        var partType = $(this).closest('.partType');
-
-        var parameters = {
-            "serial_glider": serialGlider,
-            "partType_id": partType.data('partType_id')
-        };
-
-        $.ajax({
-            type: 'GET',
-            url: 'protected/removeFromCart.php',
-            data: parameters,
-            dataType: 'json',
-            success: function (data) {
-                if (data['success']) {
-                    changeButtons(data['partType_quantity'], partType.find('.buttons'));
-                } else {
-                    alert(data['message']);
-                }
-            },
-            error: function () {
-                alert('Communication with the server failed.');
-            }
-        });
-    });
 }
 
 /**

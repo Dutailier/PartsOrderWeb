@@ -39,14 +39,34 @@ function login() {
             async: false,
             dataType: 'json',
             success: function (data) {
-                if (data['success']) {
-                    if (data['role_name'] == 'administrator') {
-                        window.location = ' categories.php';
-                    } else {
-                        window.location = ' categories.php';
+
+                // Vérifie que les propriétés de l'objet JSON ont bien été créées et
+                // vérifie si la requête fut un succès.
+                if (data.hasOwnProperty('success') &&
+                    data['success'] &&
+                    data.hasOwnProperty('role_name')) {
+
+                    // Redirige l'utilisateur selon son rôle.
+                    switch (data['role_name']) {
+
+                        // L'utilisateur est administrateur.
+                        case 'administrateur' :
+                            window.location = ' categories.php';
+                            break;
+
+                        // Tous autres utilisateurs.
+                        case 'retailer':
+                        default:
+                            window.location = ' categories.php';
                     }
-                } else {
+
+                    // Vérifie que la propriété de l'objet JSON a bien été créée.
+                } else if (data.hasOwnProperty('message')) {
+
+                    // Affiche un message d'erreur expliquant l'échec de la requête.
                     alert(data['message']);
+                } else {
+                    alert('Communication with the server failed.');
                 }
             },
             error: function () {

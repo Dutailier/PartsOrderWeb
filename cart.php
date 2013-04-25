@@ -28,7 +28,8 @@ if (!isAuthenticated()) {
                 <img src="public/images/partTypes/.png"/>
                 <span>Reclining Handle</span> -
                 <span>13453432675</span>
-                <input type="text" value="2"/>
+                <label for="quantity">Qty</label>
+                <input id="quantity" type="text" value="2"/>
                 <a class="addCart"></a>
                 <a class="removeAdd"></a>
             </div>
