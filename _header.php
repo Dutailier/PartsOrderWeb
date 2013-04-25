@@ -9,7 +9,7 @@
 
             <?php if (isAuthenticated()) : ?>
                 <li><a href="cart.php">Cart</a></li>
-                <li><a>Log off</a></li>
+                <li><a href="protected/logout.php">Log out</a></li>
             <?php endif; ?>
         </ul>
         <img id="logo-babiesRus" src="public/images/babiesrus.png">
