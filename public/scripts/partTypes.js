@@ -10,9 +10,6 @@ function validSerialGlider() {
     // Récupère le champ à valider.
     var txtSerialGlider = $('#txtSerialGlider');
 
-    // Récupère les valeurs passées en GET.
-    var $_GET = populateGet();
-
     // Crée une expression régulière à comparée.
     var serialGliderRegex = /^\d{11}$/;
 
@@ -41,7 +38,7 @@ function validSerialGlider() {
     if (isValid) {
         var parameters = {
             "serial_glider": serial,
-            "category_id": $_GET['category_id']
+            "category_id": populateGet()['category_id']
         };
 
         $.ajax({
@@ -89,12 +86,13 @@ function validSerialGlider() {
                 alert('Communication with the server failed.');
             }
         });
-
     } else {
+
+        // Retourne le curseur sur le champs non-valide.
         txtSerialGlider.focus();
     }
 
-    // Retient le postback automatique.
+    // Empêche toujours le postback automatique.
     return false;
 }
 
@@ -112,13 +110,13 @@ function addPartType(id, name, description, quantity) {
     partTypes.append(
         '<div class="partType" data-partType_id="' + id + '">' +
             '<div class="details">' +
-            '<span class="name">' + name + '</span>' +
-            '<span class="description">' + (description ? description : '') + '</span>' +
+                '<span class="name">' + name + '</span>' +
+                '<span class="description">' + (description ? description : '') + '</span>' +
             '</div>' +
             '<div class="buttons"> ' +
-            '<span class="quantity">' + quantity + '</span>' +
+                '<span class="quantity">' + quantity + '</span>' +
             '</div>' +
-            '</div>'
+        '</div>'
     );
 
     // Ajoute les bouttons appropriés au dernier élément ajouté.
@@ -133,13 +131,13 @@ function addPartType(id, name, description, quantity) {
 function updatePartType(quantity, buttons) {
 
     // Efface les présents bouttons.
-    $(buttons).find('input').remove();
+    buttons.find('input').remove();
 
     // Ajuste la quantité commandée.
-    $(buttons).find('.quantity').text(quantity);
+    buttons.find('.quantity').text(quantity);
 
     // Crée un bouton pour ajouter la pièce au panier d'achats.
-    $(buttons)
+    buttons
         .append('<input class="addCart" type="button" />')
         .click(function () {
 
@@ -183,8 +181,8 @@ function updatePartType(quantity, buttons) {
 
     // Crée un bouton pour retirer la pièce du panier d'achats.
     // Si au moins une pièce est commandée.
-    if (quantity) {
-        $(buttons)
+    if (quantity > 0) {
+        buttons
             .append('<input class="removeCart" type="button" />')
             .click(function () {
 
