@@ -1,11 +1,11 @@
+$(document).on('click', 'div.category', function () {
+    window.location = 'partTypes.php?category_id=' + $(this).data('category_id');
+});
+
 $(document).ready(function () {
 
-    // Affichage des catégories.
-    $.ajax({
-        type: 'GET',
-        url: 'protected/getCategories.php',
-        dataType: 'json',
-        success: function (data) {
+    $.get('protected/getCategories.php')
+        .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créées et
             // vérifie si la requête fut un succès.
@@ -28,11 +28,6 @@ $(document).ready(function () {
                     }
                 }
 
-                // Gère le clic sur une catégorie.
-                $('.category').click(function () {
-                    window.location = 'partTypes.php?category_id=' + $(this).data('category_id');
-                });
-
                 // Vérifie que la propriété de l'objet JSON a bien été créée.
             } else if (data.hasOwnProperty('message')) {
 
@@ -41,11 +36,10 @@ $(document).ready(function () {
             } else {
                 alert('Communication with the server failed.');
             }
-        },
-        error: function () {
+        })
+        .fail(function () {
             alert('Communication with the server failed.');
-        }
-    });
+        })
 });
 
 /**
@@ -58,6 +52,6 @@ function add_category(id, name) {
         '<div class="category" data-category_id="' + id + '" >' +
             '<span>' + name + '</span>' +
             '<img src="../images/categories/' + id + '.png" />' +
-            '</div>'
+        '</div>'
     )
 }
