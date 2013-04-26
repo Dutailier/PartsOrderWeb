@@ -1,8 +1,8 @@
 <?php
 
-require_once 'protected/authentication.php';
+include_once 'authentication.php';
 
-if(isAuthenticated()) {
+if (isAuthenticated()) {
     header('location: categories.php');
 }
 
@@ -13,13 +13,13 @@ if(isAuthenticated()) {
     <title>BabiesRus Parts Order - Home</title>
 
     <!-- Feuilles de style. -->
-    <style><?php require_once 'public/css/default.css' ?></style>
-    <style><?php require_once 'public/css/login.css' ?></style>
+    <link type="text/css" rel="stylesheet" href="public/css/default.css"/>
+    <link type="text/css" rel="stylesheet" href="public/css/login.css"/>
     <!-- Fin -->
 </head>
 <body>
 <div id="wrapper">
-    <?php require_once '_header.php' ?>
+    <?php include_once '_header.php' ?>
     <div id="content">
 
         <!-- Formulaire de connexion. -->
@@ -45,12 +45,13 @@ if(isAuthenticated()) {
         <!-- Fin -->
 
     </div>
-    <?php require_once '_footer.php' ?>
+    <?php include_once '_footer.php' ?>
 </div>
 
 <!-- Scripts. -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script><?php require_once 'public/scripts/login.js' ?></script>
+<script src="public/scripts/login.js"></script>
 <!-- Fin -->
+
 </body>
 </html>

@@ -10,4 +10,4 @@ if(!$_SESSION) {
 session_destroy();
 
 // Redirige l'utilisateur à la page de connexion.
-header('location: ../index.php');
+header('location: index.php');

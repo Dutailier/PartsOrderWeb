@@ -1,6 +1,6 @@
 <?php
 
-require_once 'protected/authentication.php';
+include_once 'authentication.php';
 
 if(!isAuthenticated()) {
     header('location: index.php');
@@ -13,14 +13,14 @@ if(!isAuthenticated()) {
     <title>BabiesRus Parts Order - Parts</title>
 
     <!-- Feuilles de style. -->
-    <style><?php require_once 'public/css/default.css' ?></style>
-    <style><?php require_once 'public/css/partTypes.css' ?></style>
-    <style><?php require_once 'public/css/cart.css' ?></style>
+    <link type="text/css" rel="stylesheet" href="public/css/default.css"/>
+    <link type="text/css" rel="stylesheet" href="public/css/partTypes.css"/>
+    <link type="text/css" rel="stylesheet" href="public/css/cart.css"/>
     <!-- Fin -->
 </head>
 <body>
 <div id="wrapper">
-    <?php require_once '_header.php' ?>
+    <?php include_once '_header.php' ?>
     <div id="content">
 
         <!-- Entrée du numéro de série d'une chaise. -->
@@ -43,12 +43,12 @@ if(!isAuthenticated()) {
         <!-- Fin -->
 
     </div>
-    <?php require_once '_footer.php' ?>
+    <?php include_once '_footer.php' ?>
 </div>
 
 <!-- Scripts. -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script><?php require_once 'public/scripts/partTypes.js' ?></script>
+<script src="public/scripts/partTypes.js"></script>
 <!-- Fin -->
 </body>
 </html>
