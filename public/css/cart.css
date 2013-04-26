@@ -10,7 +10,7 @@
 .addCart:hover,
 .alreadyCart:hover,
 .removeCart:hover {
-    cursor: hand;
+    cursor: pointer;
 }
 
 .addCart {
