@@ -73,7 +73,7 @@ body {
 #menu li {
     display: inline-block;
     margin: 26px 10px;
-    background-color: #D0D0D0;
+    background-color: #F0F0F0;
     border: 1px solid white;
     text-align: center;
 }
@@ -91,7 +91,7 @@ body {
 
 #menu a:hover {
     cursor: pointer;
-    background-color: #808080;
+    background-color: #D0D0D0;
 }
 
 #logo-babiesRus {

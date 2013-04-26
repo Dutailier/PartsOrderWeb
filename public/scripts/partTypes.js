@@ -12,7 +12,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'GET',
-            url: 'protected/addCart.php',
+            url: 'protected/addToCart.php',
             data: parameters,
             dataType: 'json',
             success: function (data) {

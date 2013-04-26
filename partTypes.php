@@ -15,7 +15,7 @@ if(!isAuthenticated()) {
     <!-- Feuilles de style. -->
     <link type="text/css" rel="stylesheet" href="public/css/default.css"/>
     <link type="text/css" rel="stylesheet" href="public/css/partTypes.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/cart.css"/>
+    <link type="text/css" rel="stylesheet" href="public/css/shoppingButtons.css"/>
     <!-- Fin -->
 </head>
 <body>

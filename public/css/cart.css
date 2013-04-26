@@ -1,26 +1,68 @@
-.addCart,
-.alreadyCart,
-.removeCart {
-    width: 42px;
-    height: 32px;
+#parts {
+    overflow: hidden; /* clearfix */
+}
+
+div.part {
+    padding: 5px;
+    border: 2px solid #484848;
+    margin: 10px;
+    height: 40px;
+}
+
+div.part:nth-child(even) {
+    background-color: #FAFAFA;
+}
+
+div.details {
+    display: inline-block;
+    overflow: hidden; /* clearfix */
+}
+
+div.details > label {
+    display: inline-block;
+    line-height: 40px;
     margin: 0px 5px;
-    border: 0px;
+    display: block;
+    float: left;
 }
 
-.addCart:hover,
-.alreadyCart:hover,
-.removeCart:hover {
-    cursor: pointer;
+label.quantity {
+    margin-top: 0px;
+    font-size: 2.5em;
 }
 
-.addCart {
-    background: url('../images/buttons/cart.png') no-repeat -5px -10px;
+label.name {
+    font-weight: bold;
+    font-size: 1.2em;
 }
 
-.alreadyCart {
-    background: url('../images/buttons/cart.png') no-repeat -61px -10px;
+label.serial {
+    font-size: 0.8em;
+    font-style: italic;
 }
 
-.removeCart {
-    background: url('../images/buttons/cart.png') no-repeat -117px -10px;
+div.buttons {
+    float: right;
+    display: inline-block;
+    overflow: hidden; /* clearfix */
+}
+
+#summary {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+#summary * {
+    padding: 8px;
+    margin: 5px;
+    float: right;
+    font-size: 1.2em;
+}
+
+#btnOrder {
+    width: 150px;
+}
+
+#btnClear {
+    text-decoration: underline;
 }
