@@ -7,7 +7,6 @@ function login() {
     // Récupère les différents éléments HTML.
     var $txtUsername = $('#txtUsername');
     var $txtPassword = $('#txtPassword');
-    var $lblError = $('#lblError');
     var isValid = true;
 
     // Valide le champ 'txtUsername'.

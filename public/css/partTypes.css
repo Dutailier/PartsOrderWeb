@@ -3,7 +3,7 @@
     margin: 20px auto;
 }
 
-#frmSerialGlider label {
+#frmSerialGlider > label {
     margin-right: 5px;
     font-weight: bold;
 }
@@ -13,11 +13,11 @@
     text-align: center;
 }
 
-#frmSerialGlider p {
+#frmSerialGlider > p {
     margin: 10px auto;
 }
 
-#frmSerialGlider input {
+#frmSerialGlider > p > input {
     margin-right: 5px;
     padding: 8px;
 }
@@ -27,7 +27,7 @@
     margin: 10px;
 }
 
-.partType {
+#partTypes > div.partType {
     float: left;
     width: 250px;
     height: auto;
@@ -36,31 +36,31 @@
     border: 2px solid #484848;
 }
 
-.partType span {
+#partTypes > div.partType > div.details > span {
     display: block;
     float: left;
     clear: both;
 }
 
-.partType .details {
+#partTypes > div.partType > div.details {
     padding: 5px;
     height: 140px;
     overflow: hidden;
 }
 
-.partType .name {
+#partTypes > div.partType > div.details > span.name {
     font-size: 1.5em;
     font-weight: bold;
 }
 
-.partType .description {
+#partTypes > div.partType > div.details > span.description {
     height: auto;
     margin-top: 10px;
     margin-bottom: 5px;
     clear: both;
 }
 
-.partType .buttons {
+#partTypes > div.partType > div.buttons {
     float: left;
     border: 2px solid #484848;
     width: 236px;
@@ -68,7 +68,7 @@
     overflow: hidden;
 }
 
-.partType .quantity {
+#partTypes > div.partType > div.details > span.quantity {
     display: block;
     font-size: 1.5em;
     font-weight: bold;
@@ -76,6 +76,6 @@
     margin: 0px 5px;
 }
 
-.partType .buttons  .addCart, .removeCart {
+#partTypes > div.partType > div.buttons > input.addCart, input.removeCart {
     float: right;
 }

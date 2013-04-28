@@ -1,12 +1,12 @@
 <?php
-
-include_once 'authentication.php';
-
-if (isAuthenticated()) {
-    header('location: categories.php');
-}
-
-?>
+//
+//include_once 'authentication.php';
+//
+//if (isAuthenticated()) {
+//    header('location: categories.php');
+//}
+//
+//?>
 
 <html>
 <head>
