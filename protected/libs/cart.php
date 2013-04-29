@@ -140,6 +140,35 @@ class Cart
         }
     }
 
+    public static function getAll()
+    {
+        // Démarre une session si celle-ci n'est pas déjà active.
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        // Vérifie que les tableaux ont bien été instancié,
+        // sinon on retourne un tableau vide.
+        if (!isset($_SESSION['items'])) {
+            return array();
+        }
+
+        $max = count($_SESSION['items']);
+        $cart = array();
+
+        // Parcours tous les items du panier d'achats afin de retourner les items
+        // qui n'ont pas une quantité nulle.
+        for ($i = 0, $j = 0; $i < $max; $i++) {
+            if (!empty($_SESSION['quantities'][$i]) > 0) {
+                $cart[$j]['item'] = $_SESSION['items'][$i];
+                $cart[$j]['quantity'] = $_SESSION['quantities'][$i];
+                $j++;
+            }
+        }
+
+        return $cart;
+    }
+
     /**
      * Efface le contenu d'un panier d'achats.
      */

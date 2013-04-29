@@ -53,7 +53,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'GET',
-            url: 'protected/ajax/removePartFormCart.php',
+            url: 'protected/ajax/removePartFromCart.php',
             data: parameters,
             dataType: 'json',
             success: function (data) {

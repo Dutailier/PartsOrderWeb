@@ -64,5 +64,6 @@ div.buttons {
 }
 
 #btnClear {
+    cursor: pointer;
     text-decoration: underline;
 }
