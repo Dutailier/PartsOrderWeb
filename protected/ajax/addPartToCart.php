@@ -1,26 +1,24 @@
 <?php
 
 include_once(dirname(__FILE__) . '/../libs/cart.php');
+include_once(dirname(__FILE__) . '/../libs/part.php');
 
-if (empty($_GET['partType_id']) || empty($_GET['serial_glider'])) {
+if (empty($_GET['type']) || empty($_GET['serial']) || empty($_GET['name'])) {
     $data['success'] = false;
     $data['message'] = 'A part must be selected or a serial number must be entered.';
 } else {
 
-    // Récupère les informations passées en GET.
-    $serial_glider = $_GET['serial_glider'];
-    $partType_id = $_GET['partType_id'];
+    // Crée une pièce à partir des informations passés en GET.
+    $part = new Part($_GET['type'], $_GET['name'], $_GET['serial']);
 
     // Vérifie que la quantité avant d'avoir ajouté le type de pièce
     // est inférieure à la quantité après.
-    if (Cart::getQuantity($serial_glider, $partType_id) <
-        ($qty = Cart::Add($serial_glider, $partType_id))
-    ) {
+    if (Cart::getQuantity($part) < ($qty = Cart::Add($part))) {
         $data['success'] = true;
-        $data['partType_quantity'] = $qty;
+        $data['quantity'] = $qty;
     } else {
         $data['success'] = false;
-        $data['message'] = 'Unable to add the item to the shopping cart.';
+        $data['message'] = 'Unable to add the part to the cart.';
     }
 }
 

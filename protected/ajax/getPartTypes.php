@@ -2,14 +2,15 @@
 
 include_once(dirname(__FILE__) . '/../libs/database.php');
 include_once(dirname(__FILE__) . '/../libs/cart.php');
+include_once(dirname(__FILE__) . '/../libs/part.php');
 
-if (empty($_GET['category_id']) || empty($_GET['serial_glider'])) {
+if (empty($_GET['category_id']) || empty($_GET['serial'])) {
     $data['success'] = false;
     $data['message'] = 'A cateogry must be selected or a serial number must be entered.';
 } else {
 
     // Récupère les informations passées en GET.
-    $serial_glider = $_GET['serial_glider'];
+    $serial = $_GET['serial'];
     $category_id = $_GET['category_id'];
 
     // Récupère la connexion à la base de données.
@@ -35,11 +36,13 @@ if (empty($_GET['category_id']) || empty($_GET['serial_glider'])) {
             // Inscrire chaque ligne dans l'objet JSON qui sera retourné.
             while (odbc_fetch_row($result)) {
                 $id = odbc_result($result, 'partType_id');
-                $data['partTypes'][$i]['partType_id'] = $id;
-                $data['partTypes'][$i]['partType_name'] = odbc_result($result, 'partType_name');
-                $data['partTypes'][$i]['partType_description'] = odbc_result($result, 'partType_description');
+                $name = odbc_result($result, 'partType_name');
 
-                $data['partTypes'][$i]['partType_quantity'] = Cart::getQuantity($serial_glider, $id);
+                $data['partTypes'][$i]['id'] = $id;
+                $data['partTypes'][$i]['name'] = $name;
+                $data['partTypes'][$i]['description'] = odbc_result($result, 'partType_description');
+
+                $data['partTypes'][$i]['quantity'] = Cart::getQuantity(new Part($id, $name, $serial));
                 $i++;
             }
         }

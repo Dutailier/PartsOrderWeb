@@ -24,74 +24,9 @@ if (!isAuthenticated()) {
     <div id="content">
 
         <h1>Parts ordered</h1>
+
         <!-- Liste des items. -->
         <div id="parts">
-            <div class="part">
-                <div class="details">
-                    <label class="quantity">5</label>
-                    <label class="name">Asdf dldkwoe ldfa dlfklsla</label>
-                    <label class="serial">11236544785</label>
-                </div>
-                <div class="buttons">
-                    <input class="removeCart" type="button"/>
-                    <input class="addCart" type="button"/>
-                </div>
-            </div>
-            <div class="part">
-                <div class="details">
-                    <label class="quantity">5</label>
-                    <label class="name">Asdf dldkwoe ldfa dlfklsla</label>
-                    <label class="serial">11236544785</label>
-                </div>
-                <div class="buttons">
-                    <input class="removeCart" type="button"/>
-                    <input class="addCart" type="button"/>
-                </div>
-            </div>
-            <div class="part">
-                <div class="details">
-                    <label class="quantity">5</label>
-                    <label class="name">Asdf dldkwoe ldfa dlfklsla</label>
-                    <label class="serial">11236544785</label>
-                </div>
-                <div class="buttons">
-                    <input class="removeCart" type="button"/>
-                    <input class="addCart" type="button"/>
-                </div>
-            </div>
-            <div class="part">
-                <div class="details">
-                    <label class="quantity">5</label>
-                    <label class="name">Asdf dldkwoe ldfa dlfklsla</label>
-                    <label class="serial">11236544785</label>
-                </div>
-                <div class="buttons">
-                    <input class="removeCart" type="button"/>
-                    <input class="addCart" type="button"/>
-                </div>
-            </div>
-            <div class="part">
-                <div class="details">
-                    <label class="quantity">5</label>
-                    <label class="name">Asdf dldkwoe ldfa dlfklsla</label>
-                    <label class="serial">11236544785</label>
-                </div>
-                <div class="buttons">
-                    <input class="removeCart" type="button"/>
-                    <input class="addCart" type="button"/>
-                </div>
-            </div>
-            <div class="part">
-                <div class="details">
-                    <label class="quantity">5</label>
-                    <label class="name">Asdf dldkwoe ldfa dlfklsla</label>
-                    <label class="serial">11236544785</label>
-                </div>
-                <div class="buttons">
-                    <input class="removeCart" type="button"/>
-                    <input class="addCart" type="button"/>
-                </div>
-            </div>
         </div>
         <!-- Fin -->
 

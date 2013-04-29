@@ -1,37 +1,38 @@
 <?php
 
+include_once(dirname(__FILE__) . '/item.php');
+
 class Cart
 {
     /**
-     * Ajoute une type de pièce au panier d'achat.
-     * @param $serial_glider
-     * @param $partType_id
+     * Incrémente la quantité de cet item dans le panier d'achats et
+     * retourne sa quantité suivant l'opération.
+     * @param Item $item
      * @return mixed
      */
-    public static function Add($serial_glider, $partType_id)
+    public static function Add(Item $item)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
         if (!isset($_SESSION)) {
             session_start();
         }
 
-        // S'ils ne sont pas déjà créés, nous créons 3 tableaux qui travaillerons
+        // S'ils ne sont pas déjà créés, nous créons 2 tableaux qui travaillerons
         // en parallèle pour garder les informations du panier d'achats.
-        if (!isset($_SESSION['partTypes'])) {
-            $_SESSION['serials'] = array();
-            $_SESSION['partTypes'] = array();
+        if (!isset($_SESSION['items'])) {
+            $_SESSION['items'] = array();
             $_SESSION['quantities'] = array();
         }
 
-        $i = Cart::getIndex($serial_glider, $partType_id);
+        $i = Cart::getIndex($item);
 
-        // Si le type de pièce figure déjà dans le panier d'achats,
-        // nous incrémentons sa quantité. Autrement, nous l'ajoutons.
-        if ($i < count($_SESSION['partTypes'])) {
+        // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
+        // l'item y est déjà contenu, alos nous incrémentons sa quantité. Autrement,
+        // nous l'ajoutons au panier d'achats.
+        if ($i < count($_SESSION['items'])) {
             $_SESSION['quantities'][$i]++;
         } else {
-            $_SESSION['serials'][$i] = $serial_glider;
-            $_SESSION['partTypes'][$i] = $partType_id;
+            $_SESSION['items'][$i] = $item;
             $_SESSION['quantities'][$i] = 1;
         }
 
@@ -40,32 +41,33 @@ class Cart
 
 
     /**
-     * Retire un type de pièce du panier d'achat. Si aucune quantité
-     * n'est inscrite, on retire la quantité actuelle.
-     * @param $serial_glider
-     * @param $partType_id
+     * Décrémente la quantité contenu dans le panier d'achats de l'item.
+     * @param Item $item
      * @return int
      */
-    public static function Remove($serial_glider, $partType_id)
+    public static function Remove(Item $item)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
         if (!isset($_SESSION)) {
             session_start();
         }
 
-        // Si le panier d'achat n'est pas instancié, c'est parce qu'il
-        // est vide.
-        if (!isset($_SESSION['partTypes'])) {
+        // Si le panier d'achat n'est pas instancié, il est vide.
+        if (!isset($_SESSION['items'])) {
             return 0;
         }
 
-        $i = Cart::getIndex($serial_glider, $partType_id);
+        $i = Cart::getIndex($item);
 
-        // Si le type de pièce figure dans le panier d'achats,
-        // nous décrémentons sa quantité. Autrement, le type
-        // de pièce ne figure pas dans le panier d'achats.
-        if ($i < count($_SESSION['partTypes'])) {
-            $_SESSION['quantities'][$i]--;
+        // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
+        // l'item y est déjà contenu, alos nous décrémentons sa quantité. Autrement,
+        // on retourne 0.
+        if ($i < count($_SESSION['items'])) {
+
+            // Si la quantité est déjà nulle, inutile de décrémenter.
+            if ($_SESSION['quantities'][$i] > 0) {
+                $_SESSION['quantities'][$i]--;
+            }
 
             // Retourne la quantité restante.
             return $_SESSION['quantities'][$i];
@@ -76,30 +78,28 @@ class Cart
 
 
     /**
-     * Permet de connaître la quantité commandée d'un type de pièce.
-     * @param $serial_glider
-     * @param $partType_id
-     * @return bool
+     * Retourne la quantité contenu par le panier d'achats de l'item.
+     * @param Item $item
+     * @return int
      */
-    public static function getQuantity($serial_glider, $partType_id)
+    public static function getQuantity(Item $item)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
         if (!isset($_SESSION)) {
             session_start();
         }
 
-        // Si le panier d'achat n'est pas instancié, c'est parce qu'il
-        // est vide.
-        if (!isset($_SESSION['partTypes'])) {
+        // Si le panier d'achat n'est pas instancié, il est vide.
+        if (!isset($_SESSION['items'])) {
             return 0;
         }
 
-        $i = Cart::getIndex($serial_glider, $partType_id);
+        $i = Cart::getIndex($item);
 
-        // Si le type de pièce figure dans le panier d'achats,
-        // nous retournons sa quantité. Autrement, c'est que
-        // le type de pièce ne figure pas dans le panier d'achat.
-        if ($i < count($_SESSION['partTypes'])) {
+        // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
+        // l'item y est déjà contenu, alos nous retournons sa quantité. Autrement,
+        // on retourne 0.
+        if ($i < count($_SESSION['items'])) {
             return $_SESSION['quantities'][$i];
         } else {
             return 0;
@@ -107,13 +107,13 @@ class Cart
     }
 
     /**
-     * Permet de spécifier la quantité de type de pièce dans le panier d'achats.
-     * @param $serial_glider
-     * @param $partType_id
+     * Définit la quantité d'un item contenu dans le panier d'achats.
+     * Retourne faux si l'item ne figure pas dans le panier d'achats.
+     * @param Item $item
      * @param $qty
      * @return bool
      */
-    public static function setQuantity($serial_glider, $partType_id, $qty)
+    public static function setQuantity(Item $item, $qty)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
         if (!isset($_SESSION)) {
@@ -121,16 +121,17 @@ class Cart
         }
 
         // Vérifie que les tableaux ont bien été instancié,
-        // sinon on retourne false pour signaler l'erreur.
-        if (!isset($_SESSION['partTypes'])) {
+        // sinon on retourne faux pour signaler l'erreur.
+        if (!isset($_SESSION['items'])) {
             return false;
         }
 
-        $i = Cart::getIndex($serial_glider, $partType_id);
+        $i = Cart::getIndex($item);
 
-        // Si le type de pièce figure déjà dans le panier d'achats, sa quantité
-        // est modifiée. Autrement, on retourne false pour signaler l'erreur.
-        if ($i < count($_SESSION['partTypes'])) {
+        // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
+        // l'item y est déjà contenu, alos nous retournons sa quantité. Autrement,
+        // on retourne faux pour signaler l'erreur.
+        if ($i < count($_SESSION['items'])) {
             $_SESSION['quantities'][$i] = $qty;
 
             return true;
@@ -149,27 +150,25 @@ class Cart
             session_start();
         }
 
-        unset($_SESSION['serials']);
-        unset($_SESSION['partTypes']);
+        unset($_SESSION['items']);
         unset($_SESSION['quantities']);
     }
 
     /**
-     * Permet de retrouver l'index d'un type de pièce commandé.
-     * @param $serial_glider
-     * @param $partType_id
+     * Retourne l'index de l'item si celui-ci y figure ou retourne
+     * le nombre d'items contenus dans le panier d'achats si l'item
+     * n'y ait pas contenu.
+     * @param Item $item
      * @return int
      */
-    private static function getIndex($serial_glider, $partType_id)
+    private static function getIndex(Item $item)
     {
-        $max = count($_SESSION['partTypes']);
+        $max = count($_SESSION['items']);
 
-        // Parcours tous les types de pièces afin de trouvé
-        // s'il figure dans le panier d'achats.
+        // Parcours tous les items du panier d'achats afin de trouver
+        // l'index de l'item.
         for ($i = 0; $i < $max; $i++) {
-            if ($_SESSION['serials'][$i] == $serial_glider &&
-                $_SESSION['partTypes'][$i] == $partType_id
-            ) {
+            if ($_SESSION['items'][$i]->Compare($item)) {
                 return $i;
             }
         }
