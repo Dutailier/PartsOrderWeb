@@ -1,6 +1,6 @@
 <?php
 
-include_once 'authentication.php';
+include_once(dirname(__FILE__) . '/authentication.php');
 
 if (!isAuthenticated()) {
     header('location: index.php');
@@ -19,7 +19,7 @@ if (!isAuthenticated()) {
 </head>
 <body>
 <div id="wrapper">
-    <?php include_once '_header.php' ?>
+    <?php include_once(dirname(__FILE__) . '/_header.php'); ?>
     <div id="content">
 
         <!-- Liste des catégories. -->
@@ -28,7 +28,7 @@ if (!isAuthenticated()) {
         <!-- Fin -->
 
     </div>
-    <?php include_once '_footer.php' ?>
+    <?php include_once(dirname(__FILE__) . '/_footer.php'); ?>
 </div>
 
 <!-- Scripts. -->

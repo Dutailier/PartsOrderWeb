@@ -1,6 +1,6 @@
 <?php
 
-require_once 'database.php';
+include_once(dirname(__FILE__) . '/../libs/database.php');
 
 // Vérifie si les informations ont bien été passées.
 if (empty($_POST['username']) || empty($_POST['password'])) {
@@ -45,10 +45,10 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
                 $data['success'] = true;
                 $data['role_name'] = $row['role_name'];
 
-				// Démarre une session si celle-ci n'est pas déjà active.
-				if (!isset($_SESSION)) {
-					session_start();
-				}
+                // Démarre une session si celle-ci n'est pas déjà active.
+                if (!isset($_SESSION)) {
+                    session_start();
+                }
 
                 // Stocke les informations de l'utilisateur pour la durée de la session.
                 $_SESSION['user_id'] = $row['user_id'];

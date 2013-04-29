@@ -1,9 +1,13 @@
 <?php
 
-require_once 'config.php';
+include_once(dirname(__FILE__) . '/config.php');
 
 class Database {
 
+    /**
+     * Retourne une connexion à la base de données.
+     * @return resource
+     */
     public static function getConnection() {
 
 		return odbc_connect(

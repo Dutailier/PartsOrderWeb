@@ -1,4 +1,4 @@
-<?php require_once 'authentication.php' ?>
+<?php require_once(dirname(__FILE__) . '/authentication.php'); ?>
 
 <div id="header-band">
     <div id="header-wrapper">

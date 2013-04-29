@@ -3,7 +3,7 @@
     margin: 20px auto;
 }
 
-#frmSerialGlider > label {
+#frmSerialGlider > p > label {
     margin-right: 5px;
     font-weight: bold;
 }
@@ -68,7 +68,7 @@
     overflow: hidden;
 }
 
-#partTypes > div.partType > div.details > span.quantity {
+#partTypes > div.partType > div.buttons > span.quantity {
     display: block;
     font-size: 1.5em;
     font-weight: bold;

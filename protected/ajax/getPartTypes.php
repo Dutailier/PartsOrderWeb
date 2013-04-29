@@ -1,7 +1,7 @@
 <?php
 
-require_once 'database.php';
-require_once 'cart.php';
+include_once(dirname(__FILE__) . '/../libs/database.php');
+include_once(dirname(__FILE__) . '/../libs/cart.php');
 
 if (empty($_GET['category_id']) || empty($_GET['serial_glider'])) {
     $data['success'] = false;
