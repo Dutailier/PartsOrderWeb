@@ -31,7 +31,7 @@ function login() {
             "password": $txtPassword.val()
         };
 
-        $.post('protected/ajax/tryLogin.php', credentials)
+        $.post('protected/ajax/account/tryLogin.php', credentials)
             .done(function (data) {
 
                 // Vérifie que les propriétés de l'objet JSON ont bien été créées et

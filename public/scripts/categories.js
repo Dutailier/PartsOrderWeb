@@ -4,7 +4,7 @@ $(document).on('click', 'div.category', function () {
 
 $(document).ready(function () {
 
-    $.get('protected/ajax/getCategories.php')
+    $.get('protected/ajax/categories/getCategories.php')
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créées et

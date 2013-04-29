@@ -1,7 +1,7 @@
 <?php
 
-include_once(dirname(__FILE__) . '/../libs/cart.php');
-include_once(dirname(__FILE__) . '/../libs/part.php');
+include_once(dirname(__FILE__) . '/../../libs/cart.php');
+include_once(dirname(__FILE__) . '/../../libs/part.php');
 
 $cart = Cart::getAll();
 $max = count($cart);

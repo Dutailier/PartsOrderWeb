@@ -42,6 +42,7 @@ label.serial {
 }
 
 div.buttons {
+    margin-top: 4px;
     float: right;
     display: inline-block;
     overflow: hidden; /* clearfix */

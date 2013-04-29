@@ -13,7 +13,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'GET',
-            url: 'protected/ajax/addPartToCart.php',
+            url: 'protected/ajax/cart/addPartToCart.php',
             data: parameters,
             dataType: 'json',
             success: function (data) {
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'GET',
-            url: 'protected/ajax/removePartFromCart.php',
+            url: 'protected/ajax/cart/removePartFromCart.php',
             data: parameters,
             dataType: 'json',
             success: function (data) {
@@ -127,7 +127,7 @@ function validSerialGlider() {
 
         $.ajax({
             type: 'GET',
-            url: 'protected/ajax/getPartTypes.php',
+            url: 'protected/ajax/partTypes/getPartTypes.php',
             data: parameters,
             dataType: 'json',
             success: function (data) {

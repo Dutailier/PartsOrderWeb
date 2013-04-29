@@ -1,6 +1,6 @@
 <?php
 
-include_once(dirname(__FILE__) . '/../libs/database.php');
+include_once(dirname(__FILE__) . '/../../libs/database.php');
 
 // Vérifie si les informations ont bien été passées.
 if (empty($_POST['username']) || empty($_POST['password'])) {

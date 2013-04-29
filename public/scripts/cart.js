@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $.get('protected/ajax/getAllPartFromCart.php')
+    $.get('protected/ajax/cart/getAllPartFromCart.php')
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créées et
@@ -78,7 +78,7 @@ $(document).on('click', '.addCart', function () {
         'serial': $part.find('label.serial').text()
     };
 
-    $.get('protected/ajax/addPartToCart.php', parameters)
+    $.get('protected/ajax/cart/addPartToCart.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et
@@ -114,7 +114,7 @@ $(document).on('click', '.removeCart', function () {
         'serial': $part.find('label.serial').text()
     };
 
-    $.get('protected/ajax/removePartFromCart.php', parameters)
+    $.get('protected/ajax/cart/removePartFromCart.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et

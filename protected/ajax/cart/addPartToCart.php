@@ -1,7 +1,7 @@
 <?php
 
-include_once(dirname(__FILE__) . '/../libs/cart.php');
-include_once(dirname(__FILE__) . '/../libs/part.php');
+include_once(dirname(__FILE__) . '/../../libs/cart.php');
+include_once(dirname(__FILE__) . '/../../libs/part.php');
 
 if (empty($_GET['type']) || empty($_GET['serial']) || empty($_GET['name'])) {
     $data['success'] = false;
@@ -13,12 +13,12 @@ if (empty($_GET['type']) || empty($_GET['serial']) || empty($_GET['name'])) {
 
     // Vérifie que la quantité avant d'avoir ajouté le type de pièce
     // est inférieure à la quantité après.
-    if (Cart::getQuantity($part) > ($qty = Cart::Remove($part))) {
+    if (Cart::getQuantity($part) < ($qty = Cart::Add($part))) {
         $data['success'] = true;
         $data['quantity'] = $qty;
     } else {
         $data['success'] = false;
-        $data['message'] = 'Unable to remove the part form cart.';
+        $data['message'] = 'Unable to add the part to the cart.';
     }
 }
 

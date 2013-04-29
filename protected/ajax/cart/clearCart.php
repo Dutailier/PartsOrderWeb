@@ -1,6 +1,6 @@
 <?php
 
-include_once(dirname(__FILE__) . '/../libs/cart.php');
+include_once(dirname(__FILE__) . '/../../libs/cart.php');
 
 Cart::Clear();
 
