@@ -47,7 +47,7 @@ if (!isAuthenticated()) {
 </div>
 
 <!-- Scripts. -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="public/scripts/partTypes.js"></script>
 <!-- Fin -->
 </body>

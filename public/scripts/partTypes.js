@@ -1,84 +1,73 @@
-$(document).ready(function () {
+$(document).on('click', 'input.addCart', function () {
+    //Récupère le partType sélectionné.
+    var $partType = $(this).closest('div.partType');
 
-    $('input.addCart').live('click', function () {
+    var parameters = {
+        "type": $partType.data('id'),
+        "name": $partType.find('span.name').text(),
+        "serial": serial
+    };
 
-        // Récupère le partType sélectionné.
-        var $partType = $(this).closest('div.partType');
+    $.get('protected/ajax/cart/addPartToCart.php', parameters)
+        .done(function (data) {
 
-        var parameters = {
-            "type": $partType.data('id'),
-            "name": $partType.find('span.name').text(),
-            "serial": serial
-        };
+            // Vérifie que les propriétés de l'objet JSON ont bien été créés et
+            // vérifie si la requête fut un succès.
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('quantity')) {
 
-        $.ajax({
-            type: 'GET',
-            url: 'protected/ajax/cart/addPartToCart.php',
-            data: parameters,
-            dataType: 'json',
-            success: function (data) {
+                // Met à jour à quantité de la pièce et ses bouttons.
+                updatePartType($partType, data['quantity']);
 
-                // Vérifie que les propriétés de l'objet JSON ont bien été créés et
-                // vérifie si la requête fut un succès.
-                if (data.hasOwnProperty('success') &&
-                    data['success'] &&
-                    data.hasOwnProperty('quantity')) {
-                    updatePartType(data['quantity'], $partType.find('.buttons'));
+                // Vérifie que la propriété de l'objet JSON a bien été créée.
+            } else if (data.hasOwnProperty('message')) {
 
-                    // Vérifie que la propriété de l'objet JSON a bien été créée.
-                } else if (data.hasOwnProperty('message')) {
-
-                    // Affiche un message d'erreur expliquant l'échec de la requête.
-                    alert(data['message']);
-                } else {
-                    alert('Communication with the server failed.');
-                }
-            },
-            error: function () {
+                // Affiche un message d'erreur expliquant l'échec de la requête.
+                alert(data['message']);
+            } else {
                 alert('Communication with the server failed.');
             }
-        });
-    });
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+});
 
-    $('input.removeCart').live('click', function () {
+$(document).on('click', 'input.removeCart', function () {
+    // Récupère le partType sélectionné.
+    var $partType = $(this).closest('div.partType');
 
-        // Récupère le partType sélectionné.
-        var $partType = $(this).closest('div.partType');
+    var parameters = {
+        "type": $partType.data('id'),
+        "name": $partType.find('span.name').text(),
+        "serial": serial
+    };
 
-        var parameters = {
-            "type": $partType.data('id'),
-            "name": $partType.find('span.name').text(),
-            "serial": serial
-        };
+    $.get('protected/ajax/cart/removePartFromCart.php', parameters)
+        .done(function (data) {
 
-        $.ajax({
-            type: 'GET',
-            url: 'protected/ajax/cart/removePartFromCart.php',
-            data: parameters,
-            dataType: 'json',
-            success: function (data) {
+            // Vérifie que les propriétés de l'objet JSON ont bien été créés et
+            // vérifie si la requête fut un succès.
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('quantity')) {
 
-                // Vérifie que les propriétés de l'objet JSON ont bien été créés et
-                // vérifie si la requête fut un succès.
-                if (data.hasOwnProperty('success') &&
-                    data['success'] &&
-                    data.hasOwnProperty('quantity')) {
-                    updatePartType(data['quantity'], $partType.find('.buttons'));
+                // Met à jour à quantité de la pièce et ses bouttons.
+                updatePartType($partType, data['quantity']);
 
-                    // Vérifie que la propriété de l'objet JSON a bien été créée.
-                } else if (data.hasOwnProperty('message')) {
+                // Vérifie que la propriété de l'objet JSON a bien été créée.
+            } else if (data.hasOwnProperty('message')) {
 
-                    // Affiche un message d'erreur expliquant l'échec de la requête.
-                    alert(data['message']);
-                } else {
-                    alert('Communication with the server failed.');
-                }
-            },
-            error: function () {
+                // Affiche un message d'erreur expliquant l'échec de la requête.
+                alert(data['message']);
+            } else {
                 alert('Communication with the server failed.');
             }
-        });
-    });
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
 });
 
 
@@ -93,9 +82,6 @@ var serial = '';
 function validSerialGlider() {
     // Récupère les champs à valider.
     var txtSerialGlider = $('#txtSerialGlider');
-
-    // Récupère les valeurs passées en GET.
-    var $_GET = populateGet();
 
     // Crée une expression régulière à comparée.
     var serialGliderRegex = /^\d{11}$/;
@@ -122,15 +108,11 @@ function validSerialGlider() {
     if (isValid) {
         var parameters = {
             "serial": txtSerialGlider.val(),
-            "category_id": $_GET['category_id']
+            "category_id": $.QueryString['category_id']
         };
 
-        $.ajax({
-            type: 'GET',
-            url: 'protected/ajax/partTypes/getPartTypes.php',
-            data: parameters,
-            dataType: 'json',
-            success: function (data) {
+        $.get('protected/ajax/partTypes/getPartTypes.php', parameters)
+            .done(function (data) {
 
                 // Vérifie que les propriétés de l'objet JSON ont bien été créés et
                 // vérifié si la requête fut un succès.
@@ -165,11 +147,10 @@ function validSerialGlider() {
                 } else {
                     alert('Communication with the server failed.');
                 }
-            },
-            error: function () {
+            })
+            .fail(function () {
                 alert('Communication with the server failed.');
-            }
-        });
+            })
 
     } else {
         txtSerialGlider.focus();
@@ -188,9 +169,9 @@ function validSerialGlider() {
  */
 function addPartType(id, name, description, quantity) {
 
-    var partTypes = $('#partTypes');
+    var $partType = $('#partTypes');
     // Ajout du type de pièce.
-    partTypes.append(
+    $partType.append(
         '<div class="partType" data-id="' + id + '">' +
             '<div class="details">' +
             '<span class="name">' + name + '</span>' +
@@ -203,15 +184,17 @@ function addPartType(id, name, description, quantity) {
     );
 
     // Ajoute les bouttons appropriés au dernier éléments ajouté.
-    updatePartType(quantity, partTypes.children('.partType').last().find('.buttons'));
+    updatePartType($partType, quantity);
 }
 
 /**
  * Ajoute les bouttons appropriés à l'éléments spécifié.
+ * @param $partType
  * @param quantity
- * @param $buttons
  */
-function updatePartType(quantity, $buttons) {
+function updatePartType($partType, quantity) {
+
+    var $buttons = $partType.find('div.buttons');
 
     // Change la quantité affichée.
     $buttons.children('.quantity').text(quantity);
@@ -228,17 +211,20 @@ function updatePartType(quantity, $buttons) {
 
 
 /**
- * Retourne un tableau contenant les paramètres passés en GET.
- * @returns {{}}
+ * Permet d'obtenir les valeurs passés en GET.
  */
-function populateGet() {
-    var obj = {},
-        params = location.search.slice(1).split('&');
+(function ($) {
+    $.QueryString = (function (string) {
 
-    for (var i = 0, len = params.length; i < len; i++) {
-        var keyVal = params[i].split('=');
-        obj[decodeURIComponent(keyVal[0])] = decodeURIComponent(keyVal[1]);
-    }
+        if (string == "") return {};
 
-    return obj;
-}
+        var params = {};
+
+        for (var i = 0; i < string.length; ++i) {
+            var p = string[i].split('=');
+            if (p.length != 2) continue;
+            params[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return params;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);
