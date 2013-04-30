@@ -81,8 +81,5 @@ class User
 
         // Détruit la session en cours.
         session_destroy();
-
-        // Redirige l'utilisateur à la page de connexion.
-        header('location: index.php');
     }
 }

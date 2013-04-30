@@ -1,5 +1,5 @@
 $(document).on('click', 'div.category', function () {
-    window.location = 'partTypes.php?category_id=' + $(this).data('category_id');
+    window.location = 'partTypes.php?category=' + $(this).data('category');
 });
 
 $(document).ready(function () {
@@ -18,13 +18,13 @@ $(document).ready(function () {
 
                     // Vérifie que les propriétés de l'objet JSON ont bien été créés.
                     if (data['categories'].hasOwnProperty(i) &&
-                        data['categories'][i].hasOwnProperty('category_id') &&
-                        data['categories'][i].hasOwnProperty('category_name')) {
+                        data['categories'][i].hasOwnProperty('id') &&
+                        data['categories'][i].hasOwnProperty('name')) {
 
                         // Ajouter la catégorie à la liste.
                         add_category(
-                            data['categories'][i]['category_id'],
-                            data['categories'][i]['category_name']);
+                            data['categories'][i]['id'],
+                            data['categories'][i]['name']);
                     }
                 }
 
@@ -49,7 +49,7 @@ $(document).ready(function () {
  */
 function add_category(id, name) {
     $('#categories').append(
-        '<div class="category" data-category_id="' + id + '" >' +
+        '<div class="category" data-category="' + id + '" >' +
             '<span>' + name + '</span>' +
             '<img src="../img/categories/' + id + '.png" />' +
         '</div>'

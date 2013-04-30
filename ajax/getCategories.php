@@ -1,35 +1,17 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/database.php');
+include_once(ROOT . 'libs/category.php');
 
-// Récupère la connexion à la base de données.
-$conn = database::getConnection();
+try {
+    $data['categories'] = Category::getCategories();
+    $data['success'] = true;
 
-if (empty($conn)) {
+} catch (Exception $e) {
+
+    // Si la requête échoué, retourne un message d'erreur.
     $data['success'] = false;
-    $data['message'] = 'The connection to the database failed.';
-} else {
-
-    // Exécute la procédure stockée.
-    $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[getCategories]}');
-
-    if (empty($result)) {
-        $data['success'] = false;
-        $data['message'] = 'The execution of the query failed.';
-    } else {
-
-        // La requête est un succès.
-        $data['success'] = true;
-
-        $i = 0;
-        // Inscrire chaque ligne dans l'objet JSON qui sera retourné.
-        while (odbc_fetch_row($result)) {
-            $data['categories'][$i]['category_id'] = odbc_result($result, 'category_id');
-            $data['categories'][$i]['category_name'] = odbc_result($result, 'category_name');
-            $i++;
-        }
-    }
+    $data['message'] = $e->getMessage();
 }
 
 // Indique que le contenu de la page affichera un objet JSON.

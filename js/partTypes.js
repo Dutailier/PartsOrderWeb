@@ -108,7 +108,7 @@ function validSerialGlider() {
     if (isValid) {
         var parameters = {
             "serial": txtSerialGlider.val(),
-            "category_id": $.QueryString['category_id']
+            "category": $.QueryString['category']
         };
 
         $.get('ajax/getPartTypes.php', parameters)
@@ -118,24 +118,24 @@ function validSerialGlider() {
                 // vérifié si la requête fut un succès.
                 if (data.hasOwnProperty('success') &&
                     data['success'] &&
-                    data.hasOwnProperty('partTypes')) {
+                    data.hasOwnProperty('types')) {
 
                     // Parcours tous les types de pièce retournés par la requête.
-                    for (var i in data['partTypes']) {
+                    for (var i in data['types']) {
 
                         // // Vérifie que les propriétés de l'objet JSON ont bien été créés.
-                        if (data['partTypes'].hasOwnProperty(i) &&
-                            data['partTypes'][i].hasOwnProperty('id') &&
-                            data['partTypes'][i].hasOwnProperty('name') &&
-                            data['partTypes'][i].hasOwnProperty('description') &&
-                            data['partTypes'][i].hasOwnProperty('quantity')) {
+                        if (data['types'].hasOwnProperty(i) &&
+                            data['types'][i].hasOwnProperty('id') &&
+                            data['types'][i].hasOwnProperty('name') &&
+                            data['types'][i].hasOwnProperty('description') &&
+                            data['types'][i].hasOwnProperty('quantity')) {
 
                             // Ajoute le type de pièce à la liste.
                             addPartType(
-                                data['partTypes'][i]['id'],
-                                data['partTypes'][i]['name'],
-                                data['partTypes'][i]['description'],
-                                data['partTypes'][i]['quantity']);
+                                data['types'][i]['id'],
+                                data['types'][i]['name'],
+                                data['types'][i]['description'],
+                                data['types'][i]['quantity']);
                         }
                     }
 

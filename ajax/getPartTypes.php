@@ -1,52 +1,38 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/database.php');
+include_once(ROOT . 'libs/type.php');
 include_once(ROOT . 'libs/cart.php');
 include_once(ROOT . 'libs/part.php');
 
-if (empty($_GET['category_id']) || empty($_GET['serial'])) {
+
+if (empty($_GET['category']) || empty($_GET['serial'])) {
     $data['success'] = false;
     $data['message'] = 'A cateogry must be selected or a serial number must be entered.';
 } else {
 
-    // Récupère les informations passées en GET.
-    $serial = $_GET['serial'];
-    $category_id = $_GET['category_id'];
+    try {
+        $data['types'] = Type::getTypes($_GET['category']);
 
-    // Récupère la connexion à la base de données.
-    $conn = database::getConnection();
+        $max = count($data['types']);
 
-    if (empty($conn)) {
-        $data['success'] = false;
-        $data['message'] = 'The connection to the database failed.';
-    } else {
-
-        // Exécute la procédure stockée.
-        $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[getPartTypes]("' . $category_id . '")}');
-
-        if (empty($result)) {
-            $data['success'] = false;
-            $data['message'] = 'The execution of the query failed.';
-        } else {
-
-            // La requête est un succès.
-            $data['success'] = true;
-
-            $i = 0;
-            // Inscrire chaque ligne dans l'objet JSON qui sera retourné.
-            while (odbc_fetch_row($result)) {
-                $id = odbc_result($result, 'partType_id');
-                $name = odbc_result($result, 'partType_name');
-
-                $data['partTypes'][$i]['id'] = $id;
-                $data['partTypes'][$i]['name'] = $name;
-                $data['partTypes'][$i]['description'] = odbc_result($result, 'partType_description');
-
-                $data['partTypes'][$i]['quantity'] = Cart::getQuantity(new Part($id, $name, $serial));
-                $i++;
-            }
+        // Parcours tous les types de pièces afin d'y ajouté la quantité déjà commandé.
+        for ($i = 0; $i < $max; $i++) {
+            $data['types'][$i]['quantity'] =
+                Cart::getQuantity(new Part(
+                    $data['types'][$i]['id'],
+                    $data['types'][$i]['name'],
+                    $_GET['serial']));;
         }
+
+        // Confirme le succès de la requête.
+        $data['success'] = true;
+
+    } catch (Exception $e) {
+
+        // Si la requête échoué, retourne un message d'erreur.
+        $data['success'] = false;
+        $data['message'] = $e->getMessage();
     }
 }
 
