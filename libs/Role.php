@@ -106,7 +106,9 @@ class Role
                 throw new Exception('The execution of the query failed.');
             } else {
 
+                $roles = array();
                 $i = 0;
+
                 // Inscrire chaque ligne dans l'objet JSON qui sera retourné.
                 while (odbc_fetch_row($result)) {
                     $roles[$i]['id'] = odbc_result($result, 'id');

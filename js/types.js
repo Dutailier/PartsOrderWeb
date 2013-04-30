@@ -111,7 +111,7 @@ function validSerialGlider() {
             "category": $.QueryString['category']
         };
 
-        $.get('ajax/getPartTypes.php', parameters)
+        $.get('ajax/getTypes.php', parameters)
             .done(function (data) {
 
                 // Vérifie que les propriétés de l'objet JSON ont bien été créés et

@@ -21,6 +21,7 @@ class Type
                 throw new Exception('The execution of the query failed.');
             } else {
 
+                $types = array();
                 $i = 0;
                 // Inscrire chaque ligne dans l'objet JSON qui sera retourné.
                 while (odbc_fetch_row($result)) {

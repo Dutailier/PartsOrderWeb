@@ -66,6 +66,11 @@ $(document).ready(function () {
                     alert('Communication with the server failed.');
                 })
         });
+
+
+        $('#btnOrder').click(function(){
+
+        });
 });
 
 $(document).on('click', '.addCart', function () {
