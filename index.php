@@ -17,6 +17,7 @@ if (Account::isAuthenticated()) {
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
     <link type="text/css" rel="stylesheet" href="css/login.css"/>
     <!-- Fin -->
+
 </head>
 <body>
 <div id="wrapper">

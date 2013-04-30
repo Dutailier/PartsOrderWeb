@@ -1,5 +1,5 @@
 $(document).on('click', 'div.category', function () {
-    window.location = 'partTypes.php?category=' + $(this).data('category');
+    window.location = 'types.php?category=' + $(this).data('category');
 });
 
 $(document).ready(function () {

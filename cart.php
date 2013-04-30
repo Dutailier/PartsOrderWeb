@@ -16,7 +16,7 @@ if (!Account::isAuthenticated()) {
     <!-- Feuilles de style. -->
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
     <link type="text/css" rel="stylesheet" href="css/cart.css"/>
-    <link type="text/css" rel="stylesheet" href="css/shoppingButtons.css"/>
+    <link type="text/css" rel="stylesheet" href="css/buttons.css"/>
     <!-- Fin -->
 </head>
 <body>

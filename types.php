@@ -15,8 +15,8 @@ if (!Account::isAuthenticated()) {
 
     <!-- Feuilles de style. -->
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
-    <link type="text/css" rel="stylesheet" href="css/partTypes.css"/>
-    <link type="text/css" rel="stylesheet" href="css/shoppingButtons.css"/>
+    <link type="text/css" rel="stylesheet" href="css/type.css"/>
+    <link type="text/css" rel="stylesheet" href="css/buttons.css"/>
     <!-- Fin -->
 </head>
 <body>
@@ -49,7 +49,7 @@ if (!Account::isAuthenticated()) {
 
 <!-- Scripts. -->
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="js/partTypes.js"></script>
+<script src="js/types.js"></script>
 <!-- Fin -->
 </body>
 </html>
