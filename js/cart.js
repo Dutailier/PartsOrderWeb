@@ -42,7 +42,7 @@ $(document).ready(function () {
         })
 
         $('#btnClear').click(function() {
-            $.get('protected/ajax/clearCart.php')
+            $.get('ajax/clearCart.php')
                 .done(function (data) {
 
                     // Vérifie que les propriétés de l'objet JSON ont bien été créées et

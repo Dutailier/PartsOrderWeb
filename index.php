@@ -1,9 +1,9 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/user.php');
+include_once(ROOT . 'libs/account.php');
 
-if (User::isAuthenticated()) {
+if (Account::isAuthenticated()) {
     header('location: categories.php');
 }
 

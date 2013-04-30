@@ -8,7 +8,7 @@ class Category
     public static function getCategories()
     {
         // Récupère la connexion à la base de données.
-        $conn = database::getConnection();
+        $conn = Database::getConnection();
 
         if (empty($conn)) {
             throw new Exception('The connection to the database failed.');

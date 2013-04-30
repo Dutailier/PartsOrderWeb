@@ -1,7 +1,7 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/user.php');
+include_once(ROOT . 'libs/account.php');
 
 ?>
 
@@ -14,7 +14,7 @@ include_once(ROOT . 'libs/user.php');
                 <li><a href="categories.php">Home</a></li>
             <?php endif; ?>
 
-            <?php if (User::isAuthenticated()) : ?>
+            <?php if (Account::isAuthenticated()) : ?>
                 <li><a href="cart.php">Cart</a></li>
                 <li><a href="logout.php">Log out</a></li>
             <?php endif; ?>

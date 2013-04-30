@@ -1,7 +1,7 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/user.php');
+include_once(ROOT . 'libs/account.php');
 
 // Vérifie si les informations ont bien été passées.
 if (empty($_POST['username']) || empty($_POST['password'])) {
@@ -12,7 +12,7 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
 
     try {
         // Essaie de connecter l'utilisateur.
-        $data['success'] = User::TryLogin($_POST['username'], $_POST['password']);
+        $data['success'] = Account::TryLogin($_POST['username'], $_POST['password']);
     } catch (Exception $e) {
 
         // Si la connexion échoué, retourne un message d'erreur.
