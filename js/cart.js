@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $.get('ajax/getAllPartFromCart.php')
+    $.get('ajax/getPartsFromCart.php')
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créées et
@@ -41,36 +41,41 @@ $(document).ready(function () {
             alert('Communication with the server failed.');
         })
 
-        $('#btnClear').click(function() {
-            $.get('ajax/clearCart.php')
-                .done(function (data) {
+    $('#btnClear').click(function () {
+        $.get('ajax/clearCart.php')
+            .done(function (data) {
 
-                    // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-                    // vérifie si la requête fut un succès.
-                    if (data.hasOwnProperty('success') &&
-                        data['success']) {
+                // Vérifie que les propriétés de l'objet JSON ont bien été créées et
+                // vérifie si la requête fut un succès.
+                if (data.hasOwnProperty('success') &&
+                    data['success']) {
 
-                        // Rafraichi la page actuelle.
-                        window.location.reload();
+                    // Rafraichi la page actuelle.
+                    window.location.reload();
 
-                        // Vérifie que la propriété de l'objet JSON a bien été créée.
-                    } else if (data.hasOwnProperty('message')) {
+                    // Vérifie que la propriété de l'objet JSON a bien été créée.
+                } else if (data.hasOwnProperty('message')) {
 
-                        // Affiche un message d'erreur expliquant l'échec de la requête.
-                        alert(data['message']);
-                    } else {
-                        alert('Communication with the server failed.');
-                    }
-                })
-                .fail(function () {
+                    // Affiche un message d'erreur expliquant l'échec de la requête.
+                    alert(data['message']);
+                } else {
                     alert('Communication with the server failed.');
-                })
-        });
+                }
+            })
+            .fail(function () {
+                alert('Communication with the server failed.');
+            })
+    });
 
 
-        $('#btnOrder').click(function(){
+    $('#btnOrder').click(function () {
+        //Vérifie que des pièces sont présentement en commande.
+        if ($('#parts > div.part').length > 0) {
 
-        });
+            // Redirige l'utilisateur vers le formulaire de commande.
+            window.location = 'order.php';
+        }
+    });
 });
 
 $(document).on('click', '.addCart', function () {

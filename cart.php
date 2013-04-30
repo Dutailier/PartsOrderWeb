@@ -33,7 +33,7 @@ if (!Account::isAuthenticated()) {
 
         <!-- Sommaire des pièces commandées -->
         <form id="summary">
-            <input id="btnOrder" name="btnOrder" type="submit" value="order"/>
+            <input id="btnOrder" name="btnOrder" type="button" value="order"/>
             <a id="btnClear">clear</a>
         </form>
         <!-- Fin -->
