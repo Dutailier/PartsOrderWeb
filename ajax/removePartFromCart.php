@@ -1,7 +1,8 @@
 <?php
 
-include_once(dirname(__FILE__) . '/../../libs/cart.php');
-include_once(dirname(__FILE__) . '/../../libs/part.php');
+include_once('../config.php');
+include_once(ROOT . 'libs/cart.php');
+include_once(ROOT . 'libs/part.php');
 
 if (empty($_GET['type']) || empty($_GET['serial']) || empty($_GET['name'])) {
     $data['success'] = false;

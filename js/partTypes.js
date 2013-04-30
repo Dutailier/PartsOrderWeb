@@ -8,7 +8,7 @@ $(document).on('click', 'input.addCart', function () {
         "serial": serial
     };
 
-    $.get('protected/ajax/cart/addPartToCart.php', parameters)
+    $.get('ajax/addPartToCart.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et
@@ -44,7 +44,7 @@ $(document).on('click', 'input.removeCart', function () {
         "serial": serial
     };
 
-    $.get('protected/ajax/cart/removePartFromCart.php', parameters)
+    $.get('ajax/removePartFromCart.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et
@@ -111,7 +111,7 @@ function validSerialGlider() {
             "category_id": $.QueryString['category_id']
         };
 
-        $.get('protected/ajax/partTypes/getPartTypes.php', parameters)
+        $.get('ajax/getPartTypes.php', parameters)
             .done(function (data) {
 
                 // Vérifie que les propriétés de l'objet JSON ont bien été créés et

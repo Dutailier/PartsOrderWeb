@@ -4,7 +4,7 @@ $(document).on('click', 'div.category', function () {
 
 $(document).ready(function () {
 
-    $.get('protected/ajax/categories/getCategories.php')
+    $.get('ajax/getCategories.php')
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créées et
@@ -51,7 +51,7 @@ function add_category(id, name) {
     $('#categories').append(
         '<div class="category" data-category_id="' + id + '" >' +
             '<span>' + name + '</span>' +
-            '<img src="../images/categories/' + id + '.png" />' +
+            '<img src="../img/categories/' + id + '.png" />' +
         '</div>'
     )
 }

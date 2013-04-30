@@ -1,6 +1,7 @@
 <?php
 
-include_once(dirname(__FILE__) . '/../../libs/cart.php');
+include_once('../config.php');
+include_once(ROOT . 'libs/cart.php');
 
 Cart::Clear();
 

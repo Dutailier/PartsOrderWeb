@@ -1,6 +1,7 @@
 <?php
 
-include_once(dirname(__FILE__) . '/item.php');
+include_once('config.php');
+include_once(ROOT . 'libs/item.php');
 
 /**
  * Class Part

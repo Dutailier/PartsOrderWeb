@@ -1,8 +1,9 @@
 <?php
 
-include_once(dirname(__FILE__) . '/../../libs/database.php');
-include_once(dirname(__FILE__) . '/../../libs/cart.php');
-include_once(dirname(__FILE__) . '/../../libs/part.php');
+include_once('../config.php');
+include_once(ROOT . 'libs/database.php');
+include_once(ROOT . 'libs/cart.php');
+include_once(ROOT . 'libs/part.php');
 
 if (empty($_GET['category_id']) || empty($_GET['serial'])) {
     $data['success'] = false;

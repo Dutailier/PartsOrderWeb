@@ -1,6 +1,7 @@
 <?php
 
-include_once(dirname(__FILE__) . '/../../libs/database.php');
+include_once('../config.php');
+include_once(ROOT . 'libs/database.php');
 
 // Récupère la connexion à la base de données.
 $conn = database::getConnection();

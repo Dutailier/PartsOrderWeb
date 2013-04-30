@@ -1,8 +1,9 @@
 <?php
 
-include_once(dirname(__FILE__) . '/authentication.php');
+include_once('config.php');
+include_once(ROOT . 'libs/user.php');
 
-if (!isAuthenticated()) {
+if (!User::isAuthenticated()) {
     header('location: index.php');
 }
 
@@ -13,14 +14,14 @@ if (!isAuthenticated()) {
     <title>BabiesRus Parts Order - Parts</title>
 
     <!-- Feuilles de style. -->
-    <link type="text/css" rel="stylesheet" href="public/css/default.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/cart.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/shoppingButtons.css"/>
+    <link type="text/css" rel="stylesheet" href="css/default.css"/>
+    <link type="text/css" rel="stylesheet" href="css/cart.css"/>
+    <link type="text/css" rel="stylesheet" href="css/shoppingButtons.css"/>
     <!-- Fin -->
 </head>
 <body>
 <div id="wrapper">
-    <?php include_once(dirname(__FILE__) . '/_header.php'); ?>
+    <?php include_once(ROOT . '_header.php'); ?>
     <div id="content">
 
         <h1>Parts ordered</h1>
@@ -38,12 +39,12 @@ if (!isAuthenticated()) {
         <!-- Fin -->
 
     </div>
-    <?php include_once(dirname(__FILE__) . '/_footer.php'); ?>
+    <?php include_once(ROOT . '_footer.php'); ?>
 </div>
 
 <!-- Scripts. -->
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="public/scripts/cart.js"></script>
+<script src="js/cart.js"></script>
 <!-- Fin -->
 </body>
 </html>

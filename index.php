@@ -1,8 +1,9 @@
 <?php
 
-include_once(dirname(__FILE__) . '/authentication.php');
+include_once('config.php');
+include_once(ROOT . 'libs/user.php');
 
-if (isAuthenticated()) {
+if (User::isAuthenticated()) {
     header('location: categories.php');
 }
 
@@ -13,13 +14,13 @@ if (isAuthenticated()) {
     <title>BabiesRus Parts Order - Home</title>
 
     <!-- Feuilles de style. -->
-    <link type="text/css" rel="stylesheet" href="public/css/default.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/login.css"/>
+    <link type="text/css" rel="stylesheet" href="css/default.css"/>
+    <link type="text/css" rel="stylesheet" href="css/login.css"/>
     <!-- Fin -->
 </head>
 <body>
 <div id="wrapper">
-    <?php include_once(dirname(__FILE__) . '/_header.php'); ?>
+    <?php include_once(ROOT . '_header.php'); ?>
     <div id="content">
 
         <!-- Formulaire de connexion. -->
@@ -45,12 +46,12 @@ if (isAuthenticated()) {
         <!-- Fin -->
 
     </div>
-    <?php include_once(dirname(__FILE__) . '/_footer.php'); ?>
+    <?php include_once(ROOT . '_footer.php'); ?>
 </div>
 
 <!-- Scripts. -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="public/scripts/login.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="js/login.js"></script>
 <!-- Fin -->
 
 </body>

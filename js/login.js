@@ -31,28 +31,16 @@ function login() {
             "password": $txtPassword.val()
         };
 
-        $.post('protected/ajax/account/tryLogin.php', credentials)
+        $.post('ajax/tryLogin.php', credentials)
             .done(function (data) {
 
                 // Vérifie que les propriétés de l'objet JSON ont bien été créées et
                 // vérifie si la requête fut un succès.
                 if (data.hasOwnProperty('success') &&
-                    data['success'] &&
-                    data.hasOwnProperty('role_name')) {
+                    data['success']) {
 
-                    // Redirige l'utilisateur selon son rôle.
-                    switch (data['role_name']) {
-
-                        // L'utilisateur est administrateur.
-                        case 'administrateur' :
-                            window.location = ' categories.php';
-                            break;
-
-                        // Tous autres utilisateurs.
-                        case 'retailer':
-                        default:
-                            window.location = 'categories.php';
-                    }
+                    // Redirige l'utilisateur.
+                    window.location = 'categories.php';
 
                     // Vérifie que la propriété de l'objet JSON a bien été créée.
                 } else if (data.hasOwnProperty('message')) {
