@@ -154,12 +154,12 @@ class Cart
             return array();
         }
 
-        $max = count($_SESSION['items']);
+        $count = count($_SESSION['items']);
         $cart = array();
 
         // Parcours tous les items du panier d'achats afin de retourner les items
         // qui n'ont pas une quantité nulle.
-        for ($i = 0, $j = 0; $i < $max; $i++) {
+        for ($i = 0, $j = 0; $i < $count; $i++) {
             if (!empty($_SESSION['quantities'][$i]) > 0) {
                 $cart[$j]['item'] = $_SESSION['items'][$i];
                 $cart[$j]['quantity'] = $_SESSION['quantities'][$i];
@@ -193,15 +193,15 @@ class Cart
      */
     private static function getIndex(Item $item)
     {
-        $max = count($_SESSION['items']);
+        $count = count($_SESSION['items']);
 
         // Parcours tous les items du panier d'achats afin de trouver
         // l'index de l'item.
-        for ($i = 0; $i < $max; $i++) {
+        for ($i = 0; $i < $count; $i++) {
             if ($_SESSION['items'][$i]->Compare($item)) {
                 return $i;
             }
         }
-        return $max;
+        return $count;
     }
 }

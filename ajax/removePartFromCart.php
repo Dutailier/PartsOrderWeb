@@ -3,23 +3,30 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/cart.php');
 include_once(ROOT . 'libs/part.php');
+include_once(ROOT . 'libs/user.php');
 
-if (empty($_GET['type']) || empty($_GET['serial']) || empty($_GET['name'])) {
+if (!User::isAuthenticated()) {
     $data['success'] = false;
-    $data['message'] = 'A part must be selected or a serial number must be entered.';
+    $data['message'] = 'You must be authenticated.';
 } else {
 
-    // Crée une pièce à partir des informations passés en GET.
-    $part = new Part($_GET['type'], $_GET['name'], $_GET['serial']);
-
-    // Vérifie que la quantité avant d'avoir ajouté le type de pièce
-    // est inférieure à la quantité après.
-    if (Cart::getQuantity($part) > ($qty = Cart::Remove($part))) {
-        $data['success'] = true;
-        $data['quantity'] = $qty;
-    } else {
+    if (empty($_GET['type']) || empty($_GET['serial']) || empty($_GET['name'])) {
         $data['success'] = false;
-        $data['message'] = 'Unable to remove the part form cart.';
+        $data['message'] = 'A part must be selected or a serial number must be entered.';
+    } else {
+
+        // Crée une pièce à partir des informations passés en GET.
+        $part = new Part($_GET['type'], $_GET['name'], $_GET['serial']);
+
+        // Vérifie que la quantité avant d'avoir ajouté le type de pièce
+        // est inférieure à la quantité après.
+        if (Cart::getQuantity($part) > ($qty = Cart::Remove($part))) {
+            $data['success'] = true;
+            $data['quantity'] = $qty;
+        } else {
+            $data['success'] = false;
+            $data['message'] = 'Unable to remove the part form cart.';
+        }
     }
 }
 

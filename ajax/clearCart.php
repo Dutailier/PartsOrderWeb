@@ -2,11 +2,19 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/cart.php');
+include_once(ROOT . 'libs/user.php');
 
-Cart::Clear();
+if (!User::isAuthenticated()) {
+    $data['success'] = false;
+    $data['message'] = 'You must be authenticated.';
+} else {
 
-// Confirme le succès de la requête.
-$data['success'] = true;
+    // Efface le contenu du panier d'achats.
+    Cart::Clear();
+
+    // Confirme le succès de la requête.
+    $data['success'] = true;
+}
 
 // Indique que le contenu de la page affichera un objet JSON.
 header('Content-type: application/json');

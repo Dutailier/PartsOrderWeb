@@ -4,35 +4,41 @@ include_once('../config.php');
 include_once(ROOT . 'libs/type.php');
 include_once(ROOT . 'libs/cart.php');
 include_once(ROOT . 'libs/part.php');
+include_once(ROOT . 'libs/user.php');
 
-
-if (empty($_GET['category']) || empty($_GET['serial'])) {
+if (!User::isAuthenticated()) {
     $data['success'] = false;
-    $data['message'] = 'A cateogry must be selected or a serial number must be entered.';
+    $data['message'] = 'You must be authenticated.';
 } else {
 
-    try {
-        $data['types'] = Type::getTypes($_GET['category']);
-
-        $max = count($data['types']);
-
-        // Parcours tous les types de pièces afin d'y ajouté la quantité déjà commandé.
-        for ($i = 0; $i < $max; $i++) {
-            $data['types'][$i]['quantity'] =
-                Cart::getQuantity(new Part(
-                    $data['types'][$i]['id'],
-                    $data['types'][$i]['name'],
-                    $_GET['serial']));;
-        }
-
-        // Confirme le succès de la requête.
-        $data['success'] = true;
-
-    } catch (Exception $e) {
-
-        // Si la requête échoué, retourne un message d'erreur.
+    if (empty($_GET['category']) || empty($_GET['serial'])) {
         $data['success'] = false;
-        $data['message'] = $e->getMessage();
+        $data['message'] = 'A cateogry must be selected or a serial number must be entered.';
+    } else {
+
+        try {
+            $data['types'] = Type::getTypes($_GET['category']);
+
+            $count = count($data['types']);
+
+            // Parcours tous les types de pièces afin d'y ajouté la quantité déjà commandé.
+            for ($i = 0; $i < $count; $i++) {
+                $data['types'][$i]['quantity'] =
+                    Cart::getQuantity(new Part(
+                        $data['types'][$i]['id'],
+                        $data['types'][$i]['name'],
+                        $_GET['serial']));;
+            }
+
+            // Confirme le succès de la requête.
+            $data['success'] = true;
+
+        } catch (Exception $e) {
+
+            // Si la requête échoué, retourne un message d'erreur.
+            $data['success'] = false;
+            $data['message'] = $e->getMessage();
+        }
     }
 }
 
