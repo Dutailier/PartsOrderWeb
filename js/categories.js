@@ -22,7 +22,7 @@ $(document).ready(function () {
                         data['categories'][i].hasOwnProperty('name')) {
 
                         // Ajouter la catégorie à la liste.
-                        add_category(
+                        addCategory(
                             data['categories'][i]['id'],
                             data['categories'][i]['name']);
                     }
@@ -47,7 +47,7 @@ $(document).ready(function () {
  * @param id
  * @param name
  */
-function add_category(id, name) {
+function addCategory(id, name) {
     $('#categories').append(
         '<div class="category" data-category="' + id + '" >' +
             '<span>' + name + '</span>' +

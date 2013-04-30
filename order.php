@@ -72,8 +72,8 @@ if (Cart::isEmpty()) {
                 </p>
 
                 <p>
-                    <label for="state">State</label>
-                    <select id="state" name="state"></select>
+                    <label for="states">State</label>
+                    <select id="states" name="states"></select>
                 </p>
 
                 <p>
@@ -82,8 +82,8 @@ if (Cart::isEmpty()) {
                 </p>
 
                 <p>
-                    <label for="country">Country</label>
-                    <select id="country" name="country"></select>
+                    <label for="countries">Country</label>
+                    <select id="countries" name="countries"></select>
                 </p>
             </fieldset>
 
@@ -99,7 +99,7 @@ if (Cart::isEmpty()) {
 
 <!-- Scripts. -->
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="public/scripts/order.js"></script>
+<script src="js/order.js"></script>
 <!-- Fin -->
 
 </body>
