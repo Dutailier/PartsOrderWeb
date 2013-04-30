@@ -14,7 +14,7 @@ if (!Account::isAuthenticated()) {
     <title>BabiesRus Parts Order - Order</title>
 
     <!-- Feuilles de style. -->
-    <link type="text/css" rel="stylesheet" href="css/default.css"/>
+    <link type="text/css" rel="stylesheet" href="css/layout.css"/>
     <link type="text/css" rel="stylesheet" href="public/css/order.css"/>
     <!-- Fin -->
 </head>
