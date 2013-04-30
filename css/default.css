@@ -107,7 +107,7 @@ body {
     color: white;
 }
 
-/* Global */
+/* Default */
 
 label.warning {
     color: red;
@@ -115,4 +115,8 @@ label.warning {
 
 input.warning {
     border: 2px solid red;
+}
+
+input, textarea, select {
+    padding: 8px;
 }

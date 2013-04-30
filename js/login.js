@@ -40,7 +40,7 @@ function login() {
                     data['success']) {
 
                     // Redirige l'utilisateur.
-                    window.location = 'categories.php';
+                    window.location = 'catalog.php';
 
                     // Vérifie que la propriété de l'objet JSON a bien été créée.
                 } else if (data.hasOwnProperty('message')) {

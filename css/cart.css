@@ -53,7 +53,7 @@ div.buttons {
     margin-left: 10px;
 }
 
-#summary * {
+#summary > * {
     padding: 8px;
     margin: 5px;
     float: right;

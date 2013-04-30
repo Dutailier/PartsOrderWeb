@@ -14,10 +14,11 @@ if (!Account::isAuthenticated()) {
     <title>BabiesRus Parts Order - Parts</title>
 
     <!-- Feuilles de style. -->
-    <link type="text/css" rel="stylesheet" href="css/layout.css"/>
+    <link type="text/css" rel="stylesheet" href="css/default.css"/>
     <link type="text/css" rel="stylesheet" href="css/cart.css"/>
     <link type="text/css" rel="stylesheet" href="css/buttons.css"/>
     <!-- Fin -->
+
 </head>
 <body>
 <div id="wrapper">
@@ -46,5 +47,6 @@ if (!Account::isAuthenticated()) {
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="js/cart.js"></script>
 <!-- Fin -->
+
 </body>
 </html>

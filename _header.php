@@ -11,12 +11,12 @@ include_once(ROOT . 'libs/account.php');
         <ul id="menu">
 
             <?php if (basename($_SERVER['PHP_SELF']) != 'index.php') : ?>
-                <li><a href="categories.php">Home</a></li>
+                <li><a href="catalog.php">Home</a></li>
             <?php endif; ?>
 
             <?php if (Account::isAuthenticated()) : ?>
                 <li><a href="cart.php">Cart</a></li>
-                <li><a href="logout.php">Log out</a></li>
+                <li><a href="logout.php">Logout</a></li>
             <?php endif; ?>
         </ul>
         <img id="logo-babiesRus" src="img/babiesrus.png">

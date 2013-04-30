@@ -121,24 +121,39 @@ class Cart
             session_start();
         }
 
-        // Vérifie que les tableaux ont bien été instancié,
-        // sinon on retourne faux pour signaler l'erreur.
         if (!isset($_SESSION['items'])) {
-            return false;
+            return 0;
         }
 
         $i = Cart::getIndex($item);
 
-        // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
-        // l'item y est déjà contenu, alos nous retournons sa quantité. Autrement,
-        // on retourne faux pour signaler l'erreur.
         if ($i < count($_SESSION['items'])) {
             $_SESSION['quantities'][$i] = $qty;
 
-            return true;
+            return $_SESSION['quantities'][$i];
         } else {
-            return false;
+            return 0;
         }
+    }
+
+    /**
+     * Retourne vrai si le panier est vide.
+     * @return bool
+     */
+    public static function isEmpty() {
+
+        // Démarre une session si celle-ci n'est pas déjà active.
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        // Vérifie que les tableaux ont bien été instancié,
+        // sinon c'est que le panier est vide.
+        if (!isset($_SESSION['items'])) {
+            return true;
+        }
+
+        return array_sum($_SESSION['quantities']) <= 0;
     }
 
     public static function getAll()
