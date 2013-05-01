@@ -14,7 +14,7 @@ class Cart
     public static function Add(IComparable $obj)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
-        if (!isset($_SESSION)) {
+        if(session_id() == '') {
             session_start();
         }
 
@@ -49,7 +49,7 @@ class Cart
     public static function Remove(IComparable $obj)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
-        if (!isset($_SESSION)) {
+        if(session_id() == '') {
             session_start();
         }
 
@@ -86,7 +86,7 @@ class Cart
     public static function getQuantity(IComparable $obj)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
-        if (!isset($_SESSION)) {
+        if(session_id() == '') {
             session_start();
         }
 
@@ -117,7 +117,7 @@ class Cart
     public static function setQuantity(IComparable $obj, $qty)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
-        if (!isset($_SESSION)) {
+        if(session_id() == '') {
             session_start();
         }
 
@@ -144,7 +144,7 @@ class Cart
     {
 
         // Démarre une session si celle-ci n'est pas déjà active.
-        if (!isset($_SESSION)) {
+        if(session_id() == '') {
             session_start();
         }
 
@@ -160,7 +160,7 @@ class Cart
     public static function getAll()
     {
         // Démarre une session si celle-ci n'est pas déjà active.
-        if (!isset($_SESSION)) {
+        if(session_id() == '') {
             session_start();
         }
 
@@ -192,7 +192,7 @@ class Cart
     public static function Clear()
     {
         // Démarre une session si celle-ci n'est pas déjà active.
-        if (!isset($_SESSION)) {
+        if(session_id() == '') {
             session_start();
         }
 

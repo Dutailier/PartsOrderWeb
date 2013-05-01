@@ -25,21 +25,17 @@ if (!Account::isAuthenticated()) {
     <div id="content">
 
         <!-- Entrée du numéro de série d'une chaise. -->
-        <form id="frmSerialGlider" method="get" onsubmit="return validSerialGlider();">
+        <form id="frmSearch" onsubmit="return false;">
             <p>
-                <label for="txtSerialGlider">Serial glider</label>
-                <input id="txtSerialGlider" name="txtSerialGlider" type="text"/>
-                <input id="btnSubmit" name="btnSubmit" type="submit" value="Search"/>
-            </p>
-
-            <p>
-                <label id="lblWarning" name="lblWarning" class="warning"/>
+                <label for="serial">Serial</label>
+                <input id="serial" name="serial" type="text"/>
+                <input id="search" name="search" type="submit" value="Search"/>
             </p>
         </form>
         <!-- Fin -->
 
         <!-- Liste des pièces. -->
-        <div id="partTypes">
+        <div id="types">
         </div>
         <!-- Fin -->
 
@@ -48,7 +44,8 @@ if (!Account::isAuthenticated()) {
 </div>
 
 <!-- Scripts. -->
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
 <script src="js/types.js"></script>
 <!-- Fin -->
 </body>

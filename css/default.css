@@ -109,11 +109,11 @@ body {
 
 /* Default */
 
-label.warning {
+label.error {
     color: red;
 }
 
-input.warning {
+input.error, textarea.error {
     border: 2px solid red;
 }
 

@@ -31,39 +31,40 @@ if (Cart::isEmpty()) {
 
         <h1>Customer informations</h1>
 
-        <from method="post" onsubmit="return confirmOrder();">
+        <form id="frmOrder" method="post" onsubmit="return false;">
+            <ul id="summary"></ul>
             <fieldset>
                 <legend>Contact informations</legend>
                 <p>
-                    <label for="firstName">First name</label>
-                    <input id="firstName" name="firstName" type="text"/>
+                    <label for="firstname">First name</label>
+                    <input id="firstname" name="firstname" type="text"/>
                 </p>
 
                 <p>
-                    <label for="lastName">Last name</label>
-                    <input id="lastName" name="lastName" type="text"/>
+                    <label for="lastname">Last name</label>
+                    <input id="lastname" name="lastname" type="text"/>
                 </p>
 
                 <p>
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email"/>
+                    <label for="email1">Email</label>
+                    <input id="email1" name="email1" type="email"/>
                 </p>
 
                 <p>
-                    <label for="emailConfirmation">Email confirmation</label>
-                    <input id="emailConfirmation" name="emailConfirmation" type="email"/>
+                    <label for="email2">Email confirmation</label>
+                    <input id="email2" name="email2" type="email"/>
                 </p>
 
                 <p>
-                    <label for="phoneNumber">Phone number</label>
-                    <input id="phoneNumber" name="phoneNumber" type="tel"/>
+                    <label for="phone">Phone number</label>
+                    <input id="phone" name="phone" type="tel"/>
                 </p>
             </fieldset>
             <fieldset>
-                <legend>address informations</legend>
+                <legend>Address informations</legend>
                 <p>
                     <label for="address">Address</label>
-                    <textarea id="address" rows="6" streetNumber"></textarea>
+                    <textarea id="address" name="address" rows="5"></textarea>
                 </p>
 
                 <p>
@@ -77,8 +78,8 @@ if (Cart::isEmpty()) {
                 </p>
 
                 <p>
-                    <label for="zipCode">Zip Code</label>
-                    <input id="zipCode" name="zipCode" type="text"/>
+                    <label for="zip">Zip Code</label>
+                    <input id="zip" name="zip" type="text"/>
                 </p>
 
                 <p>
@@ -91,14 +92,15 @@ if (Cart::isEmpty()) {
                 <input id="confirm" name="confirm" type="submit" value="Confirm"/>
                 <a id="clear">clear</a>
             </div>
-        </from>
+        </form>
 
     </div>
     <?php include_once(ROOT . '_footer.php'); ?>
 </div>
 
 <!-- Scripts. -->
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
 <script src="js/order.js"></script>
 <!-- Fin -->
 

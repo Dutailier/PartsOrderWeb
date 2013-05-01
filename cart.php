@@ -44,7 +44,7 @@ if (!Account::isAuthenticated()) {
 </div>
 
 <!-- Scripts. -->
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="js/cart.js"></script>
 <!-- Fin -->
 

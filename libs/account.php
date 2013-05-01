@@ -55,7 +55,7 @@ class Account
                 } else {
 
                     // Démarre une session si celle-ci n'est pas déjà active.
-                    if (!isset($_SESSION)) {
+                    if(session_id() == '') {
                         session_start();
                     }
 
@@ -74,7 +74,7 @@ class Account
     public static function isAuthenticated()
     {
         // Démarre la session si cela n'est pas déjà fait.
-        if (!isset($_SESSION)) {
+        if(session_id() == '') {
             session_start();
         }
 

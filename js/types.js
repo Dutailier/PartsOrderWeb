@@ -1,10 +1,89 @@
+// Définit le numéro de série de chaise inscrit.
+var serial = '';
+
+$(document).ready(function () {
+
+    $('#frmSearch').validate({
+
+        // Définit les règles de validations.
+        rules: {
+            serial: {
+                required: true,
+                digits: true,
+                minlength: 11,
+                maxlength: 11
+            }
+        },
+
+        errorPlacement: function(error, element) {
+          error.appendTo(element.parent());
+        },
+
+        // Se produit losrque tous les champs sont valides.
+        submitHandler: function () {
+
+            // Récupère le numéro de série afin de le garder valide.
+            serial = $('#serial').val();
+
+            var parameters = {
+                "serial": serial,
+                "category": $.queryString['category']
+            };
+
+            $.get('ajax/getTypes.php', parameters)
+                .done(function (data) {
+
+                    // Vérifie que les propriétés de l'objet JSON ont bien été créés et
+                    // vérifié si la requête fut un succès.
+                    if (data.hasOwnProperty('success') &&
+                        data['success'] &&
+                        data.hasOwnProperty('types')) {
+
+                        $('div.type').remove();
+
+                        // Parcours tous les types de pièce retournés par la requête.
+                        for (var i in data['types']) {
+
+                            // // Vérifie que les propriétés de l'objet JSON ont bien été créés.
+                            if (data['types'].hasOwnProperty(i) &&
+                                data['types'][i].hasOwnProperty('id') &&
+                                data['types'][i].hasOwnProperty('name') &&
+                                data['types'][i].hasOwnProperty('description') &&
+                                data['types'][i].hasOwnProperty('quantity')) {
+
+                                // Ajoute le type de pièce à la liste.
+                                addType(
+                                    data['types'][i]['id'],
+                                    data['types'][i]['name'],
+                                    data['types'][i]['description'],
+                                    data['types'][i]['quantity']);
+                            }
+                        }
+
+                        // Vérifie que la propriété de l'objet JSON a bien été créée.
+                    } else if (data.hasOwnProperty('message')) {
+
+                        // Affiche un message d'erreur expliquant l'échec de la requête.
+                        alert(data['message']);
+                    } else {
+                        alert('Communication with the server failed.');
+                    }
+                })
+                .fail(function () {
+                    alert('Communication with the server failed.');
+                })
+        }
+    })
+});
+
 $(document).on('click', 'input.addCart', function () {
-    //Récupère le partType sélectionné.
-    var $partType = $(this).closest('div.partType');
+
+    //Récupère le type sélectionné.
+    var $type = $(this).closest('div.type');
 
     var parameters = {
-        "type": $partType.data('id'),
-        "name": $partType.find('span.name').text(),
+        "type": $type.data('id'),
+        "name": $type.find('span.name').text(),
         "serial": serial
     };
 
@@ -18,7 +97,7 @@ $(document).on('click', 'input.addCart', function () {
                 data.hasOwnProperty('quantity')) {
 
                 // Met à jour à quantité de la pièce et ses bouttons.
-                updatePartType($partType, data['quantity']);
+                updateType($type, data['quantity']);
 
                 // Vérifie que la propriété de l'objet JSON a bien été créée.
             } else if (data.hasOwnProperty('message')) {
@@ -35,12 +114,13 @@ $(document).on('click', 'input.addCart', function () {
 });
 
 $(document).on('click', 'input.removeCart', function () {
-    // Récupère le partType sélectionné.
-    var $partType = $(this).closest('div.partType');
+
+    // Récupère le type sélectionné.
+    var $type = $(this).closest('div.type');
 
     var parameters = {
-        "type": $partType.data('id'),
-        "name": $partType.find('span.name').text(),
+        "type": $type.data('id'),
+        "name": $type.find('span.name').text(),
         "serial": serial
     };
 
@@ -54,7 +134,7 @@ $(document).on('click', 'input.removeCart', function () {
                 data.hasOwnProperty('quantity')) {
 
                 // Met à jour à quantité de la pièce et ses bouttons.
-                updatePartType($partType, data['quantity']);
+                updateType($type, data['quantity']);
 
                 // Vérifie que la propriété de l'objet JSON a bien été créée.
             } else if (data.hasOwnProperty('message')) {
@@ -70,96 +150,6 @@ $(document).on('click', 'input.removeCart', function () {
         })
 });
 
-
-// Définit le numéro de série de chaise inscrit.
-var serial = '';
-
-/**
- * Valide le numéro de série de la chaise et envoie une requête au serveur
- * si celui-ci est valide.
- * @returns {boolean}
- */
-function validSerialGlider() {
-    // Récupère les champs à valider.
-    var txtSerialGlider = $('#txtSerialGlider');
-
-    // Crée une expression régulière à comparée.
-    var serialGliderRegex = /^\d{11}$/;
-
-    // Flag de validation.
-    var isValid = true;
-
-    // Efface la liste de type de pièce.
-    $('.partType').remove();
-
-    if (txtSerialGlider.val()) {
-        if (serialGliderRegex.test(txtSerialGlider.val())) {
-            serial = txtSerialGlider.val();
-            txtSerialGlider.removeClass('warning');
-        } else {
-            txtSerialGlider.addClass('warning');
-            isValid = false;
-        }
-    } else {
-        txtSerialGlider.addClass('warning');
-        isValid = false;
-    }
-
-    if (isValid) {
-        var parameters = {
-            "serial": txtSerialGlider.val(),
-            "category": $.QueryString['category']
-        };
-
-        $.get('ajax/getTypes.php', parameters)
-            .done(function (data) {
-
-                // Vérifie que les propriétés de l'objet JSON ont bien été créés et
-                // vérifié si la requête fut un succès.
-                if (data.hasOwnProperty('success') &&
-                    data['success'] &&
-                    data.hasOwnProperty('types')) {
-
-                    // Parcours tous les types de pièce retournés par la requête.
-                    for (var i in data['types']) {
-
-                        // // Vérifie que les propriétés de l'objet JSON ont bien été créés.
-                        if (data['types'].hasOwnProperty(i) &&
-                            data['types'][i].hasOwnProperty('id') &&
-                            data['types'][i].hasOwnProperty('name') &&
-                            data['types'][i].hasOwnProperty('description') &&
-                            data['types'][i].hasOwnProperty('quantity')) {
-
-                            // Ajoute le type de pièce à la liste.
-                            addPartType(
-                                data['types'][i]['id'],
-                                data['types'][i]['name'],
-                                data['types'][i]['description'],
-                                data['types'][i]['quantity']);
-                        }
-                    }
-
-                    // Vérifie que la propriété de l'objet JSON a bien été créée.
-                } else if (data.hasOwnProperty('message')) {
-
-                    // Affiche un message d'erreur expliquant l'échec de la requête.
-                    alert(data['message']);
-                } else {
-                    alert('Communication with the server failed.');
-                }
-            })
-            .fail(function () {
-                alert('Communication with the server failed.');
-            })
-
-    } else {
-        txtSerialGlider.focus();
-    }
-
-    // Retient le postback automatique.
-    return false;
-}
-
 /**
  * Ajoute un type de pièce à la liste.
  * @param id
@@ -167,37 +157,37 @@ function validSerialGlider() {
  * @param description
  * @param quantity
  */
-function addPartType(id, name, description, quantity) {
+function addType(id, name, description, quantity) {
 
-    var $partType = $('#partTypes');
+    var $types = $('#types');
     // Ajout du type de pièce.
-    $partType.append(
-        '<div class="partType" data-id="' + id + '">' +
+    $types.append(
+        '<div class="type" data-id="' + id + '">' +
             '<div class="details">' +
             '<span class="name">' + name + '</span>' +
-            '<span class="description">' + (description ? description : '') + '</span>' +
+            '<span class="description">' + description + '</span>' +
             '</div>' +
             '<div class="buttons"> ' +
             '<span class="quantity">' + quantity + '</span>' +
             '</div>' +
             '</div>'
-    );
+        ).hide().fadeIn(200);
 
     // Ajoute les bouttons appropriés au dernier éléments ajouté.
-    updatePartType($partType, quantity);
+    updateType($types, quantity);
 }
 
 /**
  * Ajoute les bouttons appropriés à l'éléments spécifié.
- * @param $partType
+ * @param $type
  * @param quantity
  */
-function updatePartType($partType, quantity) {
+function updateType($type, quantity) {
 
-    var $buttons = $partType.find('div.buttons');
+    var $buttons = $type.find('div.buttons');
 
     // Change la quantité affichée.
-    $buttons.children('.quantity').text(quantity);
+    $buttons.children('span.quantity').text(quantity);
 
     // Supprimer les bouttons déjà ajoutés.
     $buttons.children('input').remove();
@@ -214,7 +204,7 @@ function updatePartType($partType, quantity) {
  * Permet d'obtenir les valeurs passés en GET.
  */
 (function ($) {
-    $.QueryString = (function (string) {
+    $.queryString = (function (string) {
 
         if (string == "") return {};
 

@@ -27,19 +27,19 @@ if (Account::isAuthenticated()) {
         <!-- Formulaire de connexion. -->
         <div id="background">
             <div id="login">
-                <form id="frmLogin" method="post" onsubmit="return login();">
+                <form method="post" onsubmit="return false;">
                     <p>
-                        <label for="txtUsername">Username</label>
-                        <input id="txtUsername" name="txtUsername" type="text"/>
+                        <label for="username">Username</label>
+                        <input id="username" name="username" type="text"/>
                     </p>
 
                     <p>
-                        <label for="txtPassword">Password</label>
-                        <input id="txtPassword" name="txtPassword" type="password"/>
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password"/>
                     </p>
 
                     <p>
-                        <input id="btnLogin" name="btnLogin" type="submit" value="Login"/>
+                        <input type="submit" value="Login"/>
                     </p>
                 </form>
             </div>
@@ -51,7 +51,8 @@ if (Account::isAuthenticated()) {
 </div>
 
 <!-- Scripts. -->
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
 <script src="js/login.js"></script>
 <!-- Fin -->
 

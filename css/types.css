@@ -1,32 +1,49 @@
-#frmSerialGlider {
+form {
     width: 600px;
     margin: 20px auto;
+    overflow: hidden; /* Clearfix */
 }
 
-#frmSerialGlider > p > label {
+form > p > label:first-child {
+    display: inline-block;
     margin-right: 5px;
     font-weight: bold;
+    width: 50px;
 }
 
-#txtSerialGlider {
-    width: 65%;
+form > p > label.error {
+
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    font-weight: normal;
+    clear: both;
+    margin-left: 60px;
+}
+
+#serial {
+    width: 390px;
     text-align: center;
 }
 
-#frmSerialGlider > p {
+#search {
+    width: 100px;
+}
+
+form > p {
     margin: 10px auto;
 }
 
-#frmSerialGlider > p > input {
+form > p > input {
     margin-right: 5px;
 }
 
-#partTypes {
+#types {
     padding: 20px;
     margin: 10px;
 }
 
-#partTypes > div.partType {
+#types > div.type {
     float: left;
     width: 250px;
     height: auto;
@@ -35,31 +52,31 @@
     border: 2px solid #484848;
 }
 
-#partTypes > div.partType > div.details > span {
+#types > div.type > div.details > span {
     display: block;
     float: left;
     clear: both;
 }
 
-#partTypes > div.partType > div.details {
+#types > div.type > div.details {
     padding: 5px;
     height: 140px;
     overflow: hidden;
 }
 
-#partTypes > div.partType > div.details > span.name {
+#types > div.type > div.details > span.name {
     font-size: 1.5em;
     font-weight: bold;
 }
 
-#partTypes > div.partType > div.details > span.description {
+#types > div.type > div.details > span.description {
     height: auto;
     margin-top: 10px;
     margin-bottom: 5px;
     clear: both;
 }
 
-#partTypes > div.partType > div.buttons {
+#types > div.type > div.buttons {
     float: left;
     border: 2px solid #484848;
     width: 236px;
@@ -67,7 +84,7 @@
     overflow: hidden;
 }
 
-#partTypes > div.partType > div.buttons > span.quantity {
+#types > div.type > div.buttons > span.quantity {
     display: block;
     font-size: 1.5em;
     font-weight: bold;
@@ -75,6 +92,6 @@
     margin: 0px 5px;
 }
 
-#partTypes > div.partType > div.buttons > input.addCart, input.removeCart {
+#types > div.type > div.buttons > input.addCart, input.removeCart {
     float: right;
 }

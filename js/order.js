@@ -1,5 +1,67 @@
 $(document).ready(function () {
 
+    // Définit la règle de validation pour le numéro de téléphone.
+    $.validator.addMethod('phone', function (value, element) {
+        return /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/g.test(value)
+    }, 'The phone number must be standard (ex: 123-456-7878).');
+
+    $('#frmOrder').validate({
+        rules: {
+            firstname: { required: true },
+            lastname: { required: true },
+            email1: {
+                required: true,
+                email: true
+            },
+            email2: {
+                required: true,
+                email: true,
+                equalTo: '#email1'
+            },
+            phone: {
+                required: true,
+                phone: true
+            },
+            address: { required: true },
+            city: { required: true },
+            zip: {
+                required: true,
+                digits: true,
+                minlength: 5,
+                maxlength: 5
+            }
+        },
+        messages: {
+            firstname: { required: 'The first name is required.' },
+            lastname: { required: 'The last name is required.' },
+            email1: {
+                required: 'The email is required.',
+                email: 'The email must be standard (ex: user@domain.com).'
+            },
+            email2: {
+                required: 'You must confirm your email.',
+                equalTo: 'The emails must be the same.'
+            },
+            phone: {
+                required: 'The phone number is required.',
+                phone: 'The phone number must be standard (ex: 123-456-7890).'
+            },
+            address: { required: 'The address is required.' },
+            city: { required: 'The city is required.' },
+            zip: {
+                required: 'The zip code is required.',
+                digits: 'The zip code must be standard.',
+                minlength: 'The zip code must be standard.',
+                maxlength: 'The zip code must be standard.'
+            }
+        },
+
+        wrapper: 'li',
+        errorPlacement: function (error) {
+            $('#summary').append(error);
+        }
+    });
+
     $('#countries').change(function () {
 
         var parameters = {

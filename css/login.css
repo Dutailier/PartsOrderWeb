@@ -10,6 +10,16 @@
     top: 73%;
 }
 
+#login > form > p > label.error {
+    display: inline-block;
+    height: 34px;
+    line-height: 34px;
+    position: absolute;
+    width: 150px;
+    right: -155px;
+    overflow: hidden;
+}
+
 #login > form > p {
     clear: both;
     margin: 10px 0px;

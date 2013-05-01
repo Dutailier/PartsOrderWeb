@@ -1,3 +1,9 @@
+form {
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden; /* Clearfix */
+}
+
 fieldset {
     display: block;
     margin: 25px;
@@ -50,4 +56,8 @@ fieldset > p > input, textarea, select {
     cursor: pointer;
     margin: 0px 5px;
     text-decoration: underline;
+}
+
+#summary {
+    margin: 5px;
 }
