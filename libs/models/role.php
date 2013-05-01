@@ -2,7 +2,7 @@
 
 include_once('config.php');
 include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/user.php');
+include_once(ROOT . 'libs/models/user.php');
 
 /**
  * Class Role
@@ -69,7 +69,7 @@ class Role
             // en fait la requête et on garde le résultat pour de
             // futures utilistions.
             if (empty($_SESSION['roles'])) {
-                $_SESSION['roles'] = Role::getRoles(Security::getUserConnected());
+                $_SESSION['roles'] = Role::getRoles(User::getConnected());
             }
 
             $i = Role::getIndex($_SESSION['roles'], $name);

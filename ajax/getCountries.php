@@ -1,7 +1,7 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/country.php');
+include_once(ROOT . 'libs/models/country.php');
 include_once(ROOT . 'libs/security.php');
 
 if (!Security::isAuthenticated()) {

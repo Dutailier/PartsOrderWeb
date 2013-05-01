@@ -2,7 +2,7 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/cart.php');
-include_once(ROOT . 'libs/part.php');
+include_once(ROOT . 'libs/models/part.php');
 include_once(ROOT . 'libs/security.php');
 
 if (!Security::isAuthenticated()) {

@@ -2,7 +2,7 @@
 
 include_once('config.php');
 include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/user.php');
+include_once(ROOT . 'libs/models/user.php');
 
 /**
  * Class Account
@@ -10,15 +10,6 @@ include_once(ROOT . 'libs/user.php');
  */
 class Security
 {
-    /**
-     * Retourne l'instance de l'utilisateur connecté.
-     * @return mixed
-     */
-    public static function getUserConnected()
-    {
-        return $_SESSION['user'];
-    }
-
     /**
      * Tente de connecté l'utilisateur.
      * Retourne vrai si la connexion réussie.

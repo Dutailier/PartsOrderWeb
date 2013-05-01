@@ -1,7 +1,7 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/icomparable.php');
+include_once(ROOT . 'libs/interfaces/icomparable.php');
 
 class Cart
 {

@@ -1,7 +1,7 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/category.php');
+include_once(ROOT . 'libs/models/category.php');
 include_once(ROOT . 'libs/security.php');
 
 if (!Security::isAuthenticated()) {

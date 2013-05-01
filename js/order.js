@@ -59,6 +59,25 @@ $(document).ready(function () {
         wrapper: 'li',
         errorPlacement: function (error) {
             $('#summary').append(error);
+        },
+
+        submitHandler: function () {
+
+            var informations = {
+                "firstname": $('#firstname').val(),
+                "lastname": $('#lastname').val(),
+                "email": $('#email1').val(),
+                "phone": $('#phone').val(),
+                "address": $('#address').val(),
+                "city": $('#city').val(),
+                "zip": $('#zip').val(),
+                "state": $('#states > option:selected').val(),
+                "country": $('#countries > option:selected').val()
+            };
+
+            $.post('ajax/placeOrder.php', informations)
+                .done()
+                .fail()
         }
     });
 
@@ -154,7 +173,7 @@ $(document).ready(function () {
             alert('Communication with the server failed.');
         })
 
-    $('#clear').click(function() {
+    $('#clear').click(function () {
         window.location.reload();
     });
 });

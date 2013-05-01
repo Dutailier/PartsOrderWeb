@@ -89,7 +89,7 @@ if (Cart::isEmpty()) {
             </fieldset>
 
             <div id="buttons">
-                <input id="confirm" name="confirm" type="submit" value="Confirm"/>
+                <input id="proceed" name="proceed" type="submit" value="proceed"/>
                 <a id="clear">clear</a>
             </div>
         </form>

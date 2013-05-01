@@ -37,4 +37,13 @@ class User
     public function getUserName() {
         return $this->username;
     }
+
+    /**
+     * Retourne l'instance de l'utilisateur connecté.
+     * @return mixed
+     */
+    public static function getConnected()
+    {
+        return $_SESSION['user'];
+    }
 }
