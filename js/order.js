@@ -153,4 +153,8 @@ $(document).ready(function () {
         .fail(function () {
             alert('Communication with the server failed.');
         })
+
+    $('#clear').click(function() {
+        window.location.reload();
+    });
 });
