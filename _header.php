@@ -1,7 +1,7 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/account.php');
+include_once(ROOT . 'libs/security.php');
 
 ?>
 
@@ -14,7 +14,7 @@ include_once(ROOT . 'libs/account.php');
                 <li><a href="catalog.php">Home</a></li>
             <?php endif; ?>
 
-            <?php if (Account::isAuthenticated()) : ?>
+            <?php if (Security::isAuthenticated()) : ?>
                 <li><a href="cart.php">Cart</a></li>
                 <li><a href="logout.php">Logout</a></li>
             <?php endif; ?>

@@ -61,7 +61,7 @@ class Role
     public static function IsInRoleName($name)
     {
 
-        if (!Account::isAuthenticated()) {
+        if (!Security::isAuthenticated()) {
             throw new Exception('An user must be authenticated.');
         } else {
 
@@ -69,7 +69,7 @@ class Role
             // en fait la requête et on garde le résultat pour de
             // futures utilistions.
             if (empty($_SESSION['roles'])) {
-                $_SESSION['roles'] = Role::getRoles(Account::getUserConnected());
+                $_SESSION['roles'] = Role::getRoles(Security::getUserConnected());
             }
 
             $i = Role::getIndex($_SESSION['roles'], $name);

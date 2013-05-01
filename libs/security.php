@@ -8,7 +8,7 @@ include_once(ROOT . 'libs/user.php');
  * Class Account
  * Gère les méthodes relatives à la sécurité du site web.
  */
-class Account
+class Security
 {
     /**
      * Retourne l'instance de l'utilisateur connecté.

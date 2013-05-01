@@ -3,9 +3,9 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/cart.php');
 include_once(ROOT . 'libs/part.php');
-include_once(ROOT . 'libs/account.php');
+include_once(ROOT . 'libs/security.php');
 
-if (!Account::isAuthenticated()) {
+if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 } else {

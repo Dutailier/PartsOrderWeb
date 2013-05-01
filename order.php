@@ -1,10 +1,10 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/account.php');
+include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/cart.php');
 
-if (!Account::isAuthenticated()) {
+if (!Security::isAuthenticated()) {
     header('location: index.php');
 }
 
