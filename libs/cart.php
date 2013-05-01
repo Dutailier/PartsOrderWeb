@@ -1,17 +1,17 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/item.php');
+include_once(ROOT . 'libs/icomparable.php');
 
 class Cart
 {
     /**
      * Incrémente la quantité de cet item dans le panier d'achats et
      * retourne sa quantité suivant l'opération.
-     * @param Item $item
+     * @param IComparable $obj
      * @return mixed
      */
-    public static function Add(Item $item)
+    public static function Add(IComparable $obj)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
         if (!isset($_SESSION)) {
@@ -25,7 +25,7 @@ class Cart
             $_SESSION['quantities'] = array();
         }
 
-        $i = Cart::getIndex($item);
+        $i = Cart::getIndex($obj);
 
         // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
         // l'item y est déjà contenu, alos nous incrémentons sa quantité. Autrement,
@@ -33,7 +33,7 @@ class Cart
         if ($i < count($_SESSION['items'])) {
             $_SESSION['quantities'][$i]++;
         } else {
-            $_SESSION['items'][$i] = $item;
+            $_SESSION['items'][$i] = $obj;
             $_SESSION['quantities'][$i] = 1;
         }
 
@@ -43,10 +43,10 @@ class Cart
 
     /**
      * Décrémente la quantité contenu dans le panier d'achats de l'item.
-     * @param Item $item
+     * @param IComparable $obj
      * @return int
      */
-    public static function Remove(Item $item)
+    public static function Remove(IComparable $obj)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
         if (!isset($_SESSION)) {
@@ -58,7 +58,7 @@ class Cart
             return 0;
         }
 
-        $i = Cart::getIndex($item);
+        $i = Cart::getIndex($obj);
 
         // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
         // l'item y est déjà contenu, alos nous décrémentons sa quantité. Autrement,
@@ -80,10 +80,10 @@ class Cart
 
     /**
      * Retourne la quantité contenu par le panier d'achats de l'item.
-     * @param Item $item
+     * @param IComparable $obj
      * @return int
      */
-    public static function getQuantity(Item $item)
+    public static function getQuantity(IComparable $obj)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
         if (!isset($_SESSION)) {
@@ -95,7 +95,7 @@ class Cart
             return 0;
         }
 
-        $i = Cart::getIndex($item);
+        $i = Cart::getIndex($obj);
 
         // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
         // l'item y est déjà contenu, alos nous retournons sa quantité. Autrement,
@@ -110,11 +110,11 @@ class Cart
     /**
      * Définit la quantité d'un item contenu dans le panier d'achats.
      * Retourne faux si l'item ne figure pas dans le panier d'achats.
-     * @param Item $item
+     * @param IComparable $obj
      * @param $qty
      * @return bool
      */
-    public static function setQuantity(Item $item, $qty)
+    public static function setQuantity(IComparable $obj, $qty)
     {
         // Démarre une session si celle-ci n'est pas déjà active.
         if (!isset($_SESSION)) {
@@ -125,7 +125,7 @@ class Cart
             return 0;
         }
 
-        $i = Cart::getIndex($item);
+        $i = Cart::getIndex($obj);
 
         if ($i < count($_SESSION['items'])) {
             $_SESSION['quantities'][$i] = $qty;
@@ -140,7 +140,8 @@ class Cart
      * Retourne vrai si le panier est vide.
      * @return bool
      */
-    public static function isEmpty() {
+    public static function isEmpty()
+    {
 
         // Démarre une session si celle-ci n'est pas déjà active.
         if (!isset($_SESSION)) {
@@ -203,17 +204,17 @@ class Cart
      * Retourne l'index de l'item si celui-ci y figure ou retourne
      * le nombre d'items contenus dans le panier d'achats si l'item
      * n'y ait pas contenu.
-     * @param Item $item
+     * @param IComparable $obj
      * @return int
      */
-    private static function getIndex(Item $item)
+    private static function getIndex(IComparable $obj)
     {
         $count = count($_SESSION['items']);
 
         // Parcours tous les items du panier d'achats afin de trouver
         // l'index de l'item.
         for ($i = 0; $i < $count; $i++) {
-            if ($_SESSION['items'][$i]->Compare($item)) {
+            if ($_SESSION['items'][$i]->CompareTo($obj)) {
                 return $i;
             }
         }

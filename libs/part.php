@@ -1,13 +1,13 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/item.php');
+include_once(ROOT . 'libs/icomparable.php');
 
 /**
  * Class Part
  * Représente une pièce qui pourra être commandé dans le panier d'achats.
  */
-class Part extends Item
+class Part implements IComparable
 {
     private $type;
     private $name;
@@ -27,17 +27,16 @@ class Part extends Item
     }
 
     /**
-     * Retourne vrai si l'item comparé est identique à cette pièce.
-     * @param Item $item
-     * @return bool|mixed
+     * Retourne vrai si l'objet comparé est identique à cette pièce.
+     * @param $obj
+     * @return bool
      */
-    public function Compare(Item $item)
+    public function CompareTo($obj)
     {
         return
-            $item instanceof self &&
-            $this->getType() == $item->getType() &&
-            $this->getSerial() == $item->getSerial();
-
+            $obj instanceof self &&
+            $this->getType() == $obj->getType() &&
+            $this->getSerial() == $obj->getSerial();
     }
 
     /**

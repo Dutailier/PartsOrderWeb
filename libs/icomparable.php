@@ -4,12 +4,12 @@
  * Class Item
  * Représente un item qu'on pourra commandé dans le panier d'achats.
  */
-abstract class Item {
-
+interface IComparable
+{
     /**
      * Retourne vrai si l'item comparé est identique à celui-ci.
-     * @param $item
+     * @param $obj
      * @return mixed
      */
-    public abstract function Compare(Item $item);
+    public function CompareTo($obj);
 }

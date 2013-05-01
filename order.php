@@ -98,7 +98,7 @@ if (Cart::isEmpty()) {
 </div>
 
 <!-- Scripts. -->
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/order.js"></script>
 <!-- Fin -->
 

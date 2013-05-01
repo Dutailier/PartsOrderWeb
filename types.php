@@ -48,7 +48,7 @@ if (!Account::isAuthenticated()) {
 </div>
 
 <!-- Scripts. -->
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/types.js"></script>
 <!-- Fin -->
 </body>
