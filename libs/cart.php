@@ -7,7 +7,8 @@ include_once(ROOT . 'libs/interfaces/icart.php');
 
 /**
  * Class Cart
- * Gère les méthodes relatives au panier d'achats.
+ * Représente un panier d'achats dans lequel ont y retrouve des items
+ * de toutes sortes. Il démarrera la session par lui-même si nécessaire.
  */
 class SessionCart implements ICart
 {
@@ -16,7 +17,7 @@ class SessionCart implements ICart
 
     /**
      * Constructeur par défaut.
-     * @param null $container Peut être une table, un cookie, etc...
+     * @param null $container
      */
     public function __construct(&$container = null)
     {
@@ -73,7 +74,9 @@ class SessionCart implements ICart
 
         $item = $this->items[$index];
 
-        if (($quantity = $item->getQuantity() - 1) > 0) {
+        $quantity = $item->getQuantity() - 1;
+
+        if ($quantity > 0) {
             $item->setQuantity($quantity);
 
         } else {
@@ -90,18 +93,19 @@ class SessionCart implements ICart
      */
     public function getQuantity(IComparable $object)
     {
-            $index = $this->getIndexOfItem($object);
+        $index = $this->getIndexOfItem($object);
 
-            if ($index == -1) {
-                return 0;
+        if ($index == -1) {
+            return 0;
 
-            } else {
-                return $this->items[$index]->getQuantity();
-            }
+        } else {
+            return $this->items[$index]->getQuantity();
+        }
     }
 
     /**
      * Définit la quantité contenue dans le panier d'achats de l'item.
+     * Peut être appelé pour ajouter un item d'une quantité supérieure à un.
      * @param IComparable $object
      * @param $quantity
      * @return mixed
@@ -171,15 +175,5 @@ class SessionCart implements ICart
             }
         }
         return -1;
-    }
-
-
-    /**
-     * Retourne un tableau itérable contenant les items du panier d'achats.
-     * @return Traversable
-     */
-    public function getIterator()
-    {
-        return ArrayIterator($this->items);
     }
 }

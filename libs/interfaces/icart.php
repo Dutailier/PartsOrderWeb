@@ -7,7 +7,7 @@ include_once(ROOT . 'libs/interfaces/icomparable.php');
  * Class ICart
  * Définit les méthodes nécessaires à un panier d'achats.
  */
-interface ICart extends IteratorAggregate
+interface ICart
 {
     public function add(IComparable $object);
 
