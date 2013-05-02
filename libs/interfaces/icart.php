@@ -9,13 +9,13 @@ include_once(ROOT . 'libs/interfaces/icomparable.php');
  */
 interface ICart extends IteratorAggregate
 {
-    public function add(IComparable $obj);
+    public function add(IComparable $object);
 
-    public function remove(IComparable $obj);
+    public function remove(IComparable $object);
 
-    public function getQuantity(IComparable $obj);
+    public function getQuantity(IComparable $object);
 
-    public function setQuantity(IComparable $obj, $quantity);
+    public function setQuantity(IComparable $object, $quantity);
 
     public function isEmpty();
 

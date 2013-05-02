@@ -28,15 +28,15 @@ class Part implements IComparable
 
     /**
      * Retourne vrai si l'objet comparé est identique à cette pièce.
-     * @param $obj
+     * @param $object
      * @return bool
      */
-    public function equals($obj)
+    public function equals($object)
     {
         return
-            $obj instanceof self &&
-            $this->getType() == $obj->getType() &&
-            $this->getSerial() == $obj->getSerial();
+            $object instanceof self &&
+            $this->getType() == $object->getType() &&
+            $this->getSerial() == $object->getSerial();
     }
 
     /**

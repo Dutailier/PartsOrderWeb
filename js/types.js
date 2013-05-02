@@ -15,8 +15,8 @@ $(document).ready(function () {
             }
         },
 
-        errorPlacement: function(error, element) {
-          error.appendTo(element.parent());
+        errorPlacement: function (error, element) {
+            error.appendTo(element.parent());
         },
 
         // Se produit losrque tous les champs sont valides.
@@ -159,22 +159,22 @@ $(document).on('click', 'input.removeCart', function () {
  */
 function addType(id, name, description, quantity) {
 
-    var $types = $('#types');
     // Ajout du type de pièce.
-    $types.append(
+    var $type = $(
         '<div class="type" data-id="' + id + '">' +
             '<div class="details">' +
-            '<span class="name">' + name + '</span>' +
-            '<span class="description">' + description + '</span>' +
+                '<span class="name">' + name + '</span>' +
+                '<span class="description">' + description + '</span>' +
             '</div>' +
             '<div class="buttons"> ' +
-            '<span class="quantity">' + quantity + '</span>' +
+                '<span class="quantity"></span>' +
             '</div>' +
-            '</div>'
-        ).hide().fadeIn(200);
+        '</div>');
+
+    $('#types').append($type);
 
     // Ajoute les bouttons appropriés au dernier éléments ajouté.
-    updateType($types, quantity);
+    updateType($type, quantity);
 }
 
 /**
@@ -188,7 +188,6 @@ function updateType($type, quantity) {
 
     // Change la quantité affichée.
     $buttons.children('span.quantity').text(quantity);
-
     // Supprimer les bouttons déjà ajoutés.
     $buttons.children('input').remove();
 

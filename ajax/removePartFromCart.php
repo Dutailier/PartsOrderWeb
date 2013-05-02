@@ -22,7 +22,7 @@ if (!Security::isAuthenticated()) {
         // Vérifie que la quantité avant d'avoir ajouté le type de pièce
         // est inférieure à la quantité après afin de confirmer que la pièce
         // à belle et bien été retirée du panier d'achats.
-        if ($cart->getQuantity($part) > ($qty = $cart->decrements($part))) {
+        if ($cart->getQuantity($part) > ($qty = $cart->remove($part))) {
             $data['success'] = true;
             $data['quantity'] = $qty;
         } else {

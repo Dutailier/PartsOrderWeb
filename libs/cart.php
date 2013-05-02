@@ -36,20 +36,20 @@ class SessionCart implements ICart
     /**
      * Ajoute un item au panier d'achats.
      * Retourne la quantité de l'item contenue dans le panier d'achats.
-     * @param IComparable $obj
+     * @param IComparable $object
      * @return mixed
      */
-    public function add(IComparable $obj)
+    public function add(IComparable $object)
     {
-        $index = $this->getIndexOfItem($obj);
+        $index = $this->getIndexOfItem($object);
 
         if ($index == -1) {
-            $item = new Item($obj);
+            $item = new Item($object);
             $this->items[] = $item;
 
         } else {
-            $item = $this->container[$index];
-            $item->setQuantity($index->getQuantity() + 1);
+            $item = $this->items[$index];
+            $item->setQuantity($item->getQuantity() + 1);
         }
 
         return $item->getQuantity();
@@ -59,57 +59,65 @@ class SessionCart implements ICart
     /**
      * Retire un item du panier d'achats.
      * Retourne la quantité de l'item contenue dans le panier d'achats.
-     * @param IComparable $obj
+     * @param IComparable $object
      * @return int
      * @throws Exception
      */
-    public function remove(IComparable $obj)
+    public function remove(IComparable $object)
     {
-        $index = $this->getIndexOfItem($obj);
+        $index = $this->getIndexOfItem($object);
 
         if ($index == -1) {
             throw new Exception('The item isn\'t inside the cart.');
         }
 
-        unset($this->items[$index]);
+        $item = $this->items[$index];
 
-        return 0;
+        if (($quantity = $item->getQuantity() - 1) > 0) {
+            $item->setQuantity($quantity);
+
+        } else {
+            unset($this->items[$index]);
+        }
+        return $quantity;
     }
 
     /**
      * Retourne la quantité de l'item contenue dans le panier d'achats.
-     * @param IComparable $obj
+     * @param IComparable $object
      * @return mixed
      * @throws Exception
      */
-    public function getQuantity(IComparable $obj)
+    public function getQuantity(IComparable $object)
     {
-        $index = $this->getIndexOfItem($obj);
+            $index = $this->getIndexOfItem($object);
 
-        if ($index == -1) {
-            throw new Exception('The item isn\'t inside the cart.');
-        }
+            if ($index == -1) {
+                return 0;
 
-        return $this->items[$index]->getQuantity();
+            } else {
+                return $this->items[$index]->getQuantity();
+            }
     }
 
     /**
      * Définit la quantité contenue dans le panier d'achats de l'item.
-     * @param IComparable $obj
+     * @param IComparable $object
      * @param $quantity
      * @return mixed
      * @throws Exception
      */
-    public function setQuantity(IComparable $obj, $quantity)
+    public function setQuantity(IComparable $object, $quantity)
     {
-        if (($quantity = (int)$quantity) < 0) {
+        if (($quantity = (int)$quantity) < 1) {
             throw new Exception('A positive quantity is required.');
         }
 
-        $index = $this->getIndexOfItem($obj);
+        $index = $this->getIndexOfItem($object);
 
         if ($index == -1) {
-            throw new Exception('The item isn\'t inside the cart.');
+            $item = new Item($object, $quantity);
+            $this->items[] = $item;
 
         } else {
             $item = $this->items[$index];
@@ -152,13 +160,13 @@ class SessionCart implements ICart
 
     /**
      * Retourne l'index de l'item.
-     * @param IComparable $obj
+     * @param IComparable $object
      * @return array
      */
-    private function getIndexOfItem(IComparable $obj)
+    private function getIndexOfItem(IComparable $object)
     {
         foreach ($this->items as $key => $item) {
-            if ($obj->equals($item->getItem())) {
+            if ($object->equals($item->getObject())) {
                 return $key;
             }
         }

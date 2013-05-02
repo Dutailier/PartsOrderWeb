@@ -24,10 +24,11 @@ if (!Security::isAuthenticated()) {
             $cart = new SessionCart();
             for ($i = 0; $i < $count; $i++) {
                 $data['types'][$i]['quantity'] =
-                    $cart->getQuantity(new Part(
-                        $data['types'][$i]['id'],
-                        $data['types'][$i]['name'],
-                        $_GET['serial']));;
+                    $cart->getQuantity(
+                        new Part(
+                            $data['types'][$i]['id'],
+                            $data['types'][$i]['name'],
+                            $_GET['serial']));
             }
 
             $data['success'] = true;

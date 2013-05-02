@@ -11,7 +11,7 @@ include_once(ROOT . 'libs/security.php');
         <ul id="menu">
 
             <?php if (basename($_SERVER['PHP_SELF']) != 'index.php') : ?>
-                <li><a href="catalog.php">Home</a></li>
+                <li><a href="catalog.php">Catalog</a></li>
             <?php endif; ?>
 
             <?php if (Security::isAuthenticated()) : ?>
