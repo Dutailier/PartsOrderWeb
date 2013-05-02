@@ -8,7 +8,7 @@ if (!Security::isAuthenticated()) {
     header('location: index.php');
 }
 
-if (Cart::isEmpty()) {
+if ((new SessionCart())->isEmpty()) {
     header('location: catalog.php');
 }
 

@@ -18,9 +18,11 @@ if (!Security::isAuthenticated()) {
         // Crée une pièce à partir des informations passés en GET.
         $part = new Part($_GET['type'], $_GET['name'], $_GET['serial']);
 
+        $cart = new SessionCart();
         // Vérifie que la quantité avant d'avoir ajouté le type de pièce
-        // est inférieure à la quantité après.
-        if (Cart::getQuantity($part) > ($qty = Cart::Remove($part))) {
+        // est inférieure à la quantité après afin de confirmer que la pièce
+        // à belle et bien été retirée du panier d'achats.
+        if ($cart->getQuantity($part) > ($qty = $cart->decrements($part))) {
             $data['success'] = true;
             $data['quantity'] = $qty;
         } else {

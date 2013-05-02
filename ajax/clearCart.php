@@ -10,7 +10,7 @@ if (!Security::isAuthenticated()) {
 } else {
 
     // Efface le contenu du panier d'achats.
-    Cart::Clear();
+    (new SessionCart())->Clear();
 
     // Confirme le succès de la requête.
     $data['success'] = true;

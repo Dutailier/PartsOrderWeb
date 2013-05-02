@@ -2,6 +2,7 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/cart.php');
+include_once(ROOT . 'libs/models/item.php');
 include_once(ROOT . 'libs/models/part.php');
 include_once(ROOT . 'libs/security.php');
 
@@ -9,22 +10,26 @@ if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 } else {
-    $cart = Cart::getAll();
-    $count = count($cart);
+    $items = (new SessionCart())->getItems();
+    $count = count($items);
 
-    if (count($cart) <= 0) {
+    if (count($items) <= 0) {
         // Retourne un tableau vide car sinon il n'y aura pas la propriété
         // parts de $data et cela sera interprété comme une erreur.
         $data['parts'] = array();
     } else {
 
         // Parcours tous les items du panier d'achats afin
-        // de les retourner en tant que pièce.
-        for ($i = 0; $i < $count; $i++) {
-            $data['parts'][$i]['type'] = $cart[$i]['item']->getType();
-            $data['parts'][$i]['name'] = $cart[$i]['item']->getName();
-            $data['parts'][$i]['serial'] = $cart[$i]['item']->getSerial();
-            $data['parts'][$i]['quantity'] = $cart[$i]['quantity'];
+        // de construite l'objet JSON.
+        foreach ($items as $item) {
+            $part = $item->getObject();
+
+            $data['parts'][] = array(
+                "type" => $part->getType(),
+                "name" => $part->getName(),
+                "serial" => $part->getSerial(),
+                "quantity" => $item->getQuantity()
+            );
         }
     }
 

@@ -1,15 +1,10 @@
 <?php
 
 /**
- * Class Item
- * Représente un item qu'on pourra commandé dans le panier d'achats.
+ * Class IComparable
+ * Définit les méthodes nécessaires pour rendre un objet comparable.
  */
 interface IComparable
 {
-    /**
-     * Retourne vrai si l'item comparé est identique à celui-ci.
-     * @param $obj
-     * @return mixed
-     */
-    public function CompareTo($obj);
+    public function equals($obj);
 }

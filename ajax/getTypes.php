@@ -21,21 +21,19 @@ if (!Security::isAuthenticated()) {
 
             $count = count($data['types']);
 
-            // Parcours tous les types de pièces afin d'y ajouté la quantité déjà commandé.
+            $cart = new SessionCart();
             for ($i = 0; $i < $count; $i++) {
                 $data['types'][$i]['quantity'] =
-                    Cart::getQuantity(new Part(
+                    $cart->getQuantity(new Part(
                         $data['types'][$i]['id'],
                         $data['types'][$i]['name'],
                         $_GET['serial']));;
             }
 
-            // Confirme le succès de la requête.
             $data['success'] = true;
 
         } catch (Exception $e) {
 
-            // Si la requête échoué, retourne un message d'erreur.
             $data['success'] = false;
             $data['message'] = $e->getMessage();
         }

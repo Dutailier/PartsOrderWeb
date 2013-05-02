@@ -31,7 +31,7 @@ class Part implements IComparable
      * @param $obj
      * @return bool
      */
-    public function CompareTo($obj)
+    public function equals($obj)
     {
         return
             $obj instanceof self &&

@@ -2,222 +2,176 @@
 
 include_once('config.php');
 include_once(ROOT . 'libs/interfaces/icomparable.php');
+include_once(ROOT . 'libs/models/item.php');
+include_once(ROOT . 'libs/interfaces/icart.php');
 
-class Cart
+/**
+ * Class Cart
+ * Gère les méthodes relatives au panier d'achats.
+ */
+class SessionCart implements ICart
 {
+    const IDENTIFIER = '_CART_';
+    protected $items;
+
     /**
-     * Incrémente la quantité de cet item dans le panier d'achats et
-     * retourne sa quantité suivant l'opération.
+     * Constructeur par défaut.
+     * @param null $container Peut être une table, un cookie, etc...
+     */
+    public function __construct(&$container = null)
+    {
+        if (is_null($container)) {
+            if (session_id() == '') {
+                session_start();
+            }
+            if (!isset($_SESSION[self::IDENTIFIER])) {
+                $_SESSION[self::IDENTIFIER] = array();
+            }
+            $container = & $_SESSION[self::IDENTIFIER];
+        }
+        $this->items = & $container;
+    }
+
+
+    /**
+     * Ajoute un item au panier d'achats.
+     * Retourne la quantité de l'item contenue dans le panier d'achats.
      * @param IComparable $obj
      * @return mixed
      */
-    public static function Add(IComparable $obj)
+    public function add(IComparable $obj)
     {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if(session_id() == '') {
-            session_start();
-        }
+        $index = $this->getIndexOfItem($obj);
 
-        // S'ils ne sont pas déjà créés, nous créons 2 tableaux qui travaillerons
-        // en parallèle pour garder les informations du panier d'achats.
-        if (!isset($_SESSION['items'])) {
-            $_SESSION['items'] = array();
-            $_SESSION['quantities'] = array();
-        }
+        if ($index == -1) {
+            $item = new Item($obj);
+            $this->items[] = $item;
 
-        $i = Cart::getIndex($obj);
-
-        // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
-        // l'item y est déjà contenu, alos nous incrémentons sa quantité. Autrement,
-        // nous l'ajoutons au panier d'achats.
-        if ($i < count($_SESSION['items'])) {
-            $_SESSION['quantities'][$i]++;
         } else {
-            $_SESSION['items'][$i] = $obj;
-            $_SESSION['quantities'][$i] = 1;
+            $item = $this->container[$index];
+            $item->setQuantity($index->getQuantity() + 1);
         }
 
-        return $_SESSION['quantities'][$i];
+        return $item->getQuantity();
     }
 
 
     /**
-     * Décrémente la quantité contenu dans le panier d'achats de l'item.
+     * Retire un item du panier d'achats.
+     * Retourne la quantité de l'item contenue dans le panier d'achats.
      * @param IComparable $obj
      * @return int
+     * @throws Exception
      */
-    public static function Remove(IComparable $obj)
+    public function remove(IComparable $obj)
     {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if(session_id() == '') {
-            session_start();
+        $index = $this->getIndexOfItem($obj);
+
+        if ($index == -1) {
+            throw new Exception('The item isn\'t inside the cart.');
         }
 
-        // Si le panier d'achat n'est pas instancié, il est vide.
-        if (!isset($_SESSION['items'])) {
-            return 0;
+        unset($this->items[$index]);
+
+        return 0;
+    }
+
+    /**
+     * Retourne la quantité de l'item contenue dans le panier d'achats.
+     * @param IComparable $obj
+     * @return mixed
+     * @throws Exception
+     */
+    public function getQuantity(IComparable $obj)
+    {
+        $index = $this->getIndexOfItem($obj);
+
+        if ($index == -1) {
+            throw new Exception('The item isn\'t inside the cart.');
         }
 
-        $i = Cart::getIndex($obj);
+        return $this->items[$index]->getQuantity();
+    }
 
-        // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
-        // l'item y est déjà contenu, alos nous décrémentons sa quantité. Autrement,
-        // on retourne 0.
-        if ($i < count($_SESSION['items'])) {
+    /**
+     * Définit la quantité contenue dans le panier d'achats de l'item.
+     * @param IComparable $obj
+     * @param $quantity
+     * @return mixed
+     * @throws Exception
+     */
+    public function setQuantity(IComparable $obj, $quantity)
+    {
+        if (($quantity = (int)$quantity) < 0) {
+            throw new Exception('A positive quantity is required.');
+        }
 
-            // Si la quantité est déjà nulle, inutile de décrémenter.
-            if ($_SESSION['quantities'][$i] > 0) {
-                $_SESSION['quantities'][$i]--;
-            }
+        $index = $this->getIndexOfItem($obj);
 
-            // Retourne la quantité restante.
-            return $_SESSION['quantities'][$i];
+        if ($index == -1) {
+            throw new Exception('The item isn\'t inside the cart.');
+
         } else {
-            return 0;
+            $item = $this->items[$index];
+            $item->setQuantity($quantity);
         }
+
+        return $item->getQuantity();
     }
 
 
     /**
-     * Retourne la quantité contenu par le panier d'achats de l'item.
-     * @param IComparable $obj
-     * @return int
-     */
-    public static function getQuantity(IComparable $obj)
-    {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if(session_id() == '') {
-            session_start();
-        }
-
-        // Si le panier d'achat n'est pas instancié, il est vide.
-        if (!isset($_SESSION['items'])) {
-            return 0;
-        }
-
-        $i = Cart::getIndex($obj);
-
-        // Si l'index est inférieur au nombre d'items dans le panier d'achats, c'est que
-        // l'item y est déjà contenu, alos nous retournons sa quantité. Autrement,
-        // on retourne 0.
-        if ($i < count($_SESSION['items'])) {
-            return $_SESSION['quantities'][$i];
-        } else {
-            return 0;
-        }
-    }
-
-    /**
-     * Définit la quantité d'un item contenu dans le panier d'achats.
-     * Retourne faux si l'item ne figure pas dans le panier d'achats.
-     * @param IComparable $obj
-     * @param $qty
+     * Retourne vrai si le panier d'achats ne contient aucun item.
      * @return bool
      */
-    public static function setQuantity(IComparable $obj, $qty)
+    public function isEmpty()
     {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if(session_id() == '') {
-            session_start();
-        }
-
-        if (!isset($_SESSION['items'])) {
-            return 0;
-        }
-
-        $i = Cart::getIndex($obj);
-
-        if ($i < count($_SESSION['items'])) {
-            $_SESSION['quantities'][$i] = $qty;
-
-            return $_SESSION['quantities'][$i];
-        } else {
-            return 0;
-        }
+        return empty($this->items);
     }
 
+
     /**
-     * Retourne vrai si le panier est vide.
-     * @return bool
+     * Retourne un tableau fixe de tous les items.
+     * dans le panier d'achats.
+     * @return array
      */
-    public static function isEmpty()
+    public function getItems()
     {
-
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if(session_id() == '') {
-            session_start();
-        }
-
-        // Vérifie que les tableaux ont bien été instancié,
-        // sinon c'est que le panier est vide.
-        if (!isset($_SESSION['items'])) {
-            return true;
-        }
-
-        return array_sum($_SESSION['quantities']) <= 0;
+        return $this->items;
     }
 
-    public static function getAll()
-    {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if(session_id() == '') {
-            session_start();
-        }
-
-        // Vérifie que les tableaux ont bien été instancié,
-        // sinon on retourne un tableau vide.
-        if (!isset($_SESSION['items'])) {
-            return array();
-        }
-
-        $count = count($_SESSION['items']);
-        $cart = array();
-
-        // Parcours tous les items du panier d'achats afin de retourner les items
-        // qui n'ont pas une quantité nulle.
-        for ($i = 0, $j = 0; $i < $count; $i++) {
-            if (!empty($_SESSION['quantities'][$i]) > 0) {
-                $cart[$j]['item'] = $_SESSION['items'][$i];
-                $cart[$j]['quantity'] = $_SESSION['quantities'][$i];
-                $j++;
-            }
-        }
-
-        return $cart;
-    }
 
     /**
-     * Efface le contenu d'un panier d'achats.
+     * Vide le panier d'achats.
      */
-    public static function Clear()
+    public function clear()
     {
-        // Démarre une session si celle-ci n'est pas déjà active.
-        if(session_id() == '') {
-            session_start();
-        }
-
-        unset($_SESSION['items']);
-        unset($_SESSION['quantities']);
+        $this->items = array();
     }
 
+
     /**
-     * Retourne l'index de l'item si celui-ci y figure ou retourne
-     * le nombre d'items contenus dans le panier d'achats si l'item
-     * n'y ait pas contenu.
+     * Retourne l'index de l'item.
      * @param IComparable $obj
-     * @return int
+     * @return array
      */
-    private static function getIndex(IComparable $obj)
+    private function getIndexOfItem(IComparable $obj)
     {
-        $count = count($_SESSION['items']);
-
-        // Parcours tous les items du panier d'achats afin de trouver
-        // l'index de l'item.
-        for ($i = 0; $i < $count; $i++) {
-            if ($_SESSION['items'][$i]->CompareTo($obj)) {
-                return $i;
+        foreach ($this->items as $key => $item) {
+            if ($obj->equals($item->getItem())) {
+                return $key;
             }
         }
-        return $count;
+        return -1;
+    }
+
+
+    /**
+     * Retourne un tableau itérable contenant les items du panier d'achats.
+     * @return Traversable
+     */
+    public function getIterator()
+    {
+        return ArrayIterator($this->items);
     }
 }
