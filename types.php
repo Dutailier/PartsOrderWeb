@@ -27,8 +27,8 @@ if (!Security::isAuthenticated()) {
         <!-- Entrée du numéro de série d'une chaise. -->
         <form id="frmSearch" onsubmit="return false;">
             <p>
-                <label for="serial">Serial</label>
-                <input id="serial" name="serial" type="text"/>
+                <label for="serialGlider">Serial</label>
+                <input id="serialGlider" name="serialGlider" type="text"/>
                 <input id="search" name="search" type="submit" value="Search"/>
             </p>
         </form>

@@ -3,7 +3,7 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/models/type.php');
 include_once(ROOT . 'libs/cart.php');
-include_once(ROOT . 'libs/models/part.php');
+include_once(ROOT . 'libs/cartItem.php');
 include_once(ROOT . 'libs/security.php');
 
 if (!Security::isAuthenticated()) {
@@ -11,30 +11,35 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
 
-    if (empty($_GET['category']) || empty($_GET['serial'])) {
+    if (empty($_GET['categoryId'])) {
         $data['success'] = false;
-        $data['message'] = 'A cateogry must be selected or a serial number must be entered.';
+        $data['message'] = 'A cateogry must be selected.';
+    } else if (empty($_GET['serialGlider'])) {
+        $data['success'] = false;
+        $data['message'] = 'The serial is required.';
     } else {
 
         try {
-            $data['types'] = Type::getTypes($_GET['category']);
-
-            $count = count($data['types']);
-
             $cart = new SessionCart();
-            for ($i = 0; $i < $count; $i++) {
-                $data['types'][$i]['quantity'] =
-                    $cart->getQuantity(
-                        new Part(
-                            $data['types'][$i]['id'],
-                            $data['types'][$i]['name'],
-                            $_GET['serial']));
+
+            $types = array();
+            $category = new Category($_GET['categoryId']);
+            foreach ($category->getTypes() as $type) {
+                $item = new CartItem(
+                    $type->getId(),
+                    $type->getName(),
+                    $_GET['serialGlider']);
+
+                $data['types'][] = array(
+                    'id' => $type->getId(),
+                    'name' => $type->getName(),
+                    'description' => $type->getDescription(),
+                    'quantity' => $cart->getQuantity($item)
+                );
+                $data['success'] = true;
             }
 
-            $data['success'] = true;
-
         } catch (Exception $e) {
-
             $data['success'] = false;
             $data['message'] = $e->getMessage();
         }

@@ -5,64 +5,51 @@ include_once(ROOT . 'libs/interfaces/icomparable.php');
 
 /**
  * Class Part
- * Représente une pièce qui pourra être commandé dans le panier d'achats.
+ * Représente une pièce.
  */
-class Part implements IComparable
+class Part
 {
-    private $type;
-    private $name;
-    private $serial;
+    private $id;
+    private $sku;
+    private $serialGlider;
 
     /**
      * Constructeur par défaut.
-     * @param $type
-     * @param $name
-     * @param $serial
+     * @param $id
+     * @param null $sku
+     * @param null $serialGlider
      */
-    public function __construct($type, $name, $serial)
+    public function __construct($id, $sku = null, $serialGlider = null)
     {
-        $this->type = $type;
-        $this->name = $name;
-        $this->serial = $serial;
+        $this->id = $id;
+        $this->sku = $sku;
+        $this->serialGlider = $serialGlider;
     }
 
     /**
-     * Retourne vrai si l'objet comparé est identique à cette pièce.
-     * @param $object
-     * @return bool
-     */
-    public function equals($object)
-    {
-        return
-            $object instanceof self &&
-            $this->getType() == $object->getType() &&
-            $this->getSerial() == $object->getSerial();
-    }
-
-    /**
-     * Retourne le type de la pièce.
+     * Retourne l'identifiant de la pièce.
      * @return mixed
      */
-    public function getType()
+    public function getId()
     {
-        return $this->type;
+        return $this->id;
     }
 
     /**
-     * Retourne le nom de la pièce.
-     * @return mixed
+     * Retourne le SKU de la pièce.
+     * @return null
      */
-    public function getName()
+    public function getSku()
     {
-        return $this->name;
+        return $this->sku;
     }
 
     /**
-     * Retourne le numéro de série de la pièce.
-     * @return mixed
+     * Retourne le numéro de série de chaise nécessitant cette pièce.
+     * @return null
      */
-    public function getSerial()
+    public function getSerialGlider()
     {
-        return $this->serial;
+        return $this->serialGlider;
     }
 }

@@ -9,13 +9,13 @@ include_once(ROOT . 'libs/interfaces/icomparable.php');
  */
 interface ICart
 {
-    public function add(IComparable $object);
+    public function add(ICartItem $item);
 
-    public function remove(IComparable $object);
+    public function remove(ICartItem $item);
 
-    public function getQuantity(IComparable $object);
+    public function getQuantity(ICartItem $item);
 
-    public function setQuantity(IComparable $object, $quantity);
+    public function setQuantity(ICartItem $item, $quantity);
 
     public function isEmpty();
 

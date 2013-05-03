@@ -9,18 +9,23 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
 
-    if (empty($_GET['country'])) {
+    if (empty($_GET['countryId'])) {
         $data['success'] = false;
         $data['message'] = 'A country must be selected.';
     } else {
 
         try {
-            $data['states'] = Country::getStatesByCountryId($_GET['country']);
+            $states = array();
+            $country = new Country($_GET['countryId']);
+            foreach ($country->getStates() as $state) {
+                $data['states'][] = array(
+                    'id' => $state->getId(),
+                    'name' => $state->getName()
+                );
+            }
             $data['success'] = true;
 
         } catch (Exception $e) {
-
-            // Si la requête échoué, retourne un message d'erreur.
             $data['success'] = false;
             $data['message'] = $e->getMessage();
         }

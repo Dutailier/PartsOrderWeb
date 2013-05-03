@@ -28,7 +28,7 @@ if (!Security::isAuthenticated()) {
         <h1>Parts ordered</h1>
 
         <!-- Liste des items. -->
-        <div id="parts">
+        <div id="items">
         </div>
         <!-- Fin -->
 

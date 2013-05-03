@@ -8,12 +8,15 @@ if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 } else {
+    try {
+        (new SessionCart())->Clear();
 
-    // Efface le contenu du panier d'achats.
-    (new SessionCart())->Clear();
+        $data['success'] = true;
 
-    // Confirme le succès de la requête.
-    $data['success'] = true;
+    } catch (Exception $e) {
+        $data['success'] = false;
+        $data['message'] = $e->getMessage();
+    }
 }
 
 // Indique que le contenu de la page affichera un objet JSON.

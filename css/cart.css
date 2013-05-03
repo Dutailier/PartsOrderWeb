@@ -1,8 +1,8 @@
-#parts {
+#item {
     overflow: hidden; /* clearfix */
 }
 
-div.part {
+div.item {
     padding: 5px;
     border: 2px solid #484848;
     margin: 10px;
@@ -36,7 +36,7 @@ label.name {
     font-size: 1.2em;
 }
 
-label.serial {
+label.serialGlider {
     font-size: 0.8em;
     font-style: italic;
 }

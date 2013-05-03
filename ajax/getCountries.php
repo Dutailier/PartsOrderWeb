@@ -9,12 +9,16 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
     try {
-        $data['countries'] = Country::getCountries();
+        $data['countries'] = array();
+        foreach (Country::getCountries() as $country) {
+            $data['countries'][] = array(
+                'id' => $country->getId(),
+                'name' => $country->getName()
+            );
+        }
         $data['success'] = true;
 
     } catch (Exception $e) {
-
-        // Si la requête échoué, retourne un message d'erreur.
         $data['success'] = false;
         $data['message'] = $e->getMessage();
     }

@@ -1,25 +1,35 @@
 <?php
 
 include_once('config.php');
+include_once(ROOT . 'libs/database.php');
+include_once(ROOT . 'libs/models/user.php');
 
 class Retailer
 {
-    private $user_id;
-    private $address_id;
+    private $userId;
     private $name;
     private $phone;
     private $email;
 
-    public function __construct(
-        $user_id, $address_id, $name, $phone, $email)
+    /**
+     * Constructeur par défaut.
+     * @param $userId
+     * @param $name
+     * @param $phone
+     * @param $email
+     */
+    public function __construct($userId, $name = null, $phone = null, $email = null)
     {
-        $this->user_id = $user_id;
-        $this->address_id = $address_id;
+        $this->userId = $userId;
         $this->name = $name;
         $this->phone = $phone;
         $this->email = $email;
     }
 
+    /**
+     * Retourne le détaillant actuellement connecté.
+     * @return mixed
+     */
     public static function getConnected()
     {
         if (session_id() == '') {
@@ -33,6 +43,12 @@ class Retailer
         return $_SESSION['retailer'];
     }
 
+    /**
+     * Retourne l'instance du détaillant correspondant à cet utilisateur.
+     * @param User $user
+     * @return Retailer
+     * @throws Exception
+     */
     public static function getRetailer(User $user)
     {
         // Récupère la connexion à la base de données.
@@ -54,11 +70,37 @@ class Retailer
 
                 return new Retailer(
                     $row['user_id'],
-                    $row['address_id'],
                     $row['name'],
                     $row['phone'],
                     $row['email']);
             }
         }
+    }
+
+    /**
+     * Retourne l'identifiant du client.
+     * @return string
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Retourne le numéro de téléhpone du client (ex: 14504647981).
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Retourne l'adresse courriel du client.
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }

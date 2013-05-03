@@ -1,5 +1,5 @@
 $(document).on('click', 'div.category', function () {
-    window.location = 'types.php?category=' + $(this).data('category');
+    window.location = 'types.php?categoryId=' + $(this).data('id');
 });
 
 $(document).ready(function () {
@@ -49,7 +49,7 @@ $(document).ready(function () {
  */
 function addCategory(id, name) {
     $('#categories').append(
-        '<div class="category" data-category="' + id + '" >' +
+        '<div class="category" data-id="' + id + '" >' +
             '<span>' + name + '</span>' +
             '<img src="../img/categories/' + id + '.png" />' +
         '</div>'

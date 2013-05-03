@@ -1,30 +1,30 @@
 $(document).ready(function () {
 
-    $.get('ajax/getPartsFromCart.php')
+    $.get('ajax/getItems.php')
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créées et
             // vérifie si la requête fut un succès.
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
-                data.hasOwnProperty('parts')) {
+                data.hasOwnProperty('items')) {
 
                 // Parcours tous les pièces contenu dans le panier d'achats.
-                for (var i in data['parts']) {
+                for (var i in data['items']) {
 
                     // Vérifie que les propriétés de l'objet JSON ont bien été créés.
-                    if (data['parts'].hasOwnProperty(i) &&
-                        data['parts'][i].hasOwnProperty('type') &&
-                        data['parts'][i].hasOwnProperty('name') &&
-                        data['parts'][i].hasOwnProperty('serial') &&
-                        data['parts'][i].hasOwnProperty('quantity')) {
+                    if (data['items'].hasOwnProperty(i) &&
+                        data['items'][i].hasOwnProperty('typeId') &&
+                        data['items'][i].hasOwnProperty('name') &&
+                        data['items'][i].hasOwnProperty('serialGlider') &&
+                        data['items'][i].hasOwnProperty('quantity')) {
 
                         // Ajoute la pièce à la liste.
-                        addPart(
-                            data['parts'][i]['type'],
-                            data['parts'][i]['name'],
-                            data['parts'][i]['serial'],
-                            data['parts'][i]['quantity']);
+                        addItem(
+                            data['items'][i]['typeId'],
+                            data['items'][i]['name'],
+                            data['items'][i]['serialGlider'],
+                            data['items'][i]['quantity']);
                     }
                 }
 
@@ -70,7 +70,7 @@ $(document).ready(function () {
 
     $('#btnOrder').click(function () {
         //Vérifie que des pièces sont présentement en commande.
-        if ($('#parts > div.part').length > 0) {
+        if ($('#items > div.item').length > 0) {
 
             // Redirige l'utilisateur vers le formulaire de commande.
             window.location = 'order.php';
@@ -80,15 +80,15 @@ $(document).ready(function () {
 
 $(document).on('click', '.addCart', function () {
 
-    var $part = $(this).closest('div.part');
+    var $item = $(this).closest('div.item');
 
     var parameters = {
-        'type': $part.data('type'),
-        'name': $part.find('label.name').text(),
-        'serial': $part.find('label.serial').text()
+        'typeId': $item.data('typeid'),
+        'name': $item.find('label.name').text(),
+        'serialGlider': $item.find('label.serialGlider').text()
     };
 
-    $.get('ajax/addPartToCart.php', parameters)
+    $.get('ajax/addItem.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et
@@ -98,7 +98,7 @@ $(document).on('click', '.addCart', function () {
                 data.hasOwnProperty('quantity')) {
 
                 // Met à jour à quantité de la pièce.
-                $part.find('label.quantity').text(data['quantity']);
+                $item.find('label.quantity').text(data['quantity']);
 
                 // Vérifie que la propriété de l'objet JSON a bien été créée.
             } else if (data.hasOwnProperty('message')) {
@@ -116,15 +116,15 @@ $(document).on('click', '.addCart', function () {
 
 $(document).on('click', '.removeCart', function () {
 
-    var $part = $(this).closest('div.part');
+    var $item = $(this).closest('div.item');
 
     var parameters = {
-        'type': $part.data('type'),
-        'name': $part.find('label.name').text(),
-        'serial': $part.find('label.serial').text()
+        'typeId': $item.data('typeid'),
+        'name': $item.find('label.name').text(),
+        'serialGlider': $item.find('label.serialGlider').text()
     };
 
-    $.get('ajax/removePartFromCart.php', parameters)
+    $.get('ajax/removeItem.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et
@@ -136,11 +136,11 @@ $(document).on('click', '.removeCart', function () {
                 // Si la quantité résultante est nulle,
                 // on supprime la pièce du panier d'achats
                 if (data['quantity'] <= 0) {
-                    $part.remove();
+                    $item.remove();
 
                     // Met à jour à quantité de la pièce.
                 } else {
-                    $part.find('label.quantity').text(data['quantity']);
+                    $item.find('label.quantity').text(data['quantity']);
                 }
 
                 // Vérifie que la propriété de l'objet JSON a bien été créée.
@@ -158,19 +158,19 @@ $(document).on('click', '.removeCart', function () {
 });
 
 /**
- * Ajoute une pièce à la liste de pièces à affichée.
- * @param type
+ * Ajoute un item à la liste du panier d'achats.
+ * @param typeId
  * @param name
- * @param serial
+ * @param serialGlider
  * @param quantity
  */
-function addPart(type, name, serial, quantity) {
-    $('#parts').append(
-        '<div class="part" data-type="' + type + '">' +
+function addItem(typeId, name, serialGlider, quantity) {
+    $('#items').append(
+        '<div class="item" data-typeId="' + typeId + '">' +
             '<div class="details">' +
             '<label class="quantity">' + quantity + '</label>' +
             '<label class="name">' + name + '</label>' +
-            '<label class="serial">' + serial + '</label>' +
+            '<label class="serialGlider">' + serialGlider + '</label>' +
             '</div>' +
             '<div class="buttons">' +
             '<input class="removeCart" type="button"/>' +

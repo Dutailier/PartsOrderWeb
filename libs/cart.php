@@ -2,7 +2,7 @@
 
 include_once('config.php');
 include_once(ROOT . 'libs/interfaces/icomparable.php');
-include_once(ROOT . 'libs/models/item.php');
+include_once(ROOT . 'libs/cartItem.php');
 include_once(ROOT . 'libs/interfaces/icart.php');
 
 /**
@@ -40,12 +40,11 @@ class SessionCart implements ICart
      * @param IComparable $object
      * @return mixed
      */
-    public function add(IComparable $object)
+    public function add(ICartItem $item)
     {
-        $index = $this->getIndexOfItem($object);
+        $index = $this->getIndexOfItem($item);
 
         if ($index == -1) {
-            $item = new Item($object);
             $this->items[] = $item;
 
         } else {
@@ -64,9 +63,9 @@ class SessionCart implements ICart
      * @return int
      * @throws Exception
      */
-    public function remove(IComparable $object)
+    public function remove(ICartItem $item)
     {
-        $index = $this->getIndexOfItem($object);
+        $index = $this->getIndexOfItem($item);
 
         if ($index == -1) {
             throw new Exception('The item isn\'t inside the cart.');
@@ -91,9 +90,9 @@ class SessionCart implements ICart
      * @return mixed
      * @throws Exception
      */
-    public function getQuantity(IComparable $object)
+    public function getQuantity(ICartItem $item)
     {
-        $index = $this->getIndexOfItem($object);
+        $index = $this->getIndexOfItem($item);
 
         if ($index == -1) {
             return 0;
@@ -111,16 +110,16 @@ class SessionCart implements ICart
      * @return mixed
      * @throws Exception
      */
-    public function setQuantity(IComparable $object, $quantity)
+    public function setQuantity(ICartItem $item, $quantity)
     {
         if (($quantity = (int)$quantity) < 1) {
             throw new Exception('A positive quantity is required.');
         }
 
-        $index = $this->getIndexOfItem($object);
+        $index = $this->getIndexOfItem($item);
 
         if ($index == -1) {
-            $item = new Item($object, $quantity);
+            $item->setQuantity($quantity);
             $this->items[] = $item;
 
         } else {
@@ -167,10 +166,10 @@ class SessionCart implements ICart
      * @param IComparable $object
      * @return array
      */
-    private function getIndexOfItem(IComparable $object)
+    private function getIndexOfItem(ICartItem $item)
     {
-        foreach ($this->items as $key => $item) {
-            if ($object->equals($item->getObject())) {
+        foreach ($this->items as $key => $value) {
+            if ($item->equals($value)) {
                 return $key;
             }
         }

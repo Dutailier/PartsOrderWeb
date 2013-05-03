@@ -10,24 +10,27 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
 
-    if (empty($_GET['type']) || empty($_GET['serial']) || empty($_GET['name'])) {
+    if (empty($_GET['typeId']) || empty($_GET['name'])) {
         $data['success'] = false;
-        $data['message'] = 'A part must be selected or a serial number must be entered.';
+        $data['message'] = 'A item must be selected.';
+    } else if (empty($_GET['serialGlider'])) {
+        $data['success'] = false;
+        $data['message'] = 'The serialGlider is required.';
     } else {
 
         // Crée une pièce à partir des informations passés en GET.
-        $part = new Part($_GET['type'], $_GET['name'], $_GET['serial']);
+        $item = new CartItem($_GET['typeId'], $_GET['name'], $_GET['serialGlider']);
 
         $cart = new SessionCart();
         // Vérifie que la quantité avant d'avoir ajouté le type de pièce
-        // est inférieure à la quantité après afin de confirmer que
-        // la pièce a belle et bien été ajoutée au panier d'achats.
-        if ($cart->getQuantity($part) < ($qty = $cart->Add($part))) {
+        // est inférieure à la quantité après afin de confirmer que la pièce
+        // à belle et bien été retirée du panier d'achats.
+        if ($cart->getQuantity($item) > ($quantity = $cart->remove($item))) {
             $data['success'] = true;
-            $data['quantity'] = $qty;
+            $data['quantity'] = $quantity;
         } else {
             $data['success'] = false;
-            $data['message'] = 'Unable to add the part to the cart.';
+            $data['message'] = 'Unable to remove the part form cart.';
         }
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/models/category.php');
+include_once(ROOT . 'libs/cart.php');
+include_once(ROOT . 'libs/cartItem.php');
 include_once(ROOT . 'libs/security.php');
 
 if (!Security::isAuthenticated()) {
@@ -9,11 +10,15 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
     try {
-        $data['categories'] = array();
-        foreach (Category::getCategories() as $category) {
-            $data['categories'][] = array(
-                'id' => $category->getId(),
-                'name' => $category->getName()
+        $cart = new SessionCart();
+
+        $data['items'] = array();
+        foreach ($cart->getItems() as $item) {
+            $data['items'][] = array(
+                'typeId' => $item->getTypeId(),
+                'name' => $item->getName(),
+                'serialGlider' => $item->getSerialGlider(),
+                'quantity' => $item->getQuantity()
             );
         }
         $data['success'] = true;
@@ -29,4 +34,3 @@ header('Content-type: application/json');
 
 // Affiche l'objet JSON.
 echo json_encode($data);
-

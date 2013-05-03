@@ -84,7 +84,7 @@ $(document).ready(function () {
     $('#countries').change(function () {
 
         var parameters = {
-            "country": $('#countries > option:selected').val()
+            "countryId": $('#countries > option:selected').val()
         };
 
         $.get('ajax/getStates.php', parameters)

@@ -6,7 +6,7 @@ include_once(ROOT . 'libs/security.php');
 // Vérifie si les informations ont bien été passées.
 if (empty($_POST['username']) || empty($_POST['password'])) {
     $data['success'] = false;
-    $data['message'] = 'Username or password incorrect.';
+    $data['message'] = 'Username and password are required.';
 
 } else {
 

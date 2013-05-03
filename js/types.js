@@ -1,5 +1,5 @@
 // Définit le numéro de série de chaise inscrit.
-var serial = '';
+var serialGlider = '';
 
 $(document).ready(function () {
 
@@ -23,11 +23,11 @@ $(document).ready(function () {
         submitHandler: function () {
 
             // Récupère le numéro de série afin de le garder valide.
-            serial = $('#serial').val();
+            serialGlider = $('#serialGlider').val();
 
             var parameters = {
-                "serial": serial,
-                "category": $.queryString['category']
+                "serialGlider": serialGlider,
+                "categoryId": $.queryString['categoryId']
             };
 
             $.get('ajax/getTypes.php', parameters)
@@ -82,12 +82,12 @@ $(document).on('click', 'input.addCart', function () {
     var $type = $(this).closest('div.type');
 
     var parameters = {
-        "type": $type.data('id'),
+        "typeId": $type.data('id'),
         "name": $type.find('span.name').text(),
-        "serial": serial
+        "serialGlider": serialGlider
     };
 
-    $.get('ajax/addPartToCart.php', parameters)
+    $.get('ajax/addItem.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et
@@ -119,12 +119,12 @@ $(document).on('click', 'input.removeCart', function () {
     var $type = $(this).closest('div.type');
 
     var parameters = {
-        "type": $type.data('id'),
+        "typeId": $type.data('id'),
         "name": $type.find('span.name').text(),
-        "serial": serial
+        "serialGlider": serialGlider
     };
 
-    $.get('ajax/removePartFromCart.php', parameters)
+    $.get('ajax/removeItem.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et

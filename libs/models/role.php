@@ -43,16 +43,6 @@ class Role
     }
 
     /**
-     * Retourne vrai si le nm de rôle spécifié est identifique à celui-ci.
-     * @param $name
-     * @return bool
-     */
-    public function CompareName($name)
-    {
-        return $this->name == $name;
-    }
-
-    /**
      * Retourne vrai si l'utilisateur connecté a le rôle spécifié.
      * @param $name
      * @return bool
@@ -68,19 +58,13 @@ class Role
             // Si les rôles n'ont jamais été récupérés, on
             // en fait la requête et on garde le résultat pour de
             // futures utilistions.
-            if (empty($_SESSION['roles'])) {
+            if (is_null($_SESSION['roles'])) {
                 $_SESSION['roles'] = Role::getRoles(User::getConnected());
             }
 
-            $i = Role::getIndex($_SESSION['roles'], $name);
+            $index = Role::getIndex($_SESSION['roles'], $name);
 
-            // Si l'index est inférieur au nombre de rôles,
-            // c'est que l'utilisateur a ce rôle.
-            if ($i < count($_SESSION['roles'])) {
-                return true;
-            } else {
-                return false;
-            }
+            return $index != -1;
         }
     }
 
@@ -90,7 +74,7 @@ class Role
      * @return mixed
      * @throws Exception
      */
-    private static function getRoles(User $user)
+    public static function getRoles(User $user)
     {
         // Récupère la connexion à la base de données.
         $conn = Database::getConnection();
@@ -107,15 +91,12 @@ class Role
             } else {
 
                 $roles = array();
-                $i = 0;
-
-                // Inscrire chaque ligne dans l'objet JSON qui sera retourné.
                 while (odbc_fetch_row($result)) {
-                    $roles[$i]['id'] = odbc_result($result, 'id');
-                    $roles[$i]['name'] = odbc_result($result, 'name');
-                    $i++;
+                    $roles[] = new Role(
+                        odbc_result($result, 'id'),
+                        odbc_result($result, 'name')
+                    );
                 }
-
                 return $roles;
             }
         }
@@ -130,14 +111,12 @@ class Role
      */
     private static function getIndex(Array $roles, $name)
     {
-        $count = count($roles);
-
-        // Parcours tous les rôles afin de les comparer.
-        for ($i = 0; $i < $count; $i++) {
-            if ($roles[$i]->CompareName($name)) {
-                return $i;
+        foreach ($roles as $index => $role) {
+            if ($role->getName() == $name) {
+                return $index;
             }
         }
-        return $count;
+
+        return -1;
     }
 }
