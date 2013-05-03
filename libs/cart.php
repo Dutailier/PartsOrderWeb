@@ -37,7 +37,7 @@ class SessionCart implements ICart
     /**
      * Ajoute un item au panier d'achats.
      * Retourne la quantité de l'item contenue dans le panier d'achats.
-     * @param IComparable $object
+     * @param ICartItem $item
      * @return mixed
      */
     public function add(ICartItem $item)
@@ -59,8 +59,8 @@ class SessionCart implements ICart
     /**
      * Retire un item du panier d'achats.
      * Retourne la quantité de l'item contenue dans le panier d'achats.
-     * @param IComparable $object
-     * @return int
+     * @param ICartItem $item
+     * @return mixed
      * @throws Exception
      */
     public function remove(ICartItem $item)
@@ -86,9 +86,8 @@ class SessionCart implements ICart
 
     /**
      * Retourne la quantité de l'item contenue dans le panier d'achats.
-     * @param IComparable $object
-     * @return mixed
-     * @throws Exception
+     * @param ICartItem $item
+     * @return int
      */
     public function getQuantity(ICartItem $item)
     {
@@ -105,7 +104,7 @@ class SessionCart implements ICart
     /**
      * Définit la quantité contenue dans le panier d'achats de l'item.
      * Peut être appelé pour ajouter un item d'une quantité supérieure à un.
-     * @param IComparable $object
+     * @param ICartItem $item
      * @param $quantity
      * @return mixed
      * @throws Exception
@@ -163,8 +162,8 @@ class SessionCart implements ICart
 
     /**
      * Retourne l'index de l'item.
-     * @param IComparable $object
-     * @return array
+     * @param ICartItem $item
+     * @return int|string
      */
     private function getIndexOfItem(ICartItem $item)
     {
