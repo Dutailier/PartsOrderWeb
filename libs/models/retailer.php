@@ -4,6 +4,10 @@ include_once('config.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/models/user.php');
 
+/**
+ * Class Retailer
+ * Représente un détaillant.
+ */
 class Retailer
 {
     private $userId;

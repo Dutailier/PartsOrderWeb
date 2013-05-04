@@ -20,7 +20,7 @@ class Type
      * @param $name
      * @param $description
      */
-    public function __construct($id, $name, $description)
+    public function __construct($id, $name = null, $description = null)
     {
         $this->id = $id;
         $this->name = $name;

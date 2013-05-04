@@ -1,19 +1,35 @@
 <?php
 
+include_once('config.php');
+include_once(ROOT . 'libs/models/country.php');
+include_once(ROOT . 'libs/database.php');
 
+/**
+ * Class State
+ * Représente un état/province.
+ */
 class State
 {
     private $id;
-    private $countryId;
     private $name;
 
-    public function __construct($id, $countryId, $name)
+    /**
+     * Constructeur par défaut.
+     * @param $id
+     * @param $name
+     */
+    public function __construct($id, $name = null)
     {
         $this->id = $id;
-        $this->countryId = $countryId;
         $this->name = $name;
     }
 
+    /**
+     * Retourne tous les états/provinces de ce pays.
+     * @param Country $country
+     * @return array
+     * @throws Exception
+     */
     public static function getStates(Country $country)
     {
 
@@ -35,7 +51,6 @@ class State
                 while (odbc_fetch_row($result)) {
                     $states[] = new State(
                         odbc_result($result, 'id'),
-                        $country->getId(),
                         odbc_result($result, 'name'));
                 }
                 return $states;
@@ -43,18 +58,21 @@ class State
         }
     }
 
+    /**
+     * Retourne l'identifiant de l'état/province.
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Retourne le nom de l'état/province.
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
-    }
-
-    public function getCountryId()
-    {
-        return $this->countryId;
     }
 }

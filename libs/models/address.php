@@ -1,6 +1,7 @@
 <?php
 
 include_once('config.php');
+include_once(ROOT . 'libs/models/state.php');
 include_once(ROOT . 'libs/database.php');
 
 /**
@@ -13,7 +14,6 @@ class Address
     private $details;
     private $city;
     private $zip;
-    private $stateId;
 
 
     /**
@@ -22,14 +22,12 @@ class Address
      * @param $details
      * @param $city
      * @param $zip
-     * @param $stateId
      */
-    public function __construct($id, $details = null, $city = null, $zip = null, $stateId = null)
+    public function __construct($id, $details = null, $city = null, $zip = null)
     {
         $this->details = $details;
         $this->city = $city;
         $this->zip = $zip;
-        $this->stateId = $stateId;
     }
 
     /**
@@ -37,11 +35,11 @@ class Address
      * @param $details
      * @param $city
      * @param $zip
-     * @param $stateId
+     * @param State $state
      * @return Address
      * @throws Exception
      */
-    public function insert($details, $city, $zip, $stateId)
+    public function insert($details, $city, $zip, State $state)
     {
         // Récupère la connexion à la base de données.
         $conn = Database::getConnection();
@@ -57,7 +55,7 @@ class Address
                     $details . ', ' .
                     $city . ', ' .
                     $zip . ', ' .
-                    $stateId . ')}');
+                    $state->getId() . ')}');
 
             if (empty($result)) {
                 throw new Exception('The execution of the query failed.');
@@ -67,7 +65,7 @@ class Address
                 $row = odbc_fetch_row($result);
 
                 return new Address(
-                    $row['id'], $details, $city, $zip, $stateId);
+                    $row['id'], $details, $city, $zip);
             }
         }
     }
@@ -106,14 +104,5 @@ class Address
     public function getZip()
     {
         return $this->zip;
-    }
-
-    /**
-     * Retourne l'identifiant de l'état/province de l'adresse.
-     * @return mixed
-     */
-    public function getStateId()
-    {
-        return $this->stateId;
     }
 }
