@@ -31,7 +31,7 @@ class Order
      * @return Order
      * @throws Exception
      */
-    public function Place(Retailer $retailer, Customer $customer)
+    public static function Place(Retailer $retailer, Customer $customer)
     {
         // Récupère la connexion à la base de données.
         $conn = Database::getConnection();
@@ -44,27 +44,25 @@ class Order
             $result = odbc_exec(
                 $conn,
                 '{CALL [BruPartsOrderDb].[dbo].[placeOrder]("' .
-                    $retailer->getId() . '", "' .
-                    $customer->getId() . '")}');
+                    $customer->getId() . '", "' .
+                    $retailer->getUserId() . '")}');
 
             if (empty($result)) {
                 throw new Exception('The execution of the query failed.');
             } else {
 
-                // Récupère la première ligne résultante.
-                $row = odbc_fetch_row($result);
-
-                return new Order($row['id']);
+                odbc_fetch_row($result);
+                return new Order(odbc_result($result, 'id'));
             }
         }
     }
 
     /**
-     * Ajouter une pièce à la commande.
-     * @param Part $part
+     * Ajouter l'item à la commande.
+     * @param CartItem $item
      * @throws Exception
      */
-    public function AddPart(Part $part)
+    public function AddItem(CartItem $item)
     {
         // Récupère la connexion à la base de données.
         $conn = Database::getConnection();
@@ -73,21 +71,18 @@ class Order
             throw new Exception('The connection to the database failed.');
         } else {
 
-            // Exécute la procédure stockée.
-            $result = odbc_exec(
-                $conn,
-                '{CALL [BruPartsOrderDb].[dbo].[addPart]("' .
-                    $part->getId() . '", "' .
-                    $this->getId() . '")}');
+            $sql = '{CALL [BruPartsOrderDb].[dbo].[insertPartIntoOrder]("' .
+                $item->getTypeId() . '", "' .
+                $item->getSerialGlider() . '", "' .
+                $this->getId() . '", "' .
+                $item->getQuantity() . '")}';
+
+            $result = odbc_exec($conn, $sql);
 
             if (empty($result)) {
                 throw new Exception('The execution of the query failed.');
             } else {
-
-                // Récupère la première ligne résultante.
-                $row = odbc_fetch_row($result);
-
-                $this->parts[] = $part;
+                $this->parts[] = $item;
             }
         }
     }

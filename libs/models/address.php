@@ -15,7 +15,6 @@ class Address
     private $city;
     private $zip;
 
-
     /**
      * Le constructeur par défaut.
      * @param $id
@@ -25,6 +24,7 @@ class Address
      */
     public function __construct($id, $details = null, $city = null, $zip = null)
     {
+        $this->id = $id;
         $this->details = $details;
         $this->city = $city;
         $this->zip = $zip;
@@ -39,7 +39,7 @@ class Address
      * @return Address
      * @throws Exception
      */
-    public function insert($details, $city, $zip, State $state)
+    public static function Add($details, $city, $zip, State $state)
     {
         // Récupère la connexion à la base de données.
         $conn = Database::getConnection();
@@ -48,24 +48,20 @@ class Address
             throw new Exception('The connection to the database failed.');
         } else {
 
-            // Exécute la procédure stockée.
-            $result = odbc_exec(
-                $conn,
-                '{CALL [BruPartsOrderDb].[dbo].[insertCustomer](' .
-                    $details . ', ' .
-                    $city . ', ' .
-                    $zip . ', ' .
-                    $state->getId() . ')}');
+            $sql = '{CALL [BruPartsOrderDb].[dbo].[insertAddress]("' .
+                $details . '", "' .
+                $city . '", "' .
+                $zip . '", "' .
+                $state->getId() . '")}';
+
+            $result = odbc_exec($conn, $sql);
 
             if (empty($result)) {
                 throw new Exception('The execution of the query failed.');
             } else {
 
-                // Récupère la première ligne résultante.
-                $row = odbc_fetch_row($result);
-
-                return new Address(
-                    $row['id'], $details, $city, $zip);
+                odbc_fetch_row($result);
+                return new Address(odbc_result($result, 'id'), $details, $city, $zip);
             }
         }
     }

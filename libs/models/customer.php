@@ -35,15 +35,15 @@ class Customer
 
     /**
      * Insère un client dans la base de données et retourne son instance.
-     * @param Address $address
      * @param $firstname
      * @param $lastname
      * @param $phone
      * @param $email
-     * @return Customer
+     * @param Address $address
      * @throws Exception
+     * @return Customer
      */
-    public function insert(Address $address, $firstname, $lastname, $phone, $email)
+    public static function Add($firstname, $lastname, $phone, $email, Address $address)
     {
         // Récupère la connexion à la base de données.
         $conn = Database::getConnection();
@@ -52,25 +52,26 @@ class Customer
             throw new Exception('The connection to the database failed.');
         } else {
 
-            // Exécute la procédure stockée.
-            $result = odbc_exec(
-                $conn,
-                '{CALL [BruPartsOrderDb].[dbo].[insertCustomer](' .
-                    $address->getId() . ', ' .
-                    $firstname . ', ' .
-                    $lastname . ', ' .
-                    $phone . ', ' .
-                    $email . ')}');
+            $sql = '{CALL [BruPartsOrderDb].[dbo].[insertCustomer]("' .
+                $address->getId() . '", "' .
+                $firstname . '", "' .
+                $lastname . '", "' .
+                $phone . '", "' .
+                $email . '")}';
+
+            $result = odbc_exec($conn, $sql);
 
             if (empty($result)) {
                 throw new Exception('The execution of the query failed.');
             } else {
 
-                // Récupère la première ligne résultante.
-                $row = odbc_fetch_row($result);
-
+                odbc_fetch_row($result);
                 return new Customer(
-                    $row['id'], $firstname, $lastname, $phone, $email);
+                    odbc_result($result, 'id'),
+                    $firstname,
+                    $lastname,
+                    $phone,
+                    $email);
             }
         }
     }
@@ -79,7 +80,8 @@ class Customer
      * Retourne l'identifiant du client.
      * @return string
      */
-    public function getId()
+    public
+    function getId()
     {
         return $this->id;
     }
@@ -88,7 +90,8 @@ class Customer
      * Retourne le prénom du client.
      * @return string
      */
-    public function getFirstname()
+    public
+    function getFirstname()
     {
         return $this->firstname;
     }
@@ -97,7 +100,8 @@ class Customer
      * Retourne le nom du client.
      * @return string
      */
-    public function getLastname()
+    public
+    function getLastname()
     {
         return $this->lastname;
     }
@@ -106,7 +110,8 @@ class Customer
      * Retourne le numéro de téléhpone du client (ex: 14504647981).
      * @return mixed
      */
-    public function getPhone()
+    public
+    function getPhone()
     {
         return $this->phone;
     }
@@ -115,7 +120,8 @@ class Customer
      * Retourne l'adresse courriel du client.
      * @return string
      */
-    public function getEmail()
+    public
+    function getEmail()
     {
         return $this->email;
     }

@@ -46,11 +46,11 @@ class Security
                 } else {
 
                     // Démarre une session si celle-ci n'est pas déjà active.
-                    if(session_id() == '') {
+                    if (session_id() == '') {
                         session_start();
                     }
 
-                    $_SESSION['user'] = new User($row['id'], $username);
+                    $_SESSION['user'] = new User(odbc_result($result, 'id'), $username);
 
                     return true;
                 }
@@ -65,7 +65,7 @@ class Security
     public static function isAuthenticated()
     {
         // Démarre la session si cela n'est pas déjà fait.
-        if(session_id() == '') {
+        if (session_id() == '') {
             session_start();
         }
 

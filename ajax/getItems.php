@@ -13,12 +13,12 @@ if (!Security::isAuthenticated()) {
         $cart = new SessionCart();
 
         $data['items'] = array();
-        foreach ($cart->getItems() as $item) {
+        foreach ($cart->getItems() as $part) {
             $data['items'][] = array(
-                'typeId' => $item->getTypeId(),
-                'name' => $item->getName(),
-                'serialGlider' => $item->getSerialGlider(),
-                'quantity' => $item->getQuantity()
+                'typeId' => $part->getTypeId(),
+                'name' => $part->getName(),
+                'serialGlider' => $part->getSerialGlider(),
+                'quantity' => $part->getQuantity()
             );
         }
         $data['success'] = true;

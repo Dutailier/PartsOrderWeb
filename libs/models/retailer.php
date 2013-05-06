@@ -14,6 +14,7 @@ class Retailer
     private $name;
     private $phone;
     private $email;
+    private $address;
 
     /**
      * Constructeur par défaut.
@@ -22,12 +23,15 @@ class Retailer
      * @param $phone
      * @param $email
      */
-    public function __construct($userId, $name = null, $phone = null, $email = null)
+    public function __construct(
+        $userId, $name = null, $phone = null,
+        $email = null, Address $address = null)
     {
         $this->userId = $userId;
         $this->name = $name;
         $this->phone = $phone;
         $this->email = $email;
+        $this->address = $address;
     }
 
     /**
@@ -41,7 +45,7 @@ class Retailer
         }
 
         if (!isset($_SESSION['retailer'])) {
-            $_SESSION['retailer'] = getRetailer(User::getConnected());
+            $_SESSION['retailer'] = self::getRetailer(User::getConnected());
         }
 
         return $_SESSION['retailer'];
@@ -68,15 +72,20 @@ class Retailer
             if (empty($result)) {
                 throw new Exception('The execution of the query failed.');
             } else {
-
                 // Récupère la première ligne résultante.
                 $row = odbc_fetch_row($result);
 
-                return new Retailer(
-                    $row['user_id'],
-                    $row['name'],
-                    $row['phone'],
-                    $row['email']);
+                if (empty($row)) {
+                    throw new Exception('No retailer available.');
+                } else {
+
+                    return new Retailer(
+                        odbc_result($result, 'user_id'),
+                        odbc_result($result, 'name'),
+                        odbc_result($result, 'phone'),
+                        odbc_result($result, 'email'),
+                        new Address(odbc_result($result, 'address_id')));
+                }
             }
         }
     }

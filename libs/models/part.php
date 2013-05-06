@@ -11,6 +11,7 @@ class Part
     private $id;
     private $sku;
     private $serialGlider;
+    private $type;
 
     /**
      * Constructeur par défaut.
@@ -18,11 +19,12 @@ class Part
      * @param null $sku
      * @param null $serialGlider
      */
-    public function __construct($id, $sku = null, $serialGlider = null)
+    public function __construct($id, $sku = null, $serialGlider = null, Type $type)
     {
         $this->id = $id;
         $this->sku = $sku;
         $this->serialGlider = $serialGlider;
+        $this->type = $type;
     }
 
     /**
@@ -32,6 +34,15 @@ class Part
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Retourne le type de la pièce.
+     * @return Type
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
