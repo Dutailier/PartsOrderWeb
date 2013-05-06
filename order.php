@@ -29,7 +29,7 @@ if ((new SessionCart())->isEmpty()) {
     <?php include_once(ROOT . '_header.php'); ?>
     <div id="content">
 
-        <h1>Customer informations</h1>
+        <h1>Shipping informations</h1>
 
         <form id="frmOrder" method="post" onsubmit="return false;">
             <ul id="summary"></ul>

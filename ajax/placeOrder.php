@@ -7,6 +7,7 @@ include_once(ROOT . 'libs/models/state.php');
 include_once(ROOT . 'libs/models/customer.php');
 include_once(ROOT . 'libs/models/order.php');
 include_once(ROOT . 'libs/cart.php');
+include_once(ROOT . 'libs/file.php');
 include_once(ROOT . 'libs/security.php');
 
 if (!Security::isAuthenticated()) {
@@ -65,6 +66,7 @@ if (!Security::isAuthenticated()) {
             }
 
             $data['success'] = true;
+
         } catch (Exception $e) {
             $data['success'] = false;
             $data['message'] = $e->getMessage();
