@@ -1,29 +1,37 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/cart.php');
+include_once(ROOT . 'libs/models/part.php');
 include_once(ROOT . 'libs/models/type.php');
 include_once(ROOT . 'libs/models/category.php');
-include_once(ROOT . 'libs/cartItem.php');
+include_once(ROOT . 'libs/cart.php');
 include_once(ROOT . 'libs/security.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
+
 } else {
     try {
         $cart = new SessionCart();
 
-        $data['items'] = array();
         foreach ($cart->getItems() as $item) {
-            $data['items'][] = array(
-                'typeId' => $item->getType()->getId(),
-                'name' => $item->getType()->getName(),
-                'categoryId' => $item->getType()->getCategory()->getId(),
-                'serialGlider' => $item->getSerialGlider(),
-                'quantity' => $item->getQuantity()
-            );
+            $category = $item->getType()->getCategory();
+
+            // Si le produit est commandé pour un client,
+            // les informations du client sont nécessaires.
+            if ($category->getId() == 3) {
+                $data['customerInfosAreRequired'] = true;
+                break;
+            }
         }
+
+        // Si la propriété n'est pas définit, c'est qu'auncun
+        // produit n'est commandé pour un client.
+        if(!isset($data['customerInfosAreRequired'])) {
+            $data['customerInfosAreRequired'] = false;
+        }
+
         $data['success'] = true;
 
     } catch (Exception $e) {

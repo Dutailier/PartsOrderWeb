@@ -13,18 +13,21 @@ class Type
     private $id;
     private $name;
     private $description;
+    private $category;
 
     /**
      * Constructeur par défaut.
      * @param $id
-     * @param $name
-     * @param $description
+     * @param null $name
+     * @param null $description
+     * @param Category $category
      */
-    public function __construct($id, $name = null, $description = null)
+    public function __construct($id, $name = null, Category $category = null, $description = null)
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
+        $this->category = $category;
     }
 
     /**
@@ -54,10 +57,50 @@ class Type
                     $types[] = new Type(
                         odbc_result($result, 'id'),
                         odbc_result($result, 'name'),
+                        $category,
                         odbc_result($result, 'description')
                     );
                 }
                 return $types;
+            }
+        }
+    }
+
+    /**
+     * Retourne le nom du type de pièce.
+     * @return mixed
+     */
+    public function getName()
+    {
+        if (is_null($this->name)) {
+            $this->Fill();
+        }
+
+        return $this->name;
+    }
+
+    private function Fill()
+    {
+        // Récupère la connexion à la base de données.
+        $conn = Database::getConnection();
+
+        if (empty($conn)) {
+            throw new Exception('The connection to the database failed.');
+        } else {
+
+            // Exécute la procédure stockée.
+            $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[getType]("' .
+                $this->getId() . '")}');
+
+            if (empty($result)) {
+                throw new Exception('The execution of the query failed.');
+            } else {
+
+                odbc_fetch_row($result);
+                $this->id = odbc_result($result, 'id');
+                $this->name = odbc_result($result, 'name');
+                $this->description = odbc_result($result, 'description');
+                $this->category = new Category(odbc_result($result, 'category_id'));
             }
         }
     }
@@ -72,20 +115,28 @@ class Type
     }
 
     /**
-     * Retourne le nom du type de pièce.
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Retourne la description du type de pièce.
      * @return mixed
      */
     public function getDescription()
     {
+        if (is_null($this->description)) {
+            $this->Fill();
+        }
+
         return $this->description;
+    }
+
+    /**
+     * Retourne l'instance de la catégorie de ce type.
+     * @return Category
+     */
+    public function getCategory()
+    {
+        if (is_null($this->category)) {
+            $this->Fill();
+        }
+
+        return $this->category;
     }
 }

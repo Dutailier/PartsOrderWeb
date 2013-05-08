@@ -87,6 +87,35 @@ class Country
      */
     public function getName()
     {
+        if (is_null($this->name)) {
+            $this->Fill();
+        }
+
         return $this->name;
+    }
+
+    private function Fill()
+    {
+        // Récupère la connexion à la base de données.
+        $conn = Database::getConnection();
+
+        if (empty($conn)) {
+            throw new Exception('The connection to the database failed.');
+        } else {
+
+            $sql = '{CALL [BruPartsOrderDb].[dbo].[getCountry]("' .
+                $this->id . '")}';
+
+            $result = odbc_exec($conn, $sql);
+
+            if (empty($result)) {
+                throw new Exception('The execution of the query failed.');
+            } else {
+
+                odbc_fetch_row($result);
+                $this->id = odbc_result($result, 'id');
+                $this->name = odbc_result($result, 'name');
+            }
+        }
     }
 }

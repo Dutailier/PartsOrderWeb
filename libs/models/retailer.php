@@ -19,9 +19,10 @@ class Retailer
     /**
      * Constructeur par défaut.
      * @param $userId
-     * @param $name
-     * @param $phone
-     * @param $email
+     * @param null $name
+     * @param null $phone
+     * @param null $email
+     * @param Address $address
      */
     public function __construct(
         $userId, $name = null, $phone = null,
@@ -45,49 +46,10 @@ class Retailer
         }
 
         if (!isset($_SESSION['retailer'])) {
-            $_SESSION['retailer'] = self::getRetailer(User::getConnected());
+            $_SESSION['retailer'] = new Retailer(User::getConnected()->getId());
         }
 
         return $_SESSION['retailer'];
-    }
-
-    /**
-     * Retourne l'instance du détaillant correspondant à cet utilisateur.
-     * @param User $user
-     * @return Retailer
-     * @throws Exception
-     */
-    public static function getRetailer(User $user)
-    {
-        // Récupère la connexion à la base de données.
-        $conn = Database::getConnection();
-
-        if (empty($conn)) {
-            throw new Exception('The connection to the database failed.');
-        } else {
-
-            // Exécute la procédure stockée.
-            $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[getRetailer]("' . $user->getId() . '")}');
-
-            if (empty($result)) {
-                throw new Exception('The execution of the query failed.');
-            } else {
-                // Récupère la première ligne résultante.
-                $row = odbc_fetch_row($result);
-
-                if (empty($row)) {
-                    throw new Exception('No retailer available.');
-                } else {
-
-                    return new Retailer(
-                        odbc_result($result, 'user_id'),
-                        odbc_result($result, 'name'),
-                        odbc_result($result, 'phone'),
-                        odbc_result($result, 'email'),
-                        new Address(odbc_result($result, 'address_id')));
-                }
-            }
-        }
     }
 
     /**
@@ -105,15 +67,65 @@ class Retailer
      */
     public function getPhone()
     {
+        if (is_null($this->phone)) {
+            $this->Fill();
+        }
+
         return $this->phone;
+    }
+
+    private function Fill()
+    {
+        // Récupère la connexion à la base de données.
+        $conn = Database::getConnection();
+
+        if (empty($conn)) {
+            throw new Exception('The connection to the database failed.');
+        } else {
+
+            // Exécute la procédure stockée.
+            $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[getRetailer]("' .
+                $this->getId() . '")}');
+
+            if (empty($result)) {
+                throw new Exception('The execution of the query failed.');
+            } else {
+
+                odbc_fetch_row($result);
+                $this->id = odbc_result($result, 'user_id');
+                $this->name = odbc_result($result, 'name');
+                $this->phone = odbc_result($result, 'phone');
+                $this->email = odbc_result($result, 'email');
+                $this->address = new Address(odbc_result($result, 'address_id'));
+            }
+        }
     }
 
     /**
      * Retourne l'adresse courriel du client.
      * @return string
      */
-    public function getEmail()
+    public
+    function getEmail()
     {
+        if (is_null($this->email)) {
+            $this->Fill();
+        }
+
         return $this->email;
+    }
+
+    /**
+     * Retourne l'instance de l'adresse de ce détaillant.
+     * @return Address
+     */
+    public
+    function getAddress()
+    {
+        if (is_null($this->address)) {
+            $this->Fill();
+        }
+
+        return $this->address;
     }
 }

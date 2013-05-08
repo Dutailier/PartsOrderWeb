@@ -25,24 +25,6 @@ class Role
     }
 
     /**
-     * Retourne l'id du rôle.
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Retourne le nom du rôle.
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Retourne vrai si l'utilisateur connecté a le rôle spécifié.
      * @param $name
      * @return bool
@@ -112,11 +94,29 @@ class Role
     private static function getIndex(Array $roles, $name)
     {
         foreach ($roles as $index => $role) {
-            if ($role->getName() == $name) {
+            if (strtolower($role->getName()) == strtolower($name)) {
                 return $index;
             }
         }
 
         return -1;
+    }
+
+    /**
+     * Retourne l'id du rôle.
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Retourne le nom du rôle.
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

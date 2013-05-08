@@ -3,6 +3,7 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/cart.php');
 include_once(ROOT . 'libs/models/part.php');
+include_once(ROOT . 'libs/models/type.php');
 include_once(ROOT . 'libs/security.php');
 
 if (!Security::isAuthenticated()) {
@@ -10,7 +11,7 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
 
-    if (empty($_GET['typeId']) || empty($_GET['name'])) {
+    if (empty($_GET['typeId']) || empty($_GET['name']) || empty($_GET['categoryId'])) {
         $data['success'] = false;
         $data['message'] = 'A item must be selected.';
     } else if (empty($_GET['serialGlider'])) {
@@ -18,19 +19,25 @@ if (!Security::isAuthenticated()) {
         $data['message'] = 'The serialGlider is required.';
     } else {
 
-        // Crée une pièce à partir des informations passés en GET.
-        $item = new CartItem($_GET['typeId'], $_GET['name'], $_GET['serialGlider']);
+        try {
+            $cateogry = new Category($_GET['categoryId']);
+            $type = new Type($_GET['typeId'], $_GET['name'], $cateogry);
+            $item = new CartItem($type, $_GET['serialGlider']);
 
-        $cart = new SessionCart();
-        // Vérifie que la quantité avant d'avoir ajouté le type de pièce
-        // est inférieure à la quantité après afin de confirmer que la pièce
-        // à belle et bien été retirée du panier d'achats.
-        if ($cart->getQuantity($item) > ($quantity = $cart->remove($item))) {
-            $data['success'] = true;
-            $data['quantity'] = $quantity;
-        } else {
+            $cart = new SessionCart();
+            // Vérifie que la quantité avant d'avoir ajouté le type de pièce
+            // est inférieure à la quantité après afin de confirmer que la pièce
+            // à belle et bien été retirée du panier d'achats.
+            if ($cart->getQuantity($item) > ($quantity = $cart->remove($item))) {
+                $data['success'] = true;
+                $data['quantity'] = $quantity;
+            } else {
+                $data['success'] = false;
+                $data['message'] = 'Unable to remove the part form cart.';
+            }
+        } catch (Exception $e) {
             $data['success'] = false;
-            $data['message'] = 'Unable to remove the part form cart.';
+            $data['message'] = $e->getMessage();
         }
     }
 }

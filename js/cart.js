@@ -15,6 +15,7 @@ $(document).ready(function () {
                     // Vérifie que les propriétés de l'objet JSON ont bien été créés.
                     if (data['items'].hasOwnProperty(i) &&
                         data['items'][i].hasOwnProperty('typeId') &&
+                        data['items'][i].hasOwnProperty('categoryId') &&
                         data['items'][i].hasOwnProperty('name') &&
                         data['items'][i].hasOwnProperty('serialGlider') &&
                         data['items'][i].hasOwnProperty('quantity')) {
@@ -22,6 +23,7 @@ $(document).ready(function () {
                         // Ajoute la pièce à la liste.
                         addItem(
                             data['items'][i]['typeId'],
+                            data['items'][i]['categoryId'],
                             data['items'][i]['name'],
                             data['items'][i]['serialGlider'],
                             data['items'][i]['quantity']);
@@ -72,8 +74,33 @@ $(document).ready(function () {
         //Vérifie que des pièces sont présentement en commande.
         if ($('#items > div.item').length > 0) {
 
-            // Redirige l'utilisateur vers le formulaire de commande.
-            window.location = 'order.php';
+            $.get('ajax/customerInfosAreRequired.php')
+                .done(function (data) {
+
+                    // Vérifie que les propriétés de l'objet JSON ont bien été créés et
+                    // vérifie si la requête fut un succès.
+                    if (data.hasOwnProperty('success') &&
+                        data['success']) {
+
+                        if (data.hasOwnProperty('customerInfosAreRequired') &&
+                            data['customerInfosAreRequired']) {
+                            window.location = 'customerInfos.php';
+                        } else {
+                            window.location = 'confirmation.php';
+                        }
+
+                        // Vérifie que la propriété de l'objet JSON a bien été créée.
+                    } else if (data.hasOwnProperty('message')) {
+
+                        // Affiche un message d'erreur expliquant l'échec de la requête.
+                        alert(data['message']);
+                    } else {
+                        alert('Communication with the server failed.');
+                    }
+                })
+                .fail(function () {
+                    alert('Communication with the server failed.');
+                })
         }
     });
 });
@@ -85,6 +112,7 @@ $(document).on('click', '.addCart', function () {
     var parameters = {
         'typeId': $item.data('typeid'),
         'name': $item.find('label.name').text(),
+        'categoryId' : $item.data('categoryid'),
         'serialGlider': $item.find('label.serialGlider').text()
     };
 
@@ -121,6 +149,7 @@ $(document).on('click', '.removeCart', function () {
     var parameters = {
         'typeId': $item.data('typeid'),
         'name': $item.find('label.name').text(),
+        'categoryId' : $item.data('categoryid'),
         'serialGlider': $item.find('label.serialGlider').text()
     };
 
@@ -164,9 +193,9 @@ $(document).on('click', '.removeCart', function () {
  * @param serialGlider
  * @param quantity
  */
-function addItem(typeId, name, serialGlider, quantity) {
+function addItem(typeId, categoryId, name, serialGlider, quantity) {
     $('#items').append(
-        '<div class="item" data-typeId="' + typeId + '">' +
+        '<div class="item" data-typeId="' + typeId + '" data-categoryId="' + categoryId + '">' +
             '<div class="details">' +
             '<label class="quantity">' + quantity + '</label>' +
             '<label class="name">' + name + '</label>' +

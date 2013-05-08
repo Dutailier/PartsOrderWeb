@@ -9,22 +9,19 @@ include_once(ROOT . 'libs/interfaces/icartItem.php');
  */
 class CartItem implements ICartItem
 {
-    private $typeId;
-    private $name;
+    private $type;
     private $serialGlider;
     private $quantity;
 
     /**
      * Constructeur par défaut.
-     * @param $typeId
-     * @param $name
+     * @param $type
      * @param $serialGlider
      * @param int $quantity
      */
-    public function __construct($typeId, $name, $serialGlider, $quantity = 1)
+    public function __construct(Type $type, $serialGlider, $quantity = 1)
     {
-        $this->typeId = $typeId;
-        $this->name = $name;
+        $this->type = $type;
         $this->serialGlider = $serialGlider;
         $this->quantity = $quantity;
     }
@@ -38,7 +35,7 @@ class CartItem implements ICartItem
     {
         return
             $object instanceof self &&
-            $object->typeId == $this->typeId &&
+            $object->type->getId() == $this->type->getId() &&
             $object->serialGlider == $this->serialGlider;
     }
 
@@ -51,7 +48,6 @@ class CartItem implements ICartItem
         return $this->quantity;
     }
 
-
     /**
      * Permet de définir la quantité d'un item.
      * @param $quantity
@@ -61,16 +57,19 @@ class CartItem implements ICartItem
         $this->quantity = $quantity;
     }
 
-    public function getTypeId()
+    /**
+     * Retourne l'instance du type de cet item.
+     * @return mixed
+     */
+    public function getType()
     {
-        return $this->typeId;
+        return $this->type;
     }
 
-    public function getName()
-    {
-        return $this->name;
-    }
-
+    /**
+     * Retourne le numéro de série de la chaise associée à l'item.
+     * @return mixed
+     */
     public function getSerialGlider()
     {
         return $this->serialGlider;

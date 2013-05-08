@@ -29,7 +29,7 @@ if ((new SessionCart())->isEmpty()) {
     <?php include_once(ROOT . '_header.php'); ?>
     <div id="content">
 
-        <h1>Shipping informations</h1>
+        <h1>Customer informations</h1>
 
         <form id="frmOrder" method="post" onsubmit="return false;">
             <ul id="summary"></ul>
@@ -101,7 +101,7 @@ if ((new SessionCart())->isEmpty()) {
 <!-- Scripts. -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-<script src="js/order.js"></script>
+<script src="js/customerInfos.js"></script>
 <!-- Fin -->
 
 </body>

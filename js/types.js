@@ -84,6 +84,7 @@ $(document).on('click', 'input.addCart', function () {
     var parameters = {
         "typeId": $type.data('id'),
         "name": $type.find('span.name').text(),
+        "categoryId" : $.queryString['categoryId'],
         "serialGlider": serialGlider
     };
 
@@ -121,6 +122,7 @@ $(document).on('click', 'input.removeCart', function () {
     var parameters = {
         "typeId": $type.data('id'),
         "name": $type.find('span.name').text(),
+        "categoryId" : $.queryString['categoryId'],
         "serialGlider": serialGlider
     };
 

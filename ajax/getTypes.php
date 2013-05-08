@@ -25,10 +25,7 @@ if (!Security::isAuthenticated()) {
             $types = array();
             $category = new Category($_GET['categoryId']);
             foreach ($category->getTypes() as $type) {
-                $item = new CartItem(
-                    $type->getId(),
-                    $type->getName(),
-                    $_GET['serialGlider']);
+                $item = new CartItem($type, $_GET['serialGlider']);
 
                 $data['types'][] = array(
                     'id' => $type->getId(),
