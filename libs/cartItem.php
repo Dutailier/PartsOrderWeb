@@ -2,6 +2,8 @@
 
 include_once('config.php');
 include_once(ROOT . 'libs/interfaces/icartItem.php');
+include_once(ROOT . 'libs/repositories/types.php');
+include_once(ROOT . 'libs/repositories/categories.php');
 
 /**
  * Class Item
@@ -9,19 +11,15 @@ include_once(ROOT . 'libs/interfaces/icartItem.php');
  */
 class CartItem implements ICartItem
 {
-    private $type;
+    private $typeId;
+    private $categoryId;
     private $serialGlider;
     private $quantity;
 
-    /**
-     * Constructeur par défaut.
-     * @param $type
-     * @param $serialGlider
-     * @param int $quantity
-     */
-    public function __construct(Type $type, $serialGlider, $quantity = 1)
+    public function __construct($typeId, $categoryId, $serialGlider, $quantity = 1)
     {
-        $this->type = $type;
+        $this->typeId = $typeId;
+        $this->categoryId = $categoryId;
         $this->serialGlider = $serialGlider;
         $this->quantity = $quantity;
     }
@@ -35,7 +33,8 @@ class CartItem implements ICartItem
     {
         return
             $object instanceof self &&
-            $object->type->getId() == $this->type->getId() &&
+            $object->typeId == $this->typeId &&
+            $object->categoryId == $this->categoryId &&
             $object->serialGlider == $this->serialGlider;
     }
 
@@ -57,21 +56,28 @@ class CartItem implements ICartItem
         $this->quantity = $quantity;
     }
 
-    /**
-     * Retourne l'instance du type de cet item.
-     * @return mixed
-     */
-    public function getType()
+    public function getCategoryId()
     {
-        return $this->type;
+        return $this->categoryId;
     }
 
-    /**
-     * Retourne le numéro de série de la chaise associée à l'item.
-     * @return mixed
-     */
+    public function getCategory()
+    {
+        return Categories::Find($this->categoryId);
+    }
+
     public function getSerialGlider()
     {
         return $this->serialGlider;
+    }
+
+    public function getTypeId()
+    {
+        return $this->typeId;
+    }
+
+    public function getType()
+    {
+        return Types::Find($this->typeId);
     }
 }

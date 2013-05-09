@@ -1,10 +1,7 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/models/part.php');
-include_once(ROOT . 'libs/models/type.php');
-include_once(ROOT . 'libs/models/category.php');
-include_once(ROOT . 'libs/cart.php');
+include_once(ROOT . 'libs/sessionCart.php');
 include_once(ROOT . 'libs/security.php');
 
 if (!Security::isAuthenticated()) {
@@ -16,11 +13,10 @@ if (!Security::isAuthenticated()) {
         $cart = new SessionCart();
 
         foreach ($cart->getItems() as $item) {
-            $category = $item->getType()->getCategory();
 
             // Si le produit est commandé pour un client,
             // les informations du client sont nécessaires.
-            if ($category->getId() == 3) {
+            if ($item->getCategoryId() == 3) {
                 $data['customerInfosAreRequired'] = true;
                 break;
             }

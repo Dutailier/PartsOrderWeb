@@ -1,10 +1,9 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/models/type.php');
-include_once(ROOT . 'libs/cart.php');
-include_once(ROOT . 'libs/cartItem.php');
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/sessionCart.php');
+include_once(ROOT . 'libs/repositories/types.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -23,9 +22,9 @@ if (!Security::isAuthenticated()) {
             $cart = new SessionCart();
 
             $types = array();
-            $category = new Category($_GET['categoryId']);
+            $category = Categories::Find($_GET['categoryId']);
             foreach ($category->getTypes() as $type) {
-                $item = new CartItem($type, $_GET['serialGlider']);
+                $item = new CartItem($type->getId(), $_GET['categoryId'], $_GET['serialGlider']);
 
                 $data['types'][] = array(
                     'id' => $type->getId(),

@@ -1,4 +1,47 @@
-#item {
+fieldset {
+    display: block;
+    float: left;
+    margin: 10px 10px 20px 10px;
+    padding: 10px 20px;
+    width: 258px;
+    height: 250px;
+    border: 1px solid #484848;
+    overflow: hidden; /* Clearfix */
+}
+
+fieldset > legend {
+    padding: 0px 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+fieldset > p {
+    float: left;
+    width: 258px;
+    margin: 5px 0px;
+    clear: both;
+    overflow: hidden; /* Clearfix */
+}
+
+fieldset > p > label.properties {
+    display: block;
+    float: left;
+    font-weight: bold;
+}
+
+fieldset > p > label.values {
+    display: block;
+    float: left;
+    clear: both;
+}
+
+#line {
+    width: 900px;
+    margin: 0px auto;
+}
+
+#items {
+    margin: 10px auto;
     overflow: hidden; /* clearfix */
 }
 
@@ -41,15 +84,8 @@
     font-style: italic;
 }
 
-#items > div.item > div.buttons {
-    margin-top: 4px;
-    float: right;
-    display: inline-block;
-    overflow: hidden; /* clearfix */
-}
-
 #summary {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 10px;
 }
 
@@ -62,9 +98,4 @@
 
 #btnOrder {
     width: 150px;
-}
-
-#btnClear {
-    cursor: pointer;
-    text-decoration: underline;
 }

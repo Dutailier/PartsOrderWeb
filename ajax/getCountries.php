@@ -1,8 +1,8 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/models/country.php');
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/repositories/countries.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -10,7 +10,7 @@ if (!Security::isAuthenticated()) {
 } else {
     try {
         $data['countries'] = array();
-        foreach (Country::getCountries() as $country) {
+        foreach (Countries::All() as $country) {
             $data['countries'][] = array(
                 'id' => $country->getId(),
                 'name' => $country->getName()

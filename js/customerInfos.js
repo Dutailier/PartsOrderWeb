@@ -75,15 +75,17 @@ $(document).ready(function () {
                 "countryId": $('#countries > option:selected').val()
             };
 
-            $.post('ajax/placeOrder.php', informations)
+            $.post('ajax/placeOrderForCustomer.php', informations)
                 .done(function (data) {
 
                     // Vérifie que les propriétés de l'objet JSON ont bien été créées et
                     // vérifie si la requête fut un succès.
                     if (data.hasOwnProperty('success') &&
-                        data['success']) {
+                        data['success'] &&
+                        data.hasOwnProperty('orderId') &&
+                        data['orderId']) {
 
-                        window.location = 'confirmation.php';
+                        window.location = 'confirmation.php?orderId=' + data['orderId'];
 
                         // Vérifie que la propriété de l'objet JSON a bien été créée.
                     } else if (data.hasOwnProperty('message')) {

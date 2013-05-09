@@ -1,20 +1,23 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/models/retailer.php');
-include_once(ROOT . 'libs/models/address.php');
-include_once(ROOT . 'libs/models/state.php');
-include_once(ROOT . 'libs/models/customer.php');
-include_once(ROOT . 'libs/models/order.php');
-include_once(ROOT . 'libs/cart.php');
-include_once(ROOT . 'libs/file.php');
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/sessionCart.php');
+include_once(ROOT . 'libs/repositories/roles.php');
+include_once(ROOT . 'libs/repositories/orders.php');
+include_once(ROOT . 'libs/repositories/retailers.php');
+include_once(ROOT . 'libs/repositories/addresses.php');
+include_once(ROOT . 'libs/repositories/customers.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
-} else {
 
+} else if (!Roles::IsInRoleName('retailer')) {
+    $data['success'] = false;
+    $data['message'] = 'You must be logged as a retailer.';
+
+} else {
     // Validation des informations passées en POST.
     if (empty($_POST['firstname'])) {
         $data['success'] = false;
@@ -42,29 +45,35 @@ if (!Security::isAuthenticated()) {
         $data['message'] = 'The country name is required.';
     } else {
         try {
-            $retailer = Retailer::getConnected();
+            $retailer = Retailers::getConnected();
 
-            $address = Address::Add(
+            $address = Addresses::Add(
                 $_POST['address'],
                 $_POST['city'],
                 $_POST['zip'],
-                new State($_POST['stateId']));
+                $_POST['stateId']);
 
-            $customer = Customer::Add(
+            $customer = Customers::Add(
                 $_POST['firstname'],
                 $_POST['lastname'],
                 $_POST['phone'],
                 $_POST['email'],
-                $address);
+                $address->getId());
 
-            $order = Order::Place($retailer, $customer);
+            $order = Orders::Add($retailer->getId(), $customer->getId());
 
             $cart = new SessionCart;
 
             foreach ($cart->getItems() as $item) {
-                $order->AddItem($item);
+                Parts::Add(
+                    $item->getTypeId(),
+                    $item->getSerialGlider(),
+                    $item->getQuantity(),
+                    $order->getId());
             }
 
+            $cart->clear();
+            $data['orderId'] = $order->getId();
             $data['success'] = true;
 
         } catch (Exception $e) {

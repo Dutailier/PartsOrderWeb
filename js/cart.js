@@ -86,7 +86,31 @@ $(document).ready(function () {
                             data['customerInfosAreRequired']) {
                             window.location = 'customerInfos.php';
                         } else {
-                            window.location = 'confirmation.php';
+
+                            $.post('ajax/placeOrderForRetailer.php')
+                                .done(function (data) {
+
+                                    // Vérifie que les propriétés de l'objet JSON ont bien été créées et
+                                    // vérifie si la requête fut un succès.
+                                    if (data.hasOwnProperty('success') &&
+                                        data['success'] &&
+                                        data.hasOwnProperty('orderId') &&
+                                        data['orderId']) {
+
+                                        window.location = 'confirmation.php?orderId=' + data['orderId'];
+
+                                        // Vérifie que la propriété de l'objet JSON a bien été créée.
+                                    } else if (data.hasOwnProperty('message')) {
+
+                                        // Affiche un message d'erreur expliquant l'échec de la requête.
+                                        alert(data['message']);
+                                    } else {
+                                        alert('Communication with the server failed.');
+                                    }
+                                })
+                                .fail(function () {
+                                    alert('Communication with the server failed.');
+                                })
                         }
 
                         // Vérifie que la propriété de l'objet JSON a bien été créée.
@@ -112,7 +136,7 @@ $(document).on('click', '.addCart', function () {
     var parameters = {
         'typeId': $item.data('typeid'),
         'name': $item.find('label.name').text(),
-        'categoryId' : $item.data('categoryid'),
+        'categoryId': $item.data('categoryid'),
         'serialGlider': $item.find('label.serialGlider').text()
     };
 
@@ -149,7 +173,7 @@ $(document).on('click', '.removeCart', function () {
     var parameters = {
         'typeId': $item.data('typeid'),
         'name': $item.find('label.name').text(),
-        'categoryId' : $item.data('categoryid'),
+        'categoryId': $item.data('categoryid'),
         'serialGlider': $item.find('label.serialGlider').text()
     };
 
@@ -187,8 +211,9 @@ $(document).on('click', '.removeCart', function () {
 });
 
 /**
- * Ajoute un item à la liste du panier d'achats.
+ * Ajoute un item à la liste.
  * @param typeId
+ * @param categoryId
  * @param name
  * @param serialGlider
  * @param quantity

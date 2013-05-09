@@ -1,10 +1,8 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/cart.php');
-include_once(ROOT . 'libs/models/part.php');
-include_once(ROOT . 'libs/models/type.php');
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/sessionCart.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -20,9 +18,7 @@ if (!Security::isAuthenticated()) {
     } else {
 
         try {
-            $cateogry = new Category($_GET['categoryId']);
-            $type = new Type($_GET['typeId'], $_GET['name'], $cateogry);
-            $item = new CartItem($type, $_GET['serialGlider']);
+            $item = new CartItem($_GET['typeId'], $_GET['categoryId'], $_GET['serialGlider']);
 
             $cart = new SessionCart();
             // Vérifie que la quantité avant d'avoir ajouté le type de pièce

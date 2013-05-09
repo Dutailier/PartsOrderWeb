@@ -1,8 +1,8 @@
 <?php
 
 include_once('config.php');
+include_once(ROOT . 'libs/sessionCart.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/cart.php');
 
 if (!Security::isAuthenticated()) {
     header('location: index.php');
@@ -20,7 +20,7 @@ if ((new SessionCart())->isEmpty()) {
 
     <!-- Feuilles de style. -->
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
-    <link type="text/css" rel="stylesheet" href="css/order.css"/>
+    <link type="text/css" rel="stylesheet" href="css/customerInfos.css"/>
     <!-- Fin -->
 
 </head>

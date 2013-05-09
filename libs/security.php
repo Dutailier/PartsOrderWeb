@@ -2,7 +2,7 @@
 
 include_once('config.php');
 include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/models/user.php');
+include_once(ROOT . 'libs/entities/user.php');
 
 /**
  * Class Account

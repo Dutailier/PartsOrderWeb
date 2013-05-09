@@ -1,11 +1,8 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/cart.php');
-include_once(ROOT . 'libs/models/type.php');
-include_once(ROOT . 'libs/models/category.php');
-include_once(ROOT . 'libs/cartItem.php');
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/sessionCart.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -19,7 +16,7 @@ if (!Security::isAuthenticated()) {
             $data['items'][] = array(
                 'typeId' => $item->getType()->getId(),
                 'name' => $item->getType()->getName(),
-                'categoryId' => $item->getType()->getCategory()->getId(),
+                'categoryId' => $item->getCategoryId(),
                 'serialGlider' => $item->getSerialGlider(),
                 'quantity' => $item->getQuantity()
             );
