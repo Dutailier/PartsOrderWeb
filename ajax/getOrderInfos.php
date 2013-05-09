@@ -38,7 +38,7 @@ if (!Security::isAuthenticated()) {
 
                 $data['customer'] = $customer->getArray();
 
-                $address = $retailer->getAddress();
+                $address = $customer->getAddress();
                 $data['customer']['address'] = $address->getArray();
                 $data['customer']['address']['state'] = $address->getState()->getArray();
 

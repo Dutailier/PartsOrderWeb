@@ -59,10 +59,24 @@ class Orders
                 odbc_fetch_row($result);
                 return new Order(
                     odbc_result($result, 'id'),
-                    odbc_result($result, 'retailerId'),
-                    odbc_result($result, 'customerId'),
+                    odbc_result($result, 'retailer_id'),
+                    odbc_result($result, 'customer_id'),
                     odbc_result($result, 'isConfirmed'));
             }
+        }
+    }
+
+    public static function Confirm($id)
+    {
+        // Récupère la connexion à la base de données.
+        $conn = Database::getConnection();
+
+        if (empty($conn)) {
+            throw new Exception('The connection to the database failed.');
+        } else {
+            $sql = '{CALL [BruPartsOrderDb].[dbo].[confirmOrder]("' . $id . '")}';
+
+            odbc_exec($conn, $sql);
         }
     }
 }

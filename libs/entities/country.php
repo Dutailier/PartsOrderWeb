@@ -29,7 +29,7 @@ class Country
     {
         return array(
             'id' => $this->getId(),
-            'details' => $this->getName(),
+            'name' => $this->getName(),
         );
     }
 
