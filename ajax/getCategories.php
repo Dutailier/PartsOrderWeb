@@ -11,10 +11,7 @@ if (!Security::isAuthenticated()) {
     try {
         $data['categories'] = array();
         foreach (Categories::All() as $category) {
-            $data['categories'][] = array(
-                'id' => $category->getId(),
-                'name' => $category->getName()
-            );
+            $data['categories'][] = $category->getArray();
         }
         $data['success'] = true;
 

@@ -24,6 +24,19 @@ class Category
         $this->name = $name;
     }
 
+    public function getTypes()
+    {
+        return Types::FilterByCategoryId($this->id);
+    }
+
+    public function getArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        );
+    }
+
     public function getId()
     {
         return $this->id;
@@ -32,10 +45,5 @@ class Category
     public function getName()
     {
         return $this->name;
-    }
-
-    public function getTypes()
-    {
-        return Types::FilterByCategoryId($this->id);
     }
 }

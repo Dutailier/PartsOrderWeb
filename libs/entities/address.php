@@ -35,14 +35,20 @@ class Address
         $this->stateId = $stateId;
     }
 
-    public function getCity()
+    public function getState()
     {
-        return $this->city;
+        return States::Find($this->stateId);
     }
 
-    public function getDetails()
+    public function getArray()
     {
-        return $this->details;
+        return array(
+            'id' => $this->getId(),
+            'details' => $this->getDetails(),
+            'city' => $this->getCity(),
+            'zip' => (string)$this->getZip(),
+            'stateId' => $this->getStateId()
+        );
     }
 
     public function getId()
@@ -50,18 +56,23 @@ class Address
         return $this->id;
     }
 
-    public function getStateId()
+    public function getDetails()
     {
-        return $this->stateId;
+        return $this->details;
     }
 
-    public function getState()
+    public function getCity()
     {
-        return States::Find($this->stateId);
+        return $this->city;
     }
 
     public function getZip()
     {
         return $this->zip;
+    }
+
+    public function getStateId()
+    {
+        return $this->stateId;
     }
 }

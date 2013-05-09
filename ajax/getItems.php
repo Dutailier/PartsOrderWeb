@@ -13,13 +13,7 @@ if (!Security::isAuthenticated()) {
 
         $data['items'] = array();
         foreach ($cart->getItems() as $item) {
-            $data['items'][] = array(
-                'typeId' => $item->getType()->getId(),
-                'name' => $item->getType()->getName(),
-                'categoryId' => $item->getCategoryId(),
-                'serialGlider' => $item->getSerialGlider(),
-                'quantity' => $item->getQuantity()
-            );
+            $data['items'][] = $item->getArray();
         }
         $data['success'] = true;
 

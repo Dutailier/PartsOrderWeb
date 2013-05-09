@@ -14,12 +14,33 @@ class Part
     private $serialGlider;
     private $typeId;
 
-    public function __construct($id, $serialGlider, $typeId, $sku = null)
+    // Seulement disponible lorsque join à une commande.
+    private $orderId;
+    private $quantity;
+
+    public function __construct(
+        $id, $serialGlider, $typeId, $sku = null,
+        // Seulement disponible lorsue join à une commande.
+        $orderId = null, $quantity = null)
     {
         $this->id = $id;
         $this->sku = $sku;
         $this->serialGlider = $serialGlider;
         $this->typeId = $typeId;
+        $this->orderId = $orderId;
+        $this->quantity = $quantity;
+    }
+
+    public function getArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'serialGlider' => $this->getSerialGlider(),
+            'sku' => $this->getSku(),
+            'typeId' => $this->getTypeId(),
+            'orderId' => $this->getOrderId(),
+            'quantity' => $this->getQuantity()
+        );
     }
 
     public function getId()
@@ -40,6 +61,23 @@ class Part
     public function getTypeId()
     {
         return $this->typeId;
+    }
+
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    public function getOrder()
+    {
+        if (!is_null($this->orderId)) {
+            return Orders::Find($this->orderId);
+        }
     }
 
     public function getType()

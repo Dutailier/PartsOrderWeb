@@ -3,24 +3,32 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/repositories/orders.php');
+include_once(ROOT . 'libs/repositories/retailers.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 } else {
-
     if (empty($_GET['orderId'])) {
         $data['success'] = false;
         $data['message'] = 'A order must me placed.';
+
     } else {
-
         try {
-
             $order = Orders::Find($_GET['orderId']);
+            $retailer = $order->getRetailer();
 
-            $data['success'] = true;
+            if (!$retailer->equals(Retailers::getConnected())) {
+                $data['success'] = false;
+                $data['message'] = 'You must be at the origin of the order.';
 
-        } catch (Exception $e) {
+            } else {
+                Orders::Confirm($_GET['orderId']);
+                $data['success'] = true;
+            }
+
+        } catch
+        (Exception $e) {
             $data['success'] = false;
             $data['message'] = $e->getMessage();
         }

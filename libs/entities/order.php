@@ -22,9 +22,34 @@ class Order
         $this->isConfirmed = $isConfirmed;
     }
 
+    public function getArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'retailerId' => $this->getRetailerId(),
+            'customerId' => $this->getCustomerId(),
+            'isConfirmed' => $this->isConfirmed()
+        );
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getRetailerId()
+    {
+        return $this->retailerId;
+    }
+
     public function getCustomerId()
     {
         return $this->customerId;
+    }
+
+    public function isConfirmed()
+    {
+        return $this->isConfirmed;
     }
 
     public function getCustomer()
@@ -34,21 +59,6 @@ class Order
         }
 
         return Customers::Find($this->customerId);
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getIsConfirmed()
-    {
-        return $this->isConfirmed;
-    }
-
-    public function getRetailerId()
-    {
-        return $this->retailerId;
     }
 
     public function getRetailer()

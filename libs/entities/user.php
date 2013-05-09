@@ -22,6 +22,13 @@ class User
         $this->username = $username;
     }
 
+    public function getArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'username' => $this->getUsername());
+    }
+
     public function getId()
     {
         return $this->id;

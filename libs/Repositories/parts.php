@@ -12,7 +12,7 @@ class Parts
         if (empty($conn)) {
             throw new Exception('The connection to the database failed.');
         } else {
-            $sql = '{CALL [BruPartsOrderDb].[dbo].[getParts]("' . $id . '")}';
+            $sql = '{CALL [BruPartsOrderDb].[dbo].[getPartsByOrderId]("' . $id . '")}';
 
             $result = odbc_exec($conn, $sql);
 
@@ -25,7 +25,10 @@ class Parts
                     $parts[] = new Part(
                         odbc_result($result, 'id'),
                         odbc_result($result, 'serial_glider'),
-                        odbc_result($result, 'typeId'));
+                        odbc_result($result, 'type_id'),
+                        odbc_result($result, 'sku'),
+                        odbc_result($result, 'order_id'),
+                        odbc_result($result, 'quantity'));
                 }
 
                 return $parts;
@@ -53,7 +56,8 @@ class Parts
                 return new Part(
                     odbc_result($result, 'id'),
                     odbc_result($result, 'serial_glider'),
-                    odbc_result($result, 'typeId'));
+                    odbc_result($result, 'typeId'),
+                    odbc_result($result, 'sku'));
             }
         }
     }
@@ -83,6 +87,7 @@ class Parts
                     odbc_result($result, 'id'),
                     $serialGlider,
                     $typeId,
+                    null,
                     $quantity,
                     $orderId);
             }

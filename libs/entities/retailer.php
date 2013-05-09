@@ -1,13 +1,14 @@
 <?php
 
 include_once('config.php');
+include_once(ROOT . 'libs/interfaces/icomparable.php');
 include_once(ROOT . 'libs/repositories/users.php');
 
 /**
  * Class Retailer
  * Représente un détaillant.
  */
-class Retailer
+class Retailer implements IComparable
 {
     private $id;
     private $userId;
@@ -20,10 +21,21 @@ class Retailer
     {
         $this->id = $id;
         $this->userId = $userId;
-        $this->name = $name;
-        $this->phone = $phone;
-        $this->email = $email;
+        $this->name = trim($name);
+        $this->email = trim($email);
         $this->addressId = $addressId;
+
+        // Retire les caractères autres que les chiffres.
+        $phone = preg_replace('/[^\d]/', '', $phone);
+        $phone = (strlen($phone) == 10 ? '1' : '') + $phone;
+        $this->phone = $phone;
+    }
+
+    public function equals($object)
+    {
+        return
+            $object instanceof self &&
+            $object->getId() == $this->getId();
     }
 
     public function getId()
@@ -31,19 +43,21 @@ class Retailer
         return $this->id;
     }
 
-    public function getAddressId()
+    public function getArray()
     {
-        return $this->addressId;
+        return array(
+            'id' => $this->getId(),
+            'userId' => $this->getUserId(),
+            'name' => $this->getName(),
+            'phone' => (string)$this->getPhone(),
+            'email' => $this->getEmail(),
+            'addressId' => $this->getAddressId()
+        );
     }
 
-    public function getAddress()
+    public function getUserId()
     {
-        return Addresses::Find($this->addressId);
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
+        return $this->userId;
     }
 
     public function getName()
@@ -56,9 +70,19 @@ class Retailer
         return $this->phone;
     }
 
-    public function getUserId()
+    public function getEmail()
     {
-        return $this->userId;
+        return $this->email;
+    }
+
+    public function getAddressId()
+    {
+        return $this->addressId;
+    }
+
+    public function getAddress()
+    {
+        return Addresses::Find($this->addressId);
     }
 
     public function getUser()

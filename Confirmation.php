@@ -25,91 +25,66 @@ if (!Security::isAuthenticated()) {
     <div id="content">
         <fieldset>
             <legend>Retailer informations</legend>
-            <label id="retailerId " class="hidden"></label>
 
             <p>
                 <label class="properties">Name : </label>
-                <label id="retailerName" class="values">Patates frites paul</label>
+                <label id="retailerName" class="values"></label>
             </p>
 
             <p>
                 <label class="properties">Phone : </label>
-                <label id="retailerPhone" class="values">1-852-654-7899</label>
+                <label id="retailerPhone" class="values"></label>
             </p>
 
             <p>
                 <label class="properties">Email : </label>
-                <label id="retailerPhone" class="values">hugo.lapointe@testtest.com</label>
+                <label id="retailerEmail" class="values"></label>
             </p>
 
             <p>
                 <label class="properties">Address : </label>
-                <label id="retailerAddress" class="values">28, rue de la Calèche, St-Basile-le-Grand, 34576, Québec,
-                    Canada</label>
+                <label id="retailerAddress" class="values"></label>
             </p>
         </fieldset>
         <fieldset>
             <legend>Customer informations</legend>
-            <label id="retailerId " class="hidden"></label>
 
             <p>
                 <label class="properties">Name : </label>
-                <label id="retailerName" class="values">Breault & Martineau</label>
+                <label id="customerName" class="values"></label>
             </p>
 
             <p>
                 <label class="properties">Phone : </label>
-                <label id="retailerPhone" class="values">1-450-654-8574</label>
+                <label id="customerPhone" class="values"></label>
             </p>
 
             <p>
                 <label class="properties">Email : </label>
-                <label id="retailerPhone" class="values">breauetmartineau@cegepsth.qc.ca</label>
+                <label id="customerEmail" class="values"></label>
             </p>
 
             <p>
                 <label class="properties">Address : </label>
-                <label id="retailerAddress" class="values">299 Bd. Sir-Wilfrid-Laurier, St-Jean-Baptiste-Sur-Richelieu,
-                    12345 Ontario, États-Unis</label>
+                <label id="customerAddress" class="values"></label>
             </p>
         </fieldset>
         <fieldset>
             <legend>Shipping informations</legend>
             <p>
                 <label class="properties">Address : </label>
-                <label id="retailerAddress" class="values">23495 Boulevard Laframboise, St-Hyacinthe, 12345, Québec,
-                    Canada</label>
+                <label id="shippingAddress" class="values"></label>
             </p>
         </fieldset>
 
         <hr id="line"/>
 
         <div id="items">
-            <div class="item" data-typeid="6" data-categoryid="3">
-                <div class="details"><label class="quantity">5</label><label class="name">Lock Handle</label><label
-                        class="serialGlider">22222222222</label></div>
-            </div>
-            <div class="item" data-typeid="6" data-categoryid="3">
-                <div class="details"><label class="quantity">5</label><label class="name">Lock Handle</label><label
-                        class="serialGlider">22222222222</label></div>
-            </div>
-            <div class="item" data-typeid="6" data-categoryid="3">
-                <div class="details"><label class="quantity">5</label><label class="name">Lock Handle</label><label
-                        class="serialGlider">22222222222</label></div>
-            </div>
-            <div class="item" data-typeid="6" data-categoryid="3">
-                <div class="details"><label class="quantity">5</label><label class="name">Lock Handle</label><label
-                        class="serialGlider">22222222222</label></div>
-            </div>
-            <div class="item" data-typeid="6" data-categoryid="3">
-                <div class="details"><label class="quantity">5</label><label class="name">Lock Handle</label><label
-                        class="serialGlider">22222222222</label></div>
-            </div>
         </div>
 
         <!-- Sommaire des pièces commandées -->
         <form id="summary">
-            <input id="btnOrder" name="btnOrder" type="button" value="Confirm"/>
+            <input id="btnConfirm" name="btnConfirm" type="button" value="Confirm"/>
         </form>
         <!-- Fin -->
 

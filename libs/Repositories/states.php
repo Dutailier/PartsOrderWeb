@@ -38,9 +38,9 @@ class States
         if (empty($conn)) {
             throw new Exception('The connection to the database failed.');
         } else {
+            $sql = '{CALL [BruPartsOrderDb].[dbo].[getStatesByCountryId]("' . $id . '")}';
 
-            // Exécute la procédure stockée.
-            $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[getStates]("' . $id . '")}');
+            $result = odbc_exec($conn, $sql);
 
             if (empty($result)) {
                 throw new Exception('The execution of the query failed.');

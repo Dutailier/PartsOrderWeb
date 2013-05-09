@@ -18,7 +18,6 @@ if (!Security::isAuthenticated()) {
 } else {
     try {
         $retailer = Retailers::getConnected();
-
         $order = Orders::Add($retailer->getId());
 
         $cart = new SessionCart();

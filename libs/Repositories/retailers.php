@@ -29,7 +29,7 @@ class Retailers
             throw new Exception('The connection to the database failed.');
         } else {
 
-            $sql = '{CALL [BruPartsOrderDb].[dbo].[getRetailers]("' . $id . '")}';
+            $sql = '{CALL [BruPartsOrderDb].[dbo].[getRetailersByUserId]("' . $id . '")}';
 
             $result = odbc_exec($conn, $sql);
 
@@ -37,17 +37,14 @@ class Retailers
                 throw new Exception('The execution of the query failed.');
             } else {
 
-                $retailers = array();
-                while (odbc_fetch_row($result)) {
-                    $retailers[] = new Retailer(
-                        odbc_result($result, 'id'),
-                        odbc_result($result, 'user_id'),
-                        odbc_result($result, 'name'),
-                        odbc_result($result, 'phone'),
-                        odbc_result($result, 'email'),
-                        odbc_result($result, 'address_id'));
-                }
-                return $retailers;
+                odbc_fetch_row($result);
+                return new Retailer(
+                    odbc_result($result, 'id'),
+                    odbc_result($result, 'user_id'),
+                    odbc_result($result, 'name'),
+                    odbc_result($result, 'phone'),
+                    odbc_result($result, 'email'),
+                    odbc_result($result, 'address_id'));
             }
         }
     }

@@ -25,6 +25,14 @@ class Country
         $this->name = $name;
     }
 
+    public function getArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'details' => $this->getName(),
+        );
+    }
+
     public function getId()
     {
         return $this->id;

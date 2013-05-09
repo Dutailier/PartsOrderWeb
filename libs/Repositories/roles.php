@@ -36,7 +36,7 @@ class Roles
         } else {
 
             // Exécute la procédure stockée.
-            $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[getRoles]("' . $id . '")}');
+            $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[getRolesByUserId]("' . $id . '")}');
 
             if (empty($result)) {
                 throw new Exception('The execution of the query failed.');

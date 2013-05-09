@@ -18,10 +18,7 @@ if (!Security::isAuthenticated()) {
             $states = array();
             $country = Countries::Find($_GET['countryId']);
             foreach ($country->getStates() as $state) {
-                $data['states'][] = array(
-                    'id' => $state->getId(),
-                    'name' => $state->getName()
-                );
+                $data['states'][] = $state->getArray();
             }
             $data['success'] = true;
 

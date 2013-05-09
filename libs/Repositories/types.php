@@ -39,7 +39,7 @@ class Types
         } else {
 
 
-            $sql = '{CALL [BruPartsOrderDb].[dbo].[getTypes]("' . $id . '")}';
+            $sql = '{CALL [BruPartsOrderDb].[dbo].[getTypesByCategoryId]("' . $id . '")}';
 
             $result = odbc_exec($conn, $sql);
 

@@ -140,7 +140,7 @@ $(document).on('click', '.addCart', function () {
         'serialGlider': $item.find('label.serialGlider').text()
     };
 
-    $.get('ajax/addItem.php', parameters)
+    $.get('ajax/AddParts.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et

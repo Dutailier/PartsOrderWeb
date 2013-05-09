@@ -23,6 +23,14 @@ class Role
         $this->name = $name;
     }
 
+    public function getArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        );
+    }
+
     /**
      * Retourne l'id du rôle.
      * @return mixed

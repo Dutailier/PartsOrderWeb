@@ -20,9 +20,13 @@ class Type
         $this->description = $description;
     }
 
-    public function getDescription()
+    public function getArray()
     {
-        return $this->description;
+        return array(
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription()
+        );
     }
 
     public function getId()
@@ -33,5 +37,10 @@ class Type
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

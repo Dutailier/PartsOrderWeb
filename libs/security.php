@@ -77,9 +77,8 @@ class Security
      */
     public static function Logout()
     {
-
         // Démarre la session si cela n'est pas déjà fait.
-        if (!$_SESSION) {
+        if (session_id() == '') {
             session_start();
         }
 

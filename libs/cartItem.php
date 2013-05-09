@@ -24,18 +24,35 @@ class CartItem implements ICartItem
         $this->quantity = $quantity;
     }
 
-    /**
-     * Retourne vrai si l'objet est identique à celui-ci.
-     * @param $object
-     * @return bool
-     */
-    public function equals($object)
+    public function getArray()
     {
-        return
-            $object instanceof self &&
-            $object->typeId == $this->typeId &&
-            $object->categoryId == $this->categoryId &&
-            $object->serialGlider == $this->serialGlider;
+        return array(
+            'typeId' => $this->getTypeId(),
+            'name' => $this->getType()->getName(),
+            'categoryId' => $this->getCategoryId(),
+            'serialGlider' => $this->getSerialGlider(),
+            'quantity' => $this->getQuantity()
+        );
+    }
+
+    public function getTypeId()
+    {
+        return $this->typeId;
+    }
+
+    public function getType()
+    {
+        return Types::Find($this->typeId);
+    }
+
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    public function getSerialGlider()
+    {
+        return $this->serialGlider;
     }
 
     /**
@@ -56,28 +73,22 @@ class CartItem implements ICartItem
         $this->quantity = $quantity;
     }
 
-    public function getCategoryId()
+    /**
+     * Retourne vrai si l'objet est identique à celui-ci.
+     * @param $object
+     * @return bool
+     */
+    public function equals($object)
     {
-        return $this->categoryId;
+        return
+            $object instanceof self &&
+            $object->typeId == $this->typeId &&
+            $object->categoryId == $this->categoryId &&
+            $object->serialGlider == $this->serialGlider;
     }
 
     public function getCategory()
     {
         return Categories::Find($this->categoryId);
-    }
-
-    public function getSerialGlider()
-    {
-        return $this->serialGlider;
-    }
-
-    public function getTypeId()
-    {
-        return $this->typeId;
-    }
-
-    public function getType()
-    {
-        return Types::Find($this->typeId);
     }
 }
