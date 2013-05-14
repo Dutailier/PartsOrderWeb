@@ -1,8 +1,7 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/entities/user.php');
+include_once(ROOT . 'libs/repositories/Users.php');
 
 /**
  * Class Account
@@ -24,38 +23,20 @@ class Security
         $username = strtolower($username);
         $password = sha1($password . $username);
 
-        // Récupère la connexion à la base de données.
-        $conn = Database::getConnection();
+        $user = Users::FindByUsernameAndPassword($username, $password);
 
-        if (empty($conn)) {
-            throw new Exception('The connection to the database failed.');
-        } else {
-
-            // Exécute la procédure stockée.
-            $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[tryLogin]("' . $username . '", "' . $password . '")}');
-
-            if (empty($result)) {
-                throw new Exception('The execution of the query failed.');
-            } else {
-
-                // Récupère la première ligne résultante.
-                $row = odbc_fetch_row($result);
-
-                if (empty($row)) {
-                    throw new Exception('Username or password incorrect.');
-                } else {
-
-                    // Démarre une session si celle-ci n'est pas déjà active.
-                    if (session_id() == '') {
-                        session_start();
-                    }
-
-                    $_SESSION['user'] = new User(odbc_result($result, 'id'), $username);
-
-                    return true;
-                }
-            }
+        if(empty($user)) {
+            return false;
         }
+
+        // Démarre la session si cela n'est pas déjà fait.
+        if (session_id() == '') {
+            session_start();
+        }
+
+        $_SESSION['user'] = $user;
+
+        return true;
     }
 
     /**

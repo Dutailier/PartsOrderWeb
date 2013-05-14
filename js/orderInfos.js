@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     var parameters = {
-        "orderId": $.queryString['orderId']
+        "orderHeaderId": $.queryString['orderHeaderId']
     };
 
     $.get('ajax/getOrderInfos.php', parameters)
@@ -11,35 +11,31 @@ $(document).ready(function () {
             // vérifie si la requête fut un succès.
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
-                data.hasOwnProperty('parts')) {
+                data.hasOwnProperty('orderHeader')) {
 
-                if (data.hasOwnProperty('retailer')) {
-                    UpdateRetailerInfos(data['retailer']);
-
-                    if (data.hasOwnProperty('customer')) {
-                        UpdateCustomerInfos(data['customer']);
-                        UpdateShippingInfos(data['customer']['address']);
-                    } else {
-                        UpdateCustomerInfos(data['retailer']);
-                        UpdateShippingInfos(data['retailer']['address']);
-                    }
+                if (data['orderHeader'].hasOwnProperty('retailer') &&
+                    data['orderHeader'].hasOwnProperty('customer') &&
+                    data['orderHeader'].hasOwnProperty('shipmentAddress')) {
+                    UpdateRetailerInfos(data['orderHeader']['retailer']);
+                    UpdateCustomerInfos(data['orderHeader']['customer']);
+                    UpdateShippingInfos(data['orderHeader']['shipmentAddress']);
                 }
 
-                for (var i in data['parts']) {
+                for (var i in data['orderLines']) {
 
                     // Vérifie que les propriétés de l'objet JSON ont bien été créés.
-                    if (data['parts'].hasOwnProperty(i) &&
-                        data['parts'][i].hasOwnProperty('typeId') &&
-                        data['parts'][i].hasOwnProperty('name') &&
-                        data['parts'][i].hasOwnProperty('serialGlider') &&
-                        data['parts'][i].hasOwnProperty('quantity')) {
+                    if (data['orderLines'].hasOwnProperty(i) &&
+                        data['orderLines'][i].hasOwnProperty('partId') &&
+                        data['orderLines'][i].hasOwnProperty('name') &&
+                        data['orderLines'][i].hasOwnProperty('serialGlider') &&
+                        data['orderLines'][i].hasOwnProperty('quantity')) {
 
                         // Ajoute la pièce à la liste.
                         AddParts(
-                            data['parts'][i]['typeId'],
-                            data['parts'][i]['name'],
-                            data['parts'][i]['serialGlider'],
-                            data['parts'][i]['quantity']);
+                            data['orderLines'][i]['partId'],
+                            data['orderLines'][i]['name'],
+                            data['orderLines'][i]['serialGlider'],
+                            data['orderLines'][i]['quantity']);
                     }
                 }
 
@@ -58,7 +54,7 @@ $(document).ready(function () {
 
     $('#btnConfirm').click(function () {
         var parameters = {
-            "orderId": $.queryString['orderId']
+            "orderHeaderId": $.queryString['orderHeaderId']
         };
 
         $.get('ajax/confirmOrder.php', parameters)
@@ -89,15 +85,15 @@ $(document).ready(function () {
 
 /**
  * Ajoute un item à la liste.
- * @param typeId
+ * @param partId
  * @param categoryId
  * @param name
  * @param serialGlider
  * @param quantity
  */
-function AddParts(typeId, name, serialGlider, quantity) {
+function AddItem(partId, name, serialGlider, quantity) {
     $('#items').append(
-        '<div class="item" data-typeId="' + typeId + '">' +
+        '<div class="item" data-part-id="' + partId + '">' +
             '<div class="details">' +
             '<label class="quantity">' + quantity + '</label>' +
             '<label class="name">' + name + '</label>' +

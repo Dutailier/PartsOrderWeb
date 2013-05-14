@@ -4,7 +4,7 @@ include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/sessionCart.php');
 include_once(ROOT . 'libs/repositories/roles.php');
-include_once(ROOT . 'libs/repositories/orders.php');
+include_once(ROOT . 'libs/repositories/orderHeaders.php');
 include_once(ROOT . 'libs/repositories/retailers.php');
 include_once(ROOT . 'libs/repositories/addresses.php');
 include_once(ROOT . 'libs/repositories/customers.php');
@@ -60,20 +60,20 @@ if (!Security::isAuthenticated()) {
                 $_POST['email'],
                 $address->getId());
 
-            $order = Orders::Add($retailer->getId(), $customer->getId());
+            $orderHeaderId = OrderHeaders::Add($retailer->getId(), $customer->getAddressId(), $customer->getId());
 
             $cart = new SessionCart;
 
             foreach ($cart->getItems() as $item) {
-                Parts::Add(
-                    $item->getTypeId(),
+                OrderLines::Add(
+                    $orderHeaderId,
+                    $item->getPartId(),
                     $item->getSerialGlider(),
-                    $item->getQuantity(),
-                    $order->getId());
+                    $item->getQuantity());
             }
 
             $cart->clear();
-            $data['orderId'] = $order->getId();
+            $data['orderHeaderId'] = $orderHeaderId;
             $data['success'] = true;
 
         } catch (Exception $e) {

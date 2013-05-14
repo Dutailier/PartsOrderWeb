@@ -2,7 +2,8 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/repositories/orders.php');
+include_once(ROOT . 'libs/repositories/orderHeaders.php');
+include_once(ROOT . 'libs/repositories/orderLines.php');
 include_once(ROOT . 'libs/repositories/retailers.php');
 include_once(ROOT . 'libs/repositories/customers.php');
 
@@ -10,46 +11,26 @@ if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 } else {
-    if (empty($_GET['orderId'])) {
+    if (empty($_GET['orderHeaderId'])) {
         $data['success'] = false;
         $data['message'] = 'A order must me placed.';
     } else {
         try {
-            $order = Orders::Find($_GET['orderId']);
-            $retailer = $order->getRetailer();
+            $orderHeader = OrderHeaders::Find($_GET['orderHeaderId']);
+            $retailerId = $orderHeader->getRetailerId();
 
-            if (!$retailer->equals(Retailers::getConnected())) {
+            if (!$retailerId == Retailers::getConnected()->getId()) {
                 $data['success'] = false;
                 $data['message'] = 'You must be at the origin of the order.';
             } else {
 
-                $parts = $order->getParts();
+                $data['orderHeader'] = $orderHeader->getArray();
 
-                // Si la commande n'est reliée à aucun client,
-                // le détaillant sera le client.
-                $customer = is_null($order->getCustomerId()) ?
-                    $retailer : $order->getCustomer();
-
-                $data['retailer'] = $retailer->getArray();
-
-                $address = $retailer->getAddress();
-                $data['retailer']['address'] = $address->getArray();
-                $data['retailer']['address']['state'] = $address->getState()->getArray();
-
-                $data['customer'] = $customer->getArray();
-
-                $address = $customer->getAddress();
-                $data['customer']['address'] = $address->getArray();
-                $data['customer']['address']['state'] = $address->getState()->getArray();
+                foreach (OrderLines::FilterByOrderHeaderId($orderHeader->getId()) as $orderLine) {
+                    $data['orderLines'][] = $orderLine->getArray();
+                }
 
                 $data['success'] = true;
-
-                foreach ($parts as $part) {
-                    $entry = $part->getArray();
-                    $entry['name'] = $part->getType()->getName();
-                    $data['parts'][] = $entry;
-
-                }
             }
 
         } catch (Exception $e) {

@@ -9,7 +9,7 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
 
-    if (empty($_GET['typeId']) || empty($_GET['name']) || empty($_GET['categoryId'])) {
+    if (empty($_GET['partId']) || empty($_GET['name']) || empty($_GET['categoryId'])) {
         $data['success'] = false;
         $data['message'] = 'A item must be selected.';
     } else if (empty($_GET['serialGlider'])) {
@@ -18,10 +18,10 @@ if (!Security::isAuthenticated()) {
     } else {
 
         try {
-            $item = new CartItem($_GET['typeId'], $_GET['categoryId'], $_GET['serialGlider']);
+            $item = new CartItem($_GET['partId'], $_GET['categoryId'], $_GET['serialGlider']);
 
             $cart = new SessionCart();
-            // Vérifie que la quantité avant d'avoir ajouté le type de pièce
+            // Vérifie que la quantité avant d'avoir ajouté la pièce
             // est inférieure à la quantité après afin de confirmer que
             // la pièce a belle et bien été ajoutée au panier d'achats.
             if ($cart->getQuantity($item) < ($quantity = $cart->Add($item))) {

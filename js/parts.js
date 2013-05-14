@@ -30,33 +30,33 @@ $(document).ready(function () {
                 "categoryId": $.queryString['categoryId']
             };
 
-            $.get('ajax/getTypes.php', parameters)
+            $.get('ajax/getPartsByCategoryId.php', parameters)
                 .done(function (data) {
 
                     // Vérifie que les propriétés de l'objet JSON ont bien été créés et
                     // vérifié si la requête fut un succès.
                     if (data.hasOwnProperty('success') &&
                         data['success'] &&
-                        data.hasOwnProperty('types')) {
+                        data.hasOwnProperty('parts')) {
 
-                        $('div.type').remove();
+                        $('div.part').remove();
 
-                        // Parcours tous les types de pièce retournés par la requête.
-                        for (var i in data['types']) {
+                        // Parcours tous les pièces retournées par la requête.
+                        for (var i in data['parts']) {
 
                             // // Vérifie que les propriétés de l'objet JSON ont bien été créés.
-                            if (data['types'].hasOwnProperty(i) &&
-                                data['types'][i].hasOwnProperty('id') &&
-                                data['types'][i].hasOwnProperty('name') &&
-                                data['types'][i].hasOwnProperty('description') &&
-                                data['types'][i].hasOwnProperty('quantity')) {
+                            if (data['parts'].hasOwnProperty(i) &&
+                                data['parts'][i].hasOwnProperty('id') &&
+                                data['parts'][i].hasOwnProperty('name') &&
+                                data['parts'][i].hasOwnProperty('description') &&
+                                data['parts'][i].hasOwnProperty('quantity')) {
 
-                                // Ajoute le type de pièce à la liste.
-                                addType(
-                                    data['types'][i]['id'],
-                                    data['types'][i]['name'],
-                                    data['types'][i]['description'],
-                                    data['types'][i]['quantity']);
+                                // Ajoute la pièce à la liste.
+                                addPart(
+                                    data['parts'][i]['id'],
+                                    data['parts'][i]['name'],
+                                    data['parts'][i]['description'],
+                                    data['parts'][i]['quantity']);
                             }
                         }
 
@@ -78,12 +78,12 @@ $(document).ready(function () {
 
 $(document).on('click', 'input.addCart', function () {
 
-    //Récupère le type sélectionné.
-    var $type = $(this).closest('div.type');
+    //Récupère la pièce sélectionnée.
+    var $part = $(this).closest('div.part');
 
     var parameters = {
-        "typeId": $type.data('id'),
-        "name": $type.find('span.name').text(),
+        "partId": $part.data('id'),
+        "name": $part.find('span.name').text(),
         "categoryId" : $.queryString['categoryId'],
         "serialGlider": serialGlider
     };
@@ -98,7 +98,7 @@ $(document).on('click', 'input.addCart', function () {
                 data.hasOwnProperty('quantity')) {
 
                 // Met à jour à quantité de la pièce et ses bouttons.
-                updateType($type, data['quantity']);
+                updateType($part, data['quantity']);
 
                 // Vérifie que la propriété de l'objet JSON a bien été créée.
             } else if (data.hasOwnProperty('message')) {
@@ -116,12 +116,12 @@ $(document).on('click', 'input.addCart', function () {
 
 $(document).on('click', 'input.removeCart', function () {
 
-    // Récupère le type sélectionné.
-    var $type = $(this).closest('div.type');
+    // Récupère la pièce sélectionnée.
+    var $part = $(this).closest('div.part');
 
     var parameters = {
-        "typeId": $type.data('id'),
-        "name": $type.find('span.name').text(),
+        "partId": $part.data('id'),
+        "name": $part.find('span.name').text(),
         "categoryId" : $.queryString['categoryId'],
         "serialGlider": serialGlider
     };
@@ -136,7 +136,7 @@ $(document).on('click', 'input.removeCart', function () {
                 data.hasOwnProperty('quantity')) {
 
                 // Met à jour à quantité de la pièce et ses bouttons.
-                updateType($type, data['quantity']);
+                updateType($part, data['quantity']);
 
                 // Vérifie que la propriété de l'objet JSON a bien été créée.
             } else if (data.hasOwnProperty('message')) {
@@ -153,17 +153,17 @@ $(document).on('click', 'input.removeCart', function () {
 });
 
 /**
- * Ajoute un type de pièce à la liste.
+ * Ajoute une pièce à la liste.
  * @param id
  * @param name
  * @param description
  * @param quantity
  */
-function addType(id, name, description, quantity) {
+function addPart(id, name, description, quantity) {
 
-    // Ajout du type de pièce.
-    var $type = $(
-        '<div class="type" data-id="' + id + '">' +
+    // Ajout du pièce.
+    var $part = $(
+        '<div class="part" data-id="' + id + '">' +
             '<div class="details">' +
                 '<span class="name">' + name + '</span>' +
                 '<span class="description">' + description + '</span>' +
@@ -173,20 +173,20 @@ function addType(id, name, description, quantity) {
             '</div>' +
         '</div>');
 
-    $('#types').append($type);
+    $('#parts').append($part);
 
     // Ajoute les bouttons appropriés au dernier éléments ajouté.
-    updateType($type, quantity);
+    updateType($part, quantity);
 }
 
 /**
  * Ajoute les bouttons appropriés à l'éléments spécifié.
- * @param $type
+ * @param $part
  * @param quantity
  */
-function updateType($type, quantity) {
+function updateType($part, quantity) {
 
-    var $buttons = $type.find('div.buttons');
+    var $buttons = $part.find('div.buttons');
 
     // Change la quantité affichée.
     $buttons.children('span.quantity').text(quantity);

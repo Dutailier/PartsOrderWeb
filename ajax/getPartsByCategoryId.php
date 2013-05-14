@@ -1,9 +1,9 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/sessionCart.php');
-include_once(ROOT . 'libs/repositories/types.php');
+include_once(ROOT . 'libs/Security.php');
+include_once(ROOT . 'libs/SessionCart.php');
+include_once(ROOT . 'libs/repositories/Parts.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -20,20 +20,22 @@ if (!Security::isAuthenticated()) {
 
         try {
             $cart = new SessionCart();
+            $parts = Parts::FilterByCategoryId($_GET['categoryId']);
 
-            $types = array();
-            $category = Categories::Find($_GET['categoryId']);
-            foreach ($category->getTypes() as $type) {
-                $item = new CartItem($type->getId(), $_GET['categoryId'], $_GET['serialGlider']);
+            $data['parts'] = array();
+            foreach ($parts as $part) {
+                $item = new CartItem(
+                    $part->getId(),
+                    $_GET['categoryId'],
+                    $_GET['serialGlider']);
 
-                $data['types'][] = array(
-                    'id' => $type->getId(),
-                    'name' => $type->getName(),
-                    'description' => $type->getDescription(),
-                    'quantity' => $cart->getQuantity($item)
-                );
-                $data['success'] = true;
+                $entry = $part->getArray();
+                $entry['quantity'] = $cart->getQuantity($item);
+
+                $data['parts'][] = $entry;
             }
+
+            $data['success'] = true;
 
         } catch (Exception $e) {
             $data['success'] = false;

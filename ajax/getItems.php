@@ -13,7 +13,9 @@ if (!Security::isAuthenticated()) {
 
         $data['items'] = array();
         foreach ($cart->getItems() as $item) {
-            $data['items'][] = $item->getArray();
+            $entry = $item->getArray();
+            $entry['name'] = Parts::Find($item->getPartId())->getName();
+            $data['items'][] = $entry;
         }
         $data['success'] = true;
 

@@ -2,7 +2,7 @@
 
 include_once('config.php');
 include_once(ROOT . 'libs/interfaces/icartItem.php');
-include_once(ROOT . 'libs/repositories/types.php');
+include_once(ROOT . 'libs/repositories/parts.php');
 include_once(ROOT . 'libs/repositories/categories.php');
 
 /**
@@ -11,14 +11,14 @@ include_once(ROOT . 'libs/repositories/categories.php');
  */
 class CartItem implements ICartItem
 {
-    private $typeId;
+    private $partId;
     private $categoryId;
     private $serialGlider;
     private $quantity;
 
-    public function __construct($typeId, $categoryId, $serialGlider, $quantity = 1)
+    public function __construct($partId, $categoryId, $serialGlider, $quantity = 1)
     {
-        $this->typeId = $typeId;
+        $this->partId = $partId;
         $this->categoryId = $categoryId;
         $this->serialGlider = $serialGlider;
         $this->quantity = $quantity;
@@ -27,22 +27,16 @@ class CartItem implements ICartItem
     public function getArray()
     {
         return array(
-            'typeId' => $this->getTypeId(),
-            'name' => $this->getType()->getName(),
+            'partId' => $this->getPartId(),
             'categoryId' => $this->getCategoryId(),
             'serialGlider' => $this->getSerialGlider(),
             'quantity' => $this->getQuantity()
         );
     }
 
-    public function getTypeId()
+    public function getPartId()
     {
-        return $this->typeId;
-    }
-
-    public function getType()
-    {
-        return Types::Find($this->typeId);
+        return $this->partId;
     }
 
     public function getCategoryId()
@@ -73,6 +67,11 @@ class CartItem implements ICartItem
         $this->quantity = $quantity;
     }
 
+    public function getPart()
+    {
+        return Parts::Find($this->partId);
+    }
+
     /**
      * Retourne vrai si l'objet est identique à celui-ci.
      * @param $object
@@ -82,7 +81,7 @@ class CartItem implements ICartItem
     {
         return
             $object instanceof self &&
-            $object->typeId == $this->typeId &&
+            $object->partId == $this->partId &&
             $object->categoryId == $this->categoryId &&
             $object->serialGlider == $this->serialGlider;
     }

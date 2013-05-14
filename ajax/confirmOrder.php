@@ -15,7 +15,7 @@ if (!Security::isAuthenticated()) {
 
     } else {
         try {
-            $order = Orders::Find($_GET['orderId']);
+            $order = OrderHeaders::Find($_GET['orderId']);
             $retailer = $order->getRetailer();
 
             if (!$retailer->equals(Retailers::getConnected())) {
@@ -23,7 +23,7 @@ if (!Security::isAuthenticated()) {
                 $data['message'] = 'You must be at the origin of the order.';
 
             } else {
-                Orders::Confirm($_GET['orderId']);
+                OrderHeaders::Confirm($_GET['orderId']);
                 $data['success'] = true;
             }
 

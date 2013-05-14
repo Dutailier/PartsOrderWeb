@@ -14,7 +14,7 @@ $(document).ready(function () {
 
                     // Vérifie que les propriétés de l'objet JSON ont bien été créés.
                     if (data['items'].hasOwnProperty(i) &&
-                        data['items'][i].hasOwnProperty('typeId') &&
+                        data['items'][i].hasOwnProperty('partId') &&
                         data['items'][i].hasOwnProperty('categoryId') &&
                         data['items'][i].hasOwnProperty('name') &&
                         data['items'][i].hasOwnProperty('serialGlider') &&
@@ -22,7 +22,7 @@ $(document).ready(function () {
 
                         // Ajoute la pièce à la liste.
                         addItem(
-                            data['items'][i]['typeId'],
+                            data['items'][i]['partId'],
                             data['items'][i]['categoryId'],
                             data['items'][i]['name'],
                             data['items'][i]['serialGlider'],
@@ -97,7 +97,7 @@ $(document).ready(function () {
                                         data.hasOwnProperty('orderId') &&
                                         data['orderId']) {
 
-                                        window.location = 'confirmation.php?orderId=' + data['orderId'];
+                                        window.location = 'confirmation.php?orderHeaderId=' + data['orderHeaderId'];
 
                                         // Vérifie que la propriété de l'objet JSON a bien été créée.
                                     } else if (data.hasOwnProperty('message')) {
@@ -134,13 +134,13 @@ $(document).on('click', '.addCart', function () {
     var $item = $(this).closest('div.item');
 
     var parameters = {
-        'typeId': $item.data('typeid'),
+        'partId': $item.data('part-id'),
         'name': $item.find('label.name').text(),
-        'categoryId': $item.data('categoryid'),
+        'categoryId': $item.data('category-id'),
         'serialGlider': $item.find('label.serialGlider').text()
     };
 
-    $.get('ajax/AddParts.php', parameters)
+    $.get('ajax/AddItem.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et
@@ -171,9 +171,9 @@ $(document).on('click', '.removeCart', function () {
     var $item = $(this).closest('div.item');
 
     var parameters = {
-        'typeId': $item.data('typeid'),
+        'partId': $item.data('part-id'),
         'name': $item.find('label.name').text(),
-        'categoryId': $item.data('categoryid'),
+        'categoryId': $item.data('category-id'),
         'serialGlider': $item.find('label.serialGlider').text()
     };
 
@@ -212,15 +212,15 @@ $(document).on('click', '.removeCart', function () {
 
 /**
  * Ajoute un item à la liste.
- * @param typeId
+ * @param partId
  * @param categoryId
  * @param name
  * @param serialGlider
  * @param quantity
  */
-function addItem(typeId, categoryId, name, serialGlider, quantity) {
+function addItem(partId, categoryId, name, serialGlider, quantity) {
     $('#items').append(
-        '<div class="item" data-typeId="' + typeId + '" data-categoryId="' + categoryId + '">' +
+        '<div class="item" data-part-id="' + partId + '" data-category-id="' + categoryId + '">' +
             '<div class="details">' +
             '<label class="quantity">' + quantity + '</label>' +
             '<label class="name">' + name + '</label>' +

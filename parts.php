@@ -15,7 +15,7 @@ if (!Security::isAuthenticated()) {
 
     <!-- Feuilles de style. -->
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
-    <link type="text/css" rel="stylesheet" href="css/types.css"/>
+    <link type="text/css" rel="stylesheet" href="css/parts.css"/>
     <link type="text/css" rel="stylesheet" href="css/buttons.css"/>
     <!-- Fin -->
 </head>
@@ -35,7 +35,7 @@ if (!Security::isAuthenticated()) {
         <!-- Fin -->
 
         <!-- Liste des pièces. -->
-        <div id="types">
+        <div id="parts">
         </div>
         <!-- Fin -->
 
@@ -46,7 +46,7 @@ if (!Security::isAuthenticated()) {
 <!-- Scripts. -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-<script src="js/types.js"></script>
+<script src="js/parts.js"></script>
 <!-- Fin -->
 </body>
 </html>
