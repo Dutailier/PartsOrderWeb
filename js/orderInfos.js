@@ -11,7 +11,7 @@ $(document).ready(function () {
             // vérifie si la requête fut un succès.
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
-                data.hasOwnProperty('parts')) {
+                data.hasOwnProperty('lines')) {
 
                 if (data.hasOwnProperty('retailer')) {
                     UpdateRetailerInfos(data['retailer']);
@@ -25,21 +25,22 @@ $(document).ready(function () {
                     }
                 }
 
-                for (var i in data['parts']) {
+                for (var i in data['lines']) {
 
                     // Vérifie que les propriétés de l'objet JSON ont bien été créés.
-                    if (data['parts'].hasOwnProperty(i) &&
-                        data['parts'][i].hasOwnProperty('typeId') &&
-                        data['parts'][i].hasOwnProperty('name') &&
-                        data['parts'][i].hasOwnProperty('serialGlider') &&
-                        data['parts'][i].hasOwnProperty('quantity')) {
+                    if (data['lines'].hasOwnProperty(i) &&
+                        data['lines'][i].hasOwnProperty('serial') &&
+                        data['lines'][i].hasOwnProperty('quantity') &&
+                        data['lines'][i].hasOwnProperty('part') &&
+                        data['lines'][i]['part'].hasOwnProperty('id') &&
+                        data['lines'][i]['part'].hasOwnProperty('name')) {
 
                         // Ajoute la pièce à la liste.
-                        AddParts(
-                            data['parts'][i]['typeId'],
-                            data['parts'][i]['name'],
-                            data['parts'][i]['serialGlider'],
-                            data['parts'][i]['quantity']);
+                        addLine(
+                            data['lines'][i]['part']['id'],
+                            data['lines'][i]['part']['name'],
+                            data['lines'][i]['serial'],
+                            data['lines'][i]['quantity']);
                     }
                 }
 
@@ -69,7 +70,7 @@ $(document).ready(function () {
                 if (data.hasOwnProperty('success') &&
                     data['success']) {
 
-                    window.location = 'thanks.php';
+                    window.location = 'confirmation.php';
 
                     // Vérifie que la propriété de l'objet JSON a bien été créée.
                 } else if (data.hasOwnProperty('message')) {
@@ -89,19 +90,19 @@ $(document).ready(function () {
 
 /**
  * Ajoute un item à la liste.
- * @param typeId
+ * @param partId
  * @param categoryId
  * @param name
- * @param serialGlider
+ * @param serial
  * @param quantity
  */
-function AddParts(typeId, name, serialGlider, quantity) {
-    $('#items').append(
-        '<div class="item" data-typeId="' + typeId + '">' +
+function addLine(partId, name, serial, quantity) {
+    $('#lines').append(
+        '<div class="line" data-type-id="' + partId + '">' +
             '<div class="details">' +
             '<label class="quantity">' + quantity + '</label>' +
             '<label class="name">' + name + '</label>' +
-            '<label class="serialGlider">' + serialGlider + '</label>' +
+            '<label class="serial">' + serial + '</label>' +
             '</div>' +
             '</div>'
     );

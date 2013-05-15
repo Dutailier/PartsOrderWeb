@@ -1,25 +1,14 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/repositories/states.php');
+include_once(ROOT . 'libs/entity.php');
 
-
-/**
- * Class Country
- * Représente un pays.
- */
-class Country
+class Country extends Entity
 {
-    // Propriétés
     private $id;
     private $name;
 
-    /**
-     * Constructeur par défaut.
-     * @param $id
-     * @param $name
-     */
-    public function __construct($id, $name)
+    function __construct($id, $name)
     {
         $this->id = $id;
         $this->name = $name;
@@ -29,7 +18,7 @@ class Country
     {
         return array(
             'id' => $this->getId(),
-            'name' => $this->getName(),
+            'name' => $this->getName()
         );
     }
 
@@ -43,8 +32,5 @@ class Country
         return $this->name;
     }
 
-    public function getStates()
-    {
-        return States::FilterByCountryId($this->id);
-    }
+
 }

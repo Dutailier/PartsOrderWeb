@@ -85,7 +85,7 @@ $(document).ready(function () {
                         data.hasOwnProperty('orderId') &&
                         data['orderId']) {
 
-                        window.location = 'confirmation.php?orderId=' + data['orderId'];
+                        window.location = 'orderInfos.php?orderId=' + data['orderId'];
 
                         // Vérifie que la propriété de l'objet JSON a bien été créée.
                     } else if (data.hasOwnProperty('message')) {
@@ -175,6 +175,9 @@ $(document).ready(function () {
                             $('<option></option>')
                                 .val(data['countries'][i]['id'])
                                 .text(data['countries'][i]['name']));
+
+                        $('#countries > option[value="1"]')
+                            .attr('selected', 'selected');
                     }
                 }
 

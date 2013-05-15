@@ -1,8 +1,9 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/entities/user.php');
+include_once(ROOT . 'libs/repositories/users.php');
+include_once(ROOT . 'libs/repositories/roles.php');
+include_once(ROOT . 'libs/repositories/retailers.php');
 
 /**
  * Class Account
@@ -10,6 +11,10 @@ include_once(ROOT . 'libs/entities/user.php');
  */
 class Security
 {
+    const USER_IDENTIFIER = '_USER_';
+    const RETAILER_IDENTIFIER = '_RETAILER_';
+    const ROLES_IDENTIFIER = '_ROLES_';
+
     /**
      * Tente de connecté l'utilisateur.
      * Retourne vrai si la connexion réussie.
@@ -20,42 +25,73 @@ class Security
      */
     public static function TryLogin($username, $password)
     {
-        // Traitement du nom d'utilisateur et du mot de passe.
+        // Le chiffrement du mot de passe est composé de la
+        // concaténation du mot de passe inscrit par l'utilisateur
+        // et du nom d'utilisateur (grain de sel).
         $username = strtolower($username);
         $password = sha1($password . $username);
 
-        // Récupère la connexion à la base de données.
-        $conn = Database::getConnection();
+        try {
+            $user = Users::FindByUsernameAndPassword($username, $password);
 
-        if (empty($conn)) {
-            throw new Exception('The connection to the database failed.');
-        } else {
+            // Si une exception es levée, c'est qu'aucun utilisateur n'a été trouvé.
+        } catch (Exception $e) {
+            return false;
+        }
 
-            // Exécute la procédure stockée.
-            $result = odbc_exec($conn, '{CALL [BruPartsOrderDb].[dbo].[tryLogin]("' . $username . '", "' . $password . '")}');
+        if (session_id() == '') {
+            session_start();
+        }
 
-            if (empty($result)) {
-                throw new Exception('The execution of the query failed.');
-            } else {
+        $_SESSION[self::USER_IDENTIFIER] = $user;
 
-                // Récupère la première ligne résultante.
-                $row = odbc_fetch_row($result);
+        return true;
+    }
 
-                if (empty($row)) {
-                    throw new Exception('Username or password incorrect.');
-                } else {
+    /**
+     * Retourne le retailer présentement connecté.
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getRetailerConnected()
+    {
+        if (!self::isInRoleName('Retailer')) {
+            throw new Exception('You must be connected as retailer.');
+        }
 
-                    // Démarre une session si celle-ci n'est pas déjà active.
-                    if (session_id() == '') {
-                        session_start();
-                    }
+        if (empty($_SESSION[self::RETAILER_IDENTIFIER])) {
+            $user = self::getUserConnected();
+            $retailer = Retailers::FindByUserId($user->getId());
+            $_SESSION[self::RETAILER_IDENTIFIER] = $retailer;
+        }
 
-                    $_SESSION['user'] = new User(odbc_result($result, 'id'), $username);
+        return $_SESSION[self::RETAILER_IDENTIFIER];
+    }
 
-                    return true;
-                }
+    /**
+     * Retourne vrai si l'utilisateur détient se rôle.
+     * @param $name
+     * @return bool
+     * @throws Exception
+     */
+    public static function isInRoleName($name)
+    {
+        if (!self::isAuthenticated()) {
+            throw new Exception('You must be authenticated.');
+        }
+
+        if (empty($_SESSION[self::ROLES_IDENTIFIER])) {
+            $user = self::getUserConnected();
+            $roles = Roles::FilterByUserId($user->getId());
+            $_SESSION[self::ROLES_IDENTIFIER] = $roles;
+        }
+
+        foreach ($_SESSION[self::ROLES_IDENTIFIER] as $role) {
+            if (strtolower($role->getName()) == strtolower($name)) {
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -64,12 +100,25 @@ class Security
      */
     public static function isAuthenticated()
     {
-        // Démarre la session si cela n'est pas déjà fait.
         if (session_id() == '') {
             session_start();
         }
 
-        return !empty($_SESSION['user']);
+        return !empty($_SESSION[self::USER_IDENTIFIER]);
+    }
+
+    /**
+     * Retourne l'utilisateur présentement connecté.
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getUserConnected()
+    {
+        if (!self::isAuthenticated()) {
+            throw new Exception('You must be authenticated.');
+        }
+
+        return $_SESSION[self::USER_IDENTIFIER];
     }
 
     /**
@@ -77,12 +126,10 @@ class Security
      */
     public static function Logout()
     {
-        // Démarre la session si cela n'est pas déjà fait.
-        if (session_id() == '') {
-            session_start();
+        if (!self::isAuthenticated()) {
+            throw new Exception('You must be connected.');
         }
 
-        // Détruit la session en cours.
         session_destroy();
     }
 }

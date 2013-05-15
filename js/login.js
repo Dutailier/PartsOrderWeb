@@ -25,8 +25,7 @@ $(document).ready(function () {
                     if (data.hasOwnProperty('success') &&
                         data['success']) {
 
-                        // Redirige l'utilisateur.
-                        window.location = 'catalog.php';
+                            window.location = 'categories.php';
 
                         // Vérifie que la propriété de l'objet JSON a bien été créée.
                     } else if (data.hasOwnProperty('message')) {

@@ -15,7 +15,7 @@ if (!Security::isAuthenticated()) {
 
     <!-- Feuilles de style. -->
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
-    <link type="text/css" rel="stylesheet" href="css/types.css"/>
+    <link type="text/css" rel="stylesheet" href="css/parts.css"/>
     <link type="text/css" rel="stylesheet" href="css/buttons.css"/>
     <!-- Fin -->
 </head>
@@ -27,15 +27,15 @@ if (!Security::isAuthenticated()) {
         <!-- Entrée du numéro de série d'une chaise. -->
         <form id="frmSearch" onsubmit="return false;">
             <p>
-                <label for="serialGlider">Serial</label>
-                <input id="serialGlider" name="serialGlider" type="text"/>
+                <label for="serial">Serial</label>
+                <input id="serial" name="serial" type="text"/>
                 <input id="search" name="search" type="submit" value="Search"/>
             </p>
         </form>
         <!-- Fin -->
 
         <!-- Liste des pièces. -->
-        <div id="types">
+        <div id="parts">
         </div>
         <!-- Fin -->
 
@@ -45,8 +45,8 @@ if (!Security::isAuthenticated()) {
 
 <!-- Scripts. -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-<script src="js/types.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="js/parts.js"></script>
 <!-- Fin -->
 </body>
 </html>

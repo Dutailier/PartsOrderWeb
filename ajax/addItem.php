@@ -3,22 +3,24 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/sessionCart.php');
+include_once(ROOT . 'libs/repositories/parts.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 } else {
 
-    if (empty($_GET['typeId']) || empty($_GET['name']) || empty($_GET['categoryId'])) {
+    if (empty($_GET['partId']) || empty($_GET['categoryId'])) {
         $data['success'] = false;
         $data['message'] = 'A item must be selected.';
-    } else if (empty($_GET['serialGlider'])) {
+    } else if (empty($_GET['serial'])) {
         $data['success'] = false;
-        $data['message'] = 'The serialGlider is required.';
+        $data['message'] = 'The serial is required.';
     } else {
 
         try {
-            $item = new CartItem($_GET['typeId'], $_GET['categoryId'], $_GET['serialGlider']);
+            $part = Parts::Find($_GET['partId']);
+            $item = new CartItem($part, $_GET['categoryId'], $_GET['serial']);
 
             $cart = new SessionCart();
             // Vérifie que la quantité avant d'avoir ajouté le type de pièce
@@ -39,8 +41,5 @@ if (!Security::isAuthenticated()) {
     }
 }
 
-// Indique que le contenu de la page affichera un objet JSON.
 header('Content-type: application/json');
-
-// Affiche l'objet JSON.
 echo json_encode($data);

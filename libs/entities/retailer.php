@@ -1,15 +1,12 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/interfaces/icomparable.php');
-include_once(ROOT . 'libs/repositories/users.php');
+include_once(ROOT . 'libs/entity.php');
 
-/**
- * Class Retailer
- * Représente un détaillant.
- */
-class Retailer implements IComparable
+class Retailer extends Entity
 {
+    const REGEX_PHONE = '^[1]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$';
+    const REGEX_EMAIL = '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$';
     private $id;
     private $userId;
     private $name;
@@ -17,42 +14,31 @@ class Retailer implements IComparable
     private $email;
     private $addressId;
 
-    public function __construct($id, $userId, $name, $phone, $email, $addressId)
+    function __construct($id, $userId, $name, $phone, $email, $addressId)
     {
         $this->id = $id;
         $this->userId = $userId;
-        $this->name = trim($name);
-        $this->email = trim($email);
-        $this->addressId = $addressId;
-
-        // Retire les caractères autres que les chiffres.
-        $phone = preg_replace('/[^\d]/', '', $phone);
-        $phone = (strlen($phone) == 10 ? '1' : '') + $phone;
+        $this->name = $name;
         $this->phone = $phone;
+        $this->email = $email;
+        $this->addressId = $addressId;
     }
 
-    public function equals($object)
-    {
-        return
-            $object instanceof self &&
-            $object->getId() == $this->getId();
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getArray()
+    public function getArray($deep = false)
     {
         return array(
             'id' => $this->getId(),
             'userId' => $this->getUserId(),
             'name' => $this->getName(),
-            'phone' => (string)$this->getPhone(),
+            'phone' => $this->getPhone(),
             'email' => $this->getEmail(),
             'addressId' => $this->getAddressId()
         );
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getUserId()
@@ -80,13 +66,17 @@ class Retailer implements IComparable
         return $this->addressId;
     }
 
-    public function getAddress()
-    {
-        return Addresses::Find($this->addressId);
-    }
-
     public function getUser()
     {
-        return Users::Find($this->userId);
+        include_once(ROOT . 'libs/repositories/users.php');
+
+        return Users::Find($this->getUserId());
+    }
+
+    public function getAddress()
+    {
+        include_once(ROOT . 'libs/repositories/addresses.php');
+
+        return Addresses::Find($this->getAddressId());
     }
 }

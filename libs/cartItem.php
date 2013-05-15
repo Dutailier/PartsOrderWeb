@@ -1,9 +1,8 @@
 <?php
 
 include_once('config.php');
+include_once(ROOT . 'libs/entities/part.php');
 include_once(ROOT . 'libs/interfaces/icartItem.php');
-include_once(ROOT . 'libs/repositories/types.php');
-include_once(ROOT . 'libs/repositories/categories.php');
 
 /**
  * Class Item
@@ -11,38 +10,41 @@ include_once(ROOT . 'libs/repositories/categories.php');
  */
 class CartItem implements ICartItem
 {
-    private $typeId;
+    private $part;
     private $categoryId;
-    private $serialGlider;
+    private $serial;
     private $quantity;
 
-    public function __construct($typeId, $categoryId, $serialGlider, $quantity = 1)
+    /**
+     * Constructeur par défaut.
+     * (Je préfère passer l'objet Part plutôt que son Id
+     * pour ne pas faire de requêtes inutiles plus tard.)
+     * @param Part $part
+     * @param $categoryId
+     * @param $serial
+     * @param int $quantity
+     */
+    public function __construct(Part $part, $categoryId, $serial, $quantity = 1)
     {
-        $this->typeId = $typeId;
+        $this->part = $part;
         $this->categoryId = $categoryId;
-        $this->serialGlider = $serialGlider;
+        $this->serial = $serial;
         $this->quantity = $quantity;
     }
 
     public function getArray()
     {
         return array(
-            'typeId' => $this->getTypeId(),
-            'name' => $this->getType()->getName(),
+            'part' => $this->getPart()->getArray(),
             'categoryId' => $this->getCategoryId(),
-            'serialGlider' => $this->getSerialGlider(),
+            'serial' => $this->getSerial(),
             'quantity' => $this->getQuantity()
         );
     }
 
-    public function getTypeId()
+    public function getPart()
     {
-        return $this->typeId;
-    }
-
-    public function getType()
-    {
-        return Types::Find($this->typeId);
+        return $this->part;
     }
 
     public function getCategoryId()
@@ -50,45 +52,27 @@ class CartItem implements ICartItem
         return $this->categoryId;
     }
 
-    public function getSerialGlider()
+    public function getSerial()
     {
-        return $this->serialGlider;
+        return $this->serial;
     }
 
-    /**
-     * Retourne la quantité de l'item.
-     * @return int
-     */
     public function getQuantity()
     {
         return $this->quantity;
     }
 
-    /**
-     * Permet de définir la quantité d'un item.
-     * @param $quantity
-     */
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
     }
 
-    /**
-     * Retourne vrai si l'objet est identique à celui-ci.
-     * @param $object
-     * @return bool
-     */
     public function equals($object)
     {
         return
             $object instanceof self &&
-            $object->typeId == $this->typeId &&
+            $object->part->getId() == $this->part->getId() &&
             $object->categoryId == $this->categoryId &&
-            $object->serialGlider == $this->serialGlider;
-    }
-
-    public function getCategory()
-    {
-        return Categories::Find($this->categoryId);
+            $object->serial == $this->serial;
     }
 }

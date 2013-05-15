@@ -3,9 +3,7 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/sessionCart.php');
-include_once(ROOT . 'libs/repositories/roles.php');
 include_once(ROOT . 'libs/repositories/orders.php');
-include_once(ROOT . 'libs/repositories/retailers.php');
 include_once(ROOT . 'libs/repositories/addresses.php');
 include_once(ROOT . 'libs/repositories/customers.php');
 
@@ -13,7 +11,7 @@ if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 
-} else if (!Roles::IsInRoleName('retailer')) {
+} else if (!Security::IsInRoleName('Retailer')) {
     $data['success'] = false;
     $data['message'] = 'You must be logged as a retailer.';
 
@@ -45,7 +43,7 @@ if (!Security::isAuthenticated()) {
         $data['message'] = 'The country name is required.';
     } else {
         try {
-            $retailer = Retailers::getConnected();
+            $retailer = Security::getRetailerConnected();
 
             $address = Addresses::Add(
                 $_POST['address'],
@@ -60,16 +58,15 @@ if (!Security::isAuthenticated()) {
                 $_POST['email'],
                 $address->getId());
 
-            $order = Orders::Add($retailer->getId(), $customer->getId());
+            $order = Orders::Add($retailer->getId(), $customer->getAddressId(), $customer->getId());
 
             $cart = new SessionCart;
 
             foreach ($cart->getItems() as $item) {
-                Parts::Add(
-                    $item->getTypeId(),
-                    $item->getSerialGlider(),
-                    $item->getQuantity(),
-                    $order->getId());
+                $order->addLine(
+                    $item->getPart()->getId(),
+                    $item->getSerial(),
+                    $item->getQuantity());
             }
 
             $cart->clear();
@@ -83,8 +80,5 @@ if (!Security::isAuthenticated()) {
     }
 }
 
-// Indique que le contenu de la page affichera un objet JSON.
 header('Content-type: application/json');
-
-// Affiche l'objet JSON.
 echo json_encode($data);

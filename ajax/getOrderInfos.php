@@ -3,8 +3,6 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/repositories/orders.php');
-include_once(ROOT . 'libs/repositories/retailers.php');
-include_once(ROOT . 'libs/repositories/customers.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -15,15 +13,15 @@ if (!Security::isAuthenticated()) {
         $data['message'] = 'A order must me placed.';
     } else {
         try {
+            $retailer = Security::getRetailerConnected();
             $order = Orders::Find($_GET['orderId']);
-            $retailer = $order->getRetailer();
 
-            if (!$retailer->equals(Retailers::getConnected())) {
+            if ($order->getRetailerId() != $retailer->getId()) {
                 $data['success'] = false;
                 $data['message'] = 'You must be at the origin of the order.';
             } else {
 
-                $parts = $order->getParts();
+                $lines = $order->getLines();
 
                 // Si la commande n'est reliée à aucun client,
                 // le détaillant sera le client.
@@ -42,14 +40,13 @@ if (!Security::isAuthenticated()) {
                 $data['customer']['address'] = $address->getArray();
                 $data['customer']['address']['state'] = $address->getState()->getArray();
 
-                $data['success'] = true;
-
-                foreach ($parts as $part) {
-                    $entry = $part->getArray();
-                    $entry['name'] = $part->getType()->getName();
-                    $data['parts'][] = $entry;
-
+                foreach ($lines as $line) {
+                    $entry = $line->getArray();
+                    $entry['part'] = $line->getPart()->getArray();
+                    $data['lines'][] = $entry;
                 }
+
+                $data['success'] = true;
             }
 
         } catch (Exception $e) {

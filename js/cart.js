@@ -14,18 +14,16 @@ $(document).ready(function () {
 
                     // Vérifie que les propriétés de l'objet JSON ont bien été créés.
                     if (data['items'].hasOwnProperty(i) &&
-                        data['items'][i].hasOwnProperty('typeId') &&
+                        data['items'][i].hasOwnProperty('part') &&
                         data['items'][i].hasOwnProperty('categoryId') &&
-                        data['items'][i].hasOwnProperty('name') &&
-                        data['items'][i].hasOwnProperty('serialGlider') &&
+                        data['items'][i].hasOwnProperty('serial') &&
                         data['items'][i].hasOwnProperty('quantity')) {
 
                         // Ajoute la pièce à la liste.
                         addItem(
-                            data['items'][i]['typeId'],
+                            data['items'][i]['part'],
                             data['items'][i]['categoryId'],
-                            data['items'][i]['name'],
-                            data['items'][i]['serialGlider'],
+                            data['items'][i]['serial'],
                             data['items'][i]['quantity']);
                     }
                 }
@@ -97,7 +95,7 @@ $(document).ready(function () {
                                         data.hasOwnProperty('orderId') &&
                                         data['orderId']) {
 
-                                        window.location = 'confirmation.php?orderId=' + data['orderId'];
+                                        window.location = 'orderInfos.php?orderId=' + data['orderId'];
 
                                         // Vérifie que la propriété de l'objet JSON a bien été créée.
                                     } else if (data.hasOwnProperty('message')) {
@@ -134,13 +132,12 @@ $(document).on('click', '.addCart', function () {
     var $item = $(this).closest('div.item');
 
     var parameters = {
-        'typeId': $item.data('typeid'),
-        'name': $item.find('label.name').text(),
-        'categoryId': $item.data('categoryid'),
-        'serialGlider': $item.find('label.serialGlider').text()
+        'partId': $item.data('type-id'),
+        'categoryId': $item.data('category-id'),
+        'serial': $item.find('label.serial').text()
     };
 
-    $.get('ajax/AddParts.php', parameters)
+    $.get('ajax/AddItem.php', parameters)
         .done(function (data) {
 
             // Vérifie que les propriétés de l'objet JSON ont bien été créés et
@@ -171,10 +168,9 @@ $(document).on('click', '.removeCart', function () {
     var $item = $(this).closest('div.item');
 
     var parameters = {
-        'typeId': $item.data('typeid'),
-        'name': $item.find('label.name').text(),
-        'categoryId': $item.data('categoryid'),
-        'serialGlider': $item.find('label.serialGlider').text()
+        'partId': $item.data('type-id'),
+        'categoryId': $item.data('category-id'),
+        'serial': $item.find('label.serial').text()
     };
 
     $.get('ajax/removeItem.php', parameters)
@@ -212,19 +208,19 @@ $(document).on('click', '.removeCart', function () {
 
 /**
  * Ajoute un item à la liste.
- * @param typeId
+ * @param part
  * @param categoryId
  * @param name
- * @param serialGlider
+ * @param serial
  * @param quantity
  */
-function addItem(typeId, categoryId, name, serialGlider, quantity) {
+function addItem(part, categoryId, serial, quantity) {
     $('#items').append(
-        '<div class="item" data-typeId="' + typeId + '" data-categoryId="' + categoryId + '">' +
+        '<div class="item" data-type-id="' + part['id'] + '" data-category-id="' + categoryId + '">' +
             '<div class="details">' +
             '<label class="quantity">' + quantity + '</label>' +
-            '<label class="name">' + name + '</label>' +
-            '<label class="serialGlider">' + serialGlider + '</label>' +
+            '<label class="name">' + part['name'] + '</label>' +
+            '<label class="serial">' + serial + '</label>' +
             '</div>' +
             '<div class="buttons">' +
             '<input class="removeCart" type="button"/>' +

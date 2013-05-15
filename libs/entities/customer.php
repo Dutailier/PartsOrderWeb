@@ -1,14 +1,13 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/repositories/addresses.php');
+include_once(ROOT . 'libs/entity.php');
 
-/**
- * Class Customer
- * Représente un client.
- */
-class Customer
+class Customer extends Entity
 {
+    const REGEX_PHONE = '/^[1]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/';
+    const REGEX_EMAIL = '/^\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}$/';
+
     private $id;
     private $firstname;
     private $lastname;
@@ -16,29 +15,25 @@ class Customer
     private $email;
     private $addressId;
 
-    public function __construct($id, $firstname, $lastname, $phone, $email, $addressId)
+    function __construct($id, $firstname, $lastname, $phone, $email, $addressId)
     {
         $this->id = $id;
-        $this->firstname = trim($firstname);
-        $this->lastname = trim($lastname);
-        $this->email = trim($email);
-        $this->addressId = $addressId;
-
-        // Retire les caractères autres que les chiffres.
-        $phone = preg_replace('/[^\d]/', '', $phone);
-        $phone = (strlen($phone) == 10 ? '1' : '') + $phone;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
         $this->phone = $phone;
+        $this->email = $email;
+        $this->addressId = $addressId;
     }
 
-    public function getArray()
+    public function getArray($deep = false)
     {
         return array(
             'id' => $this->getId(),
             'firstname' => $this->getFirstname(),
             'lastname' => $this->getLastname(),
-            'phone' => (string)$this->getPhone(),
+            'phone' => $this->getPhone(),
             'email' => $this->getEmail(),
-            'addressId' => $this->getAddressId(),
+            'addressId' => $this->getAddressId()
         );
     }
 
@@ -74,6 +69,8 @@ class Customer
 
     public function getAddress()
     {
-        return Addresses::Find($this->addressId);
+        include_once(ROOT . 'libs/repositories/addresses.php');
+
+        return Addresses::Find($this->getAddressId());
     }
 }

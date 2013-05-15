@@ -19,8 +19,5 @@ if (!Security::isAuthenticated()) {
     }
 }
 
-// Indique que le contenu de la page affichera un objet JSON.
 header('Content-type: application/json');
-
-// Affiche l'objet JSON.
 echo json_encode($data);

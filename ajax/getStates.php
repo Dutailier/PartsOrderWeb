@@ -15,9 +15,8 @@ if (!Security::isAuthenticated()) {
     } else {
 
         try {
-            $states = array();
-            $country = Countries::Find($_GET['countryId']);
-            foreach ($country->getStates() as $state) {
+            $data['states'] = array();
+            foreach (States::FilterByCountryId($_GET['countryId']) as $state) {
                 $data['states'][] = $state->getArray();
             }
             $data['success'] = true;
@@ -29,8 +28,5 @@ if (!Security::isAuthenticated()) {
     }
 }
 
-// Indique que le contenu de la page affichera un objet JSON.
 header('Content-type: application/json');
-
-// Affiche l'objet JSON.
 echo json_encode($data);

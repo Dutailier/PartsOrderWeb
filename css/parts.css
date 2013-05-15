@@ -21,7 +21,7 @@ form > p > label.error {
     margin-left: 60px;
 }
 
-#serialGlider {
+#serial {
     width: 390px;
     text-align: center;
 }
@@ -38,12 +38,12 @@ form > p > input {
     margin-right: 5px;
 }
 
-#types {
+#parts {
     padding: 20px;
     margin: 10px;
 }
 
-#types > div.type {
+#parts > div.part {
     float: left;
     width: 250px;
     height: auto;
@@ -52,31 +52,31 @@ form > p > input {
     border: 2px solid #484848;
 }
 
-#types > div.type > div.details > span {
+#parts > div.part > div.details > span {
     display: block;
     float: left;
     clear: both;
 }
 
-#types > div.type > div.details {
+#parts > div.part > div.details {
     padding: 5px;
     height: 140px;
     overflow: hidden;
 }
 
-#types > div.type > div.details > span.name {
+#parts > div.part > div.details > span.name {
     font-size: 1.5em;
     font-weight: bold;
 }
 
-#types > div.type > div.details > span.description {
+#parts > div.part > div.details > span.description {
     height: auto;
     margin-top: 10px;
     margin-bottom: 5px;
     clear: both;
 }
 
-#types > div.type > div.buttons {
+#parts > div.part > div.buttons {
     float: left;
     border: 2px solid #484848;
     width: 236px;
@@ -84,7 +84,7 @@ form > p > input {
     overflow: hidden;
 }
 
-#types > div.type > div.buttons > span.quantity {
+#parts > div.part > div.buttons > span.quantity {
     display: block;
     font-size: 1.5em;
     font-weight: bold;
@@ -92,6 +92,6 @@ form > p > input {
     margin: 0px 5px;
 }
 
-#types > div.type > div.buttons > input.addCart, input.removeCart {
+#parts > div.part > div.buttons > input.addCart, input.removeCart {
     float: right;
 }

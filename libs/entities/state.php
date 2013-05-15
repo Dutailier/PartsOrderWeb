@@ -1,19 +1,15 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/repositories/countries.php');
+include_once(ROOT . 'libs/entity.php');
 
-/**
- * Class State
- * Représente un état/province.
- */
-class State
+class State extends Entity
 {
     private $id;
     private $name;
     private $countryId;
 
-    public function __construct($id, $name, $countryId)
+    function __construct($id, $name, $countryId)
     {
         $this->id = $id;
         $this->name = $name;
@@ -46,6 +42,8 @@ class State
 
     public function getCountry()
     {
-        return Countries::Find($this->countryId);
+        include_once(ROOT . 'libs/repositories/countries.php');
+
+        return Countries::Find($this->getCountryId());
     }
 }

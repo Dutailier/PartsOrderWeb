@@ -1,25 +1,27 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/repositories/parts.php');
+include_once(ROOT . 'libs/entity.php');
 
-/**
- * Class Order
- * Représente une commande de pièces.
- */
-class Order
+class Order extends Entity
 {
     private $id;
     private $retailerId;
     private $customerId;
-    private $isConfirmed;
+    private $shippingAddressId;
+    private $creationDate;
+    private $deliveryDate;
+    private $status;
 
-    public function __construct($id, $retailerId, $customerId = null, $isConfirmed)
+    function __construct($id, $retailerId, $customerId, $shippingAddressId, $creationDate, $deliveryDate, $status)
     {
         $this->id = $id;
         $this->retailerId = $retailerId;
         $this->customerId = $customerId;
-        $this->isConfirmed = $isConfirmed;
+        $this->shippingAddressId = $shippingAddressId;
+        $this->creationDate = $creationDate;
+        $this->deliveryDate = $deliveryDate;
+        $this->status = $status;
     }
 
     public function getArray()
@@ -28,7 +30,10 @@ class Order
             'id' => $this->getId(),
             'retailerId' => $this->getRetailerId(),
             'customerId' => $this->getCustomerId(),
-            'isConfirmed' => $this->isConfirmed()
+            'shippingAddressId' => $this->getShippingAddressId(),
+            'creationDate' => $this->getCreationDate(),
+            'deliveryDate' => $this->getDeliveryDate(),
+            'status' => $this->getStatus()
         );
     }
 
@@ -47,27 +52,69 @@ class Order
         return $this->customerId;
     }
 
-    public function isConfirmed()
+    public function getShippingAddressId()
     {
-        return $this->isConfirmed;
+        return $this->shippingAddressId;
     }
 
-    public function getCustomer()
+    public function getCreationDate()
     {
-        if (is_null($this->customerId)) {
-            throw new Exception('No customer available.');
-        }
+        return $this->creationDate;
+    }
 
-        return Customers::Find($this->customerId);
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     public function getRetailer()
     {
-        return Retailers::Find($this->retailerId);
+        include_once(ROOT . 'libs/repositories/retailers.php');
+
+        return Retailers::Find($this->getRetailerId());
     }
 
-    public function getParts()
+    public function getCustomer()
     {
-        return Parts::FilterByOrderId($this->id);
+        include_once(ROOT . 'libs/repositories/customers.php');
+
+        return Customers::Find($this->getCustomerId());
+    }
+
+    public function getShippingAddress()
+    {
+        include_once(ROOT . 'libs/repositories/addresses.php');
+
+        return Addresses::Find($this->getShippingAddressId());
+    }
+
+    public function getLines()
+    {
+        include_once(ROOT . 'libs/repositories/lines.php');
+
+        return Lines::FilterByOrderId($this->getId());
+    }
+
+    public function Confirm()
+    {
+        include_once(ROOT . 'libs/repositories/orders.php');
+
+        return Orders::Confirm($this->getId());
+    }
+
+    public function addLine($partId, $serial, $quantity)
+    {
+        include_once(ROOT . 'libs/repositories/lines.php');
+
+        return Lines::Add(
+            $this->getId(),
+            $partId,
+            $serial,
+            $quantity);
     }
 }

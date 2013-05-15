@@ -1,22 +1,14 @@
 <?php
 
 include_once('config.php');
+include_once(ROOT . 'libs/entity.php');
 
-/**
- * Class User
- * Gère les méthodes relatives aux utilisateurs.
- */
-class User
+class User extends Entity
 {
     private $id;
     private $username;
 
-    /**
-     * Constructeur par défaut.
-     * @param $id
-     * @param $username
-     */
-    public function __construct($id, $username)
+    function __construct($id, $username)
     {
         $this->id = $id;
         $this->username = $username;
@@ -26,7 +18,8 @@ class User
     {
         return array(
             'id' => $this->getId(),
-            'username' => $this->getUsername());
+            'username' => $this->getUsername()
+        );
     }
 
     public function getId()
