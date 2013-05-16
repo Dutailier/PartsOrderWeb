@@ -28,7 +28,7 @@ if (!Security::isAuthenticated()) {
         <form id="frmSearch" onsubmit="return false;">
             <p>
                 <label for="serial">Serial</label>
-                <input id="serial" name="serial" type="text"/>
+                <input id="serial" name="serial" type="text" maxlength="11"/>
                 <input id="search" name="search" type="submit" value="Search"/>
             </p>
         </form>
