@@ -36,7 +36,7 @@ if (!Security::isAuthenticated()) {
         <!-- Sommaire des pièces commandées -->
         <form id="summary">
             <input id="btnOrder" name="btnOrder" type="button" value="order"/>
-            <a id="btnClear">clear</a>
+            <a id="btnClear" class="button">clear</a>
         </form>
         <!-- Fin -->
 

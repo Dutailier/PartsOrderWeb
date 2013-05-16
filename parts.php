@@ -46,7 +46,7 @@ if (!Security::isAuthenticated()) {
 
         <div id="buttons" class="hidden">
             <input id="btnCart" type="button" value="View cart"/>
-            <a id="backCategories">back</a>
+            <a id="backCategories" class="button">back</a>
         </div>
 
     </div>

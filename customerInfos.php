@@ -90,7 +90,7 @@ if ((new SessionCart())->isEmpty()) {
 
             <div id="buttons">
                 <input id="proceed" name="proceed" type="submit" value="proceed"/>
-                <a id="clear">clear</a>
+                <a id="clear" class="button">clear</a>
             </div>
         </form>
 

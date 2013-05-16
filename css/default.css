@@ -121,6 +121,10 @@ input, textarea, select {
     padding: 8px;
 }
 
+a.button, input[type=button], input[type=submit] {
+    font-size: 1.2em;
+}
+
 .hidden {
     visibility: hidden;
 }
