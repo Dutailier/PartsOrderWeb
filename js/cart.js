@@ -41,7 +41,7 @@ $(document).ready(function () {
             alert('Communication with the server failed.');
         })
 
-    $('#dialog').dialog({
+    $('#clearConfirmation').dialog({
         autoOpen: false,
         modal: true,
         buttons: {
@@ -78,66 +78,77 @@ $(document).ready(function () {
 
     $('#btnClear').click(function () {
         if ($('#items > div.item').length > 0) {
-            $('#dialog').dialog('open');
+            $('#clearConfirmation').dialog('open');
         }
     });
 
+    $('#placeOrderConfirmation').dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+            'Yes' : function() {
+                $.get('ajax/customerInfosAreRequired.php')
+                    .done(function (data) {
+
+                        // Vérifie que les propriétés de l'objet JSON ont bien été créés et
+                        // vérifie si la requête fut un succès.
+                        if (data.hasOwnProperty('success') &&
+                            data['success']) {
+
+                            if (data.hasOwnProperty('customerInfosAreRequired') &&
+                                data['customerInfosAreRequired']) {
+                                window.location = 'customerInfos.php';
+                            } else {
+
+                                $.post('ajax/placeOrderForRetailer.php')
+                                    .done(function (data) {
+
+                                        // Vérifie que les propriétés de l'objet JSON ont bien été créées et
+                                        // vérifie si la requête fut un succès.
+                                        if (data.hasOwnProperty('success') &&
+                                            data['success'] &&
+                                            data.hasOwnProperty('orderId') &&
+                                            data['orderId']) {
+
+                                            window.location = 'orderInfos.php?orderId=' + data['orderId'];
+
+                                            // Vérifie que la propriété de l'objet JSON a bien été créée.
+                                        } else if (data.hasOwnProperty('message')) {
+
+                                            // Affiche un message d'erreur expliquant l'échec de la requête.
+                                            alert(data['message']);
+                                        } else {
+                                            alert('Communication with the server failed.');
+                                        }
+                                    })
+                                    .fail(function () {
+                                        alert('Communication with the server failed.');
+                                    })
+                            }
+
+                            // Vérifie que la propriété de l'objet JSON a bien été créée.
+                        } else if (data.hasOwnProperty('message')) {
+
+                            // Affiche un message d'erreur expliquant l'échec de la requête.
+                            alert(data['message']);
+                        } else {
+                            alert('Communication with the server failed.');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Communication with the server failed.');
+                    })
+            },
+            'No' : function() {
+                $(this).dialog('close');
+            }
+        }
+    });
 
     $('#btnOrder').click(function () {
         //Vérifie que des pièces sont présentement en commande.
         if ($('#items > div.item').length > 0) {
-
-            $.get('ajax/customerInfosAreRequired.php')
-                .done(function (data) {
-
-                    // Vérifie que les propriétés de l'objet JSON ont bien été créés et
-                    // vérifie si la requête fut un succès.
-                    if (data.hasOwnProperty('success') &&
-                        data['success']) {
-
-                        if (data.hasOwnProperty('customerInfosAreRequired') &&
-                            data['customerInfosAreRequired']) {
-                            window.location = 'customerInfos.php';
-                        } else {
-
-                            $.post('ajax/placeOrderForRetailer.php')
-                                .done(function (data) {
-
-                                    // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-                                    // vérifie si la requête fut un succès.
-                                    if (data.hasOwnProperty('success') &&
-                                        data['success'] &&
-                                        data.hasOwnProperty('orderId') &&
-                                        data['orderId']) {
-
-                                        window.location = 'orderInfos.php?orderId=' + data['orderId'];
-
-                                        // Vérifie que la propriété de l'objet JSON a bien été créée.
-                                    } else if (data.hasOwnProperty('message')) {
-
-                                        // Affiche un message d'erreur expliquant l'échec de la requête.
-                                        alert(data['message']);
-                                    } else {
-                                        alert('Communication with the server failed.');
-                                    }
-                                })
-                                .fail(function () {
-                                    alert('Communication with the server failed.');
-                                })
-                        }
-
-                        // Vérifie que la propriété de l'objet JSON a bien été créée.
-                    } else if (data.hasOwnProperty('message')) {
-
-                        // Affiche un message d'erreur expliquant l'échec de la requête.
-                        alert(data['message']);
-                    } else {
-                        alert('Communication with the server failed.');
-                    }
-                })
-                .fail(function () {
-                    alert('Communication with the server failed.');
-                })
+            $('#placeOrderConfirmation').dialog('open');
         }
     });
 });

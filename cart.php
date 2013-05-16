@@ -40,8 +40,11 @@ if (!Security::isAuthenticated()) {
         </form>
         <!-- Fin -->
 
-        <div id="dialog" title="Confirmation required">
+        <div id="clearConfirmation" title="Confirmation required">
             Are you sure you want clear your shopping cart?
+        </div>
+        <div id="placeOrderConfirmation" title="Confirmation required">
+            Are you sure you want to place your order? After, you cannot change your order.
         </div>
     </div>
     <?php include_once(ROOT . '_footer.php'); ?>
