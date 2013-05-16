@@ -4,7 +4,7 @@ include_once('config.php');
 include_once(ROOT . 'libs/security.php');
 
 if (Security::isAuthenticated()) {
-    header('location: catalog.php');
+    header('location: categories.php');
 }
 
 ?>
@@ -29,12 +29,12 @@ if (Security::isAuthenticated()) {
             <div id="login">
                 <form method="post" onsubmit="return false;">
                     <p>
-                        <label for="username">Username</label>
+                        <label class="field" for="username">Username</label>
                         <input id="username" name="username" type="text"/>
                     </p>
 
                     <p>
-                        <label for="password">Password</label>
+                        <label class="field" for="password">Password</label>
                         <input id="password" name="password" type="password"/>
                     </p>
 

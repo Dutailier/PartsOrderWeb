@@ -25,7 +25,7 @@ if (!Security::isAuthenticated()) {
     <?php include_once(ROOT . '_header.php'); ?>
     <div id="content">
 
-        <h1>Thanks you for your order.</h1>
+        <h1>Thank you for your order.</h1>
 
 
     </div>

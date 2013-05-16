@@ -82,6 +82,10 @@ $(document).ready(function () {
         }
     });
 
+    $('#btnContinueShopping').click(function(){
+        window.location = 'categories.php';
+    });
+
     $('#placeOrderConfirmation').dialog({
         autoOpen: false,
         modal: true,

@@ -36,6 +36,7 @@ if (!Security::isAuthenticated()) {
         <!-- Sommaire des pièces commandées -->
         <form id="summary">
             <input id="btnOrder" name="btnOrder" type="button" value="Place your order"/>
+            <input id="btnContinueShopping" name="btnContinueShopping" type="button" value="Continue shopping"/>
             <a id="btnClear" class="button">clear</a>
         </form>
         <!-- Fin -->

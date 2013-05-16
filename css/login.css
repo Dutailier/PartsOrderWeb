@@ -1,31 +1,49 @@
 #background {
     background: url(../img/backgrounds/login.png) no-repeat;
-    height: 780px;
+    height: 670px;
 }
 
 #login {
     position: relative;
     margin: 0px auto;
-    width: 250px;
-    top: 73%;
+    width: 360px;
+    top: 83%;
+}
+
+#login > form > p {
+    clear: both;
+    margin: 5px 0px;
+    overflow: hidden; /* Clearfix */
+}
+
+#login > form > p > .field {
+    display: inline-block;
+    line-height: 30px;
+    float: left;
+    width: 100px;
+    background-color: #D0D0D0;
+    text-align: center;
+    padding: 0px 20px;
+    margin: 0px 10px;
+}
+
+#login > form > p > input {
+    display: inline-block;
+    float: left;
+    width: 200px;
+    margin: 0px;
 }
 
 #login > form > p > label.error {
     display: inline-block;
     height: 34px;
-    line-height: 34px;
+    line-height: 30px;
     position: absolute;
     width: 150px;
     right: -155px;
     overflow: hidden;
 }
 
-#login > form > p {
-    clear: both;
-    margin: 10px 0px;
-}
-
-#login > form > p > input {
-    width: 100%;
-    margin: 0px;
+#login > form > p > input[type=submit] {
+    float: right;
 }

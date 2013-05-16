@@ -60,8 +60,9 @@
     float: right;
 }
 
-#btnOrder {
+#summary > input[type=button] {
     width: 200px;
+    cursor: hand;
 }
 
 #btnClear {

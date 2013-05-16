@@ -21,7 +21,7 @@ body {
 
 #content {
     width: 960px;
-    margin: 10px auto;
+    margin: 0px auto;
     padding-bottom: 110px;
     overflow: auto;
 }
@@ -118,11 +118,11 @@ input.error, textarea.error {
 }
 
 input, textarea, select {
-    padding: 8px;
+    padding: 6px;
 }
 
 a.button, input[type=button], input[type=submit] {
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 .hidden {
