@@ -9,7 +9,8 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
     try {
-        (new SessionCart())->Clear();
+        $cart = new sessionCart();
+        $cart->Clear();
 
         $data['success'] = true;
 
