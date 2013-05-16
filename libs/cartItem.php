@@ -2,6 +2,7 @@
 
 include_once('config.php');
 include_once(ROOT . 'libs/entities/part.php');
+include_once(ROOT . 'libs/entities/category.php');
 include_once(ROOT . 'libs/interfaces/icartItem.php');
 
 /**
@@ -11,23 +12,20 @@ include_once(ROOT . 'libs/interfaces/icartItem.php');
 class CartItem implements ICartItem
 {
     private $part;
-    private $categoryId;
+    private $category;
     private $serial;
     private $quantity;
 
     /**
-     * Constructeur par défaut.
-     * (Je préfère passer l'objet Part plutôt que son Id
-     * pour ne pas faire de requêtes inutiles plus tard.)
      * @param Part $part
-     * @param $categoryId
+     * @param Category $category
      * @param $serial
      * @param int $quantity
      */
-    public function __construct(Part $part, $categoryId, $serial, $quantity = 1)
+    public function __construct(Part $part, Category $category, $serial, $quantity = 1)
     {
         $this->part = $part;
-        $this->categoryId = $categoryId;
+        $this->category = $category;
         $this->serial = $serial;
         $this->quantity = $quantity;
     }
@@ -36,7 +34,7 @@ class CartItem implements ICartItem
     {
         return array(
             'part' => $this->getPart()->getArray(),
-            'categoryId' => $this->getCategoryId(),
+            'category' => $this->getCategory()->getArray(),
             'serial' => $this->getSerial(),
             'quantity' => $this->getQuantity()
         );
@@ -47,16 +45,9 @@ class CartItem implements ICartItem
         return $this->part;
     }
 
-    public function getCategoryId()
+    public function getCategory()
     {
-        return $this->categoryId;
-    }
-
-    public function GetCategory()
-    {
-        include_once(ROOT . 'libs/repositories/categories.php');
-
-        return Categories::Find($this->getCategoryId());
+        return $this->category;
     }
 
     public function getSerial()
@@ -79,7 +70,7 @@ class CartItem implements ICartItem
         return
             $object instanceof self &&
             $object->part->getId() == $this->part->getId() &&
-            $object->categoryId == $this->categoryId &&
+            $object->category->getId() == $this->category->getId() &&
             $object->serial == $this->serial;
     }
 }

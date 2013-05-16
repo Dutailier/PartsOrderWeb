@@ -28,7 +28,7 @@ if (!Security::isAuthenticated()) {
             foreach ($cart->getItems() as $item) {
                 $order->addLine(
                     $item->getPart()->getId(),
-                    $item->getCategoryId(),
+                    $item->getCategory()->getId(),
                     $item->getSerial(),
                     $item->getQuantity());
             }

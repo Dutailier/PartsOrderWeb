@@ -34,8 +34,16 @@ class Category extends Entity
     {
         return $this->name;
     }
+
     public function CustomerInfosAreRequired()
     {
         return $this->customerInfosAreRequired;
+    }
+
+    public function getParts()
+    {
+        include_once(ROOT . 'libs/repositories/parts.php');
+
+        return Parts::FilterByCategoryId($this->getId());
     }
 }

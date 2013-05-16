@@ -15,14 +15,14 @@ $(document).ready(function () {
                     // Vérifie que les propriétés de l'objet JSON ont bien été créés.
                     if (data['items'].hasOwnProperty(i) &&
                         data['items'][i].hasOwnProperty('part') &&
-                        data['items'][i].hasOwnProperty('categoryId') &&
+                        data['items'][i].hasOwnProperty('category') &&
                         data['items'][i].hasOwnProperty('serial') &&
                         data['items'][i].hasOwnProperty('quantity')) {
 
                         // Ajoute la pièce à la liste.
                         addItem(
                             data['items'][i]['part'],
-                            data['items'][i]['categoryId'],
+                            data['items'][i]['category'],
                             data['items'][i]['serial'],
                             data['items'][i]['quantity']);
                     }
@@ -42,10 +42,10 @@ $(document).ready(function () {
         })
 
     $('#dialog').dialog({
-       autoOpen: false,
+        autoOpen: false,
         modal: true,
         buttons: {
-            'Yes' : function() {
+            'Yes': function () {
                 $.get('ajax/clearCart.php')
                     .done(function (data) {
 
@@ -70,14 +70,16 @@ $(document).ready(function () {
                         alert('Communication with the server failed.');
                     })
             },
-            'No' : function() {
+            'No': function () {
                 $(this).dialog('close');
             }
         }
     });
 
     $('#btnClear').click(function () {
-        $('#dialog').dialog('open');
+        if ($('#items > div.item').length > 0) {
+            $('#dialog').dialog('open');
+        }
     });
 
 
@@ -227,9 +229,9 @@ $(document).on('click', '.removeCart', function () {
  * @param serial
  * @param quantity
  */
-function addItem(part, categoryId, serial, quantity) {
+function addItem(part, category, serial, quantity) {
     $('#items').append(
-        '<div class="item" data-type-id="' + part['id'] + '" data-category-id="' + categoryId + '">' +
+        '<div class="item" data-type-id="' + part['id'] + '" data-category-id="' + category['id'] + '">' +
             '<div class="details">' +
             '<label class="quantity">' + quantity + '</label>' +
             '<label class="name">' + part['name'] + '</label>' +

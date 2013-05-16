@@ -15,6 +15,7 @@ class Lines
         $query = 'EXEC [addLine]';
         $query .= '@orderId = "' . intval($orderId) . '", ';
         $query .= '@partId = "' . intval($partId) . '", ';
+        $query .= '@categoryId = "' . intval($categoryId) . '", ';
         $query .= '@serial = "' . $serial . '", ';
         $query .= '@quantity = "' . intval($quantity) . '"';
 

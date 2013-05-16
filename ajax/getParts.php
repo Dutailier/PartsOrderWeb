@@ -3,7 +3,7 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/sessionCart.php');
-include_once(ROOT . 'libs/repositories/parts.php');
+include_once(ROOT . 'libs/repositories/categories.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -22,8 +22,9 @@ if (!Security::isAuthenticated()) {
             $cart = new SessionCart();
 
             $data['parts'] = array();
-            foreach (Parts::FilterByCategoryId($_GET['categoryId']) as $part) {
-                $item = new CartItem($part, $_GET['categoryId'], $_GET['serial']);
+            $category = Categories::Find($_GET['categoryId']);
+            foreach ($category->getParts() as $part) {
+                $item = new CartItem($part, $category, $_GET['serial']);
 
                 $entry = $part->getArray();
                 $entry['quantity'] = $cart->getQuantity($item);
