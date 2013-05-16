@@ -15,7 +15,7 @@ class Customers
         }
         $phone = preg_replace('[^\d]', '', $phone);
         $phone = trim($phone);
-        $phone = (strlen($phone) == 9 ? '1' : $phone) . $phone;
+        $phone = (strlen($phone) == 10 ? '1' : '') . $phone;
 
         $query = 'EXEC [addCustomer]';
         $query .= '@firstname = "' . trim($firstname) . '", ';

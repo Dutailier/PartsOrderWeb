@@ -16,7 +16,7 @@ if (!Security::isAuthenticated()) {
 
             // Si le produit est commandé pour un client,
             // les informations du client sont nécessaires.
-            if ($item->getCategoryId() == 3) {
+            if ($item->getCategory()->CustomerInfosAreRequired()) {
                 $data['customerInfosAreRequired'] = true;
                 break;
             }
@@ -24,7 +24,7 @@ if (!Security::isAuthenticated()) {
 
         // Si la propriété n'est pas définit, c'est qu'auncun
         // produit n'est commandé pour un client.
-        if(!isset($data['customerInfosAreRequired'])) {
+        if (!isset($data['customerInfosAreRequired'])) {
             $data['customerInfosAreRequired'] = false;
         }
 

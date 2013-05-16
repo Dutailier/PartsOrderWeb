@@ -7,18 +7,21 @@ class Category extends Entity
 {
     private $id;
     private $name;
+    private $customerInfosAreRequired;
 
-    function __construct($id, $name)
+    function __construct($id, $name, $customerInfosAreRequired)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->customerInfosAreRequired = $customerInfosAreRequired;
     }
 
     public function getArray()
     {
         return array(
             'id' => $this->getId(),
-            'name' => $this->getName()
+            'name' => $this->getName(),
+            'customerInfosAreRequired' => $this->CustomerInfosAreRequired()
         );
     }
 
@@ -31,6 +34,8 @@ class Category extends Entity
     {
         return $this->name;
     }
-
-
+    public function CustomerInfosAreRequired()
+    {
+        return $this->customerInfosAreRequired;
+    }
 }

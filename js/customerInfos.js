@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     // Définit la règle de validation pour le numéro de téléphone.
     $.validator.addMethod('phone', function (value, element) {
-        return /^[1]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/g.test(value)
+        return /^[1]?[-. ]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/g.test(value)
     }, 'The phone number must be standard (ex: 123-456-7878).');
 
     $('#frmOrder').validate({

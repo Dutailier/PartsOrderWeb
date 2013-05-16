@@ -38,6 +38,22 @@ form > p > input {
     margin-right: 5px;
 }
 
+#help {
+    width: 650px;
+    margin: 10px auto;
+    text-align: center;
+    overflow: hidden; /* Clearfix */
+}
+
+#help > label {
+
+}
+
+#help > img {
+    width: 350px;
+    margin: 30px;
+}
+
 #parts {
     padding: 20px;
     margin: 10px;
@@ -94,4 +110,25 @@ form > p > input {
 
 #parts > div.part > div.buttons > input.addCart, input.removeCart {
     float: right;
+}
+
+#buttons {
+    width: 250px;
+    margin: 30px auto;
+    clear: both;
+}
+
+#buttons > * {
+    padding: 8px;
+    margin: 5px;
+    float: right;
+}
+
+#btnCart {
+    width: 150px;
+}
+
+#backCategories {
+    cursor: pointer;
+    text-decoration: underline;
 }

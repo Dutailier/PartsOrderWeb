@@ -43,37 +43,44 @@ if (!Security::isAuthenticated()) {
         $data['message'] = 'The country name is required.';
     } else {
         try {
-            $retailer = Security::getRetailerConnected();
-
-            $address = Addresses::Add(
-                $_POST['address'],
-                $_POST['city'],
-                $_POST['zip'],
-                $_POST['stateId']);
-
-            $customer = Customers::Add(
-                $_POST['firstname'],
-                $_POST['lastname'],
-                $_POST['phone'],
-                $_POST['email'],
-                $address->getId());
-
-            $order = Orders::Add($retailer->getId(), $customer->getAddressId(), $customer->getId());
-
             $cart = new SessionCart;
 
-            foreach ($cart->getItems() as $item) {
-                $order->addLine(
-                    $item->getPart()->getId(),
-                    $item->getSerial(),
-                    $item->getQuantity());
+            if ($cart->isEmpty()) {
+                $data['success'] = false;
+                $data['message'] = 'You must have at least one item in the shopping cart.';
+
+            } else {
+                $retailer = Security::getRetailerConnected();
+
+                $address = Addresses::Add(
+                    $_POST['address'],
+                    $_POST['city'],
+                    $_POST['zip'],
+                    $_POST['stateId']);
+
+                $customer = Customers::Add(
+                    $_POST['firstname'],
+                    $_POST['lastname'],
+                    $_POST['phone'],
+                    $_POST['email'],
+                    $address->getId());
+
+                $order = Orders::Add($retailer->getId(), $customer->getAddressId(), $customer->getId());
+
+                foreach ($cart->getItems() as $item) {
+                    $order->addLine(
+                        $item->getPart()->getId(),
+                        $item->getSerial(),
+                        $item->getQuantity());
+                }
+                $cart->clear();
+
+                $data['orderId'] = $order->getId();
+                $data['success'] = true;
             }
 
-            $cart->clear();
-            $data['orderId'] = $order->getId();
-            $data['success'] = true;
-
-        } catch (Exception $e) {
+        } catch
+        (Exception $e) {
             $data['success'] = false;
             $data['message'] = $e->getMessage();
         }

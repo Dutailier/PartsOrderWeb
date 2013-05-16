@@ -52,6 +52,13 @@ class CartItem implements ICartItem
         return $this->categoryId;
     }
 
+    public function GetCategory()
+    {
+        include_once(ROOT . 'libs/repositories/categories.php');
+
+        return Categories::Find($this->getCategoryId());
+    }
+
     public function getSerial()
     {
         return $this->serial;

@@ -34,10 +34,20 @@ if (!Security::isAuthenticated()) {
         </form>
         <!-- Fin -->
 
+        <div id="help">
+            <label>Please enter the 11 digits of the serial number on the manufacturing label of the chair.</label>
+            <img src="img/serial.png"/>
+        </div>
+
         <!-- Liste des pièces. -->
         <div id="parts">
         </div>
         <!-- Fin -->
+
+        <div id="buttons" class="hidden">
+            <input id="btnCart" type="button" value="View cart"/>
+            <a id="backCategories">back</a>
+        </div>
 
     </div>
     <?php include_once(ROOT . '/_footer.php'); ?>

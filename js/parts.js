@@ -39,7 +39,9 @@ $(document).ready(function () {
                         data['success'] &&
                         data.hasOwnProperty('parts')) {
 
+                        $('#help').remove();
                         $('div.part').remove();
+                        $('#buttons').removeClass('hidden');
 
                         // Parcours tous les types de pièce retournés par la requête.
                         for (var i in data['parts']) {
@@ -73,7 +75,15 @@ $(document).ready(function () {
                     alert('Communication with the server failed.');
                 })
         }
-    })
+    });
+
+    $('#backCategories').click(function () {
+        window.location = 'categories.php';
+    });
+
+    $('#btnCart').click(function () {
+        window.location = 'cart.php';
+    });
 });
 
 $(document).on('click', 'input.addCart', function () {
@@ -83,7 +93,7 @@ $(document).on('click', 'input.addCart', function () {
 
     var parameters = {
         "partId": $part.data('id'),
-        "categoryId" : $.queryString['categoryId'],
+        "categoryId": $.queryString['categoryId'],
         "serial": serial
     };
 
@@ -120,7 +130,7 @@ $(document).on('click', 'input.removeCart', function () {
 
     var parameters = {
         "partId": $part.data('id'),
-        "categoryId" : $.queryString['categoryId'],
+        "categoryId": $.queryString['categoryId'],
         "serial": serial
     };
 
@@ -163,13 +173,13 @@ function addPart(id, name, description, quantity) {
     var $part = $(
         '<div class="part" data-id="' + id + '">' +
             '<div class="details">' +
-                '<span class="name">' + name + '</span>' +
-                '<span class="description">' + description + '</span>' +
+            '<span class="name">' + name + '</span>' +
+            '<span class="description">' + description + '</span>' +
             '</div>' +
             '<div class="buttons"> ' +
-                '<span class="quantity"></span>' +
+            '<span class="quantity"></span>' +
             '</div>' +
-        '</div>');
+            '</div>');
 
     $('#parts').append($part);
 

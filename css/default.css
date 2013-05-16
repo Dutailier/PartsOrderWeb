@@ -120,3 +120,7 @@ input.error, textarea.error {
 input, textarea, select {
     padding: 8px;
 }
+
+.hidden {
+    visibility: hidden;
+}

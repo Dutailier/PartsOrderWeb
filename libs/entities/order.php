@@ -32,7 +32,7 @@ class Order extends Entity
             'customerId' => $this->getCustomerId(),
             'shippingAddressId' => $this->getShippingAddressId(),
             'creationDate' => $this->getCreationDate(),
-            'deliveryDate' => $this->getDeliveryDate(),
+            'deliveryDate' => (is_null($this->getDeliveryDate()) ? 'Unknown' : $this->getDeliveryDate()),
             'status' => $this->getStatus()
         );
     }

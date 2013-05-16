@@ -24,6 +24,24 @@ if (!Security::isAuthenticated()) {
 <div id="wrapper">
     <?php include_once(ROOT . '_header.php'); ?>
     <div id="content">
+        <fieldset id='orderInfos'>
+            <legend>Order Informations</legend>
+
+            <p>
+                <label class="properties">Creation date : </label>
+                <label id="creationDate" class="values"></label>
+            </p>
+
+            <p>
+                <label class="properties">Delivery Date : </label>
+                <label id="deliveryDate" class="values"></label>
+            </p>
+
+            <p>
+                <label class="properties">Status : </label>
+                <label id="status" class="values"></label>
+            </p>
+        </fieldset>
         <fieldset>
             <legend>Retailer informations</legend>
 

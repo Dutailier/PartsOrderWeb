@@ -17,6 +17,7 @@ if (!Security::isAuthenticated()) {
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
     <link type="text/css" rel="stylesheet" href="css/cart.css"/>
     <link type="text/css" rel="stylesheet" href="css/buttons.css"/>
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
     <!-- Fin -->
 
 </head>
@@ -39,12 +40,16 @@ if (!Security::isAuthenticated()) {
         </form>
         <!-- Fin -->
 
+        <div id="dialog" title="Confirmation required">
+            Are you sure you want clear your shopping cart?
+        </div>
     </div>
     <?php include_once(ROOT . '_footer.php'); ?>
 </div>
 
 <!-- Scripts. -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="js/cart.js"></script>
 <!-- Fin -->
 

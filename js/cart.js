@@ -41,30 +41,43 @@ $(document).ready(function () {
             alert('Communication with the server failed.');
         })
 
+    $('#dialog').dialog({
+       autoOpen: false,
+        modal: true,
+        buttons: {
+            'Yes' : function() {
+                $.get('ajax/clearCart.php')
+                    .done(function (data) {
+
+                        // Vérifie que les propriétés de l'objet JSON ont bien été créées et
+                        // vérifie si la requête fut un succès.
+                        if (data.hasOwnProperty('success') &&
+                            data['success']) {
+
+                            // Rafraichi la page actuelle.
+                            window.location = 'categories.php';
+
+                            // Vérifie que la propriété de l'objet JSON a bien été créée.
+                        } else if (data.hasOwnProperty('message')) {
+
+                            // Affiche un message d'erreur expliquant l'échec de la requête.
+                            alert(data['message']);
+                        } else {
+                            alert('Communication with the server failed.');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Communication with the server failed.');
+                    })
+            },
+            'No' : function() {
+                $(this).dialog('close');
+            }
+        }
+    });
+
     $('#btnClear').click(function () {
-        $.get('ajax/clearCart.php')
-            .done(function (data) {
-
-                // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-                // vérifie si la requête fut un succès.
-                if (data.hasOwnProperty('success') &&
-                    data['success']) {
-
-                    // Rafraichi la page actuelle.
-                    window.location.reload();
-
-                    // Vérifie que la propriété de l'objet JSON a bien été créée.
-                } else if (data.hasOwnProperty('message')) {
-
-                    // Affiche un message d'erreur expliquant l'échec de la requête.
-                    alert(data['message']);
-                } else {
-                    alert('Communication with the server failed.');
-                }
-            })
-            .fail(function () {
-                alert('Communication with the server failed.');
-            })
+        $('#dialog').dialog('open');
     });
 
 

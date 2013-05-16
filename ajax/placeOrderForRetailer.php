@@ -17,20 +17,25 @@ if (!Security::isAuthenticated()) {
     try {
         $cart = new SessionCart();
 
-        $retailer = Security::getRetailerConnected();
-        $order = Orders::Add($retailer->getId(), $retailer->getAddressId());
+        if ($cart->isEmpty()) {
+            $data['success'] = false;
+            $data['message'] = 'You must have at least one item in the shopping cart.';
 
-        foreach ($cart->getItems() as $item) {
-            $order->addLine(
-                $item->getPart()->getId(),
-                $item->getSerial(),
-                $item->getQuantity());
+        } else {
+            $retailer = Security::getRetailerConnected();
+            $order = Orders::Add($retailer->getId(), $retailer->getAddressId());
+
+            foreach ($cart->getItems() as $item) {
+                $order->addLine(
+                    $item->getPart()->getId(),
+                    $item->getSerial(),
+                    $item->getQuantity());
+            }
+            $cart->clear();
+
+            $data['orderId'] = $order->getId();
+            $data['success'] = true;
         }
-
-        $cart->clear();
-        $data['orderId'] = $order->getId();
-        $data['success'] = true;
-
     } catch (Exception $e) {
         $data['success'] = false;
         $data['message'] = $e->getMessage();

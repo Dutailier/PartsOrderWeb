@@ -11,7 +11,13 @@ $(document).ready(function () {
             // vérifie si la requête fut un succès.
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
-                data.hasOwnProperty('lines')) {
+                data.hasOwnProperty('creationDate') &&
+                data.hasOwnProperty('deliveryDate') &&
+                data.hasOwnProperty('status')) {
+
+                $('#creationDate').text(data['creationDate']);
+                $('#deliveryDate').text(data['deliveryDate']);
+                $('#status').text(data['status']);
 
                 if (data.hasOwnProperty('retailer')) {
                     UpdateRetailerInfos(data['retailer']);
@@ -25,22 +31,24 @@ $(document).ready(function () {
                     }
                 }
 
-                for (var i in data['lines']) {
+                if (data.hasOwnProperty('lines')) {
+                    for (var i in data['lines']) {
 
-                    // Vérifie que les propriétés de l'objet JSON ont bien été créés.
-                    if (data['lines'].hasOwnProperty(i) &&
-                        data['lines'][i].hasOwnProperty('serial') &&
-                        data['lines'][i].hasOwnProperty('quantity') &&
-                        data['lines'][i].hasOwnProperty('part') &&
-                        data['lines'][i]['part'].hasOwnProperty('id') &&
-                        data['lines'][i]['part'].hasOwnProperty('name')) {
+                        // Vérifie que les propriétés de l'objet JSON ont bien été créés.
+                        if (data['lines'].hasOwnProperty(i) &&
+                            data['lines'][i].hasOwnProperty('serial') &&
+                            data['lines'][i].hasOwnProperty('quantity') &&
+                            data['lines'][i].hasOwnProperty('part') &&
+                            data['lines'][i]['part'].hasOwnProperty('id') &&
+                            data['lines'][i]['part'].hasOwnProperty('name')) {
 
-                        // Ajoute la pièce à la liste.
-                        addLine(
-                            data['lines'][i]['part']['id'],
-                            data['lines'][i]['part']['name'],
-                            data['lines'][i]['serial'],
-                            data['lines'][i]['quantity']);
+                            // Ajoute la pièce à la liste.
+                            addLine(
+                                data['lines'][i]['part']['id'],
+                                data['lines'][i]['part']['name'],
+                                data['lines'][i]['serial'],
+                                data['lines'][i]['quantity']);
+                        }
                     }
                 }
 
@@ -91,7 +99,7 @@ $(document).ready(function () {
         modal: true,
         dialogClass: 'dialog',
         buttons: {
-            "Yes" : function() {
+            "Yes": function () {
                 var parameters = {
                     "orderId": $.queryString['orderId']
                 };
@@ -118,7 +126,7 @@ $(document).ready(function () {
                         alert('Communication with the server failed.');
                     })
             },
-            "No" : function() {
+            "No": function () {
                 $(this).dialog('close');
             }
         }

@@ -5,7 +5,7 @@ include_once(ROOT . 'libs/entity.php');
 
 class Customer extends Entity
 {
-    const REGEX_PHONE = '/^[1]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/';
+    const REGEX_PHONE = '/^[1]?[-. ]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/';
     const REGEX_EMAIL = '/^\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}$/';
 
     private $id;

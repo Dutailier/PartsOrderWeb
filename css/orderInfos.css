@@ -35,6 +35,22 @@ fieldset > p > label.values {
     clear: both;
 }
 
+#orderInfos {
+    width: 938px;
+    height: 75px;
+    padding: 10px 0px;
+}
+
+#orderInfos > p {
+    clear: none;
+    padding: 0px 20px;
+}
+
+#orderInfos > p:nth-child(odd) {
+    margin-left:20px;
+    margin-right:20px;
+}
+
 hr {
     width: 900px;
     margin: 0px auto;
