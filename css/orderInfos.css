@@ -99,3 +99,8 @@ hr {
 #btnConfirm {
     width: 150px;
 }
+
+#btnCancel {
+    cursor: pointer;
+    text-decoration: underline;
+}

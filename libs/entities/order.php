@@ -83,7 +83,11 @@ class Order extends Entity
     {
         include_once(ROOT . 'libs/repositories/customers.php');
 
-        return Customers::Find($this->getCustomerId());
+        if (is_null($this->getCustomerId())) {
+            return null;
+        } else {
+            return Customers::Find($this->getCustomerId());
+        }
     }
 
     public function getShippingAddress()
@@ -105,6 +109,13 @@ class Order extends Entity
         include_once(ROOT . 'libs/repositories/orders.php');
 
         return Orders::Confirm($this->getId());
+    }
+
+    public function Cancel()
+    {
+        include_once(ROOT . 'libs/repositories/orders.php');
+
+        return Orders::Cancel($this->getId());
     }
 
     public function addLine($partId, $serial, $quantity)

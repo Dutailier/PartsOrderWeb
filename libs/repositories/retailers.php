@@ -19,7 +19,7 @@ class Retailers
 
         return new Retailer(
             $rows[0]['id'],
-            $rows[0]['UserId'],
+            $rows[0]['userId'],
             $rows[0]['name'],
             $rows[0]['phone'],
             $rows[0]['email'],

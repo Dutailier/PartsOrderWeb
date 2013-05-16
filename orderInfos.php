@@ -16,6 +16,7 @@ if (!Security::isAuthenticated()) {
     <!-- Feuilles de style. -->
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
     <link type="text/css" rel="stylesheet" href="css/orderInfos.css"/>
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
     <!-- Fin -->
 
 </head>
@@ -85,8 +86,13 @@ if (!Security::isAuthenticated()) {
         <!-- Sommaire des pièces commandées -->
         <form id="summary">
             <input id="btnConfirm" name="btnConfirm" type="button" value="Confirm"/>
+            <a id="btnCancel">cancel</a>
         </form>
         <!-- Fin -->
+
+        <div id="dialog" title="Confirmation required" class="dialog">
+            Are you sure you want cancel this order?
+        </div>
 
     </div>
     <?php include_once(ROOT . '_footer.php'); ?>
@@ -94,6 +100,7 @@ if (!Security::isAuthenticated()) {
 
 <!-- Scripts. -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="js/orderInfos.js"></script>
 <!-- Fin -->
 

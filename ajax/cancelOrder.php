@@ -22,7 +22,7 @@ if (!Security::isAuthenticated()) {
                 $data['message'] = 'You must be at the origin of the order.';
 
             } else {
-                $order->Confirm();
+                $order->Cancel();
                 $data['success'] = true;
             }
 

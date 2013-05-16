@@ -49,11 +49,11 @@ class Customers
         if (empty($rows)) {
             throw new Exception('No customer found.');
         }
-        return new Address(
+        return new Customer(
             $rows[0]['id'],
             $rows[0]['firstname'],
             $rows[0]['lastname'],
-            $rows[0]['phome'],
+            $rows[0]['phone'],
             $rows[0]['email'],
             $rows[0]['addressId']);
     }

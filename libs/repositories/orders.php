@@ -38,7 +38,43 @@ class Orders
         $query = 'EXEC [confirmOrder]';
         $query .= '@id = "' . intval($id) . '"';
 
-        Database::Execute($query);
+        $rows = Database::Execute($query);
+
+        if (empty($rows)) {
+            throw new Exception('No order found.');
+        }
+
+        return new Order(
+            $rows[0]['id'],
+            $rows[0]['retailerId'],
+            $rows[0]['customerId'],
+            $rows[0]['shippingAddressId'],
+            $rows[0]['creationDate'],
+            $rows[0]['deliveryDate'],
+            $rows[0]['status']
+        );
+    }
+
+    public static function Cancel($id)
+    {
+        $query = 'EXEC [cancelOrder]';
+        $query .= '@id = "' . intval($id) . '"';
+
+        $rows = Database::Execute($query);
+
+        if (empty($rows)) {
+            throw new Exception('No order found.');
+        }
+
+        return new Order(
+            $rows[0]['id'],
+            $rows[0]['retailerId'],
+            $rows[0]['customerId'],
+            $rows[0]['shippingAddressId'],
+            $rows[0]['creationDate'],
+            $rows[0]['deliveryDate'],
+            $rows[0]['status']
+        );
     }
 
     public static function Find($id)

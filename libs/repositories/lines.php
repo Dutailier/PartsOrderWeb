@@ -18,18 +18,18 @@ class Lines
         $query .= '@serial = "' . $serial . '", ';
         $query .= '@quantity = "' . intval($quantity) . '"';
 
-        $row = Database::Execute($query);
+        $rows = Database::Execute($query);
 
-        if (empty($row)) {
+        if (empty($rows)) {
             throw new Exception('The line wasn\'t added.');
         }
 
         return new Line(
-            $row['id'],
+            $rows[0]['id'],
             $orderId,
             $partId,
             $serial,
-            $row['sku'],
+            $rows[0]['sku'],
             $quantity
         );
     }

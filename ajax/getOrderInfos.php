@@ -21,26 +21,22 @@ if (!Security::isAuthenticated()) {
                 $data['message'] = 'You must be at the origin of the order.';
             } else {
 
-                $lines = $order->getLines();
-
-                // Si la commande n'est reliée à aucun client,
-                // le détaillant sera le client.
-                $customer = is_null($order->getCustomerId()) ?
-                    $retailer : $order->getCustomer();
-
+                $data = $order->getArray();
                 $data['retailer'] = $retailer->getArray();
 
                 $address = $retailer->getAddress();
                 $data['retailer']['address'] = $address->getArray();
                 $data['retailer']['address']['state'] = $address->getState()->getArray();
 
-                $data['customer'] = $customer->getArray();
+                if (!is_null($customer = $order->getCustomer())) {
+                    $data['customer'] = $customer->getArray();
 
-                $address = $customer->getAddress();
-                $data['customer']['address'] = $address->getArray();
-                $data['customer']['address']['state'] = $address->getState()->getArray();
+                    $address = $customer->getAddress();
+                    $data['customer']['address'] = $address->getArray();
+                    $data['customer']['address']['state'] = $address->getState()->getArray();
+                }
 
-                foreach ($lines as $line) {
+                foreach ($order->getLines() as $line) {
                     $entry = $line->getArray();
                     $entry['part'] = $line->getPart()->getArray();
                     $data['lines'][] = $entry;
@@ -56,8 +52,5 @@ if (!Security::isAuthenticated()) {
     }
 }
 
-// Indique que le contenu de la page affichera un objet JSON.
 header('Content-type: application/json');
-
-// Affiche l'objet JSON.
 echo json_encode($data);
