@@ -6,7 +6,7 @@ include_once(ROOT . 'libs/entities/line.php');
 
 class Lines
 {
-    public static function Add($orderId, $partId, $serial, $quantity)
+    public static function Add($orderId, $partId, $categoryId, $serial, $quantity)
     {
         if (!preg_match(Line::REGEX_SERIAL, $serial)) {
             throw new Exception('The serial must be 11 digits.');
@@ -28,6 +28,7 @@ class Lines
             $rows[0]['id'],
             $orderId,
             $partId,
+            $categoryId,
             $serial,
             $rows[0]['sku'],
             $quantity
@@ -46,6 +47,7 @@ class Lines
             $lines[] = new Line(
                 $row['orderId'],
                 $row['partId'],
+                $row['categoryId'],
                 $row['serial'],
                 $row['sku'],
                 $row['quantity']

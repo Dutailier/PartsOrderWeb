@@ -118,13 +118,14 @@ class Order extends Entity
         return Orders::Cancel($this->getId());
     }
 
-    public function addLine($partId, $serial, $quantity)
+    public function addLine($partId, $categoryId, $serial, $quantity)
     {
         include_once(ROOT . 'libs/repositories/lines.php');
 
         return Lines::Add(
             $this->getId(),
             $partId,
+            $categoryId,
             $serial,
             $quantity);
     }

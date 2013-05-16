@@ -70,6 +70,7 @@ if (!Security::isAuthenticated()) {
                 foreach ($cart->getItems() as $item) {
                     $order->addLine(
                         $item->getPart()->getId(),
+                        $item->getCategoryId(),
                         $item->getSerial(),
                         $item->getQuantity());
                 }

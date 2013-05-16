@@ -23,7 +23,7 @@ form > p > label.error {
 
 #serial {
     width: 390px;
-    height: 42px;
+    height: 40px;
     text-align: center;
 }
 
@@ -115,8 +115,10 @@ form > p > input {
 
 #buttons {
     width: 250px;
-    margin: 30px auto;
+    margin: 0px auto;
     clear: both;
+	padding-top: 30px;
+	overflow: hidden; /* Clearfix */
 }
 
 #buttons > * {

@@ -8,20 +8,22 @@ class Line extends Entity
     const REGEX_SERIAL = '/^[\d]{11}$/';
     private $orderId;
     private $partId;
+    private $categoryId;
     private $serial;
     private $sku;
     private $quantity;
 
-    function __construct($orderId, $partId, $serial, $sku, $quantity)
+    function __construct($orderId, $partId, $categoryId, $serial, $sku, $quantity)
     {
         $this->orderId = $orderId;
         $this->partId = $partId;
+        $this->categoryId = $categoryId;
         $this->serial = $serial;
         $this->sku = $sku;
         $this->quantity = $quantity;
     }
 
-    public function getArray($deep = false)
+    public function getArray()
     {
         return array(
             'partId' => $this->getPartId(),
@@ -69,5 +71,17 @@ class Line extends Entity
         include_once(ROOT . 'libs/repositories/orders.php');
 
         return Orders::Find($this->getOrderId());
+    }
+
+    public function getCategory()
+    {
+        include_once(ROOT . 'libs/repositories/categories.php');
+
+        return Categories::Find($this->getCategoryId());
+    }
+
+    public function getCategoryId()
+    {
+        return $this->categoryId;
     }
 }
