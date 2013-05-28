@@ -6,7 +6,7 @@ form {
 
 fieldset {
     display: block;
-    margin: 25px;
+    margin: 10px 25px 25px 25px;
     padding: 20px 15px;
     border: 1px solid #484848;
 }
@@ -36,6 +36,11 @@ fieldset > p > input, textarea, select {
     resize: none;
 }
 
+#lblUseStoreAddress {
+    font-weight: normal;
+    font-size: 0.6em;
+}
+
 #buttons {
     margin-right: 24px;
     margin-bottom: 20px;
@@ -52,7 +57,7 @@ fieldset > p > input, textarea, select {
     width: 150px;
 }
 
-#clear {
+#clear, #btnCancel {
     cursor: pointer;
     margin: 0px 5px;
     text-decoration: underline;

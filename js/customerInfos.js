@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // Définit la règle de validation pour le numéro de téléphone.
     $.validator.addMethod('phone', function (value, element) {
         return /^[1]?[-. ]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/g.test(value)
@@ -68,32 +67,26 @@ $(document).ready(function () {
                 "lastname": $('#lastname').val(),
                 "email": $('#email1').val(),
                 "phone": $('#phone').val(),
-                "address": $('#address').val(),
+                "details": $('#address').val(),
                 "city": $('#city').val(),
                 "zip": $('#zip').val(),
                 "stateId": $('#states > option:selected').val(),
-                "countryId": $('#countries > option:selected').val()
+                "countryId": $('#countries > option:selected').val(),
+                "useStoreAddress": $('#checkUseStoreAddress').is(':checked')
             };
 
-            $.post('ajax/placeOrderForCustomer.php', informations)
+            $.post('ajax/setCustomer.php', informations)
                 .done(function (data) {
 
-                    // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-                    // vérifie si la requête fut un succès.
                     if (data.hasOwnProperty('success') &&
-                        data['success'] &&
-                        data.hasOwnProperty('orderId') &&
-                        data['orderId']) {
+                        data['success']) {
+                        window.location = 'shippingInfos.php';
 
-                        window.location = 'orderInfos.php?orderId=' + data['orderId'];
-
-                        // Vérifie que la propriété de l'objet JSON a bien été créée.
                     } else if (data.hasOwnProperty('message')) {
-
-                        // Affiche un message d'erreur expliquant l'échec de la requête.
                         alert(data['message']);
+
                     } else {
-                        alert('Communication with the server failed.');
+                        alert('The result of the server is unreadable.');
                     }
                 })
                 .fail(function () {
@@ -108,22 +101,16 @@ $(document).ready(function () {
             "countryId": $('#countries > option:selected').val()
         };
 
-        $.get('ajax/getStates.php', parameters)
+        $.post('ajax/getStates.php', parameters)
             .done(function (data) {
 
-                // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-                // vérifie si la requête fut un succès.
                 if (data.hasOwnProperty('success') &&
                     data['success'] &&
                     data.hasOwnProperty('states')) {
 
-                    //Efface la liste actuelle.
                     $('#states > option').remove();
 
-                    // Parcours tous les états/provinces retournées par la requête.
                     for (var i in data['states']) {
-
-                        // Vérifie que les propriétés de l'objet JSON ont bien été créés.
                         if (data['states'].hasOwnProperty(i) &&
                             data['states'][i].hasOwnProperty('id') &&
                             data['states'][i].hasOwnProperty('name')) {
@@ -136,13 +123,13 @@ $(document).ready(function () {
                         }
                     }
 
-                    // Vérifie que la propriété de l'objet JSON a bien été créée.
-                } else if (data.hasOwnProperty('message')) {
+                    UpdateCustomerInfos();
 
-                    // Affiche un message d'erreur expliquant l'échec de la requête.
+                } else if (data.hasOwnProperty('message')) {
                     alert(data['message']);
+
                 } else {
-                    alert('Communication with the server failed.');
+                    alert('The result of the server is unreadable.');
                 }
             })
             .fail(function () {
@@ -150,22 +137,15 @@ $(document).ready(function () {
             })
     });
 
-    $.get('ajax/getCountries.php')
+    $.post('ajax/getCountries.php')
         .done(function (data) {
-
-            // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-            // vérifie si la requête fut un succès.
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
                 data.hasOwnProperty('countries')) {
 
-                //Efface la liste actuelle.
                 $('#countries > option').remove();
 
-                // Parcours tous les pays retournées par la requête.
                 for (var i in data['countries']) {
-
-                    // Vérifie que les propriétés de l'objet JSON ont bien été créés.
                     if (data['countries'].hasOwnProperty(i) &&
                         data['countries'][i].hasOwnProperty('id') &&
                         data['countries'][i].hasOwnProperty('name')) {
@@ -180,17 +160,13 @@ $(document).ready(function () {
                             .attr('selected', 'selected');
                     }
                 }
-
-                // Déclenche l'évènement 'change' afin que la liste d'états/provinces sont populée.
                 $('#countries').trigger('change');
 
-                // Vérifie que la propriété de l'objet JSON a bien été créée.
             } else if (data.hasOwnProperty('message')) {
-
-                // Affiche un message d'erreur expliquant l'échec de la requête.
                 alert(data['message']);
+
             } else {
-                alert('Communication with the server failed.');
+                alert('The result of the server is unreadable.');
             }
         })
         .fail(function () {
@@ -198,6 +174,112 @@ $(document).ready(function () {
         })
 
     $('#clear').click(function () {
-        window.location.reload();
+        $('fieldset > p > input, textarea').val('');
     });
+
+    $('#btnCancel').click(function () {
+        $.post('ajax/cancelTransaction.php')
+            .done(function (data) {
+
+                if (data.hasOwnProperty('success') &&
+                    data['success']) {
+                    window.location = 'destinations.php';
+
+                } else if (data.hasOwnProperty('message')) {
+                    alert(data['message']);
+
+                } else {
+                    alert('The result of the server is unreadable.');
+                }
+            })
+            .fail(function () {
+                alert('Communication with the server failed.');
+            })
+    });
+
+    $('#checkUseStoreAddress').click(function () {
+        if ($(this).is(':checked')) {
+            $.post('ajax/getRetailerAddress.php')
+                .done(function (data) {
+
+                    if (data.hasOwnProperty('success') &&
+                        data['success'] &&
+                        data.hasOwnProperty('address')) {
+
+                        if (data['address'].hasOwnProperty('details') &&
+                            data['address'].hasOwnProperty('city') &&
+                            data['address'].hasOwnProperty('zip') &&
+                            data['address'].hasOwnProperty('state') &&
+                            data['address']['state'].hasOwnProperty('id') &&
+                            data['address']['state'].hasOwnProperty('country') &&
+                            data['address']['state']['country'].hasOwnProperty('id')) {
+
+                            $('#address').val(data['address']['details']);
+                            $('#city').val(data['address']['city']);
+                            $('#zip').val(data['address']['zip']);
+
+                            $('#countries').val(data['address']['state']['country']['id']);
+                            $('#states').val(data['address']['state']['id']);
+
+                            $('#addressInfos > p > *').attr('disabled', 'disabled');
+                        }
+
+                    } else if (data.hasOwnProperty('message')) {
+                        alert(data['message']);
+
+                    } else {
+                        alert('The result of the server is unreadable.');
+                    }
+                })
+                .fail(function () {
+                    alert('Communication with the server failed.');
+                })
+
+        } else {
+            $('#addressInfos > p > *').removeAttr('disabled');
+            $('#addressInfos textarea, input[type=text]').val('');
+        }
+    })
 });
+
+function UpdateCustomerInfos() {
+    $.post('ajax/getCurrentCustomer.php')
+        .done(function (data) {
+
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('customer')) {
+
+                if (data['customer'].hasOwnProperty('firstname') &&
+                    data['customer'].hasOwnProperty('lastname') &&
+                    data['customer'].hasOwnProperty('email') &&
+                    data['customer'].hasOwnProperty('phone') &&
+                    data['customer'].hasOwnProperty('address') &&
+                    data['customer']['address'] &&
+                    data['customer']['address'].hasOwnProperty('details') &&
+                    data['customer']['address'].hasOwnProperty('city') &&
+                    data['customer']['address'].hasOwnProperty('zip') &&
+                    data['customer']['address'].hasOwnProperty('state') &&
+                    data['customer']['address']['state'].hasOwnProperty('id') &&
+                    data['customer']['address']['state'].hasOwnProperty('country') &&
+                    data['customer']['address']['state']['country'].hasOwnProperty('id')) {
+
+                    $('#firstname').val(data['customer']['firstname']);
+                    $('#lastname').val(data['customer']['lastname']);
+                    $('#email1').val(data['customer']['email']);
+                    $('#email2').val(data['customer']['email']);
+                    $('#phone').val(data['customer']['phone']);
+
+                    $('#address').val(data['customer']['address']['details']);
+                    $('#city').val(data['customer']['address']['city']);
+                    $('#zip').val(data['customer']['address']['zip']);
+
+                    $('#countries').val(data['customer']['address']['state']['country']['id']);
+                    $('#states').val(data['customer']['address']['state']['id']);
+                }
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}

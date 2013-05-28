@@ -1,42 +1,38 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/entity.php');
 
 class Line extends Entity
 {
-    const REGEX_SERIAL = '/^[\d]{11}$/';
+    const REGEX_SERIAL = '/^[0-9]{11}$/';
     private $orderId;
-    private $partId;
-    private $categoryId;
+    private $productId;
     private $serial;
-    private $sku;
     private $quantity;
+    private $sku;
 
-    function __construct($orderId, $partId, $categoryId, $serial, $sku, $quantity)
+    function __construct($orderId, $productId, $quantity, $serial, $sku = null)
     {
-        $this->orderId = $orderId;
-        $this->partId = $partId;
-        $this->categoryId = $categoryId;
-        $this->serial = $serial;
-        $this->sku = $sku;
-        $this->quantity = $quantity;
+        if (!preg_match(Line::REGEX_SERIAL, $serial)) {
+            throw new Exception('The serial must be 11 digits.');
+        }
+
+        $this->orderId = intval($orderId);
+        $this->productId = intval($productId);
+        $this->serial = trim($serial);
+        $this->quantity = trim($quantity);
+        $this->sku = trim($sku);
     }
 
     public function getArray()
     {
         return array(
-            'partId' => $this->getPartId(),
             'orderId' => $this->getOrderId(),
+            'product' => $this->getProduct()->getArray(),
             'serial' => $this->getSerial(),
-            'sku' => $this->getSku(),
-            'quantity' => $this->getQuantity()
+            'quantity' => $this->getQuantity(),
+            'sku' => $this->getSku()
         );
-    }
-
-    public function getPartId()
-    {
-        return $this->partId;
     }
 
     public function getOrderId()
@@ -44,14 +40,14 @@ class Line extends Entity
         return $this->orderId;
     }
 
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
     public function getSerial()
     {
         return $this->serial;
-    }
-
-    public function getSku()
-    {
-        return $this->sku;
     }
 
     public function getQuantity()
@@ -59,11 +55,21 @@ class Line extends Entity
         return $this->quantity;
     }
 
-    public function getPart()
+    public function setSku($sku)
     {
-        include_once(ROOT . 'libs/repositories/parts.php');
+        $this->sku = $sku;
+    }
 
-        return Parts::Find($this->getPartId());
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    public function getProduct()
+    {
+        include_once(ROOT . 'libs/repositories/products.php');
+
+        return Products::Find($this->getProductId());
     }
 
     public function getOrder()
@@ -71,17 +77,5 @@ class Line extends Entity
         include_once(ROOT . 'libs/repositories/orders.php');
 
         return Orders::Find($this->getOrderId());
-    }
-
-    public function getCategory()
-    {
-        include_once(ROOT . 'libs/repositories/categories.php');
-
-        return Categories::Find($this->getCategoryId());
-    }
-
-    public function getCategoryId()
-    {
-        return $this->categoryId;
     }
 }

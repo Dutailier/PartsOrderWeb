@@ -1,6 +1,5 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/roles.php');
 include_once(ROOT . 'libs/repositories/retailers.php');
@@ -34,18 +33,18 @@ class Security
         try {
             $user = Users::FindByUsernameAndPassword($username, $password);
 
+            if (session_id() == '') {
+                session_start();
+            }
+
+            $_SESSION[self::USER_IDENTIFIER] = $user;
+
+            return true;
+
             // Si une exception es levée, c'est qu'aucun utilisateur n'a été trouvé.
         } catch (Exception $e) {
-            return false;
+            throw new Exception('Username of password incorrect.');
         }
-
-        if (session_id() == '') {
-            session_start();
-        }
-
-        $_SESSION[self::USER_IDENTIFIER] = $user;
-
-        return true;
     }
 
     /**

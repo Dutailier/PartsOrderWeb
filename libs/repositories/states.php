@@ -1,6 +1,5 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/state.php');
 
@@ -15,7 +14,14 @@ class States
 
         $states = array();
         foreach ($rows as $row) {
-            $states[] = new State($row['id'], $row['name'], $row['countryId']);
+
+            $state = new State(
+                $row['name'],
+                $row['countryId']
+            );
+            $state->setId($row['id']);
+
+            $states[] = $state;
         }
         return $states;
     }
@@ -31,9 +37,12 @@ class States
             throw new Exception('No state found.');
         }
 
-        return new State(
-            $rows[0]['id'],
+        $state = new State(
             $rows[0]['name'],
-            $rows[0]['countryId']);
+            $rows[0]['countryId']
+        );
+        $state->setId($rows[0]['id']);
+
+        return $state;
     }
 }

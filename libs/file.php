@@ -1,7 +1,5 @@
 <?php
 
-include_once('config.php');
-
 /**
  * Class File
  * Méthodes relatives aux manipulations de fichiers.

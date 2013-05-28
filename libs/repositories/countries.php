@@ -1,6 +1,5 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/country.php');
 
@@ -14,7 +13,12 @@ class Countries
 
         $countries = array();
         foreach ($rows as $row) {
-            $countries[] = new Country($row['id'], $row['name']);
+
+            $country = new Country(
+                $row['name']);
+            $country->setId($row['id']);
+
+            $countries[] = $country;
         }
         return $countries;
     }
@@ -30,9 +34,11 @@ class Countries
             throw new Exception('No country found.');
         }
 
-        return new Country(
-            $rows[0]['id'],
+        $country = new Country(
             $rows[0]['name']
         );
+        $country->setId($rows[0]['id']);
+
+        return $country;
     }
 }

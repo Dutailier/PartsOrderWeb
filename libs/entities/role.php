@@ -1,17 +1,14 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/entity.php');
 
 class Role extends Entity
 {
-    private $id;
     private $name;
 
-    function __construct($id, $name)
+    function __construct($name)
     {
-        $this->id = $id;
-        $this->name = $name;
+        $this->name = trim($name);
     }
 
     public function getArray()
@@ -20,11 +17,6 @@ class Role extends Entity
             'id' => $this->getId(),
             'name' => $this->getName()
         );
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getName()

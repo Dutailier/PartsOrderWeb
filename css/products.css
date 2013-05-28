@@ -1,0 +1,229 @@
+#transaction {
+    float: left;
+    margin: 20px 0px;
+    padding: 15px;
+    width: 400px;
+    border: 2px solid #484848;
+}
+
+h1 {
+    margin: 0px;
+    text-align: center;
+}
+
+fieldset {
+    border: 1px solid #484848;
+    margin: 10px 0px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+div.infos {
+    overflow: hidden;
+}
+
+fieldset > legend {
+    text-align: center;
+    padding: 0px 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+fieldset p {
+    margin: 5px 0px;
+    float: left;
+    clear: both;
+    overflow: hidden; /* Clearfix */
+}
+
+fieldset label.property {
+    display: block;
+    float: left;
+    font-weight: bold;
+}
+
+fieldset label.value {
+    display: block;
+    float: left;
+    clear: both;
+}
+
+h2 {
+    font-size: 1.3em;
+    margin: 20px 0px 10px 0px;
+    text-align: center;
+}
+
+div.item {
+    border: 1px solid #484848;
+    overflow: hidden; /* Clearfix */
+    padding: 5px;
+    height: 40px;
+    margin: 7px 0px;
+}
+
+div.item > label {
+    float: left;
+    margin: 0px 3px;
+    line-height: 40px;
+}
+
+div.item > label.quantity {
+    font-size: 2.5em;
+}
+
+div.item > label.name {
+    font-weight: bold;
+}
+
+div.item > label.serial {
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+div.item > div.buttons {
+    height: 40px;
+    float: right;
+    overflow: hidden;
+}
+
+div.item > div.buttons > input {
+    margin: 4px 2px;
+}
+
+#frmSearch {
+    float: left;
+    width: 482px;
+    border: 2px solid #484848;
+    margin: 20px 10px 0px 10px;
+    padding: 5px 10px;
+    overflow: hidden;
+}
+
+#frmSearch > p > label {
+    font-weight: bold;
+    width: 40px;
+    margin: 0px 5px;
+}
+
+#frmSearch > p > label.error {
+    margin-left: 60px;
+}
+
+#frmSearch > p > input[type=text] {
+    width: 314px;
+    height: 40px;
+    margin: 0px 3px;
+    text-align: center;
+}
+
+#frmSearch > p > input[type=submit] {
+    width: 100px;
+    height: 43px;
+}
+
+#filters {
+    text-align: center;
+}
+
+label.filter {
+    text-decoration: underline;
+    margin: 5px 5px;
+    cursor: pointer;
+}
+
+#products {
+    float: left;
+    margin: 10px;
+    overflow: hidden;
+}
+
+div.product {
+    border: 1px solid #484848;
+    padding: 5px 10px;
+    margin: 10px 0px;
+    width: 482px;
+    overflow: hidden;
+}
+
+div.product > * {
+    float: left;
+    height: 40px;
+    margin: 0px 5px;
+}
+
+div.product > label.name {
+    font-weight: bold;
+    line-height: 40px;
+    font-size: 1.3em;
+    width: 210px;
+    overflow: hidden;
+}
+
+div.product > label.description {
+    font-style: italic;
+    font-size: 0.8em;
+    line-height: 40px;
+    width: 200px;
+    overflow: hidden;
+}
+
+div.product > div.buttons {
+    float: right;
+    margin: 0px;
+}
+
+div.product > div.buttons > input {
+    margin: 4px 2px;
+}
+
+#help {
+    width: 482px;
+    float: left;
+    margin: 20px;
+    text-align: center;
+    overflow: hidden;
+}
+
+#help > img,
+#help > label {
+    width: 350px;
+    margin: 20px;
+}
+
+#buttons {
+    float: right;
+    height: 40px;
+    margin: 10px 0px;
+}
+
+#btnProceed {
+    width: 150px;
+}
+
+#buttons > * {
+    padding: 8px;
+    float: right;
+    margin: 2px;
+    font-size: 1.2em;
+    line-height: 23px;
+}
+
+#buttons > a {
+    margin: 3px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#btnClear {
+    margin: 3px 5px;
+}
+
+a.btnMoreDetails, a.btnLessDetails {
+    display: block;
+    text-align: center;
+    width: 378px;
+    text-decoration: underline;
+    margin: 3px 0px;
+    cursor: pointer;
+}

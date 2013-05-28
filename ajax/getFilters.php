@@ -2,16 +2,17 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/repositories/categories.php');
+include_once(ROOT . 'libs/repositories/filters.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
+
 } else {
     try {
-        $data['categories'] = array();
-        foreach (Categories::All() as $category) {
-            $data['categories'][] = $category->getArray();
+        $data['filters'] = array();
+        foreach (Filters::FilterByType(FILTER_TYPES) as $filter) {
+            $data['filters'][] = $filter->getArray();
         }
         $data['success'] = true;
 
@@ -23,4 +24,3 @@ if (!Security::isAuthenticated()) {
 
 header('Content-type: application/json');
 echo json_encode($data);
-

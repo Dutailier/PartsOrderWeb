@@ -1,6 +1,5 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/user.php');
 
@@ -17,9 +16,13 @@ class Users
         if (empty($rows)) {
             throw new Exception('No user found.');
         }
-        return new User(
-            $rows[0]['id'],
-            $rows[0]['username']);
+
+        $user = new User(
+            $rows[0]['username']
+        );
+        $user->setId($rows[0]['id']);
+
+        return $user;
     }
 
     public static function Find($id)
@@ -32,8 +35,12 @@ class Users
         if (empty($rows)) {
             throw new Exception('No user found.');
         }
-        return new User(
-            $rows[0]['id'],
-            $rows[0]['username']);
+
+        $user = new User(
+            $rows[0]['username']
+        );
+        $user->setId($rows[0]['id']);
+
+        return $user;
     }
 }

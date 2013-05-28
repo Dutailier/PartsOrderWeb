@@ -1,19 +1,16 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/entity.php');
 
 class State extends Entity
 {
-    private $id;
     private $name;
     private $countryId;
 
-    function __construct($id, $name, $countryId)
+    function __construct($name, $countryId)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->countryId = $countryId;
+        $this->name = trim($name);
+        $this->countryId = intval($countryId);
     }
 
     public function getArray()
@@ -21,13 +18,8 @@ class State extends Entity
         return array(
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'countryId' => $this->getCountryId()
+            'country' => $this->getCountry()->getArray()
         );
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getName()

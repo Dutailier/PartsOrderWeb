@@ -6,5 +6,5 @@
  */
 interface IComparable
 {
-    public function equals($object);
+    public function Equals($object);
 }

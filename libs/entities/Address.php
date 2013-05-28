@@ -1,40 +1,36 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/entity.php');
 
 class Address extends Entity
 {
     const REGEX_ZIP = '/^\d{5}$/';
-    private $id;
     private $details;
     private $city;
     private $zip;
     private $stateId;
 
-    function __construct($id, $details, $city, $zip, $stateId)
+    function __construct($details, $city, $zip, $stateId)
     {
-        $this->id = $id;
-        $this->details = $details;
-        $this->city = $city;
-        $this->zip = $zip;
-        $this->stateId = $stateId;
+        if (!preg_match(Address::REGEX_ZIP, $zip)) {
+            throw new Exception('The zip code must be 5 digits.');
+        }
+
+        $this->details = trim($details);
+        $this->city = trim($city);
+        $this->zip = trim($zip);
+        $this->stateId = intval($stateId);
     }
 
-    public function getArray($deep = false)
+    public function getArray()
     {
         return array(
             'id' => $this->getId(),
             'details' => $this->getDetails(),
             'city' => $this->getCity(),
             'zip' => $this->getZip(),
-            'stateId' => $this->getStateId()
+            'state' => $this->getState()->getArray()
         );
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getDetails()

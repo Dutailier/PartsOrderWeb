@@ -1,28 +1,18 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/customer.php');
 
 class Customers
 {
-    public static function Add($firstname, $lastname, $phone, $email, $addressId)
+    public static function Attach(Customer $customer)
     {
-        if (!preg_match(Customer::REGEX_PHONE, $phone)) {
-            throw new Exception('The phone number must be standard. (i.e. 123-456-7890)');
-        } else if (!preg_match(Customer::REGEX_EMAIL, $email)) {
-            throw new Exception('The email address must be standard. (i.e. infos@dutailier.com.');
-        }
-        $phone = preg_replace('[^\d]', '', $phone);
-        $phone = trim($phone);
-        $phone = (strlen($phone) == 10 ? '1' : '') . $phone;
-
         $query = 'EXEC [addCustomer]';
-        $query .= '@firstname = "' . trim($firstname) . '", ';
-        $query .= '@lastname = "' . trim($lastname) . '", ';
-        $query .= '@phone = "' . $phone . '", ';
-        $query .= '@email = "' . trim($email) . '", ';
-        $query .= '@addressId = "' . intval($addressId) . '"';
+        $query .= '@firstname = "' . $customer->getFirstname() . '", ';
+        $query .= '@lastname = "' . $customer->getLastname() . '", ';
+        $query .= '@phone = "' . $customer->getPhone() . '", ';
+        $query .= '@email = "' . $customer->getEmail() . '", ';
+        $query .= '@addressId = "' . $customer->getAddressId() . '"';
 
         $rows = Database::Execute($query);
 
@@ -30,13 +20,9 @@ class Customers
             throw new Exception('The address wasn\'t added.');
         }
 
-        return new Customer(
-            $rows[0]['id'],
-            $firstname,
-            $lastname,
-            $phone,
-            $email,
-            $addressId);
+        $customer->setId($rows[0]['id']);
+
+        return $customer;
     }
 
     public static function Find($id)
@@ -49,12 +35,16 @@ class Customers
         if (empty($rows)) {
             throw new Exception('No customer found.');
         }
-        return new Customer(
-            $rows[0]['id'],
+
+        $customer = new Customer(
             $rows[0]['firstname'],
             $rows[0]['lastname'],
             $rows[0]['phone'],
             $rows[0]['email'],
-            $rows[0]['addressId']);
+            $rows[0]['addressId']
+        );
+        $customer->setId($rows[0]['id']);
+
+        return $customer;
     }
 }

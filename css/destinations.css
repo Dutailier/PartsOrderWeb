@@ -1,15 +1,21 @@
-#categories {
-    margin: 20px;
+#content {
+    text-align: center;
 }
 
-.category {
-    float:left;
+#destinations {
+    margin: 20px;
+    text-align: center;
+    overflow: hidden;
+    height: 400px;
+}
+
+.destination {
+    display: inline-block;
     width: 300px;
     height: 300px;
-    margin: auto;
 }
 
-.category span {
+.destination > span {
     display: block;
     font-size: 2.5em;
     width: 300px;
@@ -18,9 +24,8 @@
     cursor: pointer;
 }
 
-.category img {
+.destination > div.image {
     display: block;
-    width: 250px;
     height: 250px;
     margin: auto;
     cursor: pointer;

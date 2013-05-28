@@ -2,23 +2,26 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/repositories/states.php');
+include_once(ROOT . 'libs/transaction.php');
+include_once(ROOT . 'libs/repositories/filters.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
+
 } else {
-
-    if (empty($_POST['countryId'])) {
+    if (empty($_POST['filterId'])) {
         $data['success'] = false;
-        $data['message'] = 'A country must be selected.';
-    } else {
+        $data['message'] = 'A destination is required.';
 
+    } else {
         try {
-            $data['states'] = array();
-            foreach (States::FilterByCountryId($_POST['countryId']) as $state) {
-                $data['states'][] = $state->getArray();
-            }
+            $filter = Filters::Find($_POST['filterId']);
+            $transaction = Transaction::getCurrent();
+
+            $transaction->setDestinationFilter($filter);
+
+            $data['customerInfosAreRequired'] = $filter->getId() == FILTER_TO_GUEST_ID;
             $data['success'] = true;
 
         } catch (Exception $e) {

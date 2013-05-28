@@ -14,13 +14,13 @@
 }
 
 .addCart {
-    background: url('../img/buttons/cart.png') no-repeat -5px -10px;
+    background: url('../img/cart.png') no-repeat -5px -10px;
 }
 
 .alreadyCart {
-    background: url('../img/buttons/cart.png') no-repeat -61px -10px;
+    background: url('../img/cart.png') no-repeat -61px -10px;
 }
 
 .removeCart {
-    background: url('../img/buttons/cart.png') no-repeat -117px -10px;
+    background: url('../img/cart.png') no-repeat -117px -10px;
 }

@@ -1,16 +1,13 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/entity.php');
 
 class Country extends Entity
 {
-    private $id;
     private $name;
 
-    function __construct($id, $name)
+    function __construct($name)
     {
-        $this->id = $id;
         $this->name = $name;
     }
 
@@ -22,15 +19,15 @@ class Country extends Entity
         );
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function getName()
     {
         return $this->name;
     }
 
+    public function getStates()
+    {
+        include_once(ROOT . 'libs/repositories/states.php');
 
+        return States::FilterByCountryId($this->getId());
+    }
 }

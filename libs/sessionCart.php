@@ -1,9 +1,8 @@
 <?php
 
-include_once('config.php');
-include_once(ROOT . 'libs/interfaces/icomparable.php');
-include_once(ROOT . 'libs/cartItem.php');
+include_once(ROOT . 'libs/item.php');
 include_once(ROOT . 'libs/interfaces/icart.php');
+include_once(ROOT . 'libs/interfaces/icomparable.php');
 
 /**
  * Class Cart
@@ -37,10 +36,10 @@ class SessionCart implements ICart
     /**
      * Ajoute un item au panier d'achats.
      * Retourne la quantité de l'item contenue dans le panier d'achats.
-     * @param ICartItem $item
+     * @param IItem $item
      * @return mixed
      */
-    public function add(ICartItem $item)
+    public function add(IItem $item)
     {
         $index = $this->getIndexOfItem($item);
 
@@ -59,11 +58,11 @@ class SessionCart implements ICart
     /**
      * Retire un item du panier d'achats.
      * Retourne la quantité de l'item contenue dans le panier d'achats.
-     * @param ICartItem $item
+     * @param IItem $item
      * @return mixed
      * @throws Exception
      */
-    public function remove(ICartItem $item)
+    public function remove(IItem $item)
     {
         $index = $this->getIndexOfItem($item);
 
@@ -86,10 +85,10 @@ class SessionCart implements ICart
 
     /**
      * Retourne la quantité de l'item contenue dans le panier d'achats.
-     * @param ICartItem $item
+     * @param IItem $item
      * @return int
      */
-    public function getQuantity(ICartItem $item)
+    public function getQuantity(IItem $item)
     {
         $index = $this->getIndexOfItem($item);
 
@@ -104,12 +103,12 @@ class SessionCart implements ICart
     /**
      * Définit la quantité contenue dans le panier d'achats de l'item.
      * Peut être appelé pour ajouter un item d'une quantité supérieure à un.
-     * @param ICartItem $item
+     * @param IItem $item
      * @param $quantity
      * @return mixed
      * @throws Exception
      */
-    public function setQuantity(ICartItem $item, $quantity)
+    public function setQuantity(IItem $item, $quantity)
     {
         if (($quantity = (int)$quantity) < 1) {
             throw new Exception('A positive quantity is required.');
@@ -154,7 +153,7 @@ class SessionCart implements ICart
     /**
      * Vide le panier d'achats.
      */
-    public function clear()
+    public function Clear()
     {
         $this->items = array();
     }
@@ -162,13 +161,13 @@ class SessionCart implements ICart
 
     /**
      * Retourne l'index de l'item.
-     * @param ICartItem $item
+     * @param IItem $item
      * @return int|string
      */
-    private function getIndexOfItem(ICartItem $item)
+    private function getIndexOfItem(IItem $item)
     {
         foreach ($this->items as $key => $value) {
-            if ($item->equals($value)) {
+            if ($item->Equals($value)) {
                 return $key;
             }
         }

@@ -1,0 +1,68 @@
+fieldset {
+    display: block;
+    float: left;
+    border: 1px solid #484848;
+    overflow: hidden; /* Clearfix */
+}
+
+#shippingInfos
+{
+    margin: 20px 10px 10px 10px;
+    width: 898px;
+    padding: 15px 20px;
+    height: 80px;
+}
+
+#retailerInfos, #customerInfos {
+  width: 418px;
+    height: 230px;
+    margin: 10px;
+    padding: 10px 20px;
+}
+
+fieldset > legend {
+    padding: 0px 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+fieldset > p {
+    width: 410px;
+    margin: 5px 0px;
+    float: left;
+    clear: both;
+    overflow: hidden; /* Clearfix */
+}
+
+fieldset > p > label.properties {
+    display: block;
+    float: left;
+    font-weight: bold;
+}
+
+fieldset > p > label.values {
+    display: block;
+    float: left;
+    clear: both;
+}
+
+#summary {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+#summary > * {
+    padding: 8px;
+    margin: 5px;
+    float: right;
+    font-size: 1.2em;
+}
+
+#btnConfirm, #btnEdit {
+    width: 150px;
+}
+
+#btnCancel {
+    cursor: pointer;
+    text-decoration: underline;
+}

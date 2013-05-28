@@ -20,20 +20,17 @@ $(document).ready(function () {
             $.post('ajax/tryLogin.php', credentials)
                 .done(function (data) {
 
-                    // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-                    // vérifie si la requête fut un succès.
                     if (data.hasOwnProperty('success') &&
-                        data['success']) {
+                        data['success'] &&
+                        data.hasOwnProperty('valid') &&
+                        data['valid']) {
+                        window.location = 'destinations.php';
 
-                            window.location = 'categories.php';
-
-                        // Vérifie que la propriété de l'objet JSON a bien été créée.
                     } else if (data.hasOwnProperty('message')) {
-
-                        // Affiche un message d'erreur expliquant l'échec de la requête.
                         alert(data['message']);
+
                     } else {
-                        alert('Communication with the server failed.');
+                        alert('The result of the server is unreadable.');
                     }
                 })
                 .fail(function () {

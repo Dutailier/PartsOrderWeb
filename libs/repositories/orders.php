@@ -1,19 +1,18 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/order.php');
 
 class Orders
 {
-    public static function Add($retailerId, $shippingAddressId, $customerId = null)
+    public static function Attach(Order $order)
     {
         $query = 'EXEC [addOrder]';
-        $query .= '@retailerId = "' . intval($retailerId) . '", ';
-        $query .= '@shippingAddressId = "' . intval($shippingAddressId) . '"';
+        $query .= '@shippingAddressId = "' . $order->getShippingAddressId() . '", ';
+        $query .= '@retailerId = "' . $order->getRetailerId() . '"';
 
-        if (!is_null($customerId)) {
-            $query .= ', @customerId = "' . intval($customerId) . '"';
+        if (!is_null($order->getCustomerId())) {
+            $query .= ', @customerId = "' . $order->getCustomerId() . '"';
         }
 
         $rows = Database::Execute($query);
@@ -22,15 +21,11 @@ class Orders
             throw new Exception('The order wasn\'t added.');
         }
 
-        return new Order(
-            $rows[0]['id'],
-            $retailerId,
-            $customerId,
-            $shippingAddressId,
-            $rows[0]['creationDate'],
-            $rows[0]['deliveryDate'],
-            $rows[0]['status']
-        );
+        $order->setId($rows[0]['id']);
+        $order->setStatus(($rows[0]['status']));
+        $order->setCreationDate($rows[0]['creationDate']);
+
+        return $order;
     }
 
     public static function Confirm($id)
@@ -45,13 +40,7 @@ class Orders
         }
 
         return new Order(
-            $rows[0]['id'],
-            $rows[0]['retailerId'],
-            $rows[0]['customerId'],
-            $rows[0]['shippingAddressId'],
-            $rows[0]['creationDate'],
-            $rows[0]['deliveryDate'],
-            $rows[0]['status']
+            $rows[0]['customerId'], $rows[0]['id'], $rows[0]['retailerId'], $rows[0]['shippingAddressId'], $rows[0]['creationDate'], $rows[0]['deliveryDate'], $rows[0]['status']
         );
     }
 
@@ -67,13 +56,7 @@ class Orders
         }
 
         return new Order(
-            $rows[0]['id'],
-            $rows[0]['retailerId'],
-            $rows[0]['customerId'],
-            $rows[0]['shippingAddressId'],
-            $rows[0]['creationDate'],
-            $rows[0]['deliveryDate'],
-            $rows[0]['status']
+            $rows[0]['customerId'], $rows[0]['id'], $rows[0]['retailerId'], $rows[0]['shippingAddressId'], $rows[0]['creationDate'], $rows[0]['deliveryDate'], $rows[0]['status']
         );
     }
 
@@ -89,13 +72,7 @@ class Orders
         }
 
         return new Order(
-            $rows[0]['id'],
-            $rows[0]['retailerId'],
-            $rows[0]['customerId'],
-            $rows[0]['shippingAddressId'],
-            $rows[0]['creationDate'],
-            $rows[0]['deliveryDate'],
-            $rows[0]['status']
+            $rows[0]['customerId'], $rows[0]['id'], $rows[0]['retailerId'], $rows[0]['shippingAddressId'], $rows[0]['creationDate'], $rows[0]['deliveryDate'], $rows[0]['status']
         );
     }
 }

@@ -1,30 +1,38 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/entity.php');
 
 class Retailer extends Entity
 {
-    const REGEX_PHONE = '^[1]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$';
-    const REGEX_EMAIL = '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$';
-    private $id;
+    const REGEX_PHONE = '/^[1]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/';
+    const REGEX_EMAIL = '/^\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}$/';
     private $userId;
     private $name;
     private $phone;
     private $email;
     private $addressId;
 
-    function __construct($id, $userId, $name, $phone, $email, $addressId)
+    function __construct($userId, $name, $phone, $email, $addressId)
     {
-        $this->id = $id;
-        $this->userId = $userId;
-        $this->name = $name;
+        if (!preg_match(Retailer::REGEX_PHONE, $phone)) {
+            throw new Exception('The phone number must be standard. (i.e. 123-456-7890)');
+
+        } else if (!preg_match(Retailer::REGEX_EMAIL, $email)) {
+            throw new Exception('The email address must be standard. (i.e. infos@dutailier.com.');
+        }
+
+        $phone = preg_replace('/[^\d]/', '', $phone);
+        $phone = trim($phone);
+        $phone = (strlen($phone) == 10 ? '1' : '') . $phone;
+
+        $this->userId = intval($userId);
+        $this->name = trim($name);
         $this->phone = $phone;
-        $this->email = $email;
-        $this->addressId = $addressId;
+        $this->email = trim($email);
+        $this->addressId = intval($addressId);
     }
 
-    public function getArray($deep = false)
+    public function getArray()
     {
         return array(
             'id' => $this->getId(),
@@ -32,13 +40,8 @@ class Retailer extends Entity
             'name' => $this->getName(),
             'phone' => $this->getPhone(),
             'email' => $this->getEmail(),
-            'addressId' => $this->getAddressId()
+            'address' => $this->getAddress()->getArray()
         );
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getUserId()

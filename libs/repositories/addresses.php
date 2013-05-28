@@ -1,36 +1,27 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/address.php');
 
 class Addresses
 {
-    public static function Add($details, $city, $zip, $stateId)
+    public static function Attach(Address $address)
     {
-        if (!preg_match(Address::REGEX_ZIP, $zip)) {
-            throw new Exception('The zip code must be 5 digits.');
-        }
-
         $query = 'EXEC [addAddress]';
-        $query .= '@details = "' . trim($details) . '", ';
-        $query .= '@city = "' . trim($city) . '", ';
-        $query .= '@zip = "' . $zip . '", ';
-        $query .= '@stateId = "' . intval($stateId) . '"';
+        $query .= '@details = "' . $address->getDetails() . '", ';
+        $query .= '@city = "' . $address->getCity() . '", ';
+        $query .= '@zip = "' . $address->getZip() . '", ';
+        $query .= '@stateId = "' . $address->getStateId() . '"';
 
         $rows = Database::Execute($query);
 
         if (empty($rows)) {
-            echo $query;
             throw new Exception('The address wasn\'t added.');
         }
 
-        return new Address(
-            $rows[0]['id'],
-            $details,
-            $city,
-            $zip,
-            $stateId);
+        $address->setId($rows[0]['id']);
+
+        return $address;
     }
 
     public static function Find($id)
@@ -43,11 +34,14 @@ class Addresses
         if (empty($rows)) {
             throw new Exception('No Address found.');
         }
-        return new Address(
-            $rows[0]['id'],
+
+        $address = new Address(
             $rows[0]['details'],
             $rows[0]['city'],
             $rows[0]['zip'],
             $rows[0]['stateId']);
+        $address->setId($rows[0]['id']);
+
+        return $address;
     }
 }

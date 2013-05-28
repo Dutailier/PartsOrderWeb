@@ -1,23 +1,17 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/line.php');
 
 class Lines
 {
-    public static function Add($orderId, $partId, $categoryId, $serial, $quantity)
+    public static function Attach(Line $line)
     {
-        if (!preg_match(Line::REGEX_SERIAL, $serial)) {
-            throw new Exception('The serial must be 11 digits.');
-        }
-
         $query = 'EXEC [addLine]';
-        $query .= '@orderId = "' . intval($orderId) . '", ';
-        $query .= '@partId = "' . intval($partId) . '", ';
-        $query .= '@categoryId = "' . intval($categoryId) . '", ';
-        $query .= '@serial = "' . $serial . '", ';
-        $query .= '@quantity = "' . intval($quantity) . '"';
+        $query .= '@orderId = "' . $line->getOrderId() . '", ';
+        $query .= '@productId = "' . $line->getProductId() . '", ';
+        $query .= '@quantity = "' . $line->getQuantity() . '", ';
+        $query .= '@serial = "' . $line->getSerial() . '"';
 
         $rows = Database::Execute($query);
 
@@ -25,15 +19,9 @@ class Lines
             throw new Exception('The line wasn\'t added.');
         }
 
-        return new Line(
-            $rows[0]['id'],
-            $orderId,
-            $partId,
-            $categoryId,
-            $serial,
-            $rows[0]['sku'],
-            $quantity
-        );
+        $line->setSku($rows[0]['sku']);
+
+        return $line;
     }
 
     public static function FilterByOrderId($id)
@@ -46,12 +34,7 @@ class Lines
         $lines = array();
         foreach ($rows as $row) {
             $lines[] = new Line(
-                $row['orderId'],
-                $row['partId'],
-                $row['categoryId'],
-                $row['serial'],
-                $row['sku'],
-                $row['quantity']
+                $row['orderId'], $row['productId'], $row['quantity'], $row['serial'], $row['sku']
             );
         }
         return $lines;

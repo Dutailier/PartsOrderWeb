@@ -1,26 +1,21 @@
 <?php
 
-include_once('config.php');
 include_once(ROOT . 'libs/entity.php');
 
 class Order extends Entity
 {
-    private $id;
     private $retailerId;
     private $customerId;
     private $shippingAddressId;
     private $creationDate;
-    private $deliveryDate;
     private $status;
 
-    function __construct($id, $retailerId, $customerId, $shippingAddressId, $creationDate, $deliveryDate, $status)
+    function __construct($shippingAddressId, $retailerId, $customerId = null, $creationDate = null, $status = null)
     {
-        $this->id = $id;
         $this->retailerId = $retailerId;
         $this->customerId = $customerId;
         $this->shippingAddressId = $shippingAddressId;
         $this->creationDate = $creationDate;
-        $this->deliveryDate = $deliveryDate;
         $this->status = $status;
     }
 
@@ -32,19 +27,23 @@ class Order extends Entity
             'customerId' => $this->getCustomerId(),
             'shippingAddressId' => $this->getShippingAddressId(),
             'creationDate' => $this->getCreationDate(),
-            'deliveryDate' => (is_null($this->getDeliveryDate()) ? 'Unknown' : $this->getDeliveryDate()),
             'status' => $this->getStatus()
         );
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getRetailerId()
     {
         return $this->retailerId;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
     }
 
     public function getCustomerId()
@@ -60,11 +59,6 @@ class Order extends Entity
     public function getCreationDate()
     {
         return $this->creationDate;
-    }
-
-    public function getDeliveryDate()
-    {
-        return $this->deliveryDate;
     }
 
     public function getStatus()
@@ -118,15 +112,10 @@ class Order extends Entity
         return Orders::Cancel($this->getId());
     }
 
-    public function addLine($partId, $categoryId, $serial, $quantity)
+    public function AddLine(Line $line)
     {
         include_once(ROOT . 'libs/repositories/lines.php');
 
-        return Lines::Add(
-            $this->getId(),
-            $partId,
-            $categoryId,
-            $serial,
-            $quantity);
+        return Lines::Attach($line);
     }
 }

@@ -10,7 +10,8 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
 } else {
 
     try {
-        $data['success'] = Security::TryLogin($_POST['username'], $_POST['password']);
+        $data['valid'] = Security::TryLogin($_POST['username'], $_POST['password']);
+        $data['success'] = true;
 
     } catch (Exception $e) {
         $data['success'] = false;

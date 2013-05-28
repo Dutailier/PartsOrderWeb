@@ -2,8 +2,8 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/sessionCart.php');
 include_once(ROOT . 'libs/transaction.php');
+include_once(ROOT . 'libs/repositories/products.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -12,7 +12,18 @@ if (!Security::isAuthenticated()) {
     try {
         $transaction = Transaction::getCurrent();
 
-        $data['transaction'] = $transaction->getArray();
+        $filterIds = array();
+        $filterIds[] = $transaction->getDestinationFilter()->getId();
+
+        if (!empty($_POST['filterIds'])) {
+            $filterIds = $_POST['filterIds'];
+        }
+
+        $data['products'] = array();
+        foreach (Products::FilterByFilterIds($filterIds) as $product) {
+            $data['products'][] = $product->getArray();
+        }
+
         $data['success'] = true;
 
     } catch (Exception $e) {

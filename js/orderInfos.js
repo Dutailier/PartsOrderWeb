@@ -1,64 +1,49 @@
 $(document).ready(function () {
-
-    var parameters = {
-        "orderId": $.queryString['orderId']
-    };
-
-    $.get('ajax/getOrderInfos.php', parameters)
+    $.post('ajax/getOrderInfos.php')
         .done(function (data) {
-
-            // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-            // vérifie si la requête fut un succès.
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
-                data.hasOwnProperty('creationDate') &&
-                data.hasOwnProperty('deliveryDate') &&
-                data.hasOwnProperty('status')) {
+                data.hasOwnProperty('transaction')) {
 
-                $('#creationDate').text(data['creationDate']);
-                $('#deliveryDate').text(data['deliveryDate']);
-                $('#status').text(data['status']);
-
-                if (data.hasOwnProperty('retailer')) {
-                    UpdateRetailerInfos(data['retailer']);
-
-                    if (data.hasOwnProperty('customer')) {
-                        UpdateCustomerInfos(data['customer']);
-                        UpdateShippingInfos(data['customer']['address']);
-                    } else {
-                        UpdateCustomerInfos(data['retailer']);
-                        UpdateShippingInfos(data['retailer']['address']);
-                    }
+                if (data['transaction'].hasOwnProperty('order') &&
+                    data['transaction']['order'].hasOwnProperty('status') &&
+                    data['transaction']['order'].hasOwnProperty('creationDate')) {
+                    $('#status').text(data['transaction']['order']['status']);
+                    $('#creationDate').text(data['transaction']['order']['creationDate']);
                 }
 
-                if (data.hasOwnProperty('lines')) {
-                    for (var i in data['lines']) {
+                if (data['transaction'].hasOwnProperty('shippingAddress') &&
+                    data['transaction'].hasOwnProperty('retailer')) {
+                    UpdateShippingInfos(data['transaction']['shippingAddress']);
+                    UpdateRetailerInfos(data['transaction']['retailer']);
+                }
 
-                        // Vérifie que les propriétés de l'objet JSON ont bien été créés.
-                        if (data['lines'].hasOwnProperty(i) &&
-                            data['lines'][i].hasOwnProperty('serial') &&
-                            data['lines'][i].hasOwnProperty('quantity') &&
-                            data['lines'][i].hasOwnProperty('part') &&
-                            data['lines'][i]['part'].hasOwnProperty('id') &&
-                            data['lines'][i]['part'].hasOwnProperty('name')) {
+                if (data['transaction'].hasOwnProperty('customer')) {
+                    UpdateCustomerInfos(data['transaction']['customer']);
+                } else {
+                    UpdateCustomerInfos(data['transaction']['retailer']);
+                }
 
-                            // Ajoute la pièce à la liste.
-                            addLine(
-                                data['lines'][i]['part']['id'],
-                                data['lines'][i]['part']['name'],
-                                data['lines'][i]['serial'],
-                                data['lines'][i]['quantity']);
+                if (data['transaction'].hasOwnProperty('lines')) {
+                    for (var i in data['transaction']['lines']) {
+
+                        if (data['transaction']['lines'].hasOwnProperty(i) &&
+                            data['transaction']['lines'][i].hasOwnProperty('serial') &&
+                            data['transaction']['lines'][i].hasOwnProperty('quantity') &&
+                            data['transaction']['lines'][i].hasOwnProperty('product') &&
+                            data['transaction']['lines'][i]['product'].hasOwnProperty('id') &&
+                            data['transaction']['lines'][i]['product'].hasOwnProperty('name')) {
+                            addLine(data['transaction']['lines'][i]);
                         }
                     }
                 }
+            }
 
-                // Vérifie que la propriété de l'objet JSON a bien été créée.
-            } else if (data.hasOwnProperty('message')) {
-
-                // Affiche un message d'erreur expliquant l'échec de la requête.
+            else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
+
             } else {
-                alert('Communication with the server failed.');
+                alert('The result of the server is unreadable.');
             }
         })
         .fail(function () {
@@ -66,27 +51,18 @@ $(document).ready(function () {
         })
 
     $('#btnConfirm').click(function () {
-        var parameters = {
-            "orderId": $.queryString['orderId']
-        };
-
-        $.get('ajax/confirmOrder.php', parameters)
+        $.post('ajax/confirmTransaction.php')
             .done(function (data) {
-
-                // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-                // vérifie si la requête fut un succès.
                 if (data.hasOwnProperty('success') &&
                     data['success']) {
 
                     window.location = 'confirmation.php';
 
-                    // Vérifie que la propriété de l'objet JSON a bien été créée.
                 } else if (data.hasOwnProperty('message')) {
-
-                    // Affiche un message d'erreur expliquant l'échec de la requête.
                     alert(data['message']);
+
                 } else {
-                    alert('Communication with the server failed.');
+                    alert('The result of the server is unreadable.');
                 }
             })
             .fail(function () {
@@ -100,26 +76,17 @@ $(document).ready(function () {
         dialogClass: 'dialog',
         buttons: {
             "Yes": function () {
-                var parameters = {
-                    "orderId": $.queryString['orderId']
-                };
-
-                $.get('ajax/cancelOrder.php', parameters)
+                $.get('ajax/cancelTransaction.php')
                     .done(function (data) {
-
-                        // Vérifie que les propriétés de l'objet JSON ont bien été créées et
-                        // vérifie si la requête fut un succès.
                         if (data.hasOwnProperty('success') &&
                             data['success']) {
-                            window.location = 'categories.php';
+                            window.location = 'destinations.php';
 
-                            // Vérifie que la propriété de l'objet JSON a bien été créée.
                         } else if (data.hasOwnProperty('message')) {
-
-                            // Affiche un message d'erreur expliquant l'échec de la requête.
                             alert(data['message']);
+
                         } else {
-                            alert('Communication with the server failed.');
+                            alert('The result of the server is unreadable.');
                         }
                     })
                     .fail(function () {
@@ -135,24 +102,20 @@ $(document).ready(function () {
     $('#btnCancel').click(function () {
         $('#dialog').dialog('open');
     });
-});
+})
+;
 
 
 /**
- * Ajoute un item à la liste.
- * @param partId
- * @param categoryId
- * @param name
- * @param serial
- * @param quantity
+ * Ajoute une ligne à la commande.
  */
-function addLine(partId, name, serial, quantity) {
+function addLine(line) {
     $('#lines').append(
-        '<div class="line" data-type-id="' + partId + '">' +
+        '<div class="line" data-product-id="' + line['product']['id'] + '">' +
             '<div class="details">' +
-            '<label class="quantity">' + quantity + '</label>' +
-            '<label class="name">' + name + '</label>' +
-            '<label class="serial">' + serial + '</label>' +
+            '<label class="quantity">' + line['quantity'] + '</label>' +
+            '<label class="name">' + line['product']['name'] + '</label>' +
+            '<label class="serial">' + line['serial'] + '</label>' +
             '</div>' +
             '</div>'
     );
