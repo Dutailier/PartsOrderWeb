@@ -1,6 +1,6 @@
 <?php
 
-include_once(ROOT . 'libs/interfaces/icomparable.php');
+include_once(ROOT . 'libs/interfaces/iitem.php');
 
 /**
  * Class ICart
@@ -8,9 +8,11 @@ include_once(ROOT . 'libs/interfaces/icomparable.php');
  */
 interface ICart
 {
-    public function add(IItem $item);
+    public function Copy(ICart $cart);
 
-    public function remove(IItem $item);
+    public function Add(IItem $item);
+
+    public function Remove(IItem $item);
 
     public function getQuantity(IItem $item);
 

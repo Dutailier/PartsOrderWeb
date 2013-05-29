@@ -9,10 +9,10 @@ class Orders
     {
         $query = 'EXEC [addOrder]';
         $query .= '@shippingAddressId = "' . $order->getShippingAddressId() . '", ';
-        $query .= '@retailerId = "' . $order->getRetailerId() . '"';
+        $query .= '@retailerId = "' . $order->getStoreId() . '"';
 
-        if (!is_null($order->getCustomerId())) {
-            $query .= ', @customerId = "' . $order->getCustomerId() . '"';
+        if (!is_null($order->getReceiverId())) {
+            $query .= ', @customerId = "' . $order->getReceiverId() . '"';
         }
 
         $rows = Database::Execute($query);

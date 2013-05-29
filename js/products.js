@@ -101,7 +101,7 @@ $(document).ready(function () {
             alert('Communication with the server failed.');
         })
 
-    $.post('ajax/getFilters.php')
+    $.post('ajax/getTypes.php')
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&

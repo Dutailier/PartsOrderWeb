@@ -23,4 +23,15 @@ class User extends Entity
     {
         return $this->username;
     }
+
+    public function getStore()
+    {
+        include_once(ROOT . 'libs/security.php');
+        if (!Security::UserIsInRole($this, ROLE_RETAILER)) {
+            throw new Exception('The user must be a retailer.');
+        }
+
+        include_once(ROOT . 'libs/repositories/stores.php');
+        return Stores::FindByUserId($this->getId());
+    }
 }

@@ -75,7 +75,7 @@ $(document).ready(function () {
                 "useStoreAddress": $('#checkUseStoreAddress').is(':checked')
             };
 
-            $.post('ajax/setCustomer.php', informations)
+            $.post('ajax/setOrderInfos.php', informations)
                 .done(function (data) {
 
                     if (data.hasOwnProperty('success') &&
@@ -199,7 +199,7 @@ $(document).ready(function () {
 
     $('#checkUseStoreAddress').click(function () {
         if ($(this).is(':checked')) {
-            $.post('ajax/getRetailerAddress.php')
+            $.post('ajax/getStoreAddress.php')
                 .done(function (data) {
 
                     if (data.hasOwnProperty('success') &&
@@ -243,7 +243,7 @@ $(document).ready(function () {
 });
 
 function UpdateCustomerInfos() {
-    $.post('ajax/getCurrentCustomer.php')
+    $.post('ajax/getReceiver.php')
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&

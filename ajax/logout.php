@@ -1,8 +1,8 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/security.php');
 
+include_once(ROOT . 'libs/security.php');
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';

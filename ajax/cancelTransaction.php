@@ -1,17 +1,18 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/transaction.php');
 
+include_once(ROOT . 'libs/security.php');
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 
 } else {
     try {
-        Transaction::getCurrent()->Cancel();
+        include_once(ROOT . 'libs/sessionTransaction.php');
+        $transaction = new SessionTransaction();
 
+        $transaction->Destroy();
         $data['success'] = true;
 
     } catch (Exception $e) {

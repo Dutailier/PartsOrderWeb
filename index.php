@@ -3,7 +3,7 @@
 include_once('config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/sessionCart.php');
-include_once(ROOT . 'libs/transaction.php');
+include_once(ROOT . 'libs/sessionTransaction.php');
 
 if (!Security::isAuthenticated()) {
     $page = 'login';
@@ -13,7 +13,7 @@ if (!Security::isAuthenticated()) {
         $page = 'products';
     }
 
-    if($page == 'products' && !Transaction::getCurrent()->isOpen()) {
+    if($page == 'products' && !SessionTransaction::getCurrent()->isOpen()) {
         $page = 'destinations';
     }
 }

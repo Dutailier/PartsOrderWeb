@@ -1,7 +1,6 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/security.php');
 
 if (empty($_POST['username']) || empty($_POST['password'])) {
     $data['success'] = false;
@@ -10,6 +9,7 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
 } else {
 
     try {
+        include_once(ROOT . 'libs/security.php');
         $data['valid'] = Security::TryLogin($_POST['username'], $_POST['password']);
         $data['success'] = true;
 

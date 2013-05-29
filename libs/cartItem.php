@@ -30,11 +30,11 @@ class CartItem implements ICartItem
         $this->quantity = $quantity;
     }
 
-    public function getArray()
+    public function Encode()
     {
         return array(
-            'part' => $this->getPart()->getArray(),
-            'category' => $this->getCategory()->getArray(),
+            'part' => $this->getPart()->Encode(),
+            'category' => $this->getCategory()->Encode(),
             'serial' => $this->getSerial(),
             'quantity' => $this->getQuantity()
         );

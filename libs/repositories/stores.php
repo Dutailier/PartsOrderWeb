@@ -1,8 +1,8 @@
 <?php
 
-include_once(ROOT . 'libs/entities/retailer.php');
+include_once(ROOT . 'libs/entities/store.php');
 
-class Retailers
+class Stores
 {
     public static function FindByUserId($id)
     {
@@ -16,15 +16,15 @@ class Retailers
             throw new Exception('No retailer found.');
         }
 
-        $retailer = new Retailer(
+        $store = new Store(
             $rows[0]['userId'],
             $rows[0]['name'],
             $rows[0]['phone'],
             $rows[0]['email'],
             $rows[0]['addressId']);
-        $retailer->setId($rows[0]['id']);
+        $store->setId($rows[0]['id']);
 
-        return $retailer;
+        return $store;
     }
 
     public static function Find($id)
@@ -38,14 +38,14 @@ class Retailers
             throw new Exception('No retailer found.');
         }
 
-        $retailer = new Retailer(
+        $store = new Store(
             $rows[0]['userId'],
             $rows[0]['name'],
             $rows[0]['phone'],
             $rows[0]['email'],
             $rows[0]['addressId']);
-        $retailer->setId($rows[0]['id']);
+        $store->setId($rows[0]['id']);
 
-        return $retailer;
+        return $store;
     }
 }

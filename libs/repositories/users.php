@@ -14,7 +14,7 @@ class Users
         $rows = Database::Execute($query);
 
         if (empty($rows)) {
-            throw new Exception('No user found.');
+            throw new Exception('Username or password incorrect.');
         }
 
         $user = new User(

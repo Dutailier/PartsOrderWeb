@@ -4,17 +4,17 @@ include_once(ROOT . 'libs/entity.php');
 
 class Order extends Entity
 {
-    private $retailerId;
-    private $customerId;
+    private $storeId;
+    private $receiverId;
     private $shippingAddressId;
     private $creationDate;
     private $status;
 
-    function __construct($shippingAddressId, $retailerId, $customerId = null, $creationDate = null, $status = null)
+    function __construct($shippingAddressId, $storeId, $receiverId, $creationDate = null, $status = null)
     {
-        $this->retailerId = $retailerId;
-        $this->customerId = $customerId;
-        $this->shippingAddressId = $shippingAddressId;
+        $this->storeId = intval($storeId);
+        $this->receiverId = intval($receiverId);
+        $this->shippingAddressId = intval($shippingAddressId);
         $this->creationDate = $creationDate;
         $this->status = $status;
     }
@@ -23,17 +23,17 @@ class Order extends Entity
     {
         return array(
             'id' => $this->getId(),
-            'retailerId' => $this->getRetailerId(),
-            'customerId' => $this->getCustomerId(),
+            'retailerId' => $this->getStoreId(),
+            'customerId' => $this->getReceiverId(),
             'shippingAddressId' => $this->getShippingAddressId(),
             'creationDate' => $this->getCreationDate(),
             'status' => $this->getStatus()
         );
     }
 
-    public function getRetailerId()
+    public function getStoreId()
     {
-        return $this->retailerId;
+        return $this->storeId;
     }
 
     public function setStatus($status)
@@ -46,9 +46,9 @@ class Order extends Entity
         $this->creationDate = $creationDate;
     }
 
-    public function getCustomerId()
+    public function getReceiverId()
     {
-        return $this->customerId;
+        return $this->receiverId;
     }
 
     public function getShippingAddressId()
@@ -68,20 +68,16 @@ class Order extends Entity
 
     public function getRetailer()
     {
-        include_once(ROOT . 'libs/repositories/retailers.php');
+        include_once(ROOT . 'libs/repositories/stores.php');
 
-        return Retailers::Find($this->getRetailerId());
+        return Stores::Find($this->getStoreId());
     }
 
     public function getCustomer()
     {
-        include_once(ROOT . 'libs/repositories/customers.php');
+        include_once(ROOT . 'libs/repositories/receivers.php');
 
-        if (is_null($this->getCustomerId())) {
-            return null;
-        } else {
-            return Customers::Find($this->getCustomerId());
-        }
+        return Receivers::Find($this->getReceiverId());
     }
 
     public function getShippingAddress()
@@ -110,12 +106,5 @@ class Order extends Entity
         include_once(ROOT . 'libs/repositories/orders.php');
 
         return Orders::Cancel($this->getId());
-    }
-
-    public function AddLine(Line $line)
-    {
-        include_once(ROOT . 'libs/repositories/lines.php');
-
-        return Lines::Attach($line);
     }
 }

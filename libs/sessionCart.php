@@ -1,35 +1,39 @@
 <?php
 
-include_once(ROOT . 'libs/item.php');
 include_once(ROOT . 'libs/interfaces/icart.php');
-include_once(ROOT . 'libs/interfaces/icomparable.php');
+include_once(ROOT . 'libs/interfaces/iitem.php');
 
 /**
  * Class Cart
- * Représente un panier d'achats dans lequel ont y retrouve des items
- * de toutes sortes. Il démarrera la session par lui-même si nécessaire.
+ * Représente un panier d'achats contenu en session.
+ * Gère les items contenus dans le panier.
  */
-class SessionCart implements ICart
+final class SessionCart implements ICart
 {
-    const IDENTIFIER = '_CART_';
-    protected $items;
+    const ITEMS_IDENTIFIER = '_ITEMS_';
 
     /**
      * Constructeur par défaut.
-     * @param null $container
      */
-    public function __construct(&$container = null)
+    public function __construct()
     {
-        if (is_null($container)) {
-            if (session_id() == '') {
-                session_start();
-            }
-            if (!isset($_SESSION[self::IDENTIFIER])) {
-                $_SESSION[self::IDENTIFIER] = array();
-            }
-            $container = & $_SESSION[self::IDENTIFIER];
+        if (session_id() == '') {
+            session_start();
         }
-        $this->items = & $container;
+
+        if (!isset($_SESSION[self::ITEMS_IDENTIFIER])) {
+            $_SESSION[self::ITEMS_IDENTIFIER] = array();
+        }
+    }
+
+
+    /**
+     * Copie le contenu d'un autre panier d'achats.
+     * @param ICart $cart
+     */
+    public function Copy(ICart $cart)
+    {
+        $_SESSION[self::ITEMS_IDENTIFIER] = $cart->getItems();
     }
 
 
@@ -39,15 +43,15 @@ class SessionCart implements ICart
      * @param IItem $item
      * @return mixed
      */
-    public function add(IItem $item)
+    public function Add(IItem $item)
     {
         $index = $this->getIndexOfItem($item);
 
         if ($index == -1) {
-            $this->items[] = $item;
+            $_SESSION[self::ITEMS_IDENTIFIER][] = $item;
 
         } else {
-            $item = $this->items[$index];
+            $item = $_SESSION[self::ITEMS_IDENTIFIER][$index];
             $item->setQuantity($item->getQuantity() + 1);
         }
 
@@ -62,7 +66,7 @@ class SessionCart implements ICart
      * @return mixed
      * @throws Exception
      */
-    public function remove(IItem $item)
+    public function Remove(IItem $item)
     {
         $index = $this->getIndexOfItem($item);
 
@@ -70,7 +74,7 @@ class SessionCart implements ICart
             throw new Exception('The item isn\'t inside the cart.');
         }
 
-        $item = $this->items[$index];
+        $item = $_SESSION[self::ITEMS_IDENTIFIER][$index];
 
         $quantity = $item->getQuantity() - 1;
 
@@ -78,10 +82,11 @@ class SessionCart implements ICart
             $item->setQuantity($quantity);
 
         } else {
-            unset($this->items[$index]);
+            unset($_SESSION[self::ITEMS_IDENTIFIER][$index]);
         }
         return $quantity;
     }
+
 
     /**
      * Retourne la quantité de l'item contenue dans le panier d'achats.
@@ -96,9 +101,10 @@ class SessionCart implements ICart
             return 0;
 
         } else {
-            return $this->items[$index]->getQuantity();
+            return $_SESSION[self::ITEMS_IDENTIFIER][$index]->getQuantity();
         }
     }
+
 
     /**
      * Définit la quantité contenue dans le panier d'achats de l'item.
@@ -118,10 +124,10 @@ class SessionCart implements ICart
 
         if ($index == -1) {
             $item->setQuantity($quantity);
-            $this->items[] = $item;
+            $_SESSION[self::ITEMS_IDENTIFIER][] = $item;
 
         } else {
-            $item = $this->items[$index];
+            $item = $_SESSION[self::ITEMS_IDENTIFIER][$index];
             $item->setQuantity($quantity);
         }
 
@@ -135,7 +141,7 @@ class SessionCart implements ICart
      */
     public function isEmpty()
     {
-        return empty($this->items);
+        return empty($_SESSION[self::ITEMS_IDENTIFIER]);
     }
 
 
@@ -146,7 +152,7 @@ class SessionCart implements ICart
      */
     public function getItems()
     {
-        return $this->items;
+        return $_SESSION[self::ITEMS_IDENTIFIER];
     }
 
 
@@ -155,7 +161,7 @@ class SessionCart implements ICart
      */
     public function Clear()
     {
-        $this->items = array();
+        $_SESSION[self::ITEMS_IDENTIFIER] = array();
     }
 
 
@@ -166,7 +172,7 @@ class SessionCart implements ICart
      */
     private function getIndexOfItem(IItem $item)
     {
-        foreach ($this->items as $key => $value) {
+        foreach ($this->getItems() as $key => $value) {
             if ($item->Equals($value)) {
                 return $key;
             }
