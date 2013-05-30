@@ -1,8 +1,9 @@
 <?php
 
 include_once('../config.php');
-
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/repositories/filters.php');
+
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
@@ -10,8 +11,6 @@ if (!Security::isAuthenticated()) {
 } else {
     try {
         $data['filters'] = array();
-
-        include_once(ROOT . 'libs/repositories/filters.php');
         foreach (Filters::FilterByType(FILTER_TYPE_TYPES) as $filter) {
             $data['filters'][] = $filter->getArray();
         }

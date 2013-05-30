@@ -1,8 +1,11 @@
 <?php
 
 include_once('../config.php');
-
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/entities/receiver.php');
+include_once(ROOT . 'libs/sessionTransaction.php');
+include_once(ROOT . 'libs/repositories/filters.php');
+
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
@@ -14,10 +17,8 @@ if (!Security::isAuthenticated()) {
 
     } else {
         try {
-            include_once(ROOT . 'libs/sessionTransaction.php');
             $transaction = new SessionTransaction();
 
-            include_once(ROOT . 'libs/repositories/filters.php');
             $filter = Filters::Find($_POST['filterId']);
             $transaction->setDefaultFilter($filter);
 
@@ -29,7 +30,6 @@ if (!Security::isAuthenticated()) {
                 $address = $store->getAddress();
                 $address->Detach();
 
-                include_once(ROOT . 'libs/entities/receiver.php');
                 $receiver = new Receiver(
                     $store->getName(),
                     $store->getPhone(),

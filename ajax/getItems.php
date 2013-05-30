@@ -14,7 +14,7 @@ if (!Security::isAuthenticated()) {
 
         $data['items'] = array();
         foreach ($cart->getItems() as $item) {
-            $data['items'][] = $item->Encode();
+            $data['items'][] = $item->getArray();
         }
         $data['success'] = true;
 

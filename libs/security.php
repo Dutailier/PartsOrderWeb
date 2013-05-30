@@ -55,8 +55,7 @@ class Security
 
         if (empty($_SESSION[self::ROLES_IDENTIFIER])) {
             $user = self::getUserConnected();
-            $roles = Roles::FilterByUserId($user->getId());
-            $_SESSION[self::ROLES_IDENTIFIER] = $roles;
+            $_SESSION[self::ROLES_IDENTIFIER] = $user->getRoles();
         }
 
         foreach ($_SESSION[self::ROLES_IDENTIFIER] as $role) {
@@ -76,7 +75,7 @@ class Security
      */
     public static function UserIsInRole(User $user, $name)
     {
-        foreach (Roles::FilterByUserId($user->getId()) as $role) {
+        foreach ($user->getRoles() as $role) {
             if (strtolower($role->getName()) == strtolower($name)) {
                 return true;
             }

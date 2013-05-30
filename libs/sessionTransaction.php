@@ -1,6 +1,13 @@
 <?php
 
 include_once('config.php');
+include_once(ROOT . 'libs/sessionCart.php');
+include_once(ROOT . 'libs/repositories/lines.php');
+include_once(ROOT . 'libs/repositories/orders.php');
+include_once(ROOT . 'libs/repositories/stores.php');
+include_once(ROOT . 'libs/repositories/filters.php');
+include_once(ROOT . 'libs/repositories/addresses.php');
+include_once(ROOT . 'libs/repositories/receivers.php');
 include_once(ROOT . 'libs/interfaces/itransaction.php');
 
 class SessionTransaction implements ITransaction
@@ -23,7 +30,6 @@ class SessionTransaction implements ITransaction
         }
 
         if (!isset($_SESSION[self::CART_IDENTIFIER])) {
-            include_once(ROOT . 'libs/sessionCart.php');
             $_SESSION[self::CART_IDENTIFIER] = new SessionCart();
         }
 
@@ -79,25 +85,18 @@ class SessionTransaction implements ITransaction
         // si celle-ci est celle du client. Autrement, l'adresse du magasin
         // est déjà attaché à la base de données.
         if (!$address->isAttached()) {
-            include_once(ROOT . 'libs/repositories/addresses.php');
             Addresses::Attach($address);
         }
 
-        include_once(ROOT . 'libs/repositories/receivers.php');
         $receiver = Receivers::Attach($this->getReceiver());
 
-        include_once(ROOT . 'libs/entities/order.php');
         $order = new Order(
             $address->getId(),
             $this->getStore()->getId(),
             $receiver->getId()
         );
 
-        include_once(ROOT . 'libs/repositories/orders.php');
         $order = Orders::Attach($order);
-
-        include_once(ROOT . 'libs/entities/line.php');
-        include_once(ROOT . 'libs/repositories/lines.php');
 
         foreach ($this->getCart()->getItems() as $item) {
             $line = new Line(
@@ -115,8 +114,6 @@ class SessionTransaction implements ITransaction
 
     public function Close()
     {
-        include_once(ROOT . 'libs/repositories/orders.php');
-
         $this->getOrder()->Confirm();
         $this->Destroy();
     }
@@ -133,7 +130,6 @@ class SessionTransaction implements ITransaction
         $this->wasOpen = false;
         $this->wasExecute = false;
 
-        include_once(ROOT . 'libs/sessionCart.php');
         $_SESSION[self::CART_IDENTIFIER]->Clear();
     }
 
@@ -253,6 +249,6 @@ class SessionTransaction implements ITransaction
     }
 
     public function isOpen(){
-        return $this->wasOpen();
+        return $this->wasOpen;
     }
 }

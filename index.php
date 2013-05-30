@@ -1,10 +1,8 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/sessionCart.php');
-include_once(ROOT . 'libs/sessionTransaction.php');
 
+include_once(ROOT . 'libs/security.php');
 if (!Security::isAuthenticated()) {
     $page = 'login';
 } else {
@@ -12,8 +10,9 @@ if (!Security::isAuthenticated()) {
     if (empty($page) || $page == 'index') {
         $page = 'products';
     }
-
-    if($page == 'products' && !SessionTransaction::getCurrent()->isOpen()) {
+    include_once(ROOT . 'libs/sessionTransaction.php');
+    $transaction = new SessionTransaction();
+    if ($page == 'products' && !$transaction->isOpen()) {
         $page = 'destinations';
     }
 }

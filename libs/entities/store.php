@@ -1,6 +1,8 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
+include_once(ROOT . 'libs/repositories/users.php');
+include_once(ROOT . 'libs/repositories/addresses.php');
 
 class Store extends Entity
 {
@@ -71,15 +73,11 @@ class Store extends Entity
 
     public function getUser()
     {
-        include_once(ROOT . 'libs/repositories/users.php');
-
         return Users::Find($this->getUserId());
     }
 
     public function getAddress()
     {
-        include_once(ROOT . 'libs/repositories/addresses.php');
-
         return Addresses::Find($this->getAddressId());
     }
 }

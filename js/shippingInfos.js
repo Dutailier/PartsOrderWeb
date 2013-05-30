@@ -4,21 +4,47 @@ $(document).ready(function () {
 
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
-                data.hasOwnProperty('transaction') &&
-                data['transaction'].hasOwnProperty('shippingAddress') &&
-                data['transaction'].hasOwnProperty('retailer')) {
+                data.hasOwnProperty('transaction')) {
 
-                UpdateShippingInfos(data['transaction']['shippingAddress']);
-                UpdateRetailerInfos(data['transaction']['retailer']);
+                var transaction = data['transaction'];
 
-                if (data['transaction'].hasOwnProperty('customer')) {
-                    UpdateCustomerInfos(data['transaction']['customer']);
-                    $('#btnEdit').show();
-                } else {
-                    UpdateCustomerInfos(data['transaction']['retailer']);
-                    $('#btnEdit').hide();
+                if (transaction.hasOwnProperty('shippingAddress') &&
+                    transaction.hasOwnProperty('receiver') &&
+                    transaction.hasOwnProperty('store')) {
+
+                    var shippingAddress = data['transaction']['shippingAddress'];
+                    var receiver = data['transaction']['receiver'];
+                    var store = data['transaction']['store'];
+
+                    if (shippingAddress.hasOwnProperty('details') &&
+                        shippingAddress.hasOwnProperty('city') &&
+                        shippingAddress.hasOwnProperty('zip') &&
+                        shippingAddress.hasOwnProperty('state') &&
+                        shippingAddress['state'].hasOwnProperty('name')) {
+                        UpdateShippingAddress(shippingAddress);
+                    }
+
+                    if (store.hasOwnProperty('name') &&
+                        store.hasOwnProperty('phone') &&
+                        store.hasOwnProperty('email') &&
+                        store.hasOwnProperty('address')) {
+                        var address = store['address'];
+
+                        if (address.hasOwnProperty('details') &&
+                            address.hasOwnProperty('city') &&
+                            address.hasOwnProperty('zip') &&
+                            address.hasOwnProperty('state') &&
+                            address['state'].hasOwnProperty('name')) {
+                            UpdateStoreInfos(store);
+                        }
+                    }
+
+                    if (receiver.hasOwnProperty('name') &&
+                        receiver.hasOwnProperty('phone') &&
+                        receiver.hasOwnProperty('email')) {
+                        UpdateReceiverInfos(receiver);
+                    }
                 }
-
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
 
@@ -29,14 +55,6 @@ $(document).ready(function () {
         .fail(function () {
             alert('Communication with the server failed.');
         })
-
-    $('#btnEdit').click(function () {
-        window.location = 'customerInfos.php';
-    });
-
-    $('#btnConfirm').click(function() {
-       window.location = 'products.php';
-    });
 
     $('#btnCancel').click(function () {
         $.post('ajax/cancelTransaction.php')
@@ -57,97 +75,70 @@ $(document).ready(function () {
                 alert('Communication with the server failed.');
             })
     });
+
+    $('#btnEdit').click(function () {
+        window.location = 'receiverInfos.php';
+    });
+
+    $('#btnConfirm').click(function () {
+        window.location = 'products.php';
+    });
 });
 
-function UpdateShippingInfos(address) {
-
-    if (address.hasOwnProperty('details') &&
-        address.hasOwnProperty('city') &&
-        address.hasOwnProperty('zip') &&
-        address.hasOwnProperty('state') &&
-        address['state'].hasOwnProperty('name')) {
-
-        $('#shippingAddress').text(
-            address['details'] + ', ' +
-                address['city'] + ', ' +
-                address['zip'] + ', ' +
-                address['state']['name']
-        );
-    }
+/**
+ * Affiche les informations relatives à l'adresse d'expédition.
+ * @param address
+ * @constructor
+ */
+function UpdateShippingAddress(address) {
+    $('#shippingAddress').text(AddressFormat(address));
 }
 
-function UpdateRetailerInfos(infos) {
-
-    if (infos.hasOwnProperty('name') &&
-        infos.hasOwnProperty('phone') &&
-        infos.hasOwnProperty('email') &&
-        infos.hasOwnProperty('address')) {
-
-        $('#retailerName').text(infos['name']);
-
-        // 12345678901 => 1-234-567-8910
-        $('#retailerPhone').text(
-            infos['phone'].substring(0, 1) + '-' +
-                infos['phone'].substring(1, 4) + '-' +
-                infos['phone'].substring(4, 7) + '-' +
-                infos['phone'].substring(7));
-
-        $('#retailerEmail').text(infos['email']);
-
-        var address = infos['address'];
-
-        if (address.hasOwnProperty('details') &&
-            address.hasOwnProperty('city') &&
-            address.hasOwnProperty('zip') &&
-            address.hasOwnProperty('state') &&
-            address['state'].hasOwnProperty('name')) {
-
-            $('#retailerAddress').text(
-                address['details'] + ', ' +
-                    address['city'] + ', ' +
-                    address['zip'] + ', ' +
-                    address['state']['name']
-            );
-        }
-    }
-
+/**
+ * Affiche les informations relatives au magasin.
+ * @param infos
+ * @constructor
+ */
+function UpdateStoreInfos(infos) {
+    $('#storeName').text(infos['name']);
+    $('#storePhone').text(PhoneFormat(infos['phone']));
+    $('#storeEmail').text(infos['email']);
+    $('#storeAddress').text(AddressFormat(infos['address']));
 }
 
-function UpdateCustomerInfos(infos) {
+/**
+ * Affiche les informations relatives au client.
+ * @param infos
+ * @constructor
+ */
+function UpdateReceiverInfos(infos) {
+    $('#receiverName').text(infos['name']);
+    $('#receiverPhone').text(PhoneFormat(infos['phone']));
+    $('#receiverEmail').text(infos['email']);
+}
 
-    if (infos.hasOwnProperty('firstname') &&
-        infos.hasOwnProperty('lastname')) {
-        $('#customerName').text(infos['firstname'] + ' ' + infos['lastname']);
-    } else if (infos.hasOwnProperty('name')) {
-        $('#customerName').text(infos['name']);
-    }
-    if (infos.hasOwnProperty('phone') &&
-        infos.hasOwnProperty('email') &&
-        infos.hasOwnProperty('address')) {
+/**
+ * Concatonne les détails de l'adresse en une seule chaîne de caractères.
+ * @param address
+ * @returns {string}
+ * @constructor
+ */
+function AddressFormat(address) {
+    return address['details'] + ', ' +
+        address['city'] + ', ' +
+        address['zip'] + ', ' +
+        address['state']['name'];
+}
 
-        // 12345678901 => 1-234-567-8910
-        $('#customerPhone').text(
-            infos['phone'].substring(0, 1) + '-' +
-                infos['phone'].substring(1, 4) + '-' +
-                infos['phone'].substring(4, 7) + '-' +
-                infos['phone'].substring(7));
-
-        $('#customerEmail').text(infos['email']);
-
-        var address = infos['address'];
-
-        if (address.hasOwnProperty('details') &&
-            address.hasOwnProperty('city') &&
-            address.hasOwnProperty('zip') &&
-            address.hasOwnProperty('state') &&
-            address['state'].hasOwnProperty('name')) {
-
-            $('#customerAddress').text(
-                address['details'] + ', ' +
-                    address['city'] + ', ' +
-                    address['zip'] + ', ' +
-                    address['state']['name']
-            );
-        }
-    }
+/**
+ * Transforme 12345678901 pour 1-234-567-8910.
+ * @param phone
+ * @returns {string}
+ * @constructor
+ */
+function PhoneFormat(phone) {
+    return phone.substring(0, 1) + '-' +
+        phone.substring(1, 4) + '-' +
+        phone.substring(4, 7) + '-' +
+        phone.substring(7);
 }

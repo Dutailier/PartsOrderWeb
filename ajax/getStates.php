@@ -1,8 +1,9 @@
 <?php
 
 include_once('../config.php');
-
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/repositories/states.php');
+
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
@@ -15,8 +16,6 @@ if (!Security::isAuthenticated()) {
 
         try {
             $data['states'] = array();
-
-            include_once(ROOT . 'libs/repositories/states.php');
             foreach (States::FilterByCountryId($_POST['countryId']) as $state) {
                 $data['states'][] = $state->getArray();
             }

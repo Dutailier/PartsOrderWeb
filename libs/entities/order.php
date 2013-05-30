@@ -1,6 +1,11 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
+include_once(ROOT . 'libs/repositories/lines.php');
+include_once(ROOT . 'libs/repositories/stores.php');
+include_once(ROOT . 'libs/repositories/orders.php');
+include_once(ROOT . 'libs/repositories/addresses.php');
+include_once(ROOT . 'libs/repositories/receivers.php');
 
 class Order extends Entity
 {
@@ -68,43 +73,31 @@ class Order extends Entity
 
     public function getRetailer()
     {
-        include_once(ROOT . 'libs/repositories/stores.php');
-
         return Stores::Find($this->getStoreId());
     }
 
     public function getCustomer()
     {
-        include_once(ROOT . 'libs/repositories/receivers.php');
-
         return Receivers::Find($this->getReceiverId());
     }
 
     public function getShippingAddress()
     {
-        include_once(ROOT . 'libs/repositories/addresses.php');
-
         return Addresses::Find($this->getShippingAddressId());
     }
 
     public function getLines()
     {
-        include_once(ROOT . 'libs/repositories/lines.php');
-
         return Lines::FilterByOrderId($this->getId());
     }
 
     public function Confirm()
     {
-        include_once(ROOT . 'libs/repositories/orders.php');
-
         return Orders::Confirm($this->getId());
     }
 
     public function Cancel()
     {
-        include_once(ROOT . 'libs/repositories/orders.php');
-
         return Orders::Cancel($this->getId());
     }
 }

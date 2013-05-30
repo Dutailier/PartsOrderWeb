@@ -19,48 +19,43 @@ $title = 'Order Informations';
         <label id="shippingAddress" class="values"></label>
     </p>
 </fieldset>
-<fieldset id="RetailerInfos">
+<fieldset id="storeInfos">
     <legend>Store Informations</legend>
     <p>
         <label class="properties">Name : </label>
-        <label id="retailerName" class="values"></label>
+        <label id="storeName" class="values"></label>
     </p>
 
     <p>
         <label class="properties">Phone : </label>
-        <label id="retailerPhone" class="values"></label>
+        <label id="storePhone" class="values"></label>
     </p>
 
     <p>
         <label class="properties">Email : </label>
-        <label id="retailerEmail" class="values"></label>
+        <label id="storeEmail" class="values"></label>
     </p>
 
     <p>
         <label class="properties">Address : </label>
-        <label id="retailerAddress" class="values"></label>
+        <label id="storeAddress" class="values"></label>
     </p>
 </fieldset>
-<fieldset id="CustomerInfos">
+<fieldset id="receiverInfos">
     <legend>Receiver Informations</legend>
     <p>
         <label class="properties">Name : </label>
-        <label id="customerName" class="values"></label>
+        <label id="receiverName" class="values"></label>
     </p>
 
     <p>
         <label class="properties">Phone : </label>
-        <label id="customerPhone" class="values"></label>
+        <label id="receiverPhone" class="values"></label>
     </p>
 
     <p>
         <label class="properties">Email : </label>
-        <label id="customerEmail" class="values"></label>
-    </p>
-
-    <p>
-        <label class="properties">Address : </label>
-        <label id="customerAddress" class="values"></label>
+        <label id="receiverEmail" class="values"></label>
     </p>
 </fieldset>
 

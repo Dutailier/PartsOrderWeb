@@ -1,6 +1,7 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
+include_once(ROOT . 'libs/repositories/countries.php');
 
 class State extends Entity
 {
@@ -34,8 +35,6 @@ class State extends Entity
 
     public function getCountry()
     {
-        include_once(ROOT . 'libs/repositories/countries.php');
-
         return Countries::Find($this->getCountryId());
     }
 }

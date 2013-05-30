@@ -1,8 +1,11 @@
 <?php
 
 include_once('../config.php');
-
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/entities/address.php');
+include_once(ROOT . 'libs/entities/receiver.php');
+include_once(ROOT . 'libs/sessionTransaction.php');
+
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
@@ -40,11 +43,9 @@ if (!Security::isAuthenticated()) {
         $data['message'] = 'The country is required.';
     } else {
         try {
-            include_once(ROOT . 'libs/sessionTransaction.php');
             $transaction = new SessionTransaction();
             $store = Security::getStoreConnected();
 
-            include_once(ROOT . 'libs/entities/receiver.php');
             $receiver = new Receiver(
                 $_POST['firstname'],
                 $_POST['lastname'],
@@ -52,7 +53,6 @@ if (!Security::isAuthenticated()) {
                 $_POST['email']
             );
 
-            include_once(ROOT . 'libs/entities/address.php');
             $shippingAddress = new Address(
                 $_POST['details'],
                 $_POST['city'],

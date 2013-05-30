@@ -1,8 +1,11 @@
 <?php
 
 include_once('../config.php');
-
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/entities/product.php');
+include_once(ROOT . 'libs/sessionTransaction.php');
+include_once(ROOT . 'libs/repositories/products.php');
+
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
@@ -17,13 +20,9 @@ if (!Security::isAuthenticated()) {
     } else {
 
         try {
-            include_once(ROOT . 'libs/repositories/products.php');
             $product = Products::Find($_POST['productId']);
-
-            include_once(ROOT . 'libs/entities/product.php');
             $item = new Item($product, $_POST['serial']);
 
-            include_once(ROOT . 'libs/sessionTransaction.php');
             $transaction = new SessionTransaction();
 
             $data['quantity'] = $transaction->RemoveItem($item);

@@ -1,5 +1,6 @@
 <?php
 
+include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/store.php');
 
 class Stores

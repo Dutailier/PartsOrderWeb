@@ -39,9 +39,16 @@ class Orders
             throw new Exception('No order found.');
         }
 
-        return new Order(
-            $rows[0]['customerId'], $rows[0]['id'], $rows[0]['retailerId'], $rows[0]['shippingAddressId'], $rows[0]['creationDate'], $rows[0]['deliveryDate'], $rows[0]['status']
+        $order = new Order(
+            $rows[0]['shippingAddress'],
+            $rows[0]['storeId'],
+            $rows[0]['receiverId'],
+            $rows[0]['creationDate'],
+            $rows[0]['status']
         );
+        $order->setId($rows[0]['id']);
+
+        return $order;
     }
 
     public static function Cancel($id)
@@ -55,9 +62,16 @@ class Orders
             throw new Exception('No order found.');
         }
 
-        return new Order(
-            $rows[0]['customerId'], $rows[0]['id'], $rows[0]['retailerId'], $rows[0]['shippingAddressId'], $rows[0]['creationDate'], $rows[0]['deliveryDate'], $rows[0]['status']
+        $order = new Order(
+            $rows[0]['shippingAddress'],
+            $rows[0]['storeId'],
+            $rows[0]['receiverId'],
+            $rows[0]['creationDate'],
+            $rows[0]['status']
         );
+        $order->setId($rows[0]['id']);
+
+        return $order;
     }
 
     public static function Find($id)
@@ -71,8 +85,15 @@ class Orders
             throw new Exception('No order found.');
         }
 
-        return new Order(
-            $rows[0]['customerId'], $rows[0]['id'], $rows[0]['retailerId'], $rows[0]['shippingAddressId'], $rows[0]['creationDate'], $rows[0]['deliveryDate'], $rows[0]['status']
+        $order = new Order(
+            $rows[0]['shippingAddress'],
+            $rows[0]['storeId'],
+            $rows[0]['receiverId'],
+            $rows[0]['creationDate'],
+            $rows[0]['status']
         );
+        $order->setId($rows[0]['id']);
+
+        return $order;
     }
 }

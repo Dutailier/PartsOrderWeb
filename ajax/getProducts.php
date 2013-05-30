@@ -13,11 +13,10 @@ if (!Security::isAuthenticated()) {
         $transaction = SessionTransaction::getCurrent();
 
         $filterIds = array();
-
         if (!empty($_POST['filterIds'])) {
             $filterIds = $_POST['filterIds'];
         }
-        $filterIds[] = $transaction->getDestinationFilter()->getId();
+        $filterIds[] = $transaction->getDefaultFilter()->getId();
 
         $data['products'] = array();
         foreach (Products::FilterByFilterIds($filterIds) as $product) {
