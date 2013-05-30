@@ -14,6 +14,7 @@ class SessionTransaction implements ITransaction
     const LINES_IDENTIFIER = '_LINES_';
 
     private $wasExecute;
+    private $wasOpen;
 
     public function __construct()
     {
@@ -66,6 +67,8 @@ class SessionTransaction implements ITransaction
         $this->setShippingAddress($shippingAddress);
         $this->setStore($store);
         $this->setReceiver($receiver);
+
+        $this->wasOpen = true;
     }
 
     public function Execute()
@@ -127,6 +130,8 @@ class SessionTransaction implements ITransaction
         unset($_SESSION[self::RECEIVER_IDENTIFIER]);
         unset($_SESSION[self::ORDER_IDENTIFIER]);
         unset($_SESSION[self::LINES_IDENTIFIER]);
+        $this->wasOpen = false;
+        $this->wasExecute = false;
 
         include_once(ROOT . 'libs/sessionCart.php');
         $_SESSION[self::CART_IDENTIFIER]->Clear();
@@ -245,5 +250,9 @@ class SessionTransaction implements ITransaction
         }
 
         return $_SESSION[self::LINES_IDENTIFIER];
+    }
+
+    public function isOpen(){
+        return $this->wasOpen();
     }
 }

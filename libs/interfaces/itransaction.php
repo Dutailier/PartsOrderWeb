@@ -37,4 +37,6 @@ interface ITransaction
     public function getOrder();
 
     public function getLines();
+
+    public function isOpen();
 }
