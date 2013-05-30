@@ -79,15 +79,7 @@ class SessionTransaction implements ITransaction
 
     public function Execute()
     {
-        $address = $this->getShippingAddress();
-
-        // L'adresse devra être attachée à la base de données seulement
-        // si celle-ci est celle du client. Autrement, l'adresse du magasin
-        // est déjà attaché à la base de données.
-        if (!$address->isAttached()) {
-            Addresses::Attach($address);
-        }
-
+        $address = Addresses::Attach($this->getShippingAddress());
         $receiver = Receivers::Attach($this->getReceiver());
 
         $order = new Order(
@@ -248,7 +240,8 @@ class SessionTransaction implements ITransaction
         return $_SESSION[self::LINES_IDENTIFIER];
     }
 
-    public function isOpen(){
+    public function isOpen()
+    {
         return $this->wasOpen;
     }
 }
