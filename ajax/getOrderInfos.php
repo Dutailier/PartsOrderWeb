@@ -11,6 +11,7 @@ if (!Security::isAuthenticated()) {
 } else {
     try {
         $transaction = Transaction::getCurrent();
+        $transaction->CreateOrder();
 
         $data['transaction'] = $transaction->getArray();
         $data['success'] = true;

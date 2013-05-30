@@ -18,7 +18,7 @@ class State extends Entity
         return array(
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'country' => $this->getCountry()->getArray()
+            'countryId' => $this->getCountryId()
         );
     }
 

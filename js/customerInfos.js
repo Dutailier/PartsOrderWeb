@@ -211,14 +211,13 @@ $(document).ready(function () {
                             data['address'].hasOwnProperty('zip') &&
                             data['address'].hasOwnProperty('state') &&
                             data['address']['state'].hasOwnProperty('id') &&
-                            data['address']['state'].hasOwnProperty('country') &&
-                            data['address']['state']['country'].hasOwnProperty('id')) {
+                            data['address']['state'].hasOwnProperty('countryId')) {
 
                             $('#address').val(data['address']['details']);
                             $('#city').val(data['address']['city']);
                             $('#zip').val(data['address']['zip']);
 
-                            $('#countries').val(data['address']['state']['country']['id']);
+                            $('#countries').val(data['address']['state']['countryId']);
                             $('#states').val(data['address']['state']['id']);
 
                             $('#addressInfos > p > *').attr('disabled', 'disabled');
@@ -237,7 +236,7 @@ $(document).ready(function () {
 
         } else {
             $('#addressInfos > p > *').removeAttr('disabled');
-            $('#addressInfos textarea, input[type=text]').val('');
+            $('#addressInfos textarea, #addressInfos input[type=text]').val('');
         }
     })
 });
@@ -261,8 +260,7 @@ function UpdateCustomerInfos() {
                     data['customer']['address'].hasOwnProperty('zip') &&
                     data['customer']['address'].hasOwnProperty('state') &&
                     data['customer']['address']['state'].hasOwnProperty('id') &&
-                    data['customer']['address']['state'].hasOwnProperty('country') &&
-                    data['customer']['address']['state']['country'].hasOwnProperty('id')) {
+                    data['customer']['address']['state'].hasOwnProperty('countryId')) {
 
                     $('#firstname').val(data['customer']['firstname']);
                     $('#lastname').val(data['customer']['lastname']);
@@ -274,7 +272,7 @@ function UpdateCustomerInfos() {
                     $('#city').val(data['customer']['address']['city']);
                     $('#zip').val(data['customer']['address']['zip']);
 
-                    $('#countries').val(data['customer']['address']['state']['country']['id']);
+                    $('#countries').val(data['customer']['address']['state']['countryId']);
                     $('#states').val(data['customer']['address']['state']['id']);
                 }
             }

@@ -170,7 +170,9 @@ $(document).ready(function () {
     });
 
     $('#btnProceed').click(function () {
-        window.location = 'orderInfos.php';
+        if ($('#items > div.item').length > 0) {
+            window.location = 'orderInfos.php';
+        }
     });
 });
 

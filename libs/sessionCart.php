@@ -1,8 +1,8 @@
 <?php
 
+include_once('config.php');
 include_once(ROOT . 'libs/item.php');
 include_once(ROOT . 'libs/interfaces/icart.php');
-include_once(ROOT . 'libs/interfaces/icomparable.php');
 
 /**
  * Class Cart

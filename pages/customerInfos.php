@@ -47,7 +47,7 @@ $title = 'Customers Informations';
     <fieldset id="addressInfos">
         <legend>Address informations <br/>
             <input id="checkUseStoreAddress" name="checkUseStoreAddress" type="checkbox"/>
-            <label id="lblUseStoreAddress">Use the store address.</label>
+            <label id="lblUseStoreAddress">Fill with store address.</label>
         </legend>
         <p>
             <label for="address">Address</label>

@@ -30,7 +30,7 @@ class Transaction
             session_start();
         }
 
-        if (empty($_SESSION[self::IDENTIFIER])) {
+        if (!isset($_SESSION[self::IDENTIFIER])) {
             $_SESSION[self::IDENTIFIER] = new Transaction();
         }
 
@@ -44,19 +44,13 @@ class Transaction
             'retailer' => $this->getRetailer()->getArray()
         );
 
-        if (!is_null($this->order)) {
-            $infos['order'] = $this->getOrder()->getArray();
-        }
-
         if (!is_null($this->customer)) {
             $infos['customer'] = $this->getCustomer()->getArray();
         }
 
-        if (!is_null($this->order)) {
+        if (isset($this->order)) {
             $infos['order'] = $this->getOrder()->getArray();
-        }
 
-        if (!is_null($this->lines)) {
             foreach ($this->lines as $line) {
                 $infos['lines'][] = $line->getArray();
             }
@@ -154,7 +148,7 @@ class Transaction
         return $this->shippingAddress;
     }
 
-    private function CreateOrder()
+    public function CreateOrder()
     {
         include_once(ROOT . 'libs/repositories/orders.php');
 
@@ -184,8 +178,12 @@ class Transaction
 
     public function getOrder()
     {
+        if (empty($this->destinationFilter)) {
+            throw new Exception('The transaction must be open.');
+        }
+
         if (empty($this->order)) {
-            $this->CreateOrder();
+            throw new Exception('The order must be created.');
         }
 
         return $this->order;
@@ -193,6 +191,22 @@ class Transaction
 
     public function Cancel()
     {
+        include_once(ROOT . 'libs/sessionCart.php');
+
+        $cart = new SessionCart();
+
+        if (session_id() == '') {
+            session_start();
+        }
+
+        $cart->Clear();
+        unset($_SESSION[self::IDENTIFIER]);
+    }
+
+    public function Confirm()
+    {
+        $this->order->Confirm();
+
         include_once(ROOT . 'libs/sessionCart.php');
 
         $cart = new SessionCart();
