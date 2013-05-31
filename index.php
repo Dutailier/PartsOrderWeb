@@ -8,42 +8,37 @@ if (!Security::isAuthenticated()) {
     $page = 'login';
 
 } else {
-    if (!isset($_GET['page'])) {
-        include_once(ROOT . 'pages/' . 'error.php');
+    $page = $_GET['page'];
 
-    } else {
-        $page = $_GET['page'];
-
-        // Si aucune page n'est demandée, on redirige l'utilisateur
-        // à la liste de produits.
-        if (empty($page) || $page == 'index') {
-            $page = 'products';
-        }
-
-        // Si la page désirée est la liste des produits, mais
-        // que la transaction n'a pas débutée, l'utilisateur
-        // sera redirigé vers la page des destinations.
-        if ($page == 'products') {
-            $transaction = new SessionTransaction();
-
-            if (!$transaction->isOpen()) {
-                $page = 'destinations';
-            }
-        }
+    // Si aucune page n'est demandée, on redirige l'utilisateur
+    // à la liste de produits.
+    if (empty($page) || $page == 'index') {
+        $page = 'products';
     }
 
-    // Chemin de la page demandée.
-    $file = ROOT . 'pages/' . $page . '.php';
+    // Si la page désirée est la liste des produits, mais
+    // que la transaction n'a pas débutée, l'utilisateur
+    // sera redirigé vers la page des destinations.
+    if ($page == 'products') {
+        $transaction = new SessionTransaction();
 
-    if (!file_exists($file)) {
-        $file = ROOT . 'pages/' . 'error.php';
-
-    } else {
-        include_once($file);
-
-        if (empty($head) || empty($content)) {
-            include_once(ROOT . 'pages/' . 'error.php');
+        if (!$transaction->isOpen()) {
+            $page = 'destinations';
         }
+    }
+}
+
+// Chemin de la page demandée.
+$file = ROOT . 'pages/' . $page . '.php';
+
+if (!file_exists($file)) {
+    $file = ROOT . 'pages/' . 'error.php';
+
+} else {
+    include_once($file);
+
+    if (empty($head) || empty($content)) {
+        include_once(ROOT . 'pages/' . 'error.php');
     }
 }
 ?>
