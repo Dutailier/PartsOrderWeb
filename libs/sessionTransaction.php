@@ -1,6 +1,7 @@
 <?php
 
 include_once('config.php');
+include_once(ROOT . 'libs/item.php');
 include_once(ROOT . 'libs/sessionCart.php');
 include_once(ROOT . 'libs/repositories/lines.php');
 include_once(ROOT . 'libs/repositories/orders.php');
@@ -21,12 +22,25 @@ class SessionTransaction implements ITransaction
     const LINES_IDENTIFIER = '_LINES_';
 
     private $wasExecute;
-    private $wasOpen;
+    private $isOpen;
 
     public function __construct()
     {
         if (session_id() == '') {
             session_start();
+        }
+
+        if (isset($_SESSION[self::SHIPPING_ADDRESS_IDENTIFIER]) &&
+            isset($_SESSION[self::STORE_IDENTIFIER]) &&
+            isset($_SESSION[self::RECEIVER_IDENTIFIER])
+        ) {
+            $this->isOpen = true;
+        }
+
+        if (isset($_SESSION[self::ORDER_IDENTIFIER]) &&
+            isset($_SESSION[self::LINES_IDENTIFIER])
+        ) {
+            $this->wasExecute = true;
         }
 
         if (!isset($_SESSION[self::CART_IDENTIFIER])) {
@@ -74,7 +88,7 @@ class SessionTransaction implements ITransaction
         $this->setStore($store);
         $this->setReceiver($receiver);
 
-        $this->wasOpen = true;
+        $this->isOpen = true;
     }
 
     public function Execute()
@@ -88,17 +102,17 @@ class SessionTransaction implements ITransaction
             $receiver->getId()
         );
 
-        $order = Orders::Attach($order);
+        $_SESSION[self::ORDER_IDENTIFIER] = Orders::Attach($order);
 
         foreach ($this->getCart()->getItems() as $item) {
             $line = new Line(
-                $order->getId(),
+                $_SESSION[self::ORDER_IDENTIFIER]->getId(),
                 $item->getProduct()->getId(),
                 $item->getQuantity(),
                 $item->getSerial()
             );
 
-            Lines::Attach($line);
+            $_SESSION[self::LINES_IDENTIFIER][] = Lines::Attach($line);
         }
 
         $this->wasExecute = true;
@@ -119,7 +133,7 @@ class SessionTransaction implements ITransaction
         unset($_SESSION[self::RECEIVER_IDENTIFIER]);
         unset($_SESSION[self::ORDER_IDENTIFIER]);
         unset($_SESSION[self::LINES_IDENTIFIER]);
-        $this->wasOpen = false;
+        $this->isOpen = false;
         $this->wasExecute = false;
 
         $_SESSION[self::CART_IDENTIFIER]->Clear();
@@ -242,6 +256,6 @@ class SessionTransaction implements ITransaction
 
     public function isOpen()
     {
-        return $this->wasOpen;
+        return $this->isOpen;
     }
 }

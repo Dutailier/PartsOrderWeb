@@ -15,13 +15,12 @@ class Receiver extends Entity
     {
         if (!preg_match(Receiver::REGEX_PHONE, $phone)) {
             throw new Exception('The phone number must be standard. (i.e. 123-456-7890)');
-
-        } else if (!preg_match(Receiver::REGEX_EMAIL, $email)) {
+        }
+        if (!preg_match(Receiver::REGEX_EMAIL, $email)) {
             throw new Exception('The email address must be standard. (i.e. infos@dutailier.com.');
         }
 
         $phone = preg_replace('/[^\d]/', '', $phone);
-        $phone = trim($phone);
         $phone = (strlen($phone) == 10 ? '1' : '') . $phone;
 
         $this->name = trim($name);

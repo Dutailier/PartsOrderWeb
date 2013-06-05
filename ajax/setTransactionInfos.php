@@ -11,12 +11,9 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 
 } else {
-    if (empty($_POST['firstname'])) {
+    if (empty($_POST['name'])) {
         $data['success'] = false;
-        $data['message'] = 'The firstname is required.';
-    } else if (empty($_POST['lastname'])) {
-        $data['success'] = false;
-        $data['message'] = 'The lastname is required.';
+        $data['message'] = 'The name is required.';
     } else if (empty($_POST['email'])) {
         $data['success'] = false;
         $data['message'] = 'The email address is required.';
@@ -44,11 +41,11 @@ if (!Security::isAuthenticated()) {
     } else {
         try {
             $transaction = new SessionTransaction();
-            $store = Security::getStoreConnected();
+            $user = Security::getUserConnected();
+            $store = $user->getStore();
 
             $receiver = new Receiver(
-                $_POST['firstname'],
-                $_POST['lastname'],
+                $_POST['name'],
                 $_POST['phone'],
                 $_POST['email']
             );

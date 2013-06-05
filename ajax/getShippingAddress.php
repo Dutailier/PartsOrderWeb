@@ -11,9 +11,9 @@ if (!Security::isAuthenticated()) {
 } else {
     try {
         $transaction = new SessionTransaction();
-        $receiver = $transaction->getReceiver();
+        $shippingAddress = $transaction->getShippingAddress();
 
-        $data['receiver'] = $receiver->getArray();
+        $data['shippingAddress'] = $shippingAddress->getArray();
 
         $data['success'] = true;
 

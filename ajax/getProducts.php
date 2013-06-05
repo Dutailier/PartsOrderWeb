@@ -10,7 +10,7 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
     try {
-        $transaction = SessionTransaction::getCurrent();
+        $transaction = new SessionTransaction();
 
         $filterIds = array();
         if (!empty($_POST['filterIds'])) {
@@ -20,7 +20,7 @@ if (!Security::isAuthenticated()) {
 
         $data['products'] = array();
         foreach (Products::FilterByFilterIds($filterIds) as $product) {
-            $data['products'][] = $product->Encode();
+            $data['products'][] = $product->getArray();
         }
 
         $data['success'] = true;

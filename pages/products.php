@@ -21,27 +21,27 @@ $title = 'Products';
                 <label id="shippingAddress" class="value"></label>
             </p>
         </fieldset>
-        <fieldset id="retailerInfos">
+        <fieldset id="storeInfos">
             <legend>Store informations</legend>
             <div class="infos">
                 <p>
                     <label class="property">Name : </label>
-                    <label id="retailerName" class="value"></label>
+                    <label id="storeName" class="value"></label>
                 </p>
 
                 <p>
                     <label class="property">Phone : </label>
-                    <label id="retailerPhone" class="value"></label>
+                    <label id="storePhone" class="value"></label>
                 </p>
 
                 <p>
                     <label class="property">Email : </label>
-                    <label id="retailerEmail" class="value"></label>
+                    <label id="storeEmail" class="value"></label>
                 </p>
 
                 <p>
                     <label class="property">Address : </label>
-                    <label id="retailerAddress" class="value"></label>
+                    <label id="storeAddress" class="value"></label>
                 </p>
             </div>
             <a class="btnMoreDetails">Click here for more details</a>
@@ -63,11 +63,6 @@ $title = 'Products';
                 <p>
                     <label class="property">Email : </label>
                     <label id="receiverEmail" class="value"></label>
-                </p>
-
-                <p>
-                    <label class="property">Address : </label>
-                    <label id="receiverAddress" class="value"></label>
                 </p>
             </div>
             <a class="btnMoreDetails">Click here for more details</a>

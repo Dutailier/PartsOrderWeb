@@ -5,27 +5,27 @@ $title = 'Customers Informations';
 <?php ob_start(); ?>
 
 <!-- Début de l'en-tête. -->
-<link type="text/css" rel="stylesheet" href="css/customerInfos.css"/>
+<link type="text/css" rel="stylesheet" href="css/receiverInfos.css"/>
 <!-- Fin de l'en-tête. -->
 
 <?php $head = ob_get_contents(); ?>
 <?php ob_clean(); ?>
 
 <!-- Début du contenu. -->
-<h1>Customer informations</h1>
+<h1>Receiver informations</h1>
 
 <form id="frmOrder" method="post" onsubmit="return false;">
     <ul id="summary"></ul>
     <fieldset>
         <legend>Contact informations</legend>
         <p>
-            <label for="firstname">First name</label>
-            <input id="firstname" name="firstname" type="text"/>
+            <label for="firstname">Name</label>
+            <input id="name" name="name" type="text"/>
         </p>
 
         <p>
-            <label for="lastname">Last name</label>
-            <input id="lastname" name="lastname" type="text"/>
+            <label for="phone">Phone number</label>
+            <input id="phone" name="phone" type="tel"/>
         </p>
 
         <p>
@@ -37,18 +37,10 @@ $title = 'Customers Informations';
             <label for="email2">Email confirmation</label>
             <input id="email2" name="email2" type="email"/>
         </p>
-
-        <p>
-            <label for="phone">Phone number</label>
-            <input id="phone" name="phone" type="tel"/>
-        </p>
     </fieldset>
 
     <fieldset id="addressInfos">
-        <legend>Address informations <br/>
-            <input id="checkUseStoreAddress" name="checkUseStoreAddress" type="checkbox"/>
-            <label id="lblUseStoreAddress">Use the store address.</label>
-        </legend>
+        <legend>Address informations</legend>
         <p>
             <label for="address">Address</label>
             <textarea id="address" name="address" rows="5"></textarea>
@@ -76,13 +68,13 @@ $title = 'Customers Informations';
     </fieldset>
 
     <div id="buttons">
-        <input id="proceed" name="proceed" type="submit" value="proceed"/>
+        <input id="proceed" name="proceed" type="submit" value="Submit"/>
         <a id="clear" class="button">Clear</a>
         <a id="btnCancel" class="button">Cancel</a>
     </div>
 </form>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="js/customerInfos.js"></script>
+<script src="js/receiverInfos.js"></script>
 <!-- Fin du contenu. -->
 
 <?php $content = ob_get_contents(); ?>

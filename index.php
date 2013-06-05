@@ -16,9 +16,6 @@ if (!Security::isAuthenticated()) {
         $page = 'products';
     }
 
-    // Si la page désirée est la liste des produits, mais
-    // que la transaction n'a pas débutée, l'utilisateur
-    // sera redirigé vers la page des destinations.
     if ($page == 'products') {
         $transaction = new SessionTransaction();
 
@@ -36,10 +33,10 @@ if (!file_exists($file)) {
 
 } else {
     include_once($file);
+}
 
-    if (empty($head) || empty($content)) {
-        include_once(ROOT . 'pages/' . 'error.php');
-    }
+if (empty($head) || empty($content)) {
+    include_once(ROOT . 'pages/' . 'error.php');
 }
 ?>
 

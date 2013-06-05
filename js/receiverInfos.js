@@ -1,3 +1,9 @@
+function AddState(data, i) {
+    $('#states').append(
+        $('<option></option>')
+            .val(data['states'][i]['id'])
+            .text(data['states'][i]['name']));
+}
 $(document).ready(function () {
     // Définit la règle de validation pour le numéro de téléphone.
     $.validator.addMethod('phone', function (value, element) {
@@ -63,8 +69,7 @@ $(document).ready(function () {
         submitHandler: function () {
 
             var informations = {
-                "firstname": $('#firstname').val(),
-                "lastname": $('#lastname').val(),
+                "name": $('#name').val(),
                 "email": $('#email1').val(),
                 "phone": $('#phone').val(),
                 "details": $('#address').val(),
@@ -75,7 +80,7 @@ $(document).ready(function () {
                 "useStoreAddress": $('#checkUseStoreAddress').is(':checked')
             };
 
-            $.post('ajax/setOrderInfos.php', informations)
+            $.post('ajax/setTransactionInfos.php', informations)
                 .done(function (data) {
 
                     if (data.hasOwnProperty('success') &&
@@ -115,15 +120,11 @@ $(document).ready(function () {
                             data['states'][i].hasOwnProperty('id') &&
                             data['states'][i].hasOwnProperty('name')) {
 
-                            // Ajouter l'état/province à la liste.
-                            $('#states').append(
-                                $('<option></option>')
-                                    .val(data['states'][i]['id'])
-                                    .text(data['states'][i]['name']));
+                            AddState(data, i);
                         }
                     }
 
-                    UpdateCustomerInfos();
+                    UpdateInfos();
 
                 } else if (data.hasOwnProperty('message')) {
                     alert(data['message']);
@@ -196,86 +197,56 @@ $(document).ready(function () {
                 alert('Communication with the server failed.');
             })
     });
-
-    $('#checkUseStoreAddress').click(function () {
-        if ($(this).is(':checked')) {
-            $.post('ajax/getStoreAddress.php')
-                .done(function (data) {
-
-                    if (data.hasOwnProperty('success') &&
-                        data['success'] &&
-                        data.hasOwnProperty('address')) {
-
-                        if (data['address'].hasOwnProperty('details') &&
-                            data['address'].hasOwnProperty('city') &&
-                            data['address'].hasOwnProperty('zip') &&
-                            data['address'].hasOwnProperty('state') &&
-                            data['address']['state'].hasOwnProperty('id') &&
-                            data['address']['state'].hasOwnProperty('country') &&
-                            data['address']['state']['country'].hasOwnProperty('id')) {
-
-                            $('#address').val(data['address']['details']);
-                            $('#city').val(data['address']['city']);
-                            $('#zip').val(data['address']['zip']);
-
-                            $('#countries').val(data['address']['state']['country']['id']);
-                            $('#states').val(data['address']['state']['id']);
-
-                            $('#addressInfos > p > *').attr('disabled', 'disabled');
-                        }
-
-                    } else if (data.hasOwnProperty('message')) {
-                        alert(data['message']);
-
-                    } else {
-                        alert('The result of the server is unreadable.');
-                    }
-                })
-                .fail(function () {
-                    alert('Communication with the server failed.');
-                })
-
-        } else {
-            $('#addressInfos > p > *').removeAttr('disabled');
-            $('#addressInfos textarea, input[type=text]').val('');
-        }
-    })
 });
 
-function UpdateCustomerInfos() {
+/**
+ * Met à jour les informations du receveur ainsi que l'adresse d'expédition.
+ * @constructor
+ */
+function UpdateInfos() {
     $.post('ajax/getReceiver.php')
         .done(function (data) {
-
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
-                data.hasOwnProperty('customer')) {
+                data.hasOwnProperty('receiver')) {
 
-                if (data['customer'].hasOwnProperty('firstname') &&
-                    data['customer'].hasOwnProperty('lastname') &&
-                    data['customer'].hasOwnProperty('email') &&
-                    data['customer'].hasOwnProperty('phone') &&
-                    data['customer'].hasOwnProperty('address') &&
-                    data['customer']['address'] &&
-                    data['customer']['address'].hasOwnProperty('details') &&
-                    data['customer']['address'].hasOwnProperty('city') &&
-                    data['customer']['address'].hasOwnProperty('zip') &&
-                    data['customer']['address'].hasOwnProperty('state') &&
-                    data['customer']['address']['state'].hasOwnProperty('id') &&
-                    data['customer']['address']['state'].hasOwnProperty('country') &&
-                    data['customer']['address']['state']['country'].hasOwnProperty('id')) {
+                var receiver = data['receiver'];
 
-                    $('#firstname').val(data['customer']['firstname']);
-                    $('#lastname').val(data['customer']['lastname']);
-                    $('#email1').val(data['customer']['email']);
-                    $('#email2').val(data['customer']['email']);
-                    $('#phone').val(data['customer']['phone']);
+                if (receiver.hasOwnProperty('name') &&
+                    receiver.hasOwnProperty('email') &&
+                    receiver.hasOwnProperty('phone')) {
 
-                    $('#address').val(data['customer']['address']['details']);
-                    $('#city').val(data['customer']['address']['city']);
-                    $('#zip').val(data['customer']['address']['zip']);
+                    $('#name').val(receiver['name']);
+                    $('#email1').val(receiver['email']);
+                    $('#email2').val(receiver['email']);
+                    $('#phone').val(receiver['phone']);
+                }
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
 
-                    $('#countries').val(data['customer']['address']['state']['country']['id']);
-                    $('#states').val(data['customer']['address']['state']['id']);
+    $.post('ajax/getShippingAddress.php')
+        .done(function (data) {
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('shippingAddress')) {
+
+                var shippingAddress = data['shippingAddress'];
+
+                if (shippingAddress.hasOwnProperty('details') &&
+                    shippingAddress.hasOwnProperty('city') &&
+                    shippingAddress.hasOwnProperty('zip') &&
+                    shippingAddress.hasOwnProperty('state') &&
+                    shippingAddress['state'].hasOwnProperty('id') &&
+                    shippingAddress['state'].hasOwnProperty('countryId')) {
+
+                    $('#address').val(shippingAddress['details']);
+                    $('#city').val(shippingAddress['city']);
+                    $('#zip').val(shippingAddress['zip']);
+                    $('#states').val(shippingAddress['state']['id']);
+                    $('#countries').val(shippingAddress['state']['countryId']);
                 }
             }
         })

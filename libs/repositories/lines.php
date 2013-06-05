@@ -7,7 +7,7 @@ class Lines
 {
     public static function Attach(Line $line)
     {
-        $query = 'EXEC [addLine]';
+        $query = 'EXEC [AddLine]';
         $query .= '@orderId = "' . $line->getOrderId() . '", ';
         $query .= '@productId = "' . $line->getProductId() . '", ';
         $query .= '@quantity = "' . $line->getQuantity() . '", ';

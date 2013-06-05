@@ -7,7 +7,7 @@ class Stores
 {
     public static function FindByUserId($id)
     {
-        $query = 'EXEC [getRetailerByUserId]';
+        $query = 'EXEC [getStoreByUserId]';
         $query .= '@userId = "' . intval($id) . '"';
 
         $rows = Database::Execute($query);
@@ -30,7 +30,7 @@ class Stores
 
     public static function Find($id)
     {
-        $query = 'EXEC [getRetailerById]';
+        $query = 'EXEC [getStoreById]';
         $query .= '@id = ' . intval($id);
 
         $rows = Database::Execute($query);

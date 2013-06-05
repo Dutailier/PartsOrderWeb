@@ -7,11 +7,12 @@ include_once(ROOT . 'libs/sessionTransaction.php');
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
+
 } else {
     try {
         $transaction = new SessionTransaction();
 
-        $data['transaction'] = $transaction->getArray();
+        $transaction->Close();
         $data['success'] = true;
 
     } catch (Exception $e) {

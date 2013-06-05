@@ -40,7 +40,7 @@ class Orders
         }
 
         $order = new Order(
-            $rows[0]['shippingAddress'],
+            $rows[0]['shippingAddressId'],
             $rows[0]['storeId'],
             $rows[0]['receiverId'],
             $rows[0]['creationDate'],

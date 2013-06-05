@@ -24,7 +24,6 @@ class Store extends Entity
         }
 
         $phone = preg_replace('/[^\d]/', '', $phone);
-        $phone = trim($phone);
         $phone = (strlen($phone) == 10 ? '1' : '') . $phone;
 
         $this->userId = intval($userId);

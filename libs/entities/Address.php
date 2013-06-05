@@ -54,7 +54,7 @@ class Address extends Entity
         return $this->stateId;
     }
 
-    function getState()
+    public function getState()
     {
         return States::Find($this->getStateId());
     }
