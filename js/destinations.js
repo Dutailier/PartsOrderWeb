@@ -11,7 +11,7 @@ $(document).on('click', 'div.destination', function () {
                 data.hasOwnProperty('customerInfosAreRequired')) {
 
                 if (data['customerInfosAreRequired']) {
-                    window.location = 'customerInfos.php';
+                    window.location = 'receiverInfos.php';
                 } else {
                     window.location = 'shippingInfos.php';
                 }

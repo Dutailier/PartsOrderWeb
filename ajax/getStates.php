@@ -19,6 +19,7 @@ if (!Security::isAuthenticated()) {
             foreach (States::FilterByCountryId($_POST['countryId']) as $state) {
                 $data['states'][] = $state->getArray();
             }
+
             $data['success'] = true;
 
         } catch (Exception $e) {

@@ -1,15 +1,17 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
-include_once(ROOT . 'libs/repositories/states.php');
+include_once(ROOT . 'libs/repositories/products.php');
 
-class Country extends Entity
+class Filter extends Entity
 {
     private $name;
+    private $type;
 
-    function __construct($name)
+    function __construct($name, $type)
     {
         $this->name = $name;
+        $this->type = $type;
     }
 
     public function getArray()
@@ -25,8 +27,13 @@ class Country extends Entity
         return $this->name;
     }
 
-    public function getStates()
+    public function getType()
     {
-        return States::FilterByCountryId($this->getId());
+        return $this->type;
+    }
+
+    public function getProducts()
+    {
+        return Products::FilterByFilterId($this->getId());
     }
 }

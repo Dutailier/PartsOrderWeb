@@ -1,5 +1,5 @@
 <?php
-$title = 'Error';
+$title = 'Confirmation';
 ?>
 
 <?php ob_start(); ?>
@@ -11,7 +11,7 @@ $title = 'Error';
 <?php ob_clean(); ?>
 
 <!-- Début du contenu. -->
-<h1>Tanks for your order.</h1>
+<h1>Thanks for your order.</h1>
 <!-- Fin du contenu. -->
 
 <?php $content = ob_get_contents(); ?>

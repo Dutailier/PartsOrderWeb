@@ -36,11 +36,6 @@ fieldset > p > input, textarea, select {
     resize: none;
 }
 
-#lblUseStoreAddress {
-    font-weight: normal;
-    font-size: 0.6em;
-}
-
 #buttons {
     margin-right: 24px;
     margin-bottom: 20px;

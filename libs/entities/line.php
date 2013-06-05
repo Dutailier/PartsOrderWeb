@@ -1,6 +1,8 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
+include_once(ROOT . 'libs/repositories/orders.php');
+include_once(ROOT . 'libs/repositories/products.php');
 
 class Line extends Entity
 {
@@ -67,15 +69,11 @@ class Line extends Entity
 
     public function getProduct()
     {
-        include_once(ROOT . 'libs/repositories/products.php');
-
         return Products::Find($this->getProductId());
     }
 
     public function getOrder()
     {
-        include_once(ROOT . 'libs/repositories/orders.php');
-
         return Orders::Find($this->getOrderId());
     }
 }

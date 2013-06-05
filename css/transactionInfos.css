@@ -1,0 +1,121 @@
+fieldset {
+    display: block;
+    float: left;
+    margin: 10px 10px 20px 10px;
+    padding: 10px 20px;
+    width: 258px;
+    height: 250px;
+    border: 1px solid #484848;
+    overflow: hidden; /* Clearfix */
+}
+
+fieldset > legend {
+    padding: 0px 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+fieldset > p {
+    float: left;
+    width: 258px;
+    margin: 5px 0px;
+    clear: both;
+    overflow: hidden; /* Clearfix */
+}
+
+fieldset > p > label.properties {
+    display: block;
+    float: left;
+    font-weight: bold;
+}
+
+fieldset > p > label.values {
+    display: block;
+    float: left;
+    clear: both;
+}
+
+#orderInfos {
+    width: 938px;
+    height: 75px;
+    padding: 10px 0px;
+}
+
+#orderInfos > p {
+    clear: none;
+    padding: 0px 20px;
+}
+
+#orderInfos > p:nth-child(odd) {
+    margin-left:20px;
+    margin-right:20px;
+}
+
+hr {
+    width: 900px;
+    margin: 0px auto;
+}
+
+#lines {
+    margin: 10px auto;
+    overflow: hidden; /* clearfix */
+}
+
+#lines > div.line {
+    padding: 5px;
+    border: 2px solid #484848;
+    margin: 10px;
+    height: 40px;
+}
+
+#lines > div.line:nth-child(even) {
+    background-color: #FAFAFA;
+}
+
+#lines > div.line > div.details {
+    display: inline-block;
+    overflow: hidden; /* clearfix */
+}
+
+#lines > div.line > div.details > label {
+    display: inline-block;
+    line-height: 40px;
+    margin: 0px 5px;
+    float: left;
+}
+
+#lines > div.line > div.details > label.quantity {
+    margin-top: 0px;
+    font-size: 2.5em;
+}
+
+#lines > div.line > div.details > label.name {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+#lines > div.line > div.details > label.serial {
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+#summary {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#summary > * {
+    padding: 8px;
+    margin: 5px;
+    float: right;
+    font-size: 1.2em;
+}
+
+#btnConfirm {
+    width: 150px;
+}
+
+#btnCancel {
+    cursor: pointer;
+    text-decoration: underline;
+}

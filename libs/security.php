@@ -2,7 +2,7 @@
 
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/roles.php');
-include_once(ROOT . 'libs/repositories/retailers.php');
+include_once(ROOT . 'libs/repositories/stores.php');
 
 /**
  * Class Account
@@ -24,47 +24,21 @@ class Security
      */
     public static function TryLogin($username, $password)
     {
+        if (self::isAuthenticated()) {
+            throw new Exception('You can\'t login again.');
+        }
+
         // Le chiffrement du mot de passe est composé de la
         // concaténation du mot de passe inscrit par l'utilisateur
         // et du nom d'utilisateur (grain de sel).
         $username = strtolower($username);
         $password = sha1($password . $username);
 
-        try {
-            $user = Users::FindByUsernameAndPassword($username, $password);
+        $user = Users::FindByUsernameAndPassword($username, $password);
 
-            if (session_id() == '') {
-                session_start();
-            }
+        $_SESSION[self::USER_IDENTIFIER] = $user;
 
-            $_SESSION[self::USER_IDENTIFIER] = $user;
-
-            return true;
-
-            // Si une exception es levée, c'est qu'aucun utilisateur n'a été trouvé.
-        } catch (Exception $e) {
-            throw new Exception('Username of password incorrect.');
-        }
-    }
-
-    /**
-     * Retourne le retailer présentement connecté.
-     * @return mixed
-     * @throws Exception
-     */
-    public static function getRetailerConnected()
-    {
-        if (!self::isInRoleName('Retailer')) {
-            throw new Exception('You must be connected as retailer.');
-        }
-
-        if (empty($_SESSION[self::RETAILER_IDENTIFIER])) {
-            $user = self::getUserConnected();
-            $retailer = Retailers::FindByUserId($user->getId());
-            $_SESSION[self::RETAILER_IDENTIFIER] = $retailer;
-        }
-
-        return $_SESSION[self::RETAILER_IDENTIFIER];
+        return !empty($user);
     }
 
     /**
@@ -81,11 +55,27 @@ class Security
 
         if (empty($_SESSION[self::ROLES_IDENTIFIER])) {
             $user = self::getUserConnected();
-            $roles = Roles::FilterByUserId($user->getId());
-            $_SESSION[self::ROLES_IDENTIFIER] = $roles;
+            $_SESSION[self::ROLES_IDENTIFIER] = $user->getRoles();
         }
 
         foreach ($_SESSION[self::ROLES_IDENTIFIER] as $role) {
+            if (strtolower($role->getName()) == strtolower($name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Retourne vrai si l'utilisateur inscrit détient le rôle inscrit.
+     * @param User $user
+     * @param $name
+     * @return bool
+     */
+    public static function UserIsInRole(User $user, $name)
+    {
+        foreach ($user->getRoles() as $role) {
             if (strtolower($role->getName()) == strtolower($name)) {
                 return true;
             }

@@ -1,8 +1,10 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
+include_once(ROOT . 'libs/repositories/users.php');
+include_once(ROOT . 'libs/repositories/addresses.php');
 
-class Retailer extends Entity
+class Store extends Entity
 {
     const REGEX_PHONE = '/^[1]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/';
     const REGEX_EMAIL = '/^\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}$/';
@@ -14,15 +16,14 @@ class Retailer extends Entity
 
     function __construct($userId, $name, $phone, $email, $addressId)
     {
-        if (!preg_match(Retailer::REGEX_PHONE, $phone)) {
+        if (!preg_match(Store::REGEX_PHONE, $phone)) {
             throw new Exception('The phone number must be standard. (i.e. 123-456-7890)');
 
-        } else if (!preg_match(Retailer::REGEX_EMAIL, $email)) {
+        } else if (!preg_match(Store::REGEX_EMAIL, $email)) {
             throw new Exception('The email address must be standard. (i.e. infos@dutailier.com.');
         }
 
         $phone = preg_replace('/[^\d]/', '', $phone);
-        $phone = trim($phone);
         $phone = (strlen($phone) == 10 ? '1' : '') . $phone;
 
         $this->userId = intval($userId);
@@ -71,15 +72,11 @@ class Retailer extends Entity
 
     public function getUser()
     {
-        include_once(ROOT . 'libs/repositories/users.php');
-
         return Users::Find($this->getUserId());
     }
 
     public function getAddress()
     {
-        include_once(ROOT . 'libs/repositories/addresses.php');
-
         return Addresses::Find($this->getAddressId());
     }
 }

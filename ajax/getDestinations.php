@@ -9,12 +9,11 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
     try {
-        $destinations = array();
-        foreach (Filters::FilterByType(FILTER_DESTINATION) as $filter) {
-            $destinations[] = $filter->getArray();
+        $data['destinations'] = array();
+        foreach (Filters::FilterByType(FILTER_TYPE_DESTINATION) as $filter) {
+            $data['destinations'][] = $filter->getArray();
         }
 
-        $data['destinations'] = $destinations;
         $data['success'] = true;
 
     } catch (Exception $e) {

@@ -8,7 +8,6 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
     $data['message'] = 'Username and password are required.';
 
 } else {
-
     try {
         $data['valid'] = Security::TryLogin($_POST['username'], $_POST['password']);
         $data['success'] = true;

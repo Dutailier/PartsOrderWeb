@@ -2,7 +2,7 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/transaction.php');
+include_once(ROOT . 'libs/sessionTransaction.php');
 include_once(ROOT . 'libs/repositories/products.php');
 
 if (!Security::isAuthenticated()) {
@@ -10,14 +10,13 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 } else {
     try {
-        $transaction = Transaction::getCurrent();
+        $transaction = new SessionTransaction();
 
         $filterIds = array();
-
         if (!empty($_POST['filterIds'])) {
             $filterIds = $_POST['filterIds'];
         }
-        $filterIds[] = $transaction->getDestinationFilter()->getId();
+        $filterIds[] = $transaction->getDefaultFilter()->getId();
 
         $data['products'] = array();
         foreach (Products::FilterByFilterIds($filterIds) as $product) {

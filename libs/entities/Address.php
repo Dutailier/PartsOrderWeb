@@ -1,6 +1,7 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
+include_once(ROOT . 'libs/repositories/states.php');
 
 class Address extends Entity
 {
@@ -53,10 +54,8 @@ class Address extends Entity
         return $this->stateId;
     }
 
-    function getState()
+    public function getState()
     {
-        include_once(ROOT . 'libs/repositories/states.php');
-
         return States::Find($this->getStateId());
     }
 }

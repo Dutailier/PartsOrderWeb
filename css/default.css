@@ -23,7 +23,7 @@ body {
     width: 960px;
     margin: 0px auto;
     padding-bottom: 110px;
-    overflow: hidden;
+    overflow: hidden; /* Clearfix */
 }
 
 #header-band {

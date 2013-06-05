@@ -2,7 +2,7 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/transaction.php');
+include_once(ROOT . 'libs/sessionTransaction.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -10,9 +10,9 @@ if (!Security::isAuthenticated()) {
 
 } else {
     try {
-        $transaction = Transaction::getCurrent();
-        $transaction->Confirm();
+        $transaction = new SessionTransaction();
 
+        $transaction->Close();
         $data['success'] = true;
 
     } catch (Exception $e) {

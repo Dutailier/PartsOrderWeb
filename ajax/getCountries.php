@@ -13,6 +13,7 @@ if (!Security::isAuthenticated()) {
         foreach (Countries::All() as $country) {
             $data['countries'][] = $country->getArray();
         }
+
         $data['success'] = true;
 
     } catch (Exception $e) {

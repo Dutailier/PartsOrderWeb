@@ -9,10 +9,10 @@ class Orders
     {
         $query = 'EXEC [addOrder]';
         $query .= '@shippingAddressId = "' . $order->getShippingAddressId() . '", ';
-        $query .= '@retailerId = "' . $order->getRetailerId() . '"';
+        $query .= '@retailerId = "' . $order->getStoreId() . '"';
 
-        if (!is_null($order->getCustomerId())) {
-            $query .= ', @customerId = "' . $order->getCustomerId() . '"';
+        if (!is_null($order->getReceiverId())) {
+            $query .= ', @customerId = "' . $order->getReceiverId() . '"';
         }
 
         $rows = Database::Execute($query);
@@ -41,8 +41,8 @@ class Orders
 
         $order = new Order(
             $rows[0]['shippingAddressId'],
-            $rows[0]['retailerId'],
-            $rows[0]['customerId'],
+            $rows[0]['storeId'],
+            $rows[0]['receiverId'],
             $rows[0]['creationDate'],
             $rows[0]['status']
         );
@@ -63,9 +63,9 @@ class Orders
         }
 
         $order = new Order(
-            $rows[0]['shippingAddressId'],
-            $rows[0]['retailerId'],
-            $rows[0]['customerId'],
+            $rows[0]['shippingAddress'],
+            $rows[0]['storeId'],
+            $rows[0]['receiverId'],
             $rows[0]['creationDate'],
             $rows[0]['status']
         );
@@ -85,8 +85,15 @@ class Orders
             throw new Exception('No order found.');
         }
 
-        return new Order(
-            $rows[0]['customerId'], $rows[0]['id'], $rows[0]['retailerId'], $rows[0]['shippingAddressId'], $rows[0]['creationDate'], $rows[0]['deliveryDate'], $rows[0]['status']
+        $order = new Order(
+            $rows[0]['shippingAddress'],
+            $rows[0]['storeId'],
+            $rows[0]['receiverId'],
+            $rows[0]['creationDate'],
+            $rows[0]['status']
         );
+        $order->setId($rows[0]['id']);
+
+        return $order;
     }
 }

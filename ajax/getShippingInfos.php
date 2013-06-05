@@ -2,14 +2,15 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/transaction.php');
+include_once(ROOT . 'libs/sessionTransaction.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 } else {
     try {
-        $transaction = Transaction::getCurrent();
+        $transaction = new SessionTransaction();
+
         $data['transaction'] = $transaction->getArray();
         $data['success'] = true;
 

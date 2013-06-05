@@ -1,6 +1,9 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
+include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/repositories/roles.php');
+include_once(ROOT . 'libs/repositories/stores.php');
 
 class User extends Entity
 {
@@ -22,5 +25,18 @@ class User extends Entity
     public function getUsername()
     {
         return $this->username;
+    }
+
+    public function getRoles()
+    {
+        return Roles::FilterByUserId($this->getId());
+    }
+
+    public function getStore()
+    {
+        if (!Security::UserIsInRole($this, ROLE_RETAILER)) {
+            throw new Exception('The user must be a retailer.');
+        }
+        return Stores::FindByUserId($this->getId());
     }
 }

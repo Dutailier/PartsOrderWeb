@@ -11,9 +11,10 @@ if (!Security::isAuthenticated()) {
 } else {
     try {
         $data['filters'] = array();
-        foreach (Filters::FilterByType(FILTER_TYPES) as $filter) {
+        foreach (Filters::FilterByType(FILTER_TYPE_TYPES) as $filter) {
             $data['filters'][] = $filter->getArray();
         }
+
         $data['success'] = true;
 
     } catch (Exception $e) {

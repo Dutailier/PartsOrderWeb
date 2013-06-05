@@ -2,7 +2,8 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/transaction.php');
+include_once(ROOT . 'libs/entities/receiver.php');
+include_once(ROOT . 'libs/sessionTransaction.php');
 include_once(ROOT . 'libs/repositories/filters.php');
 
 if (!Security::isAuthenticated()) {
@@ -16,12 +17,29 @@ if (!Security::isAuthenticated()) {
 
     } else {
         try {
+            $transaction = new SessionTransaction();
+
             $filter = Filters::Find($_POST['filterId']);
-            $transaction = Transaction::getCurrent();
+            $transaction->setDefaultFilter($filter);
 
-            $transaction->setDestinationFilter($filter);
+            $customerInfosAreRequired = $filter->getId() == FILTER_TO_GUEST_ID;
 
-            $data['customerInfosAreRequired'] = $filter->getId() == FILTER_TO_GUEST_ID;
+            if (!$customerInfosAreRequired) {
+                $user = Security::getUserConnected();
+                $store = $user->getStore();
+                $address = $store->getAddress();
+                $address->Detach();
+
+                $receiver = new Receiver(
+                    $store->getName(),
+                    $store->getPhone(),
+                    $store->getEmail()
+                );
+
+                $transaction->Open($address, $store, $receiver);
+            }
+
+            $data['customerInfosAreRequired'] = $customerInfosAreRequired;
             $data['success'] = true;
 
         } catch (Exception $e) {
