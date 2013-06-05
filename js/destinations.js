@@ -1,6 +1,6 @@
 $(document).on('click', 'div.destination', function () {
     var parameters = {
-        "filterId": $(this).data('id')
+        "destinationId": $(this).data('id')
     };
 
     $.post('ajax/setDestination.php', parameters)
@@ -29,6 +29,7 @@ $(document).on('click', 'div.destination', function () {
 });
 
 $(document).ready(function () {
+
     $.post('ajax/getDestinations.php')
         .done(function (data) {
 

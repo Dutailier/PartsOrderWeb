@@ -83,7 +83,7 @@ $(document).ready(function () {
         },
 
         errorPlacement: function (error, element) {
-            error.appendTo(element.parent());
+            error.appendTo(element.element());
         },
         submitHandler: function () {
 
@@ -195,7 +195,9 @@ $(document).ready(function () {
     });
 
     $('#btnProceed').click(function () {
-        window.location = 'transactionInfos.php';
+        if ($('div.item').length > 0) {
+            window.location = 'transactionInfos.php';
+        }
     });
 });
 

@@ -68,6 +68,9 @@ $(document).ready(function () {
 
         submitHandler: function () {
 
+            // Désactive les champs du formulaire le temps que la requête soit exécutée.
+            $('#frmOrder *').attr('disabled', 'disabled');
+
             var informations = {
                 "name": $('#name').val(),
                 "email": $('#email1').val(),
@@ -96,6 +99,9 @@ $(document).ready(function () {
                 })
                 .fail(function () {
                     alert('Communication with the server failed.');
+                })
+                .always(function () {
+                    $('#frmOrder *').removeAttr('disabled');
                 })
         }
     });

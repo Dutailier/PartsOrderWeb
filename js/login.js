@@ -8,10 +8,11 @@ $(document).ready(function () {
             password: { required: true }
         },
 
-        // Se produit losrque tous les champs sont valides.
         submitHandler: function () {
 
-            // Crée un objet composé des informations de connexion.
+            // Désactive le formulaire le temps que la requête soit exécutée.
+            $('#login > form *').attr('disabled', 'disabled');
+
             var credentials = {
                 "username": $('#username').val(),
                 "password": $('#password').val()
@@ -35,6 +36,9 @@ $(document).ready(function () {
                 })
                 .fail(function () {
                     alert('Communication with the server failed.');
+                })
+                .always(function () {
+                    $('#login > form *').removeAttr('disabled');
                 })
         }
     });

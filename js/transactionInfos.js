@@ -80,6 +80,10 @@ $(document).ready(function () {
         })
 
     $('#btnConfirm').click(function () {
+
+        // Désactive le bouton de confirmation le temps que la requête soit exécutée.
+        $('#btnConfirm').attr('disabled', 'disabled');
+
         $.post('ajax/confirmTransaction.php')
             .done(function (data) {
                 if (data.hasOwnProperty('success') &&
@@ -96,6 +100,9 @@ $(document).ready(function () {
             })
             .fail(function () {
                 alert('Communication with the server failed.');
+            })
+            .always(function () {
+                $('#btnConfirm').removeAttr('disabled');
             })
     });
 

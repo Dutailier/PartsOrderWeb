@@ -11,7 +11,7 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 
 } else {
-    if (empty($_POST['filterId'])) {
+    if (empty($_POST['destinationId'])) {
         $data['success'] = false;
         $data['message'] = 'A destination is required.';
 
@@ -19,10 +19,10 @@ if (!Security::isAuthenticated()) {
         try {
             $transaction = new SessionTransaction();
 
-            $filter = Filters::Find($_POST['filterId']);
-            $transaction->setDefaultFilter($filter);
+            $destination = Filters::Find($_POST['destinationId']);
+            $transaction->setDefaultFilter($destination);
 
-            $customerInfosAreRequired = $filter->getId() == FILTER_TO_GUEST_ID;
+            $customerInfosAreRequired = $destination->getId() == FILTER_TO_GUEST_ID;
 
             if (!$customerInfosAreRequired) {
                 $user = Security::getUserConnected();

@@ -26,7 +26,7 @@ $title = 'Home';
             </p>
 
             <p>
-                <input type="submit" value="Login"/>
+                <input id='btnSubmit' type="submit" value="Login"/>
             </p>
         </form>
     </div>
