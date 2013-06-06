@@ -64,6 +64,7 @@ if (empty($head) || empty($content)) {
 
                 <?php if ($page != 'login') : ?>
                     <li><a id="btnProducts">Products</a></li>
+                    <li><a id="btnOrders">Orders</a></li>
                     <li><a id="btnLogout">Logout</a></li>
                 <?php endif; ?>
                 <li><a id="btnContactUs">Contact us</a></li>

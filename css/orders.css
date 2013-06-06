@@ -1,0 +1,171 @@
+#storeInfos {
+    margin: 20px 0px;
+    border: 2px solid #484848;
+    padding: 10px 20px;
+    overflow: hidden; /* Clearfix */
+}
+
+fieldset > legend {
+    padding: 0px 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#storeInfos > p {
+    float: left;
+    width: 229px;
+    margin: 5px 0px;
+    overflow: hidden; /* Clearfix */
+}
+
+#storeInfos > p > label.properties {
+    display: block;
+    float: left;
+    font-weight: bold;
+}
+
+#storeInfos > p > label.values {
+    display: block;
+    float: left;
+    clear: both;
+}
+
+#orders{
+    margin: 10px 0px;
+}
+#orders > div.order {
+    border: 1px solid #484848;
+    padding: 5px 10px;
+    margin: 20px 0px 0px 0px;
+    overflow: hidden; /* Clearfix */
+    height: 50px;
+    cursor: pointer;
+}
+
+#orders > div.order * {
+    cursor: pointer;
+}
+
+#orders > div.order > label.number {
+    font-size: 1.9em;
+    font-weight: bold;
+    line-height: 50px;
+    float: left;
+}
+
+#orders > div.order > label.status,
+#orders > div.order > label.lastModifiedDate {
+    float: right;
+    line-height: 25px;
+    margin: 0px;
+}
+
+#orders > div.order > label.status {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+#orders > div.order > label.lastModifiedDate {
+    font-size: 0.8em;
+    clear: right;
+}
+
+#orders > div.order.canceled {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+#orders > div.order.confirmed {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#orders > div.details {
+    position: relative;
+    top: -1px; /* Pour n'avoir qu'une seule ligne. */
+    border: 1px solid #484848;
+    padding: 10px 20px;
+    overflow: hidden; /* Clearfix */
+}
+
+#orders > div.details > fieldset {
+    float: left;
+    width: 411px;
+    margin: 10px;
+    height: 165px;
+    border: 1px solid #484848;
+    overflow: hidden; /* Clearfix */
+}
+
+#orders > div.details > fieldset > p {
+    float: left;
+    margin: 5px 0px;
+    clear: both;
+    overflow: hidden; /* Clearfix */
+}
+
+#orders > div.details > fieldset > p > label.properties {
+    display: block;
+    float: left;
+    font-weight: bold;
+    clear: both;
+}
+
+#orders > div.details > fieldset > p > label.values {
+    display: block;
+    float: left;
+    clear: both;
+}
+
+#orders > div.details > div.lines {
+    float: left;
+    clear: both;
+    margin: 10px auto;
+    overflow: hidden; /* clearfix */
+}
+
+#orders > div.details > div.lines > div.line {
+    padding: 5px;
+    border: 1px solid #484848;
+    margin: 0px 10px 10px 10px;
+    height: 40px;
+    width: 882px;
+}
+
+#orders > div.details > div.lines > div.line:nth-child(even) {
+    background-color: #FAFAFA;
+}
+
+#orders > div.details > div.lines > div.line > div.details {
+    display: inline-block;
+    overflow: hidden; /* clearfix */
+}
+
+#orders > div.details > div.lines > div.line > div.details > label {
+    display: inline-block;
+    line-height: 40px;
+    margin: 0px 5px;
+    float: left;
+}
+
+#orders > div.details > div.lines > div.line > div.details > label.quantity {
+    margin-top: 0px;
+    font-size: 2.5em;
+}
+
+#orders > div.details > div.lines > div.line > div.details > label.name {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+#orders > div.details > div.lines > div.line > div.details > label.serial {
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+#orders > div.details > div.buttons * {
+    padding: 8px;
+    float: right;
+    margin: 0px 10px 10px 10px;
+    font-size: 1.2em;
+    line-height: 23px;
+    width: 150px;
+}

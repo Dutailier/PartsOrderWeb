@@ -3,6 +3,7 @@
 include_once(ROOT . 'libs/entity.php');
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/addresses.php');
+include_once(ROOT . 'libs/repositories/orders.php');
 
 class Store extends Entity
 {
@@ -78,5 +79,10 @@ class Store extends Entity
     public function getAddress()
     {
         return Addresses::Find($this->getAddressId());
+    }
+
+    public function getOrders()
+    {
+        return Orders::FilterByStoreId($this->getId());
     }
 }

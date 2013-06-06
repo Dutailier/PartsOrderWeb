@@ -9,11 +9,8 @@ class Orders
     {
         $query = 'EXEC [addOrder]';
         $query .= '@shippingAddressId = "' . $order->getShippingAddressId() . '", ';
-        $query .= '@retailerId = "' . $order->getStoreId() . '"';
-
-        if (!is_null($order->getReceiverId())) {
-            $query .= ', @customerId = "' . $order->getReceiverId() . '"';
-        }
+        $query .= '@storeId = "' . $order->getStoreId() . '", ';
+        $query .= '@receiverId = "' . $order->getReceiverId() . '"';
 
         $rows = Database::Execute($query);
 
@@ -24,6 +21,7 @@ class Orders
         $order->setId($rows[0]['id']);
         $order->setStatus(($rows[0]['status']));
         $order->setCreationDate($rows[0]['creationDate']);
+        $order->setLastModifiedDate($rows[0]['lastModifiedDate']);
 
         return $order;
     }
@@ -43,7 +41,9 @@ class Orders
             $rows[0]['shippingAddressId'],
             $rows[0]['storeId'],
             $rows[0]['receiverId'],
+            $rows[0]['number'],
             $rows[0]['creationDate'],
+            $rows[0]['lastModifiedDate'],
             $rows[0]['status']
         );
         $order->setId($rows[0]['id']);
@@ -63,10 +63,12 @@ class Orders
         }
 
         $order = new Order(
-            $rows[0]['shippingAddress'],
+            $rows[0]['shippingAddressId'],
             $rows[0]['storeId'],
             $rows[0]['receiverId'],
+            $rows[0]['number'],
             $rows[0]['creationDate'],
+            $rows[0]['lastModifiedDate'],
             $rows[0]['status']
         );
         $order->setId($rows[0]['id']);
@@ -86,14 +88,42 @@ class Orders
         }
 
         $order = new Order(
-            $rows[0]['shippingAddress'],
+            $rows[0]['shippingAddressId'],
             $rows[0]['storeId'],
             $rows[0]['receiverId'],
+            $rows[0]['number'],
             $rows[0]['creationDate'],
+            $rows[0]['lastModifiedDate'],
             $rows[0]['status']
         );
         $order->setId($rows[0]['id']);
 
         return $order;
+    }
+
+    public static function FilterByStoreId($id)
+    {
+        $query = 'EXEC [getOrdersByStoreId]';
+        $query .= '@storeId = "' . intval($id) . '"';
+
+        $rows = Database::Execute($query);
+
+        $orders = array();
+        foreach ($rows as $row) {
+
+            $order = new Order(
+                $row['shippingAddressId'],
+                $row['storeId'],
+                $row['receiverId'],
+                $row['number'],
+                $row['creationDate'],
+                $row['lastModifiedDate'],
+                $row['status']
+            );
+            $order->setId($row['id']);
+
+            $orders[] = $order;
+        }
+        return $orders;
     }
 }

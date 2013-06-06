@@ -112,7 +112,7 @@ $(document).ready(function () {
         dialogClass: 'dialog',
         buttons: {
             "Yes": function () {
-                $.get('ajax/cancelTransaction.php')
+                $.post('ajax/cancelTransaction.php')
                     .done(function (data) {
                         if (data.hasOwnProperty('success') &&
                             data['success']) {

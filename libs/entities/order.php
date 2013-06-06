@@ -9,19 +9,23 @@ include_once(ROOT . 'libs/repositories/receivers.php');
 
 class Order extends Entity
 {
+    private $shippingAddressId;
     private $storeId;
     private $receiverId;
-    private $shippingAddressId;
+    private $number;
     private $creationDate;
+    private $lastModifiedDate;
     private $status;
 
-    function __construct($shippingAddressId, $storeId, $receiverId, $creationDate = null, $status = null)
+    function __construct($shippingAddressId, $storeId, $receiverId, $number = null, $creationDate = null, $lastModifiedDate = null, $status = null)
     {
         $this->storeId = intval($storeId);
         $this->receiverId = intval($receiverId);
         $this->shippingAddressId = intval($shippingAddressId);
+        $this->number = $number;
         $this->creationDate = $creationDate;
-        $this->status = $status;
+        $this->lastModifiedDate = $lastModifiedDate;
+        $this->status = trim($status);
     }
 
     public function getArray()
@@ -31,29 +35,11 @@ class Order extends Entity
             'retailerId' => $this->getStoreId(),
             'customerId' => $this->getReceiverId(),
             'shippingAddressId' => $this->getShippingAddressId(),
+            'number' => $this->getNumber(),
             'creationDate' => $this->getCreationDate(),
+            'lastModifiedDate' => $this->getLastModifiedDate(),
             'status' => $this->getStatus()
         );
-    }
-
-    public function getStoreId()
-    {
-        return $this->storeId;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function setCreationDate($creationDate)
-    {
-        $this->creationDate = $creationDate;
-    }
-
-    public function getReceiverId()
-    {
-        return $this->receiverId;
     }
 
     public function getShippingAddressId()
@@ -61,9 +47,49 @@ class Order extends Entity
         return $this->shippingAddressId;
     }
 
+    public function getStoreId()
+    {
+        return $this->storeId;
+    }
+
+    public function getReceiverId()
+    {
+        return $this->receiverId;
+    }
+
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+    }
+
+    public function setLastModifiedDate($lastModifiedDate)
+    {
+        $this->lastModifiedDate = $lastModifiedDate;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
+
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
     public function getCreationDate()
     {
         return $this->creationDate;
+    }
+
+    public function getLastModifiedDate()
+    {
+        return $this->lastModifiedDate;
     }
 
     public function getStatus()
@@ -71,12 +97,12 @@ class Order extends Entity
         return $this->status;
     }
 
-    public function getRetailer()
+    public function getStore()
     {
         return Stores::Find($this->getStoreId());
     }
 
-    public function getCustomer()
+    public function getReceiver()
     {
         return Receivers::Find($this->getReceiverId());
     }

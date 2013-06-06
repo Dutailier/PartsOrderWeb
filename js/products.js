@@ -60,6 +60,8 @@ $(document).ready(function () {
                         receiver.hasOwnProperty('email')) {
                         UpdateReceiverInfos(receiver);
                     }
+
+                    UpdateItems();
                 }
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -174,29 +176,57 @@ $(document).ready(function () {
             })
     });
 
+    $('#cancelDialog').dialog({
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        buttons: {
+            "Yes": function () {
+                $.post('ajax/cancelTransaction.php')
+                    .done(function (data) {
+
+                        if (data.hasOwnProperty('success') &&
+                            data['success']) {
+                            window.location = 'destinations.php';
+
+                        } else if (data.hasOwnProperty('message')) {
+                            alert(data['message']);
+
+                        } else {
+                            alert('The result of the server is unreadable.');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Communication with the server failed.');
+                    })
+            },
+            "No": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+
     $('#btnCancel').click(function () {
-        $.post('ajax/cancelTransaction.php')
-            .done(function (data) {
+        $('#cancelDialog').dialog('open');
+    });
 
-                if (data.hasOwnProperty('success') &&
-                    data['success']) {
-                    window.location = 'destinations.php';
-
-                } else if (data.hasOwnProperty('message')) {
-                    alert(data['message']);
-
-                } else {
-                    alert('The result of the server is unreadable.');
-                }
-            })
-            .fail(function () {
-                alert('Communication with the server failed.');
-            })
+    $('#proceedDialog').dialog({
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        buttons: {
+            "Yes": function () {
+                window.location = 'transactionInfos.php';
+            },
+            "No": function () {
+                $(this).dialog('close');
+            }
+        }
     });
 
     $('#btnProceed').click(function () {
         if ($('div.item').length > 0) {
-            window.location = 'transactionInfos.php';
+            $('#proceedDialog').dialog('open');
         }
     });
 });

@@ -3,6 +3,10 @@ $(document).ready(function () {
         window.location = 'products.php';
     });
 
+    $('#btnOrders').click(function () {
+        window.location = 'orders.php';
+    });
+
     $('#btnLogout').click(function () {
         $.post('ajax/logout.php')
             .done(function (data) {

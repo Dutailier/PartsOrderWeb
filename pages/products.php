@@ -7,6 +7,7 @@ $title = 'Products';
     <!-- Début de l'en-tête. -->
     <link type="text/css" rel="stylesheet" href="css/products.css"/>
     <link type="text/css" rel="stylesheet" href="css/shopping.css"/>
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
     <!-- Fin de l'en-tête. -->
 
 <?php $head = ob_get_contents(); ?>
@@ -104,7 +105,16 @@ $title = 'Products';
     </div>
     <!-- Fin -->
 
+    <div id="proceedDialog">
+        You can't change your order later. Do you want to continue?
+    </div>
+
+    <div id="cancelDialog">
+        Are your sure you want to cancel your order?
+    </div>
+
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="js/products.js"></script>
     <!-- Fin du contenu. -->
 

@@ -93,6 +93,11 @@ class SessionTransaction implements ITransaction
 
     public function Execute()
     {
+        if ($this->wasExecute) {
+            unset($_SESSION[self::ORDER_IDENTIFIER]);
+            unset($_SESSION[self::LINES_IDENTIFIER]);
+        }
+
         $address = Addresses::Attach($this->getShippingAddress());
         $receiver = Receivers::Attach($this->getReceiver());
 
