@@ -8,7 +8,7 @@ interface ITransaction
 
     public function Open(Address $shippingAddress, Store $store, Receiver $receiver);
 
-    public function Execute();
+    public function Proceed();
 
     public function Close();
 

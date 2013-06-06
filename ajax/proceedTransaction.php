@@ -11,10 +11,16 @@ if (!Security::isAuthenticated()) {
 } else {
     try {
         $cart = new SessionCart();
-        $transaction = new SessionTransaction();
 
-        $data['transaction'] = $transaction->getArray();
-        $data['success'] = true;
+        if ($cart->isEmpty()) {
+            $data['success'] = false;
+            $data['message'] = 'You must have at least one item in your shopping cart.';
+        } else {
+            $transaction = new SessionTransaction();
+            $transaction->Proceed();
+
+            $data['success'] = true;
+        }
 
     } catch (Exception $e) {
         $data['success'] = false;

@@ -21,26 +21,10 @@ class SessionTransaction implements ITransaction
     const ORDER_IDENTIFIER = '_ORDER_';
     const LINES_IDENTIFIER = '_LINES_';
 
-    private $wasExecute;
-    private $isOpen;
-
     public function __construct()
     {
         if (session_id() == '') {
             session_start();
-        }
-
-        if (isset($_SESSION[self::SHIPPING_ADDRESS_IDENTIFIER]) &&
-            isset($_SESSION[self::STORE_IDENTIFIER]) &&
-            isset($_SESSION[self::RECEIVER_IDENTIFIER])
-        ) {
-            $this->isOpen = true;
-        }
-
-        if (isset($_SESSION[self::ORDER_IDENTIFIER]) &&
-            isset($_SESSION[self::LINES_IDENTIFIER])
-        ) {
-            $this->wasExecute = true;
         }
 
         if (!isset($_SESSION[self::CART_IDENTIFIER])) {
@@ -64,20 +48,19 @@ class SessionTransaction implements ITransaction
 
     public function getArray()
     {
-        $array = array(
-            'shippingAddress' => $this->getShippingAddress()->getArray(),
-            'store' => $this->getStore()->getArray(),
-            'receiver' => $this->getReceiver()->getArray()
-        );
+        if ($this->isOpen()) {
+            $array['shippingAddress'] = $this->getShippingAddress()->getArray();
+            $array['store'] = $this->getStore()->getArray();
+            $array['receiver'] = $this->getReceiver()->getArray();
+        }
 
-        if ($this->wasExecute) {
+        if ($this->isProceed()) {
             $array['order'] = $this->getOrder()->getArray();
 
             foreach ($this->getLines() as $line) {
                 $array['lines'][] = $line->getArray();
             }
         }
-
         return $array;
     }
 
@@ -87,17 +70,10 @@ class SessionTransaction implements ITransaction
         $this->setShippingAddress($shippingAddress);
         $this->setStore($store);
         $this->setReceiver($receiver);
-
-        $this->isOpen = true;
     }
 
-    public function Execute()
+    public function Proceed()
     {
-        if ($this->wasExecute) {
-            unset($_SESSION[self::ORDER_IDENTIFIER]);
-            unset($_SESSION[self::LINES_IDENTIFIER]);
-        }
-
         $address = Addresses::Attach($this->getShippingAddress());
         $receiver = Receivers::Attach($this->getReceiver());
 
@@ -109,6 +85,7 @@ class SessionTransaction implements ITransaction
 
         $_SESSION[self::ORDER_IDENTIFIER] = Orders::Attach($order);
 
+        $_SESSION[self::LINES_IDENTIFIER] = array();
         foreach ($this->getCart()->getItems() as $item) {
             $line = new Line(
                 $_SESSION[self::ORDER_IDENTIFIER]->getId(),
@@ -119,8 +96,6 @@ class SessionTransaction implements ITransaction
 
             $_SESSION[self::LINES_IDENTIFIER][] = Lines::Attach($line);
         }
-
-        $this->wasExecute = true;
     }
 
     public function Close()
@@ -138,8 +113,6 @@ class SessionTransaction implements ITransaction
         unset($_SESSION[self::RECEIVER_IDENTIFIER]);
         unset($_SESSION[self::ORDER_IDENTIFIER]);
         unset($_SESSION[self::LINES_IDENTIFIER]);
-        $this->isOpen = false;
-        $this->wasExecute = false;
 
         $_SESSION[self::CART_IDENTIFIER]->Clear();
     }
@@ -155,7 +128,7 @@ class SessionTransaction implements ITransaction
 
     public function getDefaultFilter()
     {
-        if (empty($_SESSION[self::DEFAULT_FILTER_IDENTIFIER])) {
+        if (!$this->isOpen()) {
             throw new Exception('The filter must be previously setted.');
         }
 
@@ -175,7 +148,7 @@ class SessionTransaction implements ITransaction
 
     public function getShippingAddress()
     {
-        if (empty($_SESSION[self::SHIPPING_ADDRESS_IDENTIFIER])) {
+        if (!$this->isOpen()) {
             throw new Exception('The shipping address must be previously setted.');
         }
 
@@ -195,7 +168,7 @@ class SessionTransaction implements ITransaction
 
     public function getStore()
     {
-        if (empty($_SESSION[self::STORE_IDENTIFIER])) {
+        if (!$this->isOpen()) {
             throw new Exception('The store must be previously setted.');
         }
 
@@ -215,7 +188,7 @@ class SessionTransaction implements ITransaction
 
     public function getReceiver()
     {
-        if (empty($_SESSION[self::RECEIVER_IDENTIFIER])) {
+        if (!$this->isOpen()) {
             throw new Exception('The receiver must be previously setted.');
         }
 
@@ -228,7 +201,8 @@ class SessionTransaction implements ITransaction
     }
 
 
-    public function AddItem(IItem $item)
+    public
+    function AddItem(IItem $item)
     {
         return $this->getCart()->Add($item);
     }
@@ -242,7 +216,7 @@ class SessionTransaction implements ITransaction
 
     public function getOrder()
     {
-        if (empty($_SESSION[self::ORDER_IDENTIFIER])) {
+        if (!$this->isProceed()) {
             throw new Exception('The transaction must be previously executed.');
         }
 
@@ -252,7 +226,7 @@ class SessionTransaction implements ITransaction
 
     public function getLines()
     {
-        if (empty($_SESSION[self::LINES_IDENTIFIER])) {
+        if (!$this->isProceed()) {
             throw new Exception('The transaction must be previously executed.');
         }
 
@@ -261,6 +235,17 @@ class SessionTransaction implements ITransaction
 
     public function isOpen()
     {
-        return $this->isOpen;
+        return
+            isset($_SESSION[self::DEFAULT_FILTER_IDENTIFIER]) &&
+            isset($_SESSION[self::SHIPPING_ADDRESS_IDENTIFIER]) &&
+            isset($_SESSION[self::RECEIVER_IDENTIFIER]) &&
+            isset($_SESSION[self::STORE_IDENTIFIER]);
+    }
+
+    public function isProceed()
+    {
+        return
+            isset($_SESSION[self::ORDER_IDENTIFIER]) &&
+            isset($_SESSION[self::LINES_IDENTIFIER]);
     }
 }

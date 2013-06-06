@@ -216,7 +216,23 @@ $(document).ready(function () {
         dialogClass: 'dialog',
         buttons: {
             "Yes": function () {
-                window.location = 'transactionInfos.php';
+                $.post('ajax/proceedTransaction.php')
+                    .done(function (data) {
+
+                        if (data.hasOwnProperty('success') &&
+                            data['success']) {
+                            window.location = 'transactionInfos.php';
+
+                        } else if (data.hasOwnProperty('message')) {
+                            alert(data['message']);
+
+                        } else {
+                            alert('The result of the server is unreadable.');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Communication with the server failed.');
+                    })
             },
             "No": function () {
                 $(this).dialog('close');
