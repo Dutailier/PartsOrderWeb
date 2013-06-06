@@ -74,7 +74,7 @@ $(document).on('click', 'div.order', function () {
     var $order = $(this);
 
     if ($order.next().is('div.details')) {
-        $order.next().slideToggle();
+        $order.next().stop().slideToggle();
     } else {
         AddDetails($order);
     }
@@ -152,7 +152,7 @@ function AddDetails($order) {
 
                 $details.append($lines);
                 $details.append($buttons);
-                $details.insertAfter($order).hide().slideDown();
+                $details.hide().insertAfter($order).slideDown();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);

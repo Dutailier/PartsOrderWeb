@@ -48,6 +48,8 @@ class SessionTransaction implements ITransaction
 
     public function getArray()
     {
+        $array = array();
+
         if ($this->isOpen()) {
             $array['shippingAddress'] = $this->getShippingAddress()->getArray();
             $array['store'] = $this->getStore()->getArray();
@@ -107,6 +109,10 @@ class SessionTransaction implements ITransaction
 
     public function Destroy()
     {
+        if($this->isProceed()) {
+            $_SESSION[self::ORDER_IDENTIFIER]->Cancel();
+        }
+
         unset($_SESSION[self::DEFAULT_FILTER_IDENTIFIER]);
         unset($_SESSION[self::SHIPPING_ADDRESS_IDENTIFIER]);
         unset($_SESSION[self::STORE_IDENTIFIER]);

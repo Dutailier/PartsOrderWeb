@@ -32,8 +32,8 @@ class Order extends Entity
     {
         return array(
             'id' => $this->getId(),
-            'retailerId' => $this->getStoreId(),
-            'customerId' => $this->getReceiverId(),
+            'storeId' => $this->getStoreId(),
+            'receiverId' => $this->getReceiverId(),
             'shippingAddressId' => $this->getShippingAddressId(),
             'number' => $this->getNumber(),
             'creationDate' => $this->getCreationDate(),

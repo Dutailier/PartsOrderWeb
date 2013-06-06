@@ -20,7 +20,8 @@ $(document).ready(function () {
                     var store = transaction['store'];
                     var lines = transaction['lines'];
 
-                    if (order.hasOwnProperty('creationDate') &&
+                    if (order.hasOwnProperty('number') &&
+                        order.hasOwnProperty('creationDate') &&
                         order.hasOwnProperty('status')) {
                         UpdateOrderInfos(order);
                     }
@@ -146,6 +147,7 @@ $(document).ready(function () {
  * @constructor
  */
 function UpdateOrderInfos(infos) {
+    $('#number').text(infos['number']);
     $('#creationDate').text(infos['creationDate']);
     $('#status').text(infos['status']);
 }

@@ -17,6 +17,11 @@ $title = 'Order Informations';
     <legend>Order Informations</legend>
 
     <p>
+        <label class="properties">Number : </label>
+        <label id="number" class="values"></label>
+    </p>
+
+    <p>
         <label class="properties">Creation date : </label>
         <label id="creationDate" class="values"></label>
     </p>
