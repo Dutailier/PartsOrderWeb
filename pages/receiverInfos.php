@@ -68,8 +68,8 @@ $title = 'Customers Informations';
     </fieldset>
 
     <div id="buttons">
-        <input id="proceed" name="proceed" type="submit" value="Submit"/>
-        <a id="clear" class="button">Clear</a>
+        <input id="btnSubmit" name="btnSubmit" type="submit" value="Submit"/>
+        <a id="btnClear" class="button">Clear</a>
         <a id="btnCancel" class="button">Cancel</a>
     </div>
 </form>

@@ -6,7 +6,7 @@ form {
 
 fieldset {
     display: block;
-    margin: 10px 25px 25px 25px;
+    margin: 10px 0px 25px 0px;
     padding: 20px 15px;
     border: 1px solid #484848;
 }
@@ -19,7 +19,7 @@ fieldset > legend {
 
 fieldset > p {
     float: left;
-    width: 350px;
+    width: 375px;
     margin: 5px 44px;
     overflow: hidden; /* Clearfix */
 }
@@ -37,7 +37,6 @@ fieldset > p > input, textarea, select {
 }
 
 #buttons {
-    margin-right: 24px;
     margin-bottom: 20px;
     overflow: hidden; /* Clearfix */
 }
@@ -48,16 +47,13 @@ fieldset > p > input, textarea, select {
     font-size: 1.2em;
 }
 
-#proceed {
+#btnSubmit {
     width: 150px;
+    margin-left: 5px;
 }
 
-#clear, #btnCancel {
+#btnClear, #btnCancel {
     cursor: pointer;
     margin: 0px 5px;
     text-decoration: underline;
-}
-
-#summary {
-    margin: 5px;
 }

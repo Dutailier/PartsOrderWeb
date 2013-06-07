@@ -14,17 +14,17 @@ class Order extends Entity
     private $receiverId;
     private $number;
     private $creationDate;
-    private $lastModifiedDate;
+    private $lastModificationDate;
     private $status;
 
-    function __construct($shippingAddressId, $storeId, $receiverId, $number = null, $creationDate = null, $lastModifiedDate = null, $status = null)
+    function __construct($shippingAddressId, $storeId, $receiverId, $number = null, $creationDate = null, $lastModificationDate = null, $status = null)
     {
         $this->storeId = intval($storeId);
         $this->receiverId = intval($receiverId);
         $this->shippingAddressId = intval($shippingAddressId);
         $this->number = $number;
         $this->creationDate = $creationDate;
-        $this->lastModifiedDate = $lastModifiedDate;
+        $this->lastModificationDate = $lastModificationDate;
         $this->status = trim($status);
     }
 
@@ -37,7 +37,7 @@ class Order extends Entity
             'shippingAddressId' => $this->getShippingAddressId(),
             'number' => $this->getNumber(),
             'creationDate' => $this->getCreationDate(),
-            'lastModifiedDate' => $this->getLastModifiedDate(),
+            'lastModificationDate' => $this->getLastModificationDate(),
             'status' => $this->getStatus()
         );
     }
@@ -62,9 +62,9 @@ class Order extends Entity
         $this->creationDate = $creationDate;
     }
 
-    public function setLastModifiedDate($lastModifiedDate)
+    public function setLastModificationDate($lastModificationDate)
     {
-        $this->lastModifiedDate = $lastModifiedDate;
+        $this->lastModificationDate = $lastModificationDate;
     }
 
     public function setStatus($status)
@@ -87,9 +87,9 @@ class Order extends Entity
         return $this->creationDate;
     }
 
-    public function getLastModifiedDate()
+    public function getLastModificationDate()
     {
-        return $this->lastModifiedDate;
+        return $this->lastModificationDate;
     }
 
     public function getStatus()

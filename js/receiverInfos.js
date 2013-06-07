@@ -12,8 +12,7 @@ $(document).ready(function () {
 
     $('#frmOrder').validate({
         rules: {
-            firstname: { required: true },
-            lastname: { required: true },
+            name: { required: true },
             email1: {
                 required: true,
                 email: true
@@ -37,11 +36,10 @@ $(document).ready(function () {
             }
         },
         messages: {
-            firstname: { required: 'The first name is required.' },
-            lastname: { required: 'The last name is required.' },
+            name: { required: 'The name is required.' },
             email1: {
                 required: 'The email is required.',
-                email: 'The email must be standard (ex: user@domain.com).'
+                email: 'The email must be standard (i.e. user@domain.com).'
             },
             email2: {
                 required: 'You must confirm your email.',
@@ -49,7 +47,7 @@ $(document).ready(function () {
             },
             phone: {
                 required: 'The phone number is required.',
-                phone: 'The phone number must be standard (ex: 123-456-7890).'
+                phone: 'The phone number must be standard (i.e. 123-456-7890).'
             },
             address: { required: 'The address is required.' },
             city: { required: 'The city is required.' },
@@ -180,7 +178,7 @@ $(document).ready(function () {
             alert('Communication with the server failed.');
         })
 
-    $('#clear').click(function () {
+    $('#btnClear').click(function () {
         $('fieldset > p > input, textarea').val('');
     });
 

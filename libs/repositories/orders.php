@@ -22,7 +22,7 @@ class Orders
         $order->setStatus(($rows[0]['status']));
         $order->setNumber($rows[0]['number']);
         $order->setCreationDate($rows[0]['creationDate']);
-        $order->setLastModifiedDate($rows[0]['lastModifiedDate']);
+        $order->setLastModificationDate($rows[0]['lastModificationDate']);
 
         return $order;
     }
@@ -44,7 +44,7 @@ class Orders
             $rows[0]['receiverId'],
             $rows[0]['number'],
             $rows[0]['creationDate'],
-            $rows[0]['lastModifiedDate'],
+            $rows[0]['lastModificationDate'],
             $rows[0]['status']
         );
         $order->setId($rows[0]['id']);
@@ -69,7 +69,7 @@ class Orders
             $rows[0]['receiverId'],
             $rows[0]['number'],
             $rows[0]['creationDate'],
-            $rows[0]['lastModifiedDate'],
+            $rows[0]['lastModificationDate'],
             $rows[0]['status']
         );
         $order->setId($rows[0]['id']);
@@ -94,7 +94,7 @@ class Orders
             $rows[0]['receiverId'],
             $rows[0]['number'],
             $rows[0]['creationDate'],
-            $rows[0]['lastModifiedDate'],
+            $rows[0]['lastModificationDate'],
             $rows[0]['status']
         );
         $order->setId($rows[0]['id']);
@@ -118,7 +118,7 @@ class Orders
                 $row['receiverId'],
                 $row['number'],
                 $row['creationDate'],
-                $row['lastModifiedDate'],
+                $row['lastModificationDate'],
                 $row['status']
             );
             $order->setId($row['id']);
