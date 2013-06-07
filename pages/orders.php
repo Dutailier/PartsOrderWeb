@@ -39,7 +39,7 @@ $title = 'Orders';
 
 <h1>Orders</h1>
 
-<p>Click on order for more details.</p>
+<p>Click on an order for more details.</p>
 
 <div id="orders">
 </div>

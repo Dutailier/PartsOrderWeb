@@ -7,7 +7,7 @@ class Orders
 {
     public static function Attach(Order $order)
     {
-        $query = 'EXEC [addOrder]';
+        $query = 'EXEC [addOrderByStoreId]';
         $query .= '@shippingAddressId = "' . $order->getShippingAddressId() . '", ';
         $query .= '@storeId = "' . $order->getStoreId() . '", ';
         $query .= '@receiverId = "' . $order->getReceiverId() . '"';
@@ -22,15 +22,17 @@ class Orders
         $order->setStatus(($rows[0]['status']));
         $order->setNumber($rows[0]['number']);
         $order->setCreationDate($rows[0]['creationDate']);
+        $order->setLastModificationByUserId($rows[0]['lastModificationByUserId']);
         $order->setLastModificationDate($rows[0]['lastModificationDate']);
 
         return $order;
     }
 
-    public static function Confirm($id)
+    public static function ConfirmByUserId($orderId, $userId)
     {
-        $query = 'EXEC [confirmOrder]';
-        $query .= '@id = "' . intval($id) . '"';
+        $query = 'EXEC [confirmOrderByUserId]';
+        $query .= '@orderId = "' . intval($orderId) . '", ';
+        $query .= '@userId = "' . intval($userId) . '"';
 
         $rows = Database::Execute($query);
 
@@ -44,6 +46,7 @@ class Orders
             $rows[0]['receiverId'],
             $rows[0]['number'],
             $rows[0]['creationDate'],
+            $rows[0]['lastModificationByUserId'],
             $rows[0]['lastModificationDate'],
             $rows[0]['status']
         );
@@ -52,10 +55,11 @@ class Orders
         return $order;
     }
 
-    public static function Cancel($id)
+    public static function CancelByUserId($orderId, $userId)
     {
-        $query = 'EXEC [cancelOrder]';
-        $query .= '@id = "' . intval($id) . '"';
+        $query = 'EXEC [cancelOrderByUserId]';
+        $query .= '@orderId = "' . intval($orderId) . '", ';
+        $query .= '@userId = "' . intval($userId) . '"';
 
         $rows = Database::Execute($query);
 
@@ -69,6 +73,7 @@ class Orders
             $rows[0]['receiverId'],
             $rows[0]['number'],
             $rows[0]['creationDate'],
+            $rows[0]['lastModificationByUserId'],
             $rows[0]['lastModificationDate'],
             $rows[0]['status']
         );
@@ -94,6 +99,7 @@ class Orders
             $rows[0]['receiverId'],
             $rows[0]['number'],
             $rows[0]['creationDate'],
+            $rows[0]['lastModificationByUserId'],
             $rows[0]['lastModificationDate'],
             $rows[0]['status']
         );
@@ -118,6 +124,7 @@ class Orders
                 $row['receiverId'],
                 $row['number'],
                 $row['creationDate'],
+                $row['lastModificationByUserId'],
                 $row['lastModificationDate'],
                 $row['status']
             );

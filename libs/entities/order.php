@@ -1,6 +1,8 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
+include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/lines.php');
 include_once(ROOT . 'libs/repositories/stores.php');
 include_once(ROOT . 'libs/repositories/orders.php');
@@ -14,16 +16,20 @@ class Order extends Entity
     private $receiverId;
     private $number;
     private $creationDate;
+    private $lastModificationByUserId;
     private $lastModificationDate;
     private $status;
 
-    function __construct($shippingAddressId, $storeId, $receiverId, $number = null, $creationDate = null, $lastModificationDate = null, $status = null)
+    function __construct(
+        $shippingAddressId, $storeId, $receiverId, $number = null, $creationDate = null,
+        $lastModificationByUserId = null, $lastModificationDate = null, $status = null)
     {
         $this->storeId = intval($storeId);
         $this->receiverId = intval($receiverId);
         $this->shippingAddressId = intval($shippingAddressId);
-        $this->number = $number;
+        $this->number = trim($number);
         $this->creationDate = $creationDate;
+        $this->lastModificationByUserId = intval($lastModificationByUserId);
         $this->lastModificationDate = $lastModificationDate;
         $this->status = trim($status);
     }
@@ -37,6 +43,7 @@ class Order extends Entity
             'shippingAddressId' => $this->getShippingAddressId(),
             'number' => $this->getNumber(),
             'creationDate' => $this->getCreationDate(),
+            'lastModificationByUser' => $this->getLastModificationByUser()->getArray(),
             'lastModificationDate' => $this->getLastModificationDate(),
             'status' => $this->getStatus()
         );
@@ -87,6 +94,16 @@ class Order extends Entity
         return $this->creationDate;
     }
 
+    public function setLastModificationByUserId($lastModificationByUserId)
+    {
+        $this->lastModificationByUserId = $lastModificationByUserId;
+    }
+
+    public function getLastModificationByUserId()
+    {
+        return $this->lastModificationByUserId;
+    }
+
     public function getLastModificationDate()
     {
         return $this->lastModificationDate;
@@ -95,6 +112,11 @@ class Order extends Entity
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function getLastModificationByUser()
+    {
+        return Users::Find($this->getLastModificationByUserId());
     }
 
     public function getStore()
@@ -119,11 +141,11 @@ class Order extends Entity
 
     public function Confirm()
     {
-        return Orders::Confirm($this->getId());
+        return Orders::ConfirmByUserId($this->getId(), Security::getUserConnected()->getId());
     }
 
     public function Cancel()
     {
-        return Orders::Cancel($this->getId());
+        return Orders::CancelByUserId($this->getId(), Security::getUserConnected()->getId());
     }
 }

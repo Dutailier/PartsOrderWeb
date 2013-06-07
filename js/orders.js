@@ -51,6 +51,8 @@ $(document).ready(function () {
                         if (order.hasOwnProperty('status') &&
                             order.hasOwnProperty('id') &&
                             order.hasOwnProperty('number') &&
+                            order.hasOwnProperty('lastModificationByUser') &&
+                            order['lastModificationByUser'].hasOwnProperty('username') &&
                             order.hasOwnProperty('lastModificationDate')) {
                             AddOrder(order);
                         }
@@ -313,7 +315,7 @@ function AddOrder(order) {
         '<div class="order ' + order['status'].toLowerCase() + '" data-id="' + order['id'] + '">' +
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
-            '<label class="lastModificationDate">' + order['lastModificationDate'] + '</label>' +
+            '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + order['lastModificationDate'] + '</i></label>' +
             '</div>'
     );
 }

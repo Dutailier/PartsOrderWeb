@@ -60,7 +60,7 @@ fieldset > legend {
 }
 
 #orders > div.order > label.status,
-#orders > div.order > label.lastModificationDate {
+#orders > div.order > label.lastModification {
     float: right;
     line-height: 25px;
     margin: 0px;
@@ -71,7 +71,7 @@ fieldset > legend {
     font-weight: bold;
 }
 
-#orders > div.order > label.lastModificationDate {
+#orders > div.order > label.lastModification {
     font-size: 0.8em;
     clear: right;
 }

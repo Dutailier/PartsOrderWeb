@@ -15,6 +15,7 @@ class Database
         $result = odbc_exec($conn, $query);
 
         if (empty($result)) {
+            echo $query;
             throw new Exception('The execution of the query failed.');
         }
 
