@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.post('ajax/getShippingInfos.php')
+    $.post('ajax/getTransactionInfos.php')
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&
