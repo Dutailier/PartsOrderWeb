@@ -220,8 +220,9 @@ $(document).ready(function () {
                     .done(function (data) {
 
                         if (data.hasOwnProperty('success') &&
-                            data['success']) {
-                            window.location = 'transactionInfos.php';
+                            data['success'] &&
+                            data.hasOwnProperty('orderId')) {
+                            window.location = 'orderInfos.php?orderId=' + data['orderId'];
 
                         } else if (data.hasOwnProperty('message')) {
                             alert(data['message']);

@@ -1,30 +1,32 @@
 $(document).ready(function () {
-    $.post('ajax/getTransactionInfos.php')
+    var parameters = {
+        "orderId": $.QueryString['orderId']
+    };
+
+    $.post('ajax/getOrderInfos.php', parameters)
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
-                data.hasOwnProperty('transaction')) {
+                data.hasOwnProperty('order')) {
 
-                var transaction = data['transaction'];
+                var order = data['order'];
 
-                if (transaction.hasOwnProperty('order') &&
-                    transaction.hasOwnProperty('shippingAddress') &&
-                    transaction.hasOwnProperty('receiver') &&
-                    transaction.hasOwnProperty('store') &&
-                    transaction.hasOwnProperty('lines')) {
+                if (order.hasOwnProperty('number') &&
+                    order.hasOwnProperty('creationDate') &&
+                    order.hasOwnProperty('status')) {
+                    UpdateOrderInfos(order);
+                }
 
-                    var order = transaction['order'];
-                    var shippingAddress = transaction['shippingAddress'];
-                    var receiver = transaction['receiver'];
-                    var store = transaction['store'];
-                    var lines = transaction['lines'];
+                if (order.hasOwnProperty('shippingAddress') &&
+                    order.hasOwnProperty('receiver') &&
+                    order.hasOwnProperty('store') &&
+                    order.hasOwnProperty('lines')) {
 
-                    if (order.hasOwnProperty('number') &&
-                        order.hasOwnProperty('creationDate') &&
-                        order.hasOwnProperty('status')) {
-                        UpdateOrderInfos(order);
-                    }
+                    var shippingAddress = order['shippingAddress'];
+                    var receiver = order['receiver'];
+                    var store = order['store'];
+                    var lines = order['lines'];
 
                     if (shippingAddress.hasOwnProperty('details') &&
                         shippingAddress.hasOwnProperty('city') &&
@@ -80,40 +82,56 @@ $(document).ready(function () {
             alert('Communication with the server failed.');
         })
 
-    $('#btnConfirm').click(function () {
-
-        // Désactive le bouton de confirmation le temps que la requête soit exécutée.
-        $('#btnConfirm').attr('disabled', 'disabled');
-
-        $.post('ajax/confirmTransaction.php')
-            .done(function (data) {
-                if (data.hasOwnProperty('success') &&
-                    data['success']) {
-
-                    window.location = 'confirmation.php';
-
-                } else if (data.hasOwnProperty('message')) {
-                    alert(data['message']);
-
-                } else {
-                    alert('The result of the server is unreadable.');
-                }
-            })
-            .fail(function () {
-                alert('Communication with the server failed.');
-            })
-            .always(function () {
-                $('#btnConfirm').removeAttr('disabled');
-            })
-    });
-
-    $('#dialog').dialog({
+    $('#confirmDialog').dialog({
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',
         buttons: {
             "Yes": function () {
-                $.post('ajax/cancelTransaction.php')
+
+                var parameters = {
+                    "orderId": $.QueryString['orderId']
+                };
+
+                $.post('ajax/confirmOrder.php', parameters)
+                    .done(function (data) {
+                        if (data.hasOwnProperty('success') &&
+                            data['success']) {
+
+                            window.location = 'confirmation.php';
+
+                        } else if (data.hasOwnProperty('message')) {
+                            alert(data['message']);
+
+                        } else {
+                            alert('The result of the server is unreadable.');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Communication with the server failed.');
+                    })
+                    .always(function () {
+                        $('#btnConfirm').removeAttr('disabled');
+                    })
+            },
+            "No": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+    $('#cancelDialog').dialog({
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        buttons: {
+            "Yes": function () {
+
+                var parameters = {
+                    "orderId": $.QueryString['orderId']
+                };
+
+                $.post('ajax/cancelOrder.php', parameters)
                     .done(function (data) {
                         if (data.hasOwnProperty('success') &&
                             data['success']) {
@@ -136,8 +154,12 @@ $(document).ready(function () {
         }
     });
 
+    $('#btnConfirm').click(function () {
+        $('#confirmDialog').dialog('open');
+    });
+
     $('#btnCancel').click(function () {
-        $('#dialog').dialog('open');
+        $('#cancelDialog').dialog('open');
     });
 });
 
@@ -224,3 +246,16 @@ function AddLine(line) {
             '</div>'
     );
 }
+
+(function ($) {
+    $.QueryString = (function (a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i) {
+            var p = a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);

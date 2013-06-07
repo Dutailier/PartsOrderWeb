@@ -30,6 +30,7 @@ if (!Security::isAuthenticated()) {
                 $lines = $order->getLines();
 
                 $data['order'] = $order->getArray();
+                $data['order']['store'] = $store->getArray();
                 $data['order']['receiver'] = $receiver->getArray();
                 $data['order']['shippingAddress'] = $shippingAddress->getArray();
 

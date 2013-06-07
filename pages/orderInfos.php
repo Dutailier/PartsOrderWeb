@@ -5,7 +5,7 @@ $title = 'Order Informations';
 <?php ob_start(); ?>
 
 <!-- Début de l'en-tête. -->
-<link type="text/css" rel="stylesheet" href="css/transactionInfos.css"/>
+<link type="text/css" rel="stylesheet" href="css/orderInfos.css"/>
 <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
 <!-- Fin de l'en-tête. -->
 
@@ -92,12 +92,16 @@ $title = 'Order Informations';
 </form>
 <!-- Fin -->
 
-<div id="dialog" title="Confirmation required" class="dialog">
-    Are you sure you want cancel this order?
+<div id="cancelDialog" title="Cancellation required" class="dialog">
+    Are you sure you want to cancel this order?
+</div>
+
+<div id="confirmDialog" title="Confirmation required" class="dialog">
+    Are you sure you want to confirm this order?
 </div>
 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script src="js/transactionInfos.js"></script>
+<script src="js/orderInfos.js"></script>
 <!-- Fin du contenu. -->
 
 <?php $content = ob_get_contents(); ?>

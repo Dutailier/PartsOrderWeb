@@ -19,6 +19,11 @@ if (!Security::isAuthenticated()) {
             $transaction = new SessionTransaction();
             $transaction->Proceed();
 
+            $order = $transaction->getOrder();
+            $data['orderId'] = $order->getId();
+
+            $transaction->Destroy();
+
             $data['success'] = true;
         }
 

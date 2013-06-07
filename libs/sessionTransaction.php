@@ -100,22 +100,7 @@ class SessionTransaction implements ITransaction
         }
     }
 
-    public function Confirm()
-    {
-        $this->getOrder()->Confirm();
-        $this->Destroy();
-    }
-
-    public function Cancel()
-    {
-        if($this->isProceed()) {
-            $_SESSION[self::ORDER_IDENTIFIER]->Cancel();
-        }
-        $this->Destroy();
-
-    }
-
-    private function Destroy()
+    public function Destroy()
     {
         unset($_SESSION[self::DEFAULT_FILTER_IDENTIFIER]);
         unset($_SESSION[self::SHIPPING_ADDRESS_IDENTIFIER]);
@@ -123,7 +108,6 @@ class SessionTransaction implements ITransaction
         unset($_SESSION[self::RECEIVER_IDENTIFIER]);
         unset($_SESSION[self::ORDER_IDENTIFIER]);
         unset($_SESSION[self::LINES_IDENTIFIER]);
-
         $_SESSION[self::CART_IDENTIFIER]->Clear();
     }
 
