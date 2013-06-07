@@ -10,9 +10,9 @@ interface ITransaction
 
     public function Proceed();
 
-    public function Close();
+    public function Confirm();
 
-    public function Destroy();
+    public function Cancel();
 
     public function setDefaultFilter(Filter $filter);
 

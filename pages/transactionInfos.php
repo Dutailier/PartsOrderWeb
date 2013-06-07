@@ -95,6 +95,7 @@ $title = 'Order Informations';
 <div id="dialog" title="Confirmation required" class="dialog">
     Are you sure you want cancel this order?
 </div>
+
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="js/transactionInfos.js"></script>
 <!-- Fin du contenu. -->

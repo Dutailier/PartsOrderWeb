@@ -6,6 +6,7 @@ $title = 'Orders';
 
 <!-- Début de l'en-tête. -->
 <link type="text/css" rel="stylesheet" href="css/orders.css"/>
+<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
 <!-- Fin de l'en-tête. -->
 
 <?php $head = ob_get_contents(); ?>
@@ -41,6 +42,15 @@ $title = 'Orders';
 <div id="orders">
 </div>
 
+<div id="confirmDialog">
+    Are your sure you want to confirm the order : <label class="orderNumber"></label>?
+</div>
+
+<div id="cancelDialog">
+    Are your sure you want to cancel the order : <label class="orderNumber"></label>?
+</div>
+
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="js/orders.js"></script>
 <!-- Fin du contenu. -->
 

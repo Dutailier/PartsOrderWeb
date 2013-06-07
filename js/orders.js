@@ -67,6 +67,74 @@ $(document).ready(function () {
         .fail(function () {
             alert('Communication with the server failed.');
         })
+
+    $('#confirmDialog').dialog({
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        buttons: {
+            "Yes": function () {
+                var parameters = {
+                    "orderId": $(this).find('label.orderNumber').data('order-id')
+                };
+
+                $.post('ajax/confirmOrder.php', parameters)
+                    .done(function (data) {
+                        if (data.hasOwnProperty('success') &&
+                            data['success']) {
+
+                            window.location.reload();
+
+                        } else if (data.hasOwnProperty('message')) {
+                            alert(data['message']);
+
+                        } else {
+                            alert('The result of the server is unreadable.');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Communication with the server failed.');
+                    })
+            },
+            "No": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+    $('#cancelDialog').dialog({
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        buttons: {
+            "Yes": function () {
+                var parameters = {
+                    "orderId": $(this).find('label.orderNumber').data('order-id')
+                };
+
+                $.post('ajax/cancelOrder.php', parameters)
+                    .done(function (data) {
+                        if (data.hasOwnProperty('success') &&
+                            data['success']) {
+
+                            window.location.reload();
+
+                        } else if (data.hasOwnProperty('message')) {
+                            alert(data['message']);
+
+                        } else {
+                            alert('The result of the server is unreadable.');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Communication with the server failed.');
+                    })
+            },
+            "No": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
 });
 
 $(document).on('click', 'div.order', function () {
@@ -142,11 +210,12 @@ function AddDetails($order) {
                 }
 
                 if (order.hasOwnProperty('status')) {
-                    if (order['status'] == 'Ordered') {
-                        $buttons.append('<input class="btnCancel" type="button" value="Cancel"/>');
-                        $buttons.append('<input class="btnConfirm" type="button" value="Confirm"/>');
-                    } else if (order['status'] == 'Confirmed') {
-                        $buttons.append('<input class="btnCancel" type="button" value="Cancel"/>');
+                    switch (order['status']) {
+                        case 'Ordered' :
+                            $buttons.append('<input class="btnConfirm" type="button" value="Confirm"/>');
+                        case 'Confirmed':
+                            $buttons.append('<input class="btnCancel" type="button" value="Cancel"/>');
+                            break;
                     }
                 }
 
@@ -170,56 +239,24 @@ $(document).on('click', 'input.btnConfirm', function () {
 
     var $details = $(this).closest('div.details');
     var $order = $details.prev();
+    var $dialog = $('#confirmDialog');
+    var $number = $dialog.find('label.orderNumber');
 
-    var parameters = {
-        "orderId" : $order.data('id')
-    };
-
-    $.post('ajax/confirmOrder.php', parameters)
-        .done(function (data) {
-            if (data.hasOwnProperty('success') &&
-                data['success']) {
-
-                window.location.reload();
-
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
-
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        })
+    $number.text($order.find('label.number').text());
+    $number.data('order-id', $order.data('id'));
+    $dialog.dialog('open');
 });
 
 $(document).on('click', 'input.btnCancel', function () {
 
     var $details = $(this).closest('div.details');
     var $order = $details.prev();
+    var $dialog = $('#cancelDialog');
+    var $number = $dialog.find('label.orderNumber');
 
-    var parameters = {
-        "orderId" : $order.data('id')
-    };
-
-    $.post('ajax/cancelOrder.php', parameters)
-        .done(function (data) {
-            if (data.hasOwnProperty('success') &&
-                data['success']) {
-
-                window.location.reload();
-
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
-
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        })
+    $number.text($order.find('label.number').text());
+    $number.data('order-id', $order.data('id'));
+    $dialog.dialog('open');
 });
 
 /**

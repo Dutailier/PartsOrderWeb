@@ -12,7 +12,7 @@ if (!Security::isAuthenticated()) {
     try {
         $transaction = new SessionTransaction();
 
-        $transaction->Close();
+        $transaction->Confirm();
         $data['success'] = true;
 
     } catch (Exception $e) {

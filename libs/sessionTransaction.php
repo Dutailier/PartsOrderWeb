@@ -100,19 +100,23 @@ class SessionTransaction implements ITransaction
         }
     }
 
-    public function Close()
+    public function Confirm()
     {
         $this->getOrder()->Confirm();
         $this->Destroy();
     }
 
-
-    public function Destroy()
+    public function Cancel()
     {
         if($this->isProceed()) {
             $_SESSION[self::ORDER_IDENTIFIER]->Cancel();
         }
+        $this->Destroy();
 
+    }
+
+    private function Destroy()
+    {
         unset($_SESSION[self::DEFAULT_FILTER_IDENTIFIER]);
         unset($_SESSION[self::SHIPPING_ADDRESS_IDENTIFIER]);
         unset($_SESSION[self::STORE_IDENTIFIER]);

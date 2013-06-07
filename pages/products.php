@@ -45,7 +45,7 @@ $title = 'Products';
                     <label id="storeAddress" class="value"></label>
                 </p>
             </div>
-            <a class="btnMoreDetails">Click here for more details</a>
+            <a class="btnMoreDetails">More details</a>
             <a class="btnLessDetails">Close details</a>
         </fieldset>
         <fieldset id="receiverInfos">
@@ -66,7 +66,7 @@ $title = 'Products';
                     <label id="receiverEmail" class="value"></label>
                 </p>
             </div>
-            <a class="btnMoreDetails">Click here for more details</a>
+            <a class="btnMoreDetails">More details</a>
             <a class="btnLessDetails">Close details</a>
         </fieldset>
         <h2 id="lblProducts">Products</h2>
