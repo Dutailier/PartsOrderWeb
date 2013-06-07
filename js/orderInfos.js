@@ -16,6 +16,15 @@ $(document).ready(function () {
                     order.hasOwnProperty('creationDate') &&
                     order.hasOwnProperty('status')) {
                     UpdateOrderInfos(order);
+
+                    var $summary = $('#summary');
+                    switch (order['status']) {
+                        case 'Ordered':
+                            $summary.append('<input id="btnConfirm" name="btnConfirm" type="button" value="Confirm"/>');
+                        case 'Confirmed':
+                            $summary.append('<input id="btnCancel" name="btnCancel" type="button" value="Cancel"/>');
+                            break;
+                    }
                 }
 
                 if (order.hasOwnProperty('shippingAddress') &&
@@ -153,14 +162,14 @@ $(document).ready(function () {
             }
         }
     });
+});
 
-    $('#btnConfirm').click(function () {
-        $('#confirmDialog').dialog('open');
-    });
+$(document).on('click', '#btnConfirm', function () {
+    $('#confirmDialog').dialog('open');
+});
 
-    $('#btnCancel').click(function () {
-        $('#cancelDialog').dialog('open');
-    });
+$(document).on('click', '#btnCancel', function () {
+    $('#cancelDialog').dialog('open');
 });
 
 /**

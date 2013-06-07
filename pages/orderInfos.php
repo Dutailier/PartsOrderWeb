@@ -87,8 +87,7 @@ $title = 'Order Informations';
 
 <!-- Sommaire des pièces commandées -->
 <form id="summary">
-    <input id="btnConfirm" name="btnConfirm" type="button" value="Confirm"/>
-    <a id="btnCancel">Cancel</a>
+
 </form>
 <!-- Fin -->
 

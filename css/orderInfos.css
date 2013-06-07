@@ -47,8 +47,8 @@ fieldset > p > label.values {
 }
 
 #orderInfos > p:nth-child(odd) {
-    margin-left:20px;
-    margin-right:20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 hr {
@@ -111,11 +111,6 @@ hr {
     font-size: 1.2em;
 }
 
-#btnConfirm {
+#summary > input {
     width: 150px;
-}
-
-#btnCancel {
-    cursor: pointer;
-    text-decoration: underline;
 }
