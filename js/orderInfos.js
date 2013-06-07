@@ -179,7 +179,7 @@ $(document).on('click', '#btnCancel', function () {
  */
 function UpdateOrderInfos(infos) {
     $('#number').text(infos['number']);
-    $('#creationDate').text(infos['creationDate']);
+    $('#creationDate').text(DateFormat(infos['creationDate']));
     $('#status').text(infos['status']);
 }
 
@@ -254,6 +254,16 @@ function AddLine(line) {
             '</div>' +
             '</div>'
     );
+}
+
+/**
+ * Transforme 2013-06-07 10:24:15.227 pour 2013-06-07 10:24:15.
+ * @param date
+ * @returns {string}
+ * @constructor
+ */
+function DateFormat(date) {
+    return date.substring(0, 19);
 }
 
 (function ($) {

@@ -141,11 +141,23 @@ class Order extends Entity
 
     public function Confirm()
     {
+        $status = $this->getStatus();
+
+        if ($status != 'Ordered') {
+            throw new Exception('You can\'t confirm this order.');
+        }
+
         return Orders::ConfirmByUserId($this->getId(), Security::getUserConnected()->getId());
     }
 
     public function Cancel()
     {
+        $status = $this->getStatus();
+
+        if ($status != 'Ordered' && $status != 'Confirmed') {
+            throw new Exception('You can\'t cancel this order.');
+        }
+
         return Orders::CancelByUserId($this->getId(), Security::getUserConnected()->getId());
     }
 }

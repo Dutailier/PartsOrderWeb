@@ -134,4 +134,30 @@ class Orders
         }
         return $orders;
     }
+
+    public static function All()
+    {
+        $query = 'EXEC [getOrders]';
+
+        $rows = Database::Execute($query);
+
+        $orders = array();
+        foreach ($rows as $row) {
+
+            $order = new Order(
+                $row['shippingAddressId'],
+                $row['storeId'],
+                $row['receiverId'],
+                $row['number'],
+                $row['creationDate'],
+                $row['lastModificationByUserId'],
+                $row['lastModificationDate'],
+                $row['status']
+            );
+            $order->setId($row['id']);
+
+            $orders[] = $order;
+        }
+        return $orders;
+    }
 }

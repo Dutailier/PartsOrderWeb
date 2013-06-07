@@ -2,6 +2,7 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/repositories/orders.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -10,10 +11,18 @@ if (!Security::isAuthenticated()) {
 } else {
     try {
         $user = Security::getUserConnected();
-        $store = $user->getStore();
+        $orders = array();
+
+        if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
+            $orders = Orders::All();
+
+        } else if (Security::isInRoleName(ROLE_STORE)) {
+            $store = $user->getStore();
+            $orders = $store->getOrders();
+        }
 
         $data['orders'] = array();
-        foreach ($store->getOrders() as $order) {
+        foreach ($orders as $order) {
             $data['orders'][] = $order->getArray();
         }
 

@@ -315,7 +315,7 @@ function AddOrder(order) {
         '<div class="order ' + order['status'].toLowerCase() + '" data-id="' + order['id'] + '">' +
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
-            '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + order['lastModificationDate'] + '</i></label>' +
+            '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + DateFormat(order['lastModificationDate']) + '</i></label>' +
             '</div>'
     );
 }
@@ -371,4 +371,14 @@ function PhoneFormat(phone) {
         phone.substring(1, 4) + '-' +
         phone.substring(4, 7) + '-' +
         phone.substring(7);
+}
+
+/**
+ * Transforme 2013-06-07 10:24:15.227 pour 2013-06-07 10:24:15.
+ * @param date
+ * @returns {string}
+ * @constructor
+ */
+function DateFormat(date) {
+    return date.substring(0, 19);
 }

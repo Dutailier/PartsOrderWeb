@@ -34,7 +34,7 @@ class User extends Entity
 
     public function getStore()
     {
-        if (!Security::UserIsInRole($this, ROLE_RETAILER)) {
+        if (!Security::UserIsInRole($this, ROLE_STORE)) {
             throw new Exception('The user must be a retailer.');
         }
         return Stores::FindByUserId($this->getId());
