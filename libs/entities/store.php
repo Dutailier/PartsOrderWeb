@@ -38,7 +38,7 @@ class Store extends Entity
     {
         return array(
             'id' => $this->getId(),
-            'userId' => $this->getUserId(),
+            'user' => $this->getUser()->getArray(),
             'name' => $this->getName(),
             'phone' => $this->getPhone(),
             'email' => $this->getEmail(),

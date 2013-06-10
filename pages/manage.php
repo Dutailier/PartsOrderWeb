@@ -15,13 +15,20 @@ $title = 'Manage';
 
 <!-- Début du contenu. -->
 <ul id="tabs">
-    <li id="btnLastOrders">Last Orders</li>
-    <li id="btnStores">Stores List</li>
+    <li id="btnLastOrders">Orders</li>
+    <li id="btnStores">Stores</li>
 </ul>
 
 <div class="tab" id="tabOrders">
     <div id="orders">
-        <p>Click on an order for more details.</p>
+        <div id="filters">
+            <b>Search : </b><input id="search" name="search" type="text">
+            <div id="dates">
+                <b>from : </b><input id="from" class="date" type="text" class="datepicker" />
+                <b>to : </b><input id="to" class="date" type="text" class="datepicker" />
+                <input id="btnGo" name="btnGo" type="button" value="Go" />
+            </div>
+        </div>
     </div>
 </div>
 

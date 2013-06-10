@@ -1,9 +1,31 @@
 $(document).ready(function () {
 
+    $("#from").datepicker({
+        dateFormat: 'yy-mm-dd',
+        onClose: function (selectedDate) {
+            $("#to").datepicker("option", "minDate", selectedDate);
+        }
+    });
+
+    $("#to").datepicker({
+        dateFormat: 'yy-mm-dd',
+        maxDate: '+1d',
+        onClose: function (selectedDate) {
+            $("#from").datepicker("option", "maxDate", selectedDate);
+        }
+    });
+
+    $('#from').datepicker('setDate', '-1w');
+    $('#to').datepicker('setDate', '+1d');
+
     SelectTabLastOrders();
 
     $('#btnLastOrders').click(function () {
         SelectTabLastOrders();
+    });
+
+    $('#btnGo').click(function () {
+        UpdateOrders();
     });
 
     $('#btnStores').click(function () {
@@ -126,24 +148,14 @@ function SelectTabStores() {
         })
 }
 
-/**
- * Affiche le contenu de l'onglet : dernières commandes.
- * @constructor
- */
-function SelectTabLastOrders() {
-    $('#btnLastOrders').addClass('selected');
-    $('#tabOrders').show();
-
-    $('#btnStores').removeClass('selected');
-    $('#tabStores').hide();
-
+function UpdateOrders() {
     var parameters = {
-        'numberOfOrders': 10
+        'from': $('#from').val(),
+        'to': $('#to').val()
     };
 
-    $.post('ajax/getLastOrders.php', parameters)
+    $.post('ajax/getOrdersByRangeOfDates.php', parameters)
         .done(function (data) {
-
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
                 data.hasOwnProperty('orders')) {
@@ -178,6 +190,19 @@ function SelectTabLastOrders() {
         .fail(function () {
             alert('Communication with the server failed.');
         })
+}
+/**
+ * Affiche le contenu de l'onglet : dernières commandes.
+ * @constructor
+ */
+function SelectTabLastOrders() {
+    $('#btnLastOrders').addClass('selected');
+    $('#tabOrders').show();
+
+    $('#btnStores').removeClass('selected');
+    $('#tabStores').hide();
+
+    UpdateOrders();
 }
 
 $(document).on('click', 'div.order', function () {
@@ -273,7 +298,7 @@ function AddDetails($order) {
 
                 if (order.hasOwnProperty('status')) {
                     switch (order['status']) {
-                        case 'Ordered' :
+                        case 'Pending' :
                             $buttons.append('<input class="btnConfirm" type="button" value="Confirm"/>');
                         case 'Confirmed':
                             $buttons.append('<input class="btnCancel" type="button" value="Cancel"/>');
@@ -347,15 +372,21 @@ $(document).on('click', 'div.banner', function () {
                             store.hasOwnProperty('name') &&
                             store.hasOwnProperty('phone') &&
                             store.hasOwnProperty('email') &&
-                            store.hasOwnProperty('address')) {
+                            store.hasOwnProperty('address') &&
+                            store.hasOwnProperty('user')) {
                             var address = store['address'];
+                            var user = store['user'];
 
                             if (address.hasOwnProperty('details') &&
                                 address.hasOwnProperty('city') &&
                                 address.hasOwnProperty('zip') &&
                                 address.hasOwnProperty('state') &&
                                 address['state'].hasOwnProperty('name')) {
-                                AddStore(store);
+
+                                if (user.hasOwnProperty('id') &&
+                                    user.hasOwnProperty('username')) {
+                                    AddStore(store);
+                                }
                             }
                         }
                     }
@@ -501,6 +532,7 @@ function AddStore(store) {
         '<div class="store" data-id="' + store['id'] + '">' +
             '<div class="storeDetails">' +
             '<label class="name">' + store['name'] + '</label>' +
+            '<label class="username"> - ' + store['user']['username'] + '</label>' +
             '</div>' +
             '</div>'
 

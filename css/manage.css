@@ -53,6 +53,60 @@ div.tab {
     float: left;
 }
 
+#stores > div.store {
+    border: 1px solid #484848;
+    padding: 5px 20px;
+    margin: 20px 0px 0px 0px;
+    overflow: hidden; /* Clearfix */
+    height: 50px;
+    cursor: pointer;
+}
+
+#stores > div.store * {
+    cursor: pointer;
+}
+
+#stores > div.store > div.storeDetails > label.name {
+    font-size: 1.7em;
+    font-weight: bold;
+    line-height: 50px;
+    float: left;
+}
+
+#stores > div.store > div.storeDetails > label.username {
+    line-height: 50px;
+    float: left;
+    font-style: italic;
+    margin-left: 10px;
+}
+
+#filters {
+    border: 1px solid #484848;
+    padding: 8px;
+    overflow: hidden; /* Clearfix */
+}
+
+#filters * {
+    line-height: 20px;
+    margin: 0px 5px;
+}
+
+#btnGo {
+    width: 50px;
+}
+
+#search {
+    width: 300px;
+}
+
+#dates {
+    float: right;
+}
+
+#dates * {
+    text-align: center;
+}
+
 #orders > div.order {
     border: 1px solid #484848;
     padding: 5px 20px;

@@ -19,7 +19,7 @@ $(document).ready(function () {
 
                     var $summary = $('#summary');
                     switch (order['status']) {
-                        case 'Ordered':
+                        case 'Pending':
                             $summary.append('<input id="btnConfirm" name="btnConfirm" type="button" value="Confirm"/>');
                         case 'Confirmed':
                             $summary.append('<input id="btnCancel" name="btnCancel" type="button" value="Cancel"/>');

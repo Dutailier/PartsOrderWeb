@@ -13,13 +13,13 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be connected as administrator.';
 
 } else {
-    if (empty($_POST['numberOfOrders'])) {
+    if (empty($_POST['from']) || empty($_POST['to'])) {
         $data['success'] = true;
-        $data['message'] = 'A number of orders is required.';
+        $data['message'] = 'A rage of dates is required.';
 
     } else {
         try {
-            $orders = Orders::Latest($_POST['numberOfOrders']);
+            $orders = Orders::FilterByRangeOfDates(strtotime($_POST['from']), strtotime($_POST['to']));
 
             $data['orders'] = array();
             foreach ($orders as $order) {

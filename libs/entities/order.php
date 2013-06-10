@@ -143,7 +143,7 @@ class Order extends Entity
     {
         $status = $this->getStatus();
 
-        if ($status != 'Ordered') {
+        if ($status != 'Pending') {
             throw new Exception('You can\'t confirm this order.');
         }
 
@@ -154,7 +154,7 @@ class Order extends Entity
     {
         $status = $this->getStatus();
 
-        if ($status != 'Ordered' && $status != 'Confirmed') {
+        if ($status != 'Pending' && $status != 'Confirmed') {
             throw new Exception('You can\'t cancel this order.');
         }
 

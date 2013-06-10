@@ -135,10 +135,11 @@ class Orders
         return $orders;
     }
 
-    public static function Latest($numberOfOrders)
+    public static function FilterByRangeOfDates($from, $to)
     {
-        $query = 'EXEC [getLastOrders]';
-        $query .= '@numberOfOrders = "' . intval($numberOfOrders) . '"';
+        $query = 'EXEC [getOrdersByRangeOfDates]';
+        $query .= '@from = "' . date('Ymd', $from) . '", ';
+        $query .= '@to = "' . date('Ymd', $to) . '"';
 
         $rows = Database::Execute($query);
 

@@ -218,7 +218,7 @@ function AddDetails($order) {
 
                 if (order.hasOwnProperty('status')) {
                     switch (order['status']) {
-                        case 'Ordered' :
+                        case 'Pending' :
                             $buttons.append('<input class="btnConfirm" type="button" value="Confirm"/>');
                         case 'Confirmed':
                             $buttons.append('<input class="btnCancel" type="button" value="Cancel"/>');
