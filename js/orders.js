@@ -9,7 +9,8 @@ $(document).ready(function () {
 
                 var store = data['store'];
 
-                if (store.hasOwnProperty('name') &&
+                if (store.hasOwnProperty('id') &&
+                    store.hasOwnProperty('name') &&
                     store.hasOwnProperty('phone') &&
                     store.hasOwnProperty('email') &&
                     store.hasOwnProperty('address')) {
@@ -22,41 +23,45 @@ $(document).ready(function () {
                         address['state'].hasOwnProperty('name')) {
                         UpdateStoreInfos(store);
                     }
-                }
 
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                    var parameters = {
+                        'storeId' : store['id']
+                    };
 
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        })
+                    $.post('ajax/getOrdersByStoreId.php', parameters)
+                        .done(function (data) {
 
-    $.post('ajax/getOrders.php')
-        .done(function (data) {
+                            if (data.hasOwnProperty('success') &&
+                                data['success'] &&
+                                data.hasOwnProperty('orders')) {
 
-            if (data.hasOwnProperty('success') &&
-                data['success'] &&
-                data.hasOwnProperty('orders')) {
+                                var orders = data['orders'];
 
-                var orders = data['orders'];
+                                for (var i in orders) {
+                                    if (orders.hasOwnProperty(i)) {
+                                        var order = orders[i];
 
-                for (var i in orders) {
-                    if (orders.hasOwnProperty(i)) {
-                        var order = orders[i];
+                                        if (order.hasOwnProperty('status') &&
+                                            order.hasOwnProperty('id') &&
+                                            order.hasOwnProperty('number') &&
+                                            order.hasOwnProperty('lastModificationByUser') &&
+                                            order['lastModificationByUser'].hasOwnProperty('username') &&
+                                            order.hasOwnProperty('lastModificationDate')) {
+                                            AddOrder(order);
+                                        }
+                                    }
+                                }
 
-                        if (order.hasOwnProperty('status') &&
-                            order.hasOwnProperty('id') &&
-                            order.hasOwnProperty('number') &&
-                            order.hasOwnProperty('lastModificationByUser') &&
-                            order['lastModificationByUser'].hasOwnProperty('username') &&
-                            order.hasOwnProperty('lastModificationDate')) {
-                            AddOrder(order);
-                        }
-                    }
+                            } else if (data.hasOwnProperty('message')) {
+                                alert(data['message']);
+
+                            } else {
+                                alert('The result of the server is unreadable.');
+                            }
+                        })
+                        .fail(function () {
+                            alert('Communication with the server failed.');
+                        })
                 }
 
             } else if (data.hasOwnProperty('message')) {
