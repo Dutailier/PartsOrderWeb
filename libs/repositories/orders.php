@@ -135,9 +135,10 @@ class Orders
         return $orders;
     }
 
-    public static function All()
+    public static function Latest($numberOfOrders)
     {
-        $query = 'EXEC [getOrders]';
+        $query = 'EXEC [getLastOrders]';
+        $query .= '@numberOfOrders = "' . intval($numberOfOrders) . '"';
 
         $rows = Database::Execute($query);
 

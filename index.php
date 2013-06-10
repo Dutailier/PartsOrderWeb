@@ -63,11 +63,17 @@ if (empty($head) || empty($content)) {
             <ul id="menu">
 
                 <?php if ($page != 'login') : ?>
-                    <li><a id="btnProducts">Products</a></li>
-                    <li><a id="btnOrders">Orders</a></li>
+                    <?php if (Security::isInRoleName(ROLE_STORE)) : ?>
+                        <li><a id="btnProducts">Products</a></li>
+                        <li><a id="btnOrders">Orders</a></li>
+                    <?php endif; ?>
+
+                    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) : ?>
+                        <li><a id="btnManage">Manage</a></li>
+                    <?php endif; ?>
+
                     <li><a id="btnLogout">Logout</a></li>
                 <?php endif; ?>
-                <li><a id="btnContactUs">Contact us</a></li>
             </ul>
             <img id="logo-babiesRus" src="img/babiesrus.png">
         </div>

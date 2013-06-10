@@ -1,79 +1,14 @@
 $(document).ready(function () {
 
-    $.post('ajax/getStoreConnected.php')
-        .done(function (data) {
+    SelectTabLastOrders();
 
-            if (data.hasOwnProperty('success') &&
-                data['success'] &&
-                data.hasOwnProperty('store')) {
+    $('#btnLastOrders').click(function () {
+        SelectTabLastOrders();
+    });
 
-                var store = data['store'];
-
-                if (store.hasOwnProperty('id') &&
-                    store.hasOwnProperty('name') &&
-                    store.hasOwnProperty('phone') &&
-                    store.hasOwnProperty('email') &&
-                    store.hasOwnProperty('address')) {
-                    var address = store['address'];
-
-                    if (address.hasOwnProperty('details') &&
-                        address.hasOwnProperty('city') &&
-                        address.hasOwnProperty('zip') &&
-                        address.hasOwnProperty('state') &&
-                        address['state'].hasOwnProperty('name')) {
-                        UpdateStoreInfos(store);
-                    }
-
-                    var parameters = {
-                        'storeId' : store['id']
-                    };
-
-                    $.post('ajax/getOrdersByStoreId.php', parameters)
-                        .done(function (data) {
-
-                            if (data.hasOwnProperty('success') &&
-                                data['success'] &&
-                                data.hasOwnProperty('orders')) {
-
-                                var orders = data['orders'];
-
-                                for (var i in orders) {
-                                    if (orders.hasOwnProperty(i)) {
-                                        var order = orders[i];
-
-                                        if (order.hasOwnProperty('status') &&
-                                            order.hasOwnProperty('id') &&
-                                            order.hasOwnProperty('number') &&
-                                            order.hasOwnProperty('lastModificationByUser') &&
-                                            order['lastModificationByUser'].hasOwnProperty('username') &&
-                                            order.hasOwnProperty('lastModificationDate')) {
-                                            AddOrder(order);
-                                        }
-                                    }
-                                }
-
-                            } else if (data.hasOwnProperty('message')) {
-                                alert(data['message']);
-
-                            } else {
-                                alert('The result of the server is unreadable.');
-                            }
-                        })
-                        .fail(function () {
-                            alert('Communication with the server failed.');
-                        })
-                }
-
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
-
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        })
+    $('#btnStores').click(function () {
+        SelectTabStores();
+    });
 
     $('#confirmDialog').dialog({
         autoOpen: false,
@@ -144,6 +79,107 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Affiche le contenu de l'onglet : magasins.
+ * @constructor
+ */
+function SelectTabStores() {
+    $('#btnLastOrders').removeClass('selected');
+    $('#tabOrders').hide();
+
+    $('#btnStores').addClass('selected');
+    $('#tabStores').show();
+    $('#banners').show();
+    $('#stores').hide();
+
+    $.post('ajax/getBanners.php')
+        .done(function (data) {
+
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data['banners']) {
+
+                $('div.banner').remove();
+
+                var banners = data['banners'];
+
+                for (var i in banners) {
+                    if (banners.hasOwnProperty(i)) {
+                        var banner = banners[i];
+
+                        if (banner.hasOwnProperty('id') &&
+                            banner.hasOwnProperty('name')) {
+                            AddBannerInfos(banner);
+                        }
+                    }
+                }
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
+/**
+ * Affiche le contenu de l'onglet : dernières commandes.
+ * @constructor
+ */
+function SelectTabLastOrders() {
+    $('#btnLastOrders').addClass('selected');
+    $('#tabOrders').show();
+
+    $('#btnStores').removeClass('selected');
+    $('#tabStores').hide();
+
+    var parameters = {
+        'numberOfOrders': 10
+    };
+
+    $.post('ajax/getLastOrders.php', parameters)
+        .done(function (data) {
+
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('orders')) {
+
+                $('div.orderDetails').remove();
+                $('div.order').remove();
+
+                var orders = data['orders'];
+
+                for (var i in orders) {
+                    if (orders.hasOwnProperty(i)) {
+                        var order = orders[i];
+
+                        if (order.hasOwnProperty('status') &&
+                            order.hasOwnProperty('id') &&
+                            order.hasOwnProperty('number') &&
+                            order.hasOwnProperty('lastModificationByUser') &&
+                            order['lastModificationByUser'].hasOwnProperty('username') &&
+                            order.hasOwnProperty('lastModificationDate')) {
+                            AddOrderInfos(order);
+                        }
+                    }
+                }
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
 $(document).on('click', 'div.order', function () {
 
     var $order = $(this);
@@ -177,16 +213,6 @@ function AddDetails($order) {
                 var $lines = $('<div class="lines"></div>');
                 var $buttons = $('<div class="buttons"></div>');
 
-                if (order.hasOwnProperty('receiver')) {
-                    var receiver = order['receiver'];
-
-                    if (receiver.hasOwnProperty('name') &&
-                        receiver.hasOwnProperty('phone') &&
-                        receiver.hasOwnProperty('email')) {
-                        AddReceiverInfos($details, receiver);
-                    }
-                }
-
                 if (order.hasOwnProperty('shippingAddress')) {
                     var shippingAddress = order['shippingAddress'];
 
@@ -196,6 +222,35 @@ function AddDetails($order) {
                         shippingAddress.hasOwnProperty('state') &&
                         shippingAddress['state'].hasOwnProperty('name')) {
                         AddShippingAddressInfos($details, shippingAddress);
+                    }
+                }
+
+                if (order.hasOwnProperty('store')) {
+                    var store = order['store'];
+
+                    if (store.hasOwnProperty('name') &&
+                        store.hasOwnProperty('phone') &&
+                        store.hasOwnProperty('email') &&
+                        store.hasOwnProperty('address')) {
+                        var address = store['address'];
+
+                        if (address.hasOwnProperty('details') &&
+                            address.hasOwnProperty('city') &&
+                            address.hasOwnProperty('zip') &&
+                            address.hasOwnProperty('state') &&
+                            address['state'].hasOwnProperty('name')) {
+                            AddStoreInfos($details, store);
+                        }
+                    }
+                }
+
+                if (order.hasOwnProperty('receiver')) {
+                    var receiver = order['receiver'];
+
+                    if (receiver.hasOwnProperty('name') &&
+                        receiver.hasOwnProperty('phone') &&
+                        receiver.hasOwnProperty('email')) {
+                        AddReceiverInfos($details, receiver);
                     }
                 }
 
@@ -211,7 +266,7 @@ function AddDetails($order) {
                                 line['product'].hasOwnProperty('name') &&
                                 line.hasOwnProperty('quantity') &&
                                 line.hasOwnProperty('serial'))
-                                AddLine($lines, line);
+                                AddLineInfos($lines, line);
                         }
                     }
                 }
@@ -266,6 +321,87 @@ $(document).on('click', 'input.btnCancel', function () {
     $dialog.dialog('open');
 });
 
+$(document).on('click', 'div.banner', function () {
+    var parameters = {
+        'bannerId': $(this).data('id')
+    };
+
+    $.post('ajax/getStoresByBannerId.php', parameters)
+        .done(function (data) {
+
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('stores')) {
+
+                $('#banners').hide();
+                $('#stores').show();
+                $('div.store').remove();
+
+                var stores = data['stores'];
+
+                for (var i in stores) {
+                    if (stores.hasOwnProperty(i)) {
+                        var store = stores[i];
+
+                        if (store.hasOwnProperty('id') &&
+                            store.hasOwnProperty('name') &&
+                            store.hasOwnProperty('phone') &&
+                            store.hasOwnProperty('email') &&
+                            store.hasOwnProperty('address')) {
+                            var address = store['address'];
+
+                            if (address.hasOwnProperty('details') &&
+                                address.hasOwnProperty('city') &&
+                                address.hasOwnProperty('zip') &&
+                                address.hasOwnProperty('state') &&
+                                address['state'].hasOwnProperty('name')) {
+                                AddStore(store);
+                            }
+                        }
+                    }
+                }
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+});
+
+/**
+ * Affiche les informations relatives au magasin.
+ * @param $details
+ * @param store
+ * @constructor
+ */
+function AddStoreInfos($details, store) {
+    $details.append(
+        '<fieldset class="storeInfos">' +
+            '<legend>Store informations</legend>' +
+            '<p>' +
+            '<label class="properties">Name : </label>' +
+            '<label id="receiverName" class="values">' + store['name'] + '</label>' +
+            '</p>' +
+            '<p>' +
+            '<label class="properties">Phone : </label>' +
+            '<label id="receiverPhone" class="values">' + PhoneFormat(store['phone']) + '</label>' +
+            '</p>' +
+            '<p>' +
+            '<label class="properties">Email : </label>' +
+            '<label id="receiverEmail" class="values">' + store['email'] + '</label>' +
+            '</p>' +
+            '<p>' +
+            '<label class="properties">Address : </label>' +
+            '<label id="storeAddress" class="values">' + AddressFormat(store['address']) + '</label>' +
+            '</p>' +
+            '</fieldset>'
+    );
+}
+
 /**
  * Ajoute les informations relatives au receveur aux détails de la commande.
  * @param $details
@@ -315,7 +451,7 @@ function AddShippingAddressInfos($details, shippingAddress) {
  * @param order
  * @constructor
  */
-function AddOrder(order) {
+function AddOrderInfos(order) {
     $('#orders').append(
         '<div class="order ' + order['status'].toLowerCase() + '" data-id="' + order['id'] + '">' +
             '<label class="number">' + order['number'] + '</label>' +
@@ -328,7 +464,7 @@ function AddOrder(order) {
 /**
  * Ajoute une ligne à la commande.
  */
-function AddLine($list, line) {
+function AddLineInfos($list, line) {
     $list.append(
         '<div class="line">' +
             '<div class="lineDetails">' +
@@ -341,15 +477,34 @@ function AddLine($list, line) {
 }
 
 /**
- * Affiche les informations relatives au magasin.
- * @param infos
+ * Affiche les informations relative à la banière.
+ * @param banner
  * @constructor
  */
-function UpdateStoreInfos(infos) {
-    $('#storeName').text(infos['name']);
-    $('#storePhone').text(PhoneFormat(infos['phone']));
-    $('#storeEmail').text(infos['email']);
-    $('#storeAddress').text(AddressFormat(infos['address']));
+function AddBannerInfos(banner) {
+    $('#banners').append(
+        '<div class="banner" data-id="' + banner['id'] + '">' +
+            '<div class="bannerDetails">' +
+            '<label class="name">' + banner['name'] + '</label>' +
+            '</div>' +
+            '</div>'
+    );
+}
+
+/**
+ * Affiche les informations relatives au magasin.
+ * @param store
+ * @constructor
+ */
+function AddStore(store) {
+    $('#stores').append(
+        '<div class="store" data-id="' + store['id'] + '">' +
+            '<div class="storeDetails">' +
+            '<label class="name">' + store['name'] + '</label>' +
+            '</div>' +
+            '</div>'
+
+    );
 }
 
 /**

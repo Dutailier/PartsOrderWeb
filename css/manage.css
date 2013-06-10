@@ -1,43 +1,56 @@
-#storeInfos {
-    margin: 20px 0px;
+#tabs {
+    list-style-type: none;
+    padding: 0px;
+    height: 38px;
+    border-bottom: 2px solid #484848;
+    overflow: visible; /* Clearfix */
+}
+
+#tabs > li {
+    display: block;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 15px;
     border: 2px solid #484848;
-    padding: 10px 20px;
+    line-height: 20px;
+    padding: 8px;
+    width: 100px;
+    background-color: #FAFAFA;
+}
+
+#tabs > li:hover {
+    background-color: #FFFFFF;
+}
+
+#tabs > li.selected {
+    background-color: #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+    z-index: 999999;
+}
+
+div.tab {
+    margin-bottom: 20px;
+}
+
+#banners > div.banner {
+    border: 1px solid #484848;
+    padding: 5px 20px;
+    margin: 20px 0px 0px 0px;
     overflow: hidden; /* Clearfix */
+    height: 50px;
+    cursor: pointer;
 }
 
-#storeInfos > legend {
-    padding: 0px 10px;
-    font-size: 1.5em;
+#banners > div.banner * {
+    cursor: pointer;
+}
+
+#banners > div.banner > div.bannerDetails > label.name {
+    font-size: 1.7em;
     font-weight: bold;
-}
-
-fieldset > legend {
-    padding: 0px 10px;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-#storeInfos > p {
+    line-height: 50px;
     float: left;
-    width: 229px;
-    margin: 5px 0px;
-    overflow: hidden; /* Clearfix */
-}
-
-#storeInfos > p > label.properties {
-    display: block;
-    float: left;
-    font-weight: bold;
-}
-
-#storeInfos > p > label.values {
-    display: block;
-    float: left;
-    clear: both;
-}
-
-#orders{
-    margin: 10px 0px;
 }
 
 #orders > div.order {
@@ -109,22 +122,21 @@ fieldset > legend {
     clear: both;
 }
 
-#orders > div.orderDetails > fieldset.storeInfos > p {
+#orders > div.orderDetails > fieldset.shippingAddressInfos > p {
     float: left;
-    width: 218px;
     margin: 5px 0px;
     overflow: hidden; /* Clearfix */
 }
 
 #orders > div.orderDetails > fieldset.receiverInfos,
-#orders > div.orderDetails > fieldset.shippingAddressInfos {
+#orders > div.orderDetails > fieldset.storeInfos {
     float: left;
     width: 411px;
-    height: 165px;
+    height: 215px;
 }
 
 #orders > div.orderDetails > fieldset.receiverInfos > p,
-#orders > div.orderDetails > fieldset.shippingAddressInfos > p {
+#orders > div.orderDetails > fieldset.storeInfos > p {
     float: left;
     margin: 5px 0px;
     clear: both;

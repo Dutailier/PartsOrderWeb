@@ -39,9 +39,9 @@ $title = 'Orders';
 
 <h1>Orders</h1>
 
-<p>Click on an order for more details.</p>
-
 <div id="orders">
+    <p>Click on an order for more details.</p>
+
 </div>
 
 <div id="confirmDialog">

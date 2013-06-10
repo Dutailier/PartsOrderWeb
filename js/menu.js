@@ -7,6 +7,10 @@ $(document).ready(function () {
         window.location = 'orders.php';
     });
 
+    $('#btnManage').click(function () {
+        window.location = 'manage.php';
+    });
+
     $('#btnLogout').click(function () {
         $.post('ajax/logout.php')
             .done(function (data) {

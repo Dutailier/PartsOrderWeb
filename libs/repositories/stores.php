@@ -49,4 +49,27 @@ class Stores
 
         return $store;
     }
+
+    public static function FilterByBannerId($id)
+    {
+        $query = 'EXEC [getStoresByBannerId]';
+        $query .= '@bannerId = "' . intval($id) . '"';
+
+        $rows = Database::Execute($query);
+
+        $stores = array();
+        foreach ($rows as $row) {
+
+            $store = new Store(
+                $row['userId'],
+                $row['name'],
+                $row['phone'],
+                $row['email'],
+                $row['addressId']);
+            $store->setId($rows[0]['id']);
+
+            $stores[] = $store;
+        }
+        return $stores;
+    }
 }
