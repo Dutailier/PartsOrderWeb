@@ -21,7 +21,7 @@ $(document).ready(function () {
                         shippingAddress.hasOwnProperty('zip') &&
                         shippingAddress.hasOwnProperty('state') &&
                         shippingAddress['state'].hasOwnProperty('name')) {
-                        UpdateShippingAddress(shippingAddress);
+                        updateShippingAddressinfos(shippingAddress);
                     }
 
                     if (store.hasOwnProperty('name') &&
@@ -35,14 +35,14 @@ $(document).ready(function () {
                             address.hasOwnProperty('zip') &&
                             address.hasOwnProperty('state') &&
                             address['state'].hasOwnProperty('name')) {
-                            UpdateStoreInfos(store);
+                            updateStoreInfos(store);
                         }
                     }
 
                     if (receiver.hasOwnProperty('name') &&
                         receiver.hasOwnProperty('phone') &&
                         receiver.hasOwnProperty('email')) {
-                        UpdateReceiverInfos(receiver);
+                        updateReceiverInfos(receiver);
                     }
                 }
             } else if (data.hasOwnProperty('message')) {
@@ -54,7 +54,7 @@ $(document).ready(function () {
         })
         .fail(function () {
             alert('Communication with the server failed.');
-        })
+        });
 
     $('#btnCancel').click(function () {
         $.post('ajax/cancelTransaction.php')
@@ -88,32 +88,29 @@ $(document).ready(function () {
 /**
  * Affiche les informations relatives à l'adresse d'expédition.
  * @param address
- * @constructor
  */
-function UpdateShippingAddress(address) {
-    $('#shippingAddress').text(AddressFormat(address));
+function updateShippingAddressinfos(address) {
+    $('#shippingAddress').text(addressFormat(address));
 }
 
 /**
  * Affiche les informations relatives au magasin.
  * @param infos
- * @constructor
  */
-function UpdateStoreInfos(infos) {
+function updateStoreInfos(infos) {
     $('#storeName').text(infos['name']);
-    $('#storePhone').text(PhoneFormat(infos['phone']));
+    $('#storePhone').text(phoneFormat(infos['phone']));
     $('#storeEmail').text(infos['email']);
-    $('#storeAddress').text(AddressFormat(infos['address']));
+    $('#storeAddress').text(addressFormat(infos['address']));
 }
 
 /**
  * Affiche les informations relatives au client.
  * @param infos
- * @constructor
  */
-function UpdateReceiverInfos(infos) {
+function updateReceiverInfos(infos) {
     $('#receiverName').text(infos['name']);
-    $('#receiverPhone').text(PhoneFormat(infos['phone']));
+    $('#receiverPhone').text(phoneFormat(infos['phone']));
     $('#receiverEmail').text(infos['email']);
 }
 
@@ -121,9 +118,8 @@ function UpdateReceiverInfos(infos) {
  * Concatonne les détails de l'adresse en une seule chaîne de caractères.
  * @param address
  * @returns {string}
- * @constructor
  */
-function AddressFormat(address) {
+function addressFormat(address) {
     return address['details'] + ', ' +
         address['city'] + ', ' +
         address['zip'] + ', ' +
@@ -134,9 +130,8 @@ function AddressFormat(address) {
  * Transforme 12345678901 pour 1-234-567-8910.
  * @param phone
  * @returns {string}
- * @constructor
  */
-function PhoneFormat(phone) {
+function phoneFormat(phone) {
     return phone.substring(0, 1) + '-' +
         phone.substring(1, 4) + '-' +
         phone.substring(4, 7) + '-' +

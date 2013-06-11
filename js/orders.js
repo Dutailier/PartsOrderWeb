@@ -21,11 +21,11 @@ $(document).ready(function () {
                         address.hasOwnProperty('zip') &&
                         address.hasOwnProperty('state') &&
                         address['state'].hasOwnProperty('name')) {
-                        UpdateStoreInfos(store);
+                        updateStoreInfos(store);
                     }
 
                     var parameters = {
-                        'storeId' : store['id']
+                        'storeId': store['id']
                     };
 
                     $.post('ajax/getOrdersByStoreId.php', parameters)
@@ -47,7 +47,7 @@ $(document).ready(function () {
                                             order.hasOwnProperty('lastModificationByUser') &&
                                             order['lastModificationByUser'].hasOwnProperty('username') &&
                                             order.hasOwnProperty('lastModificationDate')) {
-                                            AddOrder(order);
+                                            addOrderInfos(order);
                                         }
                                     }
                                 }
@@ -73,7 +73,7 @@ $(document).ready(function () {
         })
         .fail(function () {
             alert('Communication with the server failed.');
-        })
+        });
 
     $('#confirmDialog').dialog({
         autoOpen: false,
@@ -151,16 +151,15 @@ $(document).on('click', 'div.order', function () {
     if ($order.next().is('div.orderDetails')) {
         $order.next().stop().slideToggle();
     } else {
-        AddDetails($order);
+        addOrderDetails($order);
     }
 });
 
 /**
  * Retourne les détails d'une commande.
  * @param $order
- * @constructor
  */
-function AddDetails($order) {
+function addOrderDetails($order) {
     var parameters = {
         "orderId": $order.data('id')
     };
@@ -183,7 +182,7 @@ function AddDetails($order) {
                     if (receiver.hasOwnProperty('name') &&
                         receiver.hasOwnProperty('phone') &&
                         receiver.hasOwnProperty('email')) {
-                        AddReceiverInfos($details, receiver);
+                        addReceiverInfosToOrderDetails($details, receiver);
                     }
                 }
 
@@ -195,7 +194,7 @@ function AddDetails($order) {
                         shippingAddress.hasOwnProperty('zip') &&
                         shippingAddress.hasOwnProperty('state') &&
                         shippingAddress['state'].hasOwnProperty('name')) {
-                        AddShippingAddressInfos($details, shippingAddress);
+                        addShippingAddressInfosToOrderDetails($details, shippingAddress);
                     }
                 }
 
@@ -211,12 +210,13 @@ function AddDetails($order) {
                                 line['product'].hasOwnProperty('name') &&
                                 line.hasOwnProperty('quantity') &&
                                 line.hasOwnProperty('serial'))
-                                AddLine($lines, line);
+                                addLineInfosToLinesOfOrderDetails($lines, line);
                         }
                     }
                 }
 
                 if (order.hasOwnProperty('status')) {
+                    //noinspection FallthroughInSwitchStatementJS
                     switch (order['status']) {
                         case 'Pending' :
                             $buttons.append('<input class="btnConfirm" type="button" value="Confirm"/>');
@@ -270,9 +270,8 @@ $(document).on('click', 'input.btnCancel', function () {
  * Ajoute les informations relatives au receveur aux détails de la commande.
  * @param $details
  * @param receiver
- * @constructor
  */
-function AddReceiverInfos($details, receiver) {
+function addReceiverInfosToOrderDetails($details, receiver) {
     $details.append(
         '<fieldset class="receiverInfos">' +
             '<legend>Receiver informations</legend>' +
@@ -282,7 +281,7 @@ function AddReceiverInfos($details, receiver) {
             '</p>' +
             '<p>' +
             '<label class="properties">Phone : </label>' +
-            '<label id="receiverPhone" class="values">' + PhoneFormat(receiver['phone']) + '</label>' +
+            '<label id="receiverPhone" class="values">' + phoneFormat(receiver['phone']) + '</label>' +
             '</p>' +
             '<p>' +
             '<label class="properties">Email : </label>' +
@@ -296,15 +295,14 @@ function AddReceiverInfos($details, receiver) {
  * Ajoute les informations relatives à l'adresse de livraison aux détails de la commande.
  * @param $details
  * @param shippingAddress
- * @constructor
  */
-function AddShippingAddressInfos($details, shippingAddress) {
+function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
     $details.append(
         '<fieldset class="shippingAddressInfos">' +
             '<legend>Shipping informations</legend>' +
             '<p>' +
             '<label class="properties">Address : </label>' +
-            '<label id="shippingAddress" class="values">' + AddressFormat(shippingAddress) + '</label>' +
+            '<label id="shippingAddress" class="values">' + addressFormat(shippingAddress) + '</label>' +
             '</p>' +
             '</fieldset>'
     );
@@ -313,14 +311,13 @@ function AddShippingAddressInfos($details, shippingAddress) {
 /**
  * Ajoute une commande à la liste de commandes.
  * @param order
- * @constructor
  */
-function AddOrder(order) {
+function addOrderInfos(order) {
     $('#orders').append(
         '<div class="order ' + order['status'].toLowerCase() + '" data-id="' + order['id'] + '">' +
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
-            '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + DateFormat(order['lastModificationDate']) + '</i></label>' +
+            '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + dateFormat(order['lastModificationDate']) + '</i></label>' +
             '</div>'
     );
 }
@@ -328,7 +325,7 @@ function AddOrder(order) {
 /**
  * Ajoute une ligne à la commande.
  */
-function AddLine($list, line) {
+function addLineInfosToLinesOfOrderDetails($list, line) {
     $list.append(
         '<div class="line">' +
             '<div class="lineDetails">' +
@@ -343,22 +340,20 @@ function AddLine($list, line) {
 /**
  * Affiche les informations relatives au magasin.
  * @param infos
- * @constructor
  */
-function UpdateStoreInfos(infos) {
+function updateStoreInfos(infos) {
     $('#storeName').text(infos['name']);
-    $('#storePhone').text(PhoneFormat(infos['phone']));
+    $('#storePhone').text(phoneFormat(infos['phone']));
     $('#storeEmail').text(infos['email']);
-    $('#storeAddress').text(AddressFormat(infos['address']));
+    $('#storeAddress').text(addressFormat(infos['address']));
 }
 
 /**
  * Concatonne les détails de l'adresse en une seule chaîne de caractères.
  * @param address
  * @returns {string}
- * @constructor
  */
-function AddressFormat(address) {
+function addressFormat(address) {
     return address['details'] + ', ' +
         address['city'] + ', ' +
         address['zip'] + ', ' +
@@ -369,9 +364,8 @@ function AddressFormat(address) {
  * Transforme 12345678901 pour 1-234-567-8910.
  * @param phone
  * @returns {string}
- * @constructor
  */
-function PhoneFormat(phone) {
+function phoneFormat(phone) {
     return phone.substring(0, 1) + '-' +
         phone.substring(1, 4) + '-' +
         phone.substring(4, 7) + '-' +
@@ -382,8 +376,7 @@ function PhoneFormat(phone) {
  * Transforme 2013-06-07 10:24:15.227 pour 2013-06-07 10:24:15.
  * @param date
  * @returns {string}
- * @constructor
  */
-function DateFormat(date) {
+function dateFormat(date) {
     return date.substring(0, 19);
 }

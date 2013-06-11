@@ -258,7 +258,6 @@ $(document).ready(function () {
 
 /**
  * Affiche le contenu de l'onglet : magasins.
- * @constructor
  */
 function selectTabStores() {
     $('#btnTabOrders').removeClass('selected');
@@ -354,7 +353,6 @@ function updateOrdersInfosByRangeOfDates() {
 }
 /**
  * Affiche le contenu de l'onglet : dernières commandes.
- * @constructor
  */
 function selectTabOrders() {
     $('#btnTabOrders').addClass('selected');
@@ -380,7 +378,6 @@ $(document).on('click', 'div.order', function () {
 /**
  * Retourne les détails d'une commande.
  * @param $order
- * @constructor
  */
 function addOrderDetails($order) {
     var parameters = {
@@ -458,6 +455,7 @@ function addOrderDetails($order) {
                 }
 
                 if (order.hasOwnProperty('status')) {
+                    //noinspection FallthroughInSwitchStatementJS
                     switch (order['status']) {
                         case 'Pending' :
                             $buttons.append('<input class="btnConfirm" type="button" value="Confirm"/>');
@@ -511,7 +509,6 @@ $(document).on('click', 'input.btnCancel', function () {
  * Affiche les informations relatives au magasin.
  * @param $details
  * @param store
- * @constructor
  */
 function addStoreInfosToOrderDetails($details, store) {
     $details.append(
@@ -541,7 +538,6 @@ function addStoreInfosToOrderDetails($details, store) {
  * Ajoute les informations relatives au receveur aux détails de la commande.
  * @param $details
  * @param receiver
- * @constructor
  */
 function addReceiverInfosToOrderDetails($details, receiver) {
     $details.append(
@@ -567,7 +563,6 @@ function addReceiverInfosToOrderDetails($details, receiver) {
  * Ajoute les informations relatives à l'adresse de livraison aux détails de la commande.
  * @param $details
  * @param shippingAddress
- * @constructor
  */
 function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
     $details.append(
@@ -584,7 +579,6 @@ function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
 /**
  * Ajoute une commande à la liste de commandes.
  * @param order
- * @constructor
  */
 function addOrderInfos(order) {
     $('#orders').append(
@@ -614,7 +608,6 @@ function addLineInfosToOrderDetails($list, line) {
 /**
  * Affiche les informations relatives au magasin.
  * @param store
- * @constructor
  */
 function addStoreInfos(store) {
     $('#stores').append(
@@ -632,7 +625,6 @@ function addStoreInfos(store) {
  * Concatonne les détails de l'adresse en une seule chaîne de caractères.
  * @param address
  * @returns {string}
- * @constructor
  */
 function addressFormat(address) {
     return address['details'] + ', ' +
@@ -645,7 +637,6 @@ function addressFormat(address) {
  * Transforme 12345678901 pour 1-234-567-8910.
  * @param phone
  * @returns {string}
- * @constructor
  */
 function phoneFormat(phone) {
     return phone.substring(0, 1) + '-' +
@@ -658,7 +649,6 @@ function phoneFormat(phone) {
  * Transforme 2013-06-07 10:24:15.227 pour 2013-06-07 10:24:15.
  * @param date
  * @returns {string}
- * @constructor
  */
 function dateFormat(date) {
     return date.substring(0, 19);

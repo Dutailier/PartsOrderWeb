@@ -37,7 +37,7 @@ $(document).ready(function () {
                         shippingAddress.hasOwnProperty('zip') &&
                         shippingAddress.hasOwnProperty('state') &&
                         shippingAddress['state'].hasOwnProperty('name')) {
-                        UpdateShippingAddress(shippingAddress);
+                        updateShippingAddressInfos(shippingAddress);
                     }
 
                     if (store.hasOwnProperty('name') &&
@@ -51,17 +51,17 @@ $(document).ready(function () {
                             address.hasOwnProperty('zip') &&
                             address.hasOwnProperty('state') &&
                             address['state'].hasOwnProperty('name')) {
-                            UpdateStoreInfos(store);
+                            updateStoreInfos(store);
                         }
                     }
 
                     if (receiver.hasOwnProperty('name') &&
                         receiver.hasOwnProperty('phone') &&
                         receiver.hasOwnProperty('email')) {
-                        UpdateReceiverInfos(receiver);
+                        updateReceiverInfos(receiver);
                     }
 
-                    UpdateItems();
+                    updateItems();
                 }
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -72,7 +72,7 @@ $(document).ready(function () {
         })
         .fail(function () {
             alert('Communication with the server failed.');
-        })
+        });
 
     $('#frmSearch').validate({
         rules: {
@@ -92,26 +92,26 @@ $(document).ready(function () {
             // Récupère le numéro de série afin de le garder valide.
             serial = $('#serial').val();
 
-            var parameters = {
-                "serial": serial
-            };
-
             $.post('ajax/getProducts.php')
                 .done(function (data) {
 
                     if (data.hasOwnProperty('success') &&
                         data['success'] &&
                         data.hasOwnProperty('products')) {
+                        var products = data['products'];
 
                         $('#help').remove();
                         $('div.product').remove();
 
-                        for (var i in data['products']) {
-                            if (data['products'].hasOwnProperty(i) &&
-                                data['products'][i].hasOwnProperty('id') &&
-                                data['products'][i].hasOwnProperty('name') &&
-                                data['products'][i].hasOwnProperty('description')) {
-                                AddProduct(data['products'][i]);
+                        for (var i in products) {
+                            if (products.hasOwnProperty(i)) {
+                                var product = products[i];
+
+                                if (product.hasOwnProperty('id') &&
+                                    product.hasOwnProperty('name') &&
+                                    product.hasOwnProperty('description')) {
+                                    addProductInfos(product);
+                                }
                             }
                         }
 
@@ -134,12 +134,16 @@ $(document).ready(function () {
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
                 data.hasOwnProperty('filters')) {
+                var filters = data['filters'];
 
-                for (var i in data['filters']) {
-                    if (data['filters'].hasOwnProperty(i) &&
-                        data['filters'][i].hasOwnProperty('id') &&
-                        data['filters'][i].hasOwnProperty('name')) {
-                        AddFilter(data['filters'][i]);
+                for (var i in filters) {
+                    if (filters.hasOwnProperty(i)) {
+                        var filter = filters[i];
+
+                        if (filter.hasOwnProperty('id') &&
+                            filter.hasOwnProperty('name')) {
+                            addFilterInfos(filter);
+                        }
                     }
                 }
 
@@ -152,7 +156,7 @@ $(document).ready(function () {
         })
         .fail(function () {
             alert('Communication with the server failed.');
-        })
+        });
 
     $('#btnClear').click(function () {
         $.post('ajax/clearCart.php')
@@ -261,7 +265,7 @@ $(document).on('click', 'input.addCart', function () {
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
-                UpdateItems();
+                updateItems();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -288,7 +292,7 @@ $(document).on('click', 'input.removeCart', function () {
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
-                UpdateItems();
+                updateItems();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -316,15 +320,19 @@ $(document).on('click', 'label.filter', function () {
                 if (data.hasOwnProperty('success') &&
                     data['success'] &&
                     data.hasOwnProperty('products')) {
+                    var products = data['products'];
 
                     $('div.product').remove();
 
-                    for (var i in data['products']) {
-                        if (data['products'].hasOwnProperty(i) &&
-                            data['products'][i].hasOwnProperty('id') &&
-                            data['products'][i].hasOwnProperty('name') &&
-                            data['products'][i].hasOwnProperty('description')) {
-                            AddProduct(data['products'][i]);
+                    for (var i in products) {
+                        if (products.hasOwnProperty(i)) {
+                            var product = products[i];
+
+                            if (product.hasOwnProperty('id') &&
+                                product.hasOwnProperty('name') &&
+                                product.hasOwnProperty('description')) {
+                                addProductInfos(product);
+                            }
                         }
                     }
                 }
@@ -338,32 +346,29 @@ $(document).on('click', 'label.filter', function () {
 /**
  * Affiche les informations relatives à l'adresse d'expédition.
  * @param address
- * @constructor
  */
-function UpdateShippingAddress(address) {
-    $('#shippingAddress').text(AddressFormat(address));
+function updateShippingAddressInfos(address) {
+    $('#shippingAddress').text(addressFormat(address));
 }
 
 /**
  * Affiche les informations relatives au magasin.
  * @param infos
- * @constructor
  */
-function UpdateStoreInfos(infos) {
+function updateStoreInfos(infos) {
     $('#storeName').text(infos['name']);
-    $('#storePhone').text(PhoneFormat(infos['phone']));
+    $('#storePhone').text(phoneFormat(infos['phone']));
     $('#storeEmail').text(infos['email']);
-    $('#storeAddress').text(AddressFormat(infos['address']));
+    $('#storeAddress').text(addressFormat(infos['address']));
 }
 
 /**
  * Affiche les informations relatives au client.
  * @param infos
- * @constructor
  */
-function UpdateReceiverInfos(infos) {
+function updateReceiverInfos(infos) {
     $('#receiverName').text(infos['name']);
-    $('#receiverPhone').text(PhoneFormat(infos['phone']));
+    $('#receiverPhone').text(phoneFormat(infos['phone']));
     $('#receiverEmail').text(infos['email']);
 }
 
@@ -371,9 +376,8 @@ function UpdateReceiverInfos(infos) {
  * Concatonne les détails de l'adresse en une seule chaîne de caractères.
  * @param address
  * @returns {string}
- * @constructor
  */
-function AddressFormat(address) {
+function addressFormat(address) {
     return address['details'] + ', ' +
         address['city'] + ', ' +
         address['zip'] + ', ' +
@@ -384,35 +388,43 @@ function AddressFormat(address) {
  * Transforme 12345678901 pour 1-234-567-8910.
  * @param phone
  * @returns {string}
- * @constructor
  */
-function PhoneFormat(phone) {
+function phoneFormat(phone) {
     return phone.substring(0, 1) + '-' +
         phone.substring(1, 4) + '-' +
         phone.substring(4, 7) + '-' +
         phone.substring(7);
 }
 
-function UpdateItems() {
+function updateItems() {
     $.post('ajax/getItems.php')
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
                 data.hasOwnProperty('items')) {
+                var items = data['items'];
+                var $lblProducts = $('#lblProducts');
 
                 $('div.item').remove();
-                $('#lblProducts').hide();
 
-                for (var i in data['items']) {
-                    if (data['items'].hasOwnProperty(i) &&
-                        data['items'][i].hasOwnProperty('quantity') &&
-                        data['items'][i].hasOwnProperty('serial') &&
-                        data['items'][i].hasOwnProperty('product') &&
-                        data['items'][i]['product'].hasOwnProperty('id') &&
-                        data['items'][i]['product'].hasOwnProperty('name')) {
-                        $('#lblProducts').show();
-                        AddItem(data['items'][i]);
+                if (items.length > 0) {
+                    $lblProducts.show();
+                } else {
+                    $lblProducts.hide();
+                }
+
+                for (var i in items) {
+                    if (items.hasOwnProperty(i)) {
+                        var item = items[i];
+
+                        if (item.hasOwnProperty('quantity') &&
+                            item.hasOwnProperty('serial') &&
+                            item.hasOwnProperty('product') &&
+                            item['product'].hasOwnProperty('id') &&
+                            item['product'].hasOwnProperty('name')) {
+                            addItemInfos(item);
+                        }
                     }
                 }
 
@@ -428,7 +440,7 @@ function UpdateItems() {
         })
 }
 
-function AddItem(item) {
+function addItemInfos(item) {
     var $item = $(
         '<div class="item" data-product-id="' + item['product']['id'] + '">' +
             '<label class="quantity">' + item['quantity'] + '</label>' +
@@ -443,7 +455,7 @@ function AddItem(item) {
     $('#items').append($item);
 }
 
-function AddProduct(product) {
+function addProductInfos(product) {
 
     var $product = $(
         '<div class="product" data-id="' + product['id'] + '">' +
@@ -458,7 +470,7 @@ function AddProduct(product) {
     $('#products').append($product);
 }
 
-function AddFilter(filter) {
+function addFilterInfos(filter) {
     var $filter = $(
         '<label class="filter" data-id="' + filter['id'] + '">' + filter['name'] + '</label>');
 

@@ -36,12 +36,16 @@ $(document).ready(function () {
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
                 data.hasOwnProperty('destinations')) {
+                var destinations = data['destinations'];
 
-                for (var i in data['destinations']) {
-                    if (data['destinations'].hasOwnProperty(i) &&
-                        data['destinations'][i].hasOwnProperty('id') &&
-                        data['destinations'][i].hasOwnProperty('name')) {
-                        AddDestination(data['destinations'][i]);
+                for (var i in destinations) {
+                    if (destinations.hasOwnProperty(i)) {
+                        var destination = destinations[i];
+
+                        if (destination.hasOwnProperty('id') &&
+                            destination.hasOwnProperty('name')) {
+                            addDestinationsInfos(destination);
+                        }
                     }
                 }
 
@@ -57,7 +61,7 @@ $(document).ready(function () {
         })
 });
 
-function AddDestination(destination) {
+function addDestinationsInfos(destination) {
     var $destination = $(
         '<div class="destination" data-id="' + destination['id'] + '" >' +
             '<span class="name">' + destination['name'] + '</span>' +

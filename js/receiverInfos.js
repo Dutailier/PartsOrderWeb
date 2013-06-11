@@ -1,15 +1,10 @@
-function AddState(data, i) {
-    $('#states').append(
-        $('<option></option>')
-            .val(data['states'][i]['id'])
-            .text(data['states'][i]['name']));
-}
 $(document).ready(function () {
-    // Définit la règle de validation pour le numéro de téléphone.
-    $.validator.addMethod('phone', function (value, element) {
+    //noinspection JSUnresolvedVariable,JSUnresolvedFunction
+    $.validator.addMethod('phone', function (value) {
         return /^[1]?[-. ]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/g.test(value)
     }, 'The phone number must be standard (ex: 123-456-7878).');
 
+    //noinspection JSUnresolvedFunction
     $('#frmOrder').validate({
         rules: {
             name: { required: true },
@@ -76,8 +71,8 @@ $(document).ready(function () {
                 "details": $('#address').val(),
                 "city": $('#city').val(),
                 "zip": $('#zip').val(),
-                "stateId": $('#states > option:selected').val(),
-                "countryId": $('#countries > option:selected').val(),
+                "stateId": $('#states').find('option:selected').val(),
+                "countryId": $('#countries').find('option:selected').val(),
                 "useStoreAddress": $('#checkUseStoreAddress').is(':checked')
             };
 
@@ -107,7 +102,7 @@ $(document).ready(function () {
     $('#countries').change(function () {
 
         var parameters = {
-            "countryId": $('#countries > option:selected').val()
+            "countryId": $('#countries').find('option:selected').val()
         };
 
         $.post('ajax/getStates.php', parameters)
@@ -116,19 +111,22 @@ $(document).ready(function () {
                 if (data.hasOwnProperty('success') &&
                     data['success'] &&
                     data.hasOwnProperty('states')) {
+                    var states = data['states'];
 
-                    $('#states > option').remove();
+                    $('#states').find('option').remove();
 
-                    for (var i in data['states']) {
-                        if (data['states'].hasOwnProperty(i) &&
-                            data['states'][i].hasOwnProperty('id') &&
-                            data['states'][i].hasOwnProperty('name')) {
+                    for (var i in states) {
+                        if (states.hasOwnProperty(i)) {
+                            var state = states[i];
 
-                            AddState(data, i);
+                            if (state.hasOwnProperty('id') &&
+                                state.hasOwnProperty('name')) {
+                                addStateInfos(state);
+                            }
                         }
                     }
 
-                    UpdateInfos();
+                    updateReceiverInfosAndShippindAddressInfos();
 
                 } else if (data.hasOwnProperty('message')) {
                     alert(data['message']);
@@ -148,9 +146,10 @@ $(document).ready(function () {
                 data['success'] &&
                 data.hasOwnProperty('countries')) {
 
-                $('#countries > option').remove();
-
+                var $countries = $('#countries');
                 var countries = data['countries'];
+
+                $countries.find('option').remove();
 
                 for (var i in countries) {
                     if (countries.hasOwnProperty(i)) {
@@ -158,17 +157,11 @@ $(document).ready(function () {
 
                         if (country.hasOwnProperty('id') &&
                             country.hasOwnProperty('name')) {
-                            $('#countries').append(
-                                $('<option></option>')
-                                    .val(country['id'])
-                                    .text(country['name']));
-
-                            $('#countries > option[value="1"]')
-                                .attr('selected', 'selected');
+                            addCountryInfos(country);
                         }
                     }
                 }
-                $('#countries').trigger('change');
+                $countries.trigger('change');
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -179,7 +172,7 @@ $(document).ready(function () {
         })
         .fail(function () {
             alert('Communication with the server failed.');
-        })
+        });
 
     $('#btnClear').click(function () {
         $('fieldset > p > input, textarea').val('');
@@ -206,11 +199,24 @@ $(document).ready(function () {
     });
 });
 
+function addStateInfos(state) {
+    $('#states').append(
+        $('<option></option>')
+            .val(state['id'])
+            .text(state['name']));
+}
+
+function addCountryInfos(country) {
+    $('#countries').append(
+        $('<option></option>')
+            .val(country['id'])
+            .text(country['name']));
+}
+
 /**
  * Met à jour les informations du receveur ainsi que l'adresse d'expédition.
- * @constructor
  */
-function UpdateInfos() {
+function updateReceiverInfosAndShippindAddressInfos() {
     $.post('ajax/getReceiver.php')
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
@@ -232,7 +238,7 @@ function UpdateInfos() {
         })
         .fail(function () {
             alert('Communication with the server failed.');
-        })
+        });
 
     $.post('ajax/getShippingAddress.php')
         .done(function (data) {
