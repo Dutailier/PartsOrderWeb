@@ -31,9 +31,4 @@ class Filter extends Entity
     {
         return $this->type;
     }
-
-    public function getProducts()
-    {
-        return Products::FilterByFilterId($this->getId());
-    }
 }
