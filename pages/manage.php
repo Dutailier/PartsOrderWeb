@@ -39,8 +39,7 @@ $title = 'Manage';
         <input id="btnSearchUsername" name="btnSearchUsername" type="button" value="Search"/>
 
         <div id="banners">
-            <b>Banner : </b><select id="banner">
-            </select>
+            <b>Banner : </b><select id="banner"> </select>
         </div>
     </div>
     <div id="stores">

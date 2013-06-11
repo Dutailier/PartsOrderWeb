@@ -18,14 +18,14 @@ $(document).ready(function () {
     $('#from').datepicker('setDate', '-1w');
     $('#to').datepicker('setDate', '+1d');
 
-    SelectTabOrders();
+    selectTabOrders();
 
     $('#btnTabOrders').click(function () {
-        SelectTabOrders();
+        selectTabOrders();
     });
 
     $('#btnRangeOfDates').click(function () {
-        UpdateOrdersByRangeOfDates();
+        updateOrdersInfosByRangeOfDates();
     });
 
     $('#btnSearchNumber').click(function () {
@@ -54,7 +54,7 @@ $(document).ready(function () {
                                 order.hasOwnProperty('lastModificationByUser') &&
                                 order['lastModificationByUser'].hasOwnProperty('username') &&
                                 order.hasOwnProperty('lastModificationDate')) {
-                                AddOrderInfos(order);
+                                addOrderInfos(order);
                             }
                         }
                     }
@@ -108,7 +108,7 @@ $(document).ready(function () {
 
                                     if (user.hasOwnProperty('id') &&
                                         user.hasOwnProperty('username')) {
-                                        AddStore(store);
+                                        addStoreInfos(store);
                                     }
                                 }
                             }
@@ -128,12 +128,12 @@ $(document).ready(function () {
     });
 
     $('#btnTabStores').click(function () {
-        SelectTabStores();
+        selectTabStores();
     });
 
     $('#banner').change(function () {
         var parameters = {
-            'bannerId': $('#banner > option:selected').val()
+            'bannerId': $('#banner').find('option:selected').val()
         };
 
         $.post('ajax/getStoresByBannerId.php', parameters)
@@ -169,7 +169,7 @@ $(document).ready(function () {
 
                                     if (user.hasOwnProperty('id') &&
                                         user.hasOwnProperty('username')) {
-                                        AddStore(store);
+                                        addStoreInfos(store);
                                     }
                                 }
                             }
@@ -260,7 +260,7 @@ $(document).ready(function () {
  * Affiche le contenu de l'onglet : magasins.
  * @constructor
  */
-function SelectTabStores() {
+function selectTabStores() {
     $('#btnTabOrders').removeClass('selected');
     $('#tabOrders').hide();
 
@@ -276,9 +276,10 @@ function SelectTabStores() {
                 data['success'] &&
                 data['banners']) {
 
-                $('#banner > option').remove();
-
                 var banners = data['banners'];
+                var $banner = $('#banner');
+
+                $banner.find('option').remove();
 
                 for (var i in banners) {
                     if (banners.hasOwnProperty(i)) {
@@ -286,12 +287,12 @@ function SelectTabStores() {
 
                         if (banner.hasOwnProperty('id') &&
                             banner.hasOwnProperty('name')) {
-                            $('#banner').append(
+                            $banner.append(
                                 $('<option></option>')
                                     .val(banner['id'])
                                     .text(banner['name']));
 
-                            $('#banner').trigger('change');
+                            $banner.trigger('change');
                         }
                     }
                 }
@@ -308,7 +309,7 @@ function SelectTabStores() {
         })
 }
 
-function UpdateOrdersByRangeOfDates() {
+function updateOrdersInfosByRangeOfDates() {
     var parameters = {
         'from': $('#from').val(),
         'to': $('#to').val()
@@ -335,7 +336,7 @@ function UpdateOrdersByRangeOfDates() {
                             order.hasOwnProperty('lastModificationByUser') &&
                             order['lastModificationByUser'].hasOwnProperty('username') &&
                             order.hasOwnProperty('lastModificationDate')) {
-                            AddOrderInfos(order);
+                            addOrderInfos(order);
                         }
                     }
                 }
@@ -355,14 +356,14 @@ function UpdateOrdersByRangeOfDates() {
  * Affiche le contenu de l'onglet : dernières commandes.
  * @constructor
  */
-function SelectTabOrders() {
+function selectTabOrders() {
     $('#btnTabOrders').addClass('selected');
     $('#tabOrders').show();
 
     $('#btnTabStores').removeClass('selected');
     $('#tabStores').hide();
 
-    UpdateOrdersByRangeOfDates();
+    updateOrdersInfosByRangeOfDates();
 }
 
 $(document).on('click', 'div.order', function () {
@@ -372,7 +373,7 @@ $(document).on('click', 'div.order', function () {
     if ($order.next().is('div.orderDetails')) {
         $order.next().stop().slideToggle();
     } else {
-        AddDetails($order);
+        addOrderDetails($order);
     }
 });
 
@@ -381,7 +382,7 @@ $(document).on('click', 'div.order', function () {
  * @param $order
  * @constructor
  */
-function AddDetails($order) {
+function addOrderDetails($order) {
     var parameters = {
         "orderId": $order.data('id')
     };
@@ -406,7 +407,7 @@ function AddDetails($order) {
                         shippingAddress.hasOwnProperty('zip') &&
                         shippingAddress.hasOwnProperty('state') &&
                         shippingAddress['state'].hasOwnProperty('name')) {
-                        AddShippingAddressInfos($details, shippingAddress);
+                        addShippingAddressInfosToOrderDetails($details, shippingAddress);
                     }
                 }
 
@@ -424,7 +425,7 @@ function AddDetails($order) {
                             address.hasOwnProperty('zip') &&
                             address.hasOwnProperty('state') &&
                             address['state'].hasOwnProperty('name')) {
-                            AddStoreInfos($details, store);
+                            addStoreInfosToOrderDetails($details, store);
                         }
                     }
                 }
@@ -435,7 +436,7 @@ function AddDetails($order) {
                     if (receiver.hasOwnProperty('name') &&
                         receiver.hasOwnProperty('phone') &&
                         receiver.hasOwnProperty('email')) {
-                        AddReceiverInfos($details, receiver);
+                        addReceiverInfosToOrderDetails($details, receiver);
                     }
                 }
 
@@ -451,7 +452,7 @@ function AddDetails($order) {
                                 line['product'].hasOwnProperty('name') &&
                                 line.hasOwnProperty('quantity') &&
                                 line.hasOwnProperty('serial'))
-                                AddLineInfos($lines, line);
+                                addLineInfosToOrderDetails($lines, line);
                         }
                     }
                 }
@@ -512,7 +513,7 @@ $(document).on('click', 'input.btnCancel', function () {
  * @param store
  * @constructor
  */
-function AddStoreInfos($details, store) {
+function addStoreInfosToOrderDetails($details, store) {
     $details.append(
         '<fieldset class="storeInfos">' +
             '<legend>Store informations</legend>' +
@@ -522,7 +523,7 @@ function AddStoreInfos($details, store) {
             '</p>' +
             '<p>' +
             '<label class="properties">Phone : </label>' +
-            '<label id="receiverPhone" class="values">' + PhoneFormat(store['phone']) + '</label>' +
+            '<label id="receiverPhone" class="values">' + phoneFormat(store['phone']) + '</label>' +
             '</p>' +
             '<p>' +
             '<label class="properties">Email : </label>' +
@@ -530,7 +531,7 @@ function AddStoreInfos($details, store) {
             '</p>' +
             '<p>' +
             '<label class="properties">Address : </label>' +
-            '<label id="storeAddress" class="values">' + AddressFormat(store['address']) + '</label>' +
+            '<label id="storeAddress" class="values">' + addressFormat(store['address']) + '</label>' +
             '</p>' +
             '</fieldset>'
     );
@@ -542,7 +543,7 @@ function AddStoreInfos($details, store) {
  * @param receiver
  * @constructor
  */
-function AddReceiverInfos($details, receiver) {
+function addReceiverInfosToOrderDetails($details, receiver) {
     $details.append(
         '<fieldset class="receiverInfos">' +
             '<legend>Receiver informations</legend>' +
@@ -552,7 +553,7 @@ function AddReceiverInfos($details, receiver) {
             '</p>' +
             '<p>' +
             '<label class="properties">Phone : </label>' +
-            '<label id="receiverPhone" class="values">' + PhoneFormat(receiver['phone']) + '</label>' +
+            '<label id="receiverPhone" class="values">' + phoneFormat(receiver['phone']) + '</label>' +
             '</p>' +
             '<p>' +
             '<label class="properties">Email : </label>' +
@@ -568,13 +569,13 @@ function AddReceiverInfos($details, receiver) {
  * @param shippingAddress
  * @constructor
  */
-function AddShippingAddressInfos($details, shippingAddress) {
+function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
     $details.append(
         '<fieldset class="shippingAddressInfos">' +
             '<legend>Shipping informations</legend>' +
             '<p>' +
             '<label class="properties">Address : </label>' +
-            '<label id="shippingAddress" class="values">' + AddressFormat(shippingAddress) + '</label>' +
+            '<label id="shippingAddress" class="values">' + addressFormat(shippingAddress) + '</label>' +
             '</p>' +
             '</fieldset>'
     );
@@ -585,12 +586,12 @@ function AddShippingAddressInfos($details, shippingAddress) {
  * @param order
  * @constructor
  */
-function AddOrderInfos(order) {
+function addOrderInfos(order) {
     $('#orders').append(
         '<div class="order ' + order['status'].toLowerCase() + '" data-id="' + order['id'] + '">' +
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
-            '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + DateFormat(order['lastModificationDate']) + '</i></label>' +
+            '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + dateFormat(order['lastModificationDate']) + '</i></label>' +
             '</div>'
     );
 }
@@ -598,7 +599,7 @@ function AddOrderInfos(order) {
 /**
  * Ajoute une ligne à la commande.
  */
-function AddLineInfos($list, line) {
+function addLineInfosToOrderDetails($list, line) {
     $list.append(
         '<div class="line">' +
             '<div class="lineDetails">' +
@@ -615,7 +616,7 @@ function AddLineInfos($list, line) {
  * @param store
  * @constructor
  */
-function AddStore(store) {
+function addStoreInfos(store) {
     $('#stores').append(
         '<div class="store" data-id="' + store['id'] + '">' +
             '<div class="storeDetails">' +
@@ -633,7 +634,7 @@ function AddStore(store) {
  * @returns {string}
  * @constructor
  */
-function AddressFormat(address) {
+function addressFormat(address) {
     return address['details'] + ', ' +
         address['city'] + ', ' +
         address['zip'] + ', ' +
@@ -646,7 +647,7 @@ function AddressFormat(address) {
  * @returns {string}
  * @constructor
  */
-function PhoneFormat(phone) {
+function phoneFormat(phone) {
     return phone.substring(0, 1) + '-' +
         phone.substring(1, 4) + '-' +
         phone.substring(4, 7) + '-' +
@@ -659,6 +660,6 @@ function PhoneFormat(phone) {
  * @returns {string}
  * @constructor
  */
-function DateFormat(date) {
+function dateFormat(date) {
     return date.substring(0, 19);
 }
