@@ -10,8 +10,7 @@ $(document).ready(function () {
 
         submitHandler: function () {
 
-            // Désactive le formulaire le temps que la requête soit exécutée.
-            $('#login').find('form').children().attr('disabled', 'disabled');
+            $('#login').find('form').filter().attr('disabled', 'disabled');
 
             var credentials = {
                 "username": $('#username').val(),
@@ -39,7 +38,7 @@ $(document).ready(function () {
                     alert('Communication with the server failed.');
                 })
                 .always(function () {
-                    $('#login').find('form').children().removeAttr('disabled');
+                    $('#login').find('form').filter().removeAttr('disabled');
                 })
         }
     });
