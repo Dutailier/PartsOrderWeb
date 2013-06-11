@@ -5,27 +5,50 @@ include_once(ROOT . 'libs/entities/store.php');
 
 class Stores
 {
-    public static function FindByUserId($id)
+    public static function FilterByUserId($id)
     {
-        $query = 'EXEC [getStoreByUserId]';
+        $query = 'EXEC [getStoresByUserId]';
         $query .= '@userId = "' . intval($id) . '"';
 
         $rows = Database::Execute($query);
 
+        $stores = array();
+        foreach ($rows as $row) {
 
-        if (empty($rows)) {
-            throw new Exception('No retailer found.');
+            $store = new Store(
+                $row['userId'],
+                $row['name'],
+                $row['phone'],
+                $row['email'],
+                $row['addressId']);
+            $store->setId($row['id']);
+
+            $stores[] = $store;
         }
+        return $stores;
+    }
 
-        $store = new Store(
-            $rows[0]['userId'],
-            $rows[0]['name'],
-            $rows[0]['phone'],
-            $rows[0]['email'],
-            $rows[0]['addressId']);
-        $store->setId($rows[0]['id']);
+    public static function FilterByUsername($username)
+    {
+        $query = 'EXEC [getStoresByUsername]';
+        $query .= '@username = "' . trim($username) . '"';
 
-        return $store;
+        $rows = Database::Execute($query);
+
+        $stores = array();
+        foreach ($rows as $row) {
+
+            $store = new Store(
+                $row['userId'],
+                $row['name'],
+                $row['phone'],
+                $row['email'],
+                $row['addressId']);
+            $store->setId($row['id']);
+
+            $stores[] = $store;
+        }
+        return $stores;
     }
 
     public static function Find($id)
@@ -66,7 +89,7 @@ class Stores
                 $row['phone'],
                 $row['email'],
                 $row['addressId']);
-            $store->setId($rows[0]['id']);
+            $store->setId($row['id']);
 
             $stores[] = $store;
         }

@@ -20,16 +20,171 @@ $(document).ready(function () {
 
     SelectTabLastOrders();
 
-    $('#btnLastOrders').click(function () {
+    $('#btnTabOrders').click(function () {
         SelectTabLastOrders();
     });
 
-    $('#btnGo').click(function () {
-        UpdateOrders();
+    $('#btnRangeOfDates').click(function () {
+        UpdateOrdersByRangeOfDates();
     });
 
-    $('#btnStores').click(function () {
+    $('#btnSearchNumber').click(function () {
+        var parameters = {
+            'number': $('#number').val()
+        };
+
+        $.post('ajax/getOrdersByNumber.php', parameters)
+            .done(function (data) {
+                if (data.hasOwnProperty('success') &&
+                    data['success'] &&
+                    data.hasOwnProperty('orders')) {
+
+                    $('div.orderDetails').remove();
+                    $('div.order').remove();
+
+                    var orders = data['orders'];
+
+                    for (var i in orders) {
+                        if (orders.hasOwnProperty(i)) {
+                            var order = orders[i];
+
+                            if (order.hasOwnProperty('status') &&
+                                order.hasOwnProperty('id') &&
+                                order.hasOwnProperty('number') &&
+                                order.hasOwnProperty('lastModificationByUser') &&
+                                order['lastModificationByUser'].hasOwnProperty('username') &&
+                                order.hasOwnProperty('lastModificationDate')) {
+                                AddOrderInfos(order);
+                            }
+                        }
+                    }
+
+                } else if (data.hasOwnProperty('message')) {
+                    alert(data['message']);
+
+                } else {
+                    alert('The result of the server is unreadable.');
+                }
+            })
+            .fail(function () {
+                alert('Communication with the server failed.');
+            })
+    });
+
+    $('#btnSearchUsername').click(function () {
+        var parameters = {
+            'username': $('#username').val()
+        };
+
+        $.post('ajax/getStoresByUsername.php', parameters)
+            .done(function (data) {
+                if (data.hasOwnProperty('success') &&
+                    data['success'] &&
+                    data.hasOwnProperty('stores')) {
+
+                    $('div.storeDetails').remove();
+                    $('div.store').remove();
+
+                    var stores = data['stores'];
+
+                    for (var i in stores) {
+                        if (stores.hasOwnProperty(i)) {
+                            var store = stores[i];
+
+                            if (store.hasOwnProperty('id') &&
+                                store.hasOwnProperty('name') &&
+                                store.hasOwnProperty('phone') &&
+                                store.hasOwnProperty('email') &&
+                                store.hasOwnProperty('address') &&
+                                store.hasOwnProperty('user')) {
+                                var address = store['address'];
+                                var user = store['user'];
+
+                                if (address.hasOwnProperty('details') &&
+                                    address.hasOwnProperty('city') &&
+                                    address.hasOwnProperty('zip') &&
+                                    address.hasOwnProperty('state') &&
+                                    address['state'].hasOwnProperty('name')) {
+
+                                    if (user.hasOwnProperty('id') &&
+                                        user.hasOwnProperty('username')) {
+                                        AddStore(store);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                } else if (data.hasOwnProperty('message')) {
+                    alert(data['message']);
+
+                } else {
+                    alert('The result of the server is unreadable.');
+                }
+            })
+            .fail(function () {
+                alert('Communication with the server failed.');
+            })
+    });
+
+    $('#btnTabStores').click(function () {
         SelectTabStores();
+    });
+
+    $('#banner').change(function () {
+        var parameters = {
+            'bannerId': $('#banner > option:selected').val()
+        };
+
+        $.post('ajax/getStoresByBannerId.php', parameters)
+            .done(function (data) {
+
+                if (data.hasOwnProperty('success') &&
+                    data['success'] &&
+                    data.hasOwnProperty('stores')) {
+
+                    $('#stores').show();
+                    $('div.store').remove();
+
+                    var stores = data['stores'];
+
+                    for (var i in stores) {
+                        if (stores.hasOwnProperty(i)) {
+                            var store = stores[i];
+
+                            if (store.hasOwnProperty('id') &&
+                                store.hasOwnProperty('name') &&
+                                store.hasOwnProperty('phone') &&
+                                store.hasOwnProperty('email') &&
+                                store.hasOwnProperty('address') &&
+                                store.hasOwnProperty('user')) {
+                                var address = store['address'];
+                                var user = store['user'];
+
+                                if (address.hasOwnProperty('details') &&
+                                    address.hasOwnProperty('city') &&
+                                    address.hasOwnProperty('zip') &&
+                                    address.hasOwnProperty('state') &&
+                                    address['state'].hasOwnProperty('name')) {
+
+                                    if (user.hasOwnProperty('id') &&
+                                        user.hasOwnProperty('username')) {
+                                        AddStore(store);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else if (data.hasOwnProperty('message')) {
+                    alert(data['message']);
+
+                } else {
+                    alert('The result of the server is unreadable.');
+                }
+            })
+            .fail(function () {
+                alert('Communication with the server failed.');
+            })
     });
 
     $('#confirmDialog').dialog({
@@ -106,10 +261,10 @@ $(document).ready(function () {
  * @constructor
  */
 function SelectTabStores() {
-    $('#btnLastOrders').removeClass('selected');
+    $('#btnTabOrders').removeClass('selected');
     $('#tabOrders').hide();
 
-    $('#btnStores').addClass('selected');
+    $('#btnTabStores').addClass('selected');
     $('#tabStores').show();
     $('#banners').show();
     $('#stores').hide();
@@ -121,7 +276,7 @@ function SelectTabStores() {
                 data['success'] &&
                 data['banners']) {
 
-                $('div.banner').remove();
+                $('#banner > option').remove();
 
                 var banners = data['banners'];
 
@@ -131,7 +286,12 @@ function SelectTabStores() {
 
                         if (banner.hasOwnProperty('id') &&
                             banner.hasOwnProperty('name')) {
-                            AddBannerInfos(banner);
+                            $('#banner').append(
+                                $('<option></option>')
+                                    .val(banner['id'])
+                                    .text(banner['name']));
+
+                            $('#banner').trigger('change');
                         }
                     }
                 }
@@ -148,7 +308,7 @@ function SelectTabStores() {
         })
 }
 
-function UpdateOrders() {
+function UpdateOrdersByRangeOfDates() {
     var parameters = {
         'from': $('#from').val(),
         'to': $('#to').val()
@@ -196,13 +356,13 @@ function UpdateOrders() {
  * @constructor
  */
 function SelectTabLastOrders() {
-    $('#btnLastOrders').addClass('selected');
+    $('#btnTabOrders').addClass('selected');
     $('#tabOrders').show();
 
-    $('#btnStores').removeClass('selected');
+    $('#btnTabStores').removeClass('selected');
     $('#tabStores').hide();
 
-    UpdateOrders();
+    UpdateOrdersByRangeOfDates();
 }
 
 $(document).on('click', 'div.order', function () {
@@ -346,63 +506,6 @@ $(document).on('click', 'input.btnCancel', function () {
     $dialog.dialog('open');
 });
 
-$(document).on('click', 'div.banner', function () {
-    var parameters = {
-        'bannerId': $(this).data('id')
-    };
-
-    $.post('ajax/getStoresByBannerId.php', parameters)
-        .done(function (data) {
-
-            if (data.hasOwnProperty('success') &&
-                data['success'] &&
-                data.hasOwnProperty('stores')) {
-
-                $('#banners').hide();
-                $('#stores').show();
-                $('div.store').remove();
-
-                var stores = data['stores'];
-
-                for (var i in stores) {
-                    if (stores.hasOwnProperty(i)) {
-                        var store = stores[i];
-
-                        if (store.hasOwnProperty('id') &&
-                            store.hasOwnProperty('name') &&
-                            store.hasOwnProperty('phone') &&
-                            store.hasOwnProperty('email') &&
-                            store.hasOwnProperty('address') &&
-                            store.hasOwnProperty('user')) {
-                            var address = store['address'];
-                            var user = store['user'];
-
-                            if (address.hasOwnProperty('details') &&
-                                address.hasOwnProperty('city') &&
-                                address.hasOwnProperty('zip') &&
-                                address.hasOwnProperty('state') &&
-                                address['state'].hasOwnProperty('name')) {
-
-                                if (user.hasOwnProperty('id') &&
-                                    user.hasOwnProperty('username')) {
-                                    AddStore(store);
-                                }
-                            }
-                        }
-                    }
-                }
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
-
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        })
-});
-
 /**
  * Affiche les informations relatives au magasin.
  * @param $details
@@ -502,21 +605,6 @@ function AddLineInfos($list, line) {
             '<label class="quantity">' + line['quantity'] + '</label>' +
             '<label class="name">' + line['product']['name'] + '</label>' +
             '<label class="serial">' + line['serial'] + '</label>' +
-            '</div>' +
-            '</div>'
-    );
-}
-
-/**
- * Affiche les informations relative à la banière.
- * @param banner
- * @constructor
- */
-function AddBannerInfos(banner) {
-    $('#banners').append(
-        '<div class="banner" data-id="' + banner['id'] + '">' +
-            '<div class="bannerDetails">' +
-            '<label class="name">' + banner['name'] + '</label>' +
             '</div>' +
             '</div>'
     );

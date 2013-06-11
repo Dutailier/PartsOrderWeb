@@ -150,19 +150,22 @@ $(document).ready(function () {
 
                 $('#countries > option').remove();
 
-                for (var i in data['countries']) {
-                    if (data['countries'].hasOwnProperty(i) &&
-                        data['countries'][i].hasOwnProperty('id') &&
-                        data['countries'][i].hasOwnProperty('name')) {
+                var countries = data['countries'];
 
-                        // Ajoute le pays à la liste.
-                        $('#countries').append(
-                            $('<option></option>')
-                                .val(data['countries'][i]['id'])
-                                .text(data['countries'][i]['name']));
+                for (var i in countries) {
+                    if (countries.hasOwnProperty(i)) {
+                        var country = countries[i];
 
-                        $('#countries > option[value="1"]')
-                            .attr('selected', 'selected');
+                        if (country.hasOwnProperty('id') &&
+                            country.hasOwnProperty('name')) {
+                            $('#countries').append(
+                                $('<option></option>')
+                                    .val(country['id'])
+                                    .text(country['name']));
+
+                            $('#countries > option[value="1"]')
+                                .attr('selected', 'selected');
+                        }
                     }
                 }
                 $('#countries').trigger('change');

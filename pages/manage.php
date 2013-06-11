@@ -15,30 +15,38 @@ $title = 'Manage';
 
 <!-- Début du contenu. -->
 <ul id="tabs">
-    <li id="btnLastOrders">Orders</li>
-    <li id="btnStores">Stores</li>
+    <li id="btnTabOrders">Orders</li>
+    <li id="btnTabStores">Stores</li>
 </ul>
 
 <div class="tab" id="tabOrders">
     <div id="orders">
-        <div id="filters">
-            <b>Search : </b><input id="search" name="search" type="text">
+        <div id="orderFilters" class="filters">
+            <b>Search : </b><input id="number" name="number" type="text" maxlength="11">
+            <input id="btnSearchNumber" name="btnSearchNumber" type="button" value="Search"/>
+
             <div id="dates">
-                <b>from : </b><input id="from" class="date" type="text" class="datepicker" />
-                <b>to : </b><input id="to" class="date" type="text" class="datepicker" />
-                <input id="btnGo" name="btnGo" type="button" value="Go" />
+                <b>from : </b><input id="from" class="date" type="text" class="datepicker"/>
+                <b>to : </b><input id="to" class="date" type="text" class="datepicker"/>
+                <input id="btnRangeOfDates" name="btnRangeOfDates" type="button" value="Go"/>
             </div>
         </div>
     </div>
 </div>
 
 <div class="tab" id="tabStores">
-    <div id="banners">
-        <p>Click on a banner to see his stores.</p>
+    <div id="storeFilters" class="filters">
+        <b>Search : </b><input id="username" name="username" type="text">
+        <input id="btnSearchUsername" name="btnSearchUsername" type="button" value="Search"/>
+
+        <div id="banners">
+            <b>Banner : </b><select id="banner">
+            </select>
+        </div>
     </div>
-    <div id="stores">
-        <p>Click on a store for more details.</p>
-    </div>
+</div>
+<div id="stores">
+</div>
 </div>
 
 <div id="confirmDialog">

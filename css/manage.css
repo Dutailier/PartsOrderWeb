@@ -80,26 +80,30 @@ div.tab {
     margin-left: 10px;
 }
 
-#filters {
+div.filters {
     border: 1px solid #484848;
     padding: 8px;
     overflow: hidden; /* Clearfix */
 }
 
-#filters * {
+div.filters * {
     line-height: 20px;
     margin: 0px 5px;
 }
 
-#btnGo {
-    width: 50px;
+#btnSearchNumber,
+#btnRangeOfDates,
+#btnSearchUsername {
+    width: 75px;
 }
 
-#search {
-    width: 300px;
+#number, input.date, #banner {
+    text-align: center;
+    width: 180px;
+    font-size: 1.2em;
 }
 
-#dates {
+#dates, #banners {
     float: right;
 }
 
