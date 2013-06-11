@@ -13,7 +13,12 @@ if (!Security::isAuthenticated()) {
     // Si aucune page n'est demandée, on redirige l'utilisateur
     // à la liste de produits.
     if (empty($page) || $page == 'index') {
-        $page = 'products';
+        if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
+            $page = 'manage';
+
+        } else if(Security::isInRoleName(ROLE_STORE)) {
+            $page = 'products';
+        }
     }
 
     if ($page == 'products') {
@@ -42,7 +47,7 @@ if (empty($head) || empty($content)) {
 
 <html>
 <head>
-    <title>BabiesRus Parts Order - <?php echo $title; ?></title>
+    <title>Parts Order Web - <?php echo $title; ?></title>
 
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
 
