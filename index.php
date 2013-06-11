@@ -10,8 +10,6 @@ if (!Security::isAuthenticated()) {
 } else {
     $page = $_GET['page'];
 
-    // Si aucune page n'est demandée, on redirige l'utilisateur
-    // à la liste de produits.
     if (empty($page) || $page == 'index') {
         if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
             $page = 'manage';

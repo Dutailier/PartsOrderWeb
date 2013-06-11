@@ -41,7 +41,7 @@ body {
     margin: 0px auto;
     height: 100px;
     width: 1280px;;
-    overflow: hidden;
+    overflow: hidden; /* Clearfix */
 }
 
 /* En-tête */

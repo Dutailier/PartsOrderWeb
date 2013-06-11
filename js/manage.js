@@ -18,10 +18,10 @@ $(document).ready(function () {
     $('#from').datepicker('setDate', '-1w');
     $('#to').datepicker('setDate', '+1d');
 
-    SelectTabLastOrders();
+    SelectTabOrders();
 
     $('#btnTabOrders').click(function () {
-        SelectTabLastOrders();
+        SelectTabOrders();
     });
 
     $('#btnRangeOfDates').click(function () {
@@ -355,7 +355,7 @@ function UpdateOrdersByRangeOfDates() {
  * Affiche le contenu de l'onglet : dernières commandes.
  * @constructor
  */
-function SelectTabLastOrders() {
+function SelectTabOrders() {
     $('#btnTabOrders').addClass('selected');
     $('#tabOrders').show();
 

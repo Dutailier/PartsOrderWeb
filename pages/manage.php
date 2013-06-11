@@ -6,7 +6,6 @@ $title = 'Manage';
 
 <!-- Début de l'en-tête. -->
 <link type="text/css" rel="stylesheet" href="css/manage.css"/>
-<link type="text/css" rel="stylesheet" href="css/order.css"/>
 <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
 <!-- Fin de l'en-tête. -->
 
@@ -44,9 +43,8 @@ $title = 'Manage';
             </select>
         </div>
     </div>
-</div>
-<div id="stores">
-</div>
+    <div id="stores">
+    </div>
 </div>
 
 <div id="confirmDialog">
