@@ -19,27 +19,31 @@ $title = 'Manage';
 </ul>
 
 <div class="tab" id="tabOrders">
-    <div id="orders">
-        <div id="orderFilters" class="filters">
-            <b>Search : </b><input id="number" name="number" type="text" maxlength="11">
-            <input id="btnSearchNumber" name="btnSearchNumber" type="button" value="Search"/>
-
-            <div id="dates">
-                <b>from : </b><input id="from" class="date" type="text" class="datepicker"/>
-                <b>to : </b><input id="to" class="date" type="text" class="datepicker"/>
-                <input id="btnRangeOfDates" name="btnRangeOfDates" type="button" value="Go"/>
-            </div>
+    <div id="orderFilters" class="filters">
+        <div id="numberWrapper">
+            <label for="number">Search by number : </label>
+            <input id="number" name="number" type="text" maxlength="11">
         </div>
+        <div id="datesWrapper">
+            <label for="from">from :</label>
+            <input id="from" class="date" type="text" class="datepicker"/>
+            <label for="to">to : </label>
+            <input id="to" class="date" type="text" class="datepicker"/>
+        </div>
+    </div>
+    <div id="orders">
     </div>
 </div>
 
 <div class="tab" id="tabStores">
     <div id="storeFilters" class="filters">
-        <b>Search : </b><input id="username" name="username" type="text">
-        <input id="btnSearchUsername" name="btnSearchUsername" type="button" value="Search"/>
-
-        <div id="banners">
-            <b>Banner : </b><select id="banner"> </select>
+        <div id="usernameWrapper">
+            <label for="username">Search by username : </label>
+            <input id="username" name="username" type="text">
+        </div>
+        <div id="bannersWrapper">
+            <label for="banners">Banner : </label>
+            <select id="banners"> </select>
         </div>
     </div>
     <div id="stores">

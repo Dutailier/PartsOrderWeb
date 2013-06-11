@@ -26,7 +26,7 @@ class Banners
 
     public static function All()
     {
-        $query = 'EXEC [getBanners]';
+        $query = 'EXEC [getbanners]';
 
         $rows = Database::Execute($query);
 

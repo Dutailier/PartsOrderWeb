@@ -108,33 +108,6 @@ class Orders
         return $order;
     }
 
-    public static function FilterByStoreId($id)
-    {
-        $query = 'EXEC [getOrdersByStoreId]';
-        $query .= '@storeId = "' . intval($id) . '"';
-
-        $rows = Database::Execute($query);
-
-        $orders = array();
-        foreach ($rows as $row) {
-
-            $order = new Order(
-                $row['shippingAddressId'],
-                $row['storeId'],
-                $row['receiverId'],
-                $row['number'],
-                $row['creationDate'],
-                $row['lastModificationByUserId'],
-                $row['lastModificationDate'],
-                $row['status']
-            );
-            $order->setId($row['id']);
-
-            $orders[] = $order;
-        }
-        return $orders;
-    }
-
     public static function FilterByRangeOfDates($from, $to)
     {
         $query = 'EXEC [getOrdersByRangeOfDates]';
@@ -163,10 +136,67 @@ class Orders
         return $orders;
     }
 
+    public static function FilterByRangeOfDatesAndStoreId($from, $to, $id)
+    {
+        $query = 'EXEC [getOrdersByRangeOfDatesAndStoreId]';
+        $query .= '@from = "' . date('Ymd', $from) . '", ';
+        $query .= '@to = "' . date('Ymd', $to) . '", ';
+        $query .= '@storeId = "' . intval($id) . '"';
+
+        $rows = Database::Execute($query);
+
+        $orders = array();
+        foreach ($rows as $row) {
+
+            $order = new Order(
+                $row['shippingAddressId'],
+                $row['storeId'],
+                $row['receiverId'],
+                $row['number'],
+                $row['creationDate'],
+                $row['lastModificationByUserId'],
+                $row['lastModificationDate'],
+                $row['status']
+            );
+            $order->setId($row['id']);
+
+            $orders[] = $order;
+        }
+        return $orders;
+    }
+
     public static function FilterByNumber($number)
     {
         $query = 'EXEC [getOrdersByNumber]';
         $query .= '@number = "' . trim($number) . '"';
+
+        $rows = Database::Execute($query);
+
+        $orders = array();
+        foreach ($rows as $row) {
+
+            $order = new Order(
+                $row['shippingAddressId'],
+                $row['storeId'],
+                $row['receiverId'],
+                $row['number'],
+                $row['creationDate'],
+                $row['lastModificationByUserId'],
+                $row['lastModificationDate'],
+                $row['status']
+            );
+            $order->setId($row['id']);
+
+            $orders[] = $order;
+        }
+        return $orders;
+    }
+
+    public static function FilterByNumberAndStoreId($number, $id)
+    {
+        $query = 'EXEC [getOrdersByNumberAndStoreId]';
+        $query .= '@number = "' . trim($number) . '", ';
+        $query .= '@storeId = "' . intval($id) . '"';
 
         $rows = Database::Execute($query);
 

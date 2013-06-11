@@ -88,30 +88,31 @@ div.filters {
     overflow: hidden; /* Clearfix */
 }
 
+div.filters label {
+    font-weight: bold;
+}
+
+div.filters input, select {
+    text-align: center;
+    font-size: 1.2em;
+    width: 200px;
+}
+
 div.filters * {
     line-height: 20px;
     margin: 0px 5px;
 }
 
-#btnSearchNumber,
-#btnRangeOfDates,
-#btnSearchUsername {
-    width: 75px;
-}
-
-#number, input.date, #banner {
-    text-align: center;
-    width: 180px;
-    font-size: 1.2em;
-}
-
-#dates, #banners {
-    float: right;
+#numberWrapper,
+#usernameWrapper {
+    float: left;
     overflow: hidden; /* Clearfix */
 }
 
-#dates * {
-    text-align: center;
+#datesWrapper,
+#bannersWrapper {
+    float: right;
+    overflow: hidden; /* Clearfix */
 }
 
 #orders > div.order {
@@ -192,7 +193,7 @@ div.filters * {
 #orders > div.orderDetails > fieldset.receiverInfos,
 #orders > div.orderDetails > fieldset.storeInfos {
     float: left;
-    width: 411px;
+    width: 412px;
     height: 215px;
 }
 

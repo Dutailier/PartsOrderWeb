@@ -39,9 +39,19 @@ $title = 'Orders';
 
 <h1>Orders</h1>
 
+<div id="orderFilters" class="filters">
+    <div id="numberWrapper">
+        <label for="number">Search by number : </label>
+        <input id="number" name="number" type="text" maxlength="11">
+    </div>
+    <div id="datesWrapper">
+        <label for="from">from :</label>
+        <input id="from" class="date" type="text" class="datepicker"/>
+        <label for="to">to : </label>
+        <input id="to" class="date" type="text" class="datepicker"/>
+    </div>
+</div>
 <div id="orders">
-    <p>Click on an order for more details.</p>
-
 </div>
 
 <div id="confirmDialog">

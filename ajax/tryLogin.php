@@ -13,13 +13,6 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
             $_POST['username'],
             $_POST['password']);
 
-        $user = Security::getUserConnected();
-
-        $data['roles'] = array();
-        foreach($user->getRoles() as $role) {
-            $data['roles'][] = $role->getArray();
-        }
-
         $data['success'] = true;
 
     } catch (Exception $e) {

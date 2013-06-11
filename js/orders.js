@@ -1,79 +1,32 @@
 $(document).ready(function () {
 
-    $.post('ajax/getStoreConnected.php')
-        .done(function (data) {
+    $("#from").datepicker({
+        maxDate: '0',
+        onClose: function (selectedDate) {
+            $("#to").datepicker("option", "minDate", selectedDate);
+        }
+    });
 
-            if (data.hasOwnProperty('success') &&
-                data['success'] &&
-                data.hasOwnProperty('store')) {
+    $("#to").datepicker({
+        maxDate: '+1d',
+        onClose: function (selectedDate) {
+            $("#from").datepicker("option", "maxDate", selectedDate);
+        }
+    });
 
-                var store = data['store'];
+    $('#from').datepicker('setDate', '0');
+    $('#to').datepicker('setDate', '+1d');
 
-                if (store.hasOwnProperty('id') &&
-                    store.hasOwnProperty('name') &&
-                    store.hasOwnProperty('phone') &&
-                    store.hasOwnProperty('email') &&
-                    store.hasOwnProperty('address')) {
-                    var address = store['address'];
+    getStoreInfos();
+    updateOrdersInfosByRangeOfDates();
 
-                    if (address.hasOwnProperty('details') &&
-                        address.hasOwnProperty('city') &&
-                        address.hasOwnProperty('zip') &&
-                        address.hasOwnProperty('state') &&
-                        address['state'].hasOwnProperty('name')) {
-                        updateStoreInfos(store);
-                    }
+    $('input.date').change(function () {
+        updateOrdersInfosByRangeOfDates();
+    });
 
-                    var parameters = {
-                        'storeId': store['id']
-                    };
-
-                    $.post('ajax/getOrdersByStoreId.php', parameters)
-                        .done(function (data) {
-
-                            if (data.hasOwnProperty('success') &&
-                                data['success'] &&
-                                data.hasOwnProperty('orders')) {
-
-                                var orders = data['orders'];
-
-                                for (var i in orders) {
-                                    if (orders.hasOwnProperty(i)) {
-                                        var order = orders[i];
-
-                                        if (order.hasOwnProperty('status') &&
-                                            order.hasOwnProperty('id') &&
-                                            order.hasOwnProperty('number') &&
-                                            order.hasOwnProperty('lastModificationByUser') &&
-                                            order['lastModificationByUser'].hasOwnProperty('username') &&
-                                            order.hasOwnProperty('lastModificationDate')) {
-                                            addOrderInfos(order);
-                                        }
-                                    }
-                                }
-
-                            } else if (data.hasOwnProperty('message')) {
-                                alert(data['message']);
-
-                            } else {
-                                alert('The result of the server is unreadable.');
-                            }
-                        })
-                        .fail(function () {
-                            alert('Communication with the server failed.');
-                        })
-                }
-
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
-
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        });
+    $('#number').change(function () {
+        updateOrderInfosByNumber();
+    });
 
     $('#confirmDialog').dialog({
         autoOpen: false,
@@ -81,27 +34,9 @@ $(document).ready(function () {
         dialogClass: 'dialog',
         buttons: {
             "Yes": function () {
-                var parameters = {
-                    "orderId": $(this).find('label.orderNumber').data('order-id')
-                };
-
-                $.post('ajax/confirmOrder.php', parameters)
-                    .done(function (data) {
-                        if (data.hasOwnProperty('success') &&
-                            data['success']) {
-
-                            window.location.reload();
-
-                        } else if (data.hasOwnProperty('message')) {
-                            alert(data['message']);
-
-                        } else {
-                            alert('The result of the server is unreadable.');
-                        }
-                    })
-                    .fail(function () {
-                        alert('Communication with the server failed.');
-                    })
+                var $orderNumber = $(this).find('label.orderNumber');
+                var id = $orderNumber.data('order-id');
+                confirmOrder(id);
             },
             "No": function () {
                 $(this).dialog('close');
@@ -115,27 +50,9 @@ $(document).ready(function () {
         dialogClass: 'dialog',
         buttons: {
             "Yes": function () {
-                var parameters = {
-                    "orderId": $(this).find('label.orderNumber').data('order-id')
-                };
-
-                $.post('ajax/cancelOrder.php', parameters)
-                    .done(function (data) {
-                        if (data.hasOwnProperty('success') &&
-                            data['success']) {
-
-                            window.location.reload();
-
-                        } else if (data.hasOwnProperty('message')) {
-                            alert(data['message']);
-
-                        } else {
-                            alert('The result of the server is unreadable.');
-                        }
-                    })
-                    .fail(function () {
-                        alert('Communication with the server failed.');
-                    })
+                var $orderNumber = $(this).find('label.orderNumber');
+                var id = $orderNumber.data('order-id');
+                cancelOrder(id);
             },
             "No": function () {
                 $(this).dialog('close');
@@ -266,6 +183,177 @@ $(document).on('click', 'input.btnCancel', function () {
     $dialog.dialog('open');
 });
 
+function updateOrdersInfosByRangeOfDates() {
+    var parameters = {
+        'from': $('#from').val(),
+        'to': $('#to').val()
+    };
+
+    $.post('ajax/getOrdersByRangeOfDatesStoreConnected.php', parameters)
+        .done(function (data) {
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('orders')) {
+
+                $('div.orderDetails').remove();
+                $('div.order').remove();
+
+                var orders = data['orders'];
+
+                for (var i in orders) {
+                    if (orders.hasOwnProperty(i)) {
+                        var order = orders[i];
+
+                        if (order.hasOwnProperty('status') &&
+                            order.hasOwnProperty('id') &&
+                            order.hasOwnProperty('number') &&
+                            order.hasOwnProperty('lastModificationByUser') &&
+                            order['lastModificationByUser'].hasOwnProperty('username') &&
+                            order.hasOwnProperty('lastModificationDate')) {
+                            addOrderInfos(order);
+                        }
+                    }
+                }
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
+function updateOrderInfosByNumber() {
+    var parameters = {
+        'number': $('#number').val()
+    };
+
+    $.post('ajax/getOrdersByNumberStoreConnected.php', parameters)
+        .done(function (data) {
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('orders')) {
+
+                $('div.orderDetails').remove();
+                $('div.order').remove();
+
+                var orders = data['orders'];
+
+                for (var i in orders) {
+                    if (orders.hasOwnProperty(i)) {
+                        var order = orders[i];
+
+                        if (order.hasOwnProperty('status') &&
+                            order.hasOwnProperty('id') &&
+                            order.hasOwnProperty('number') &&
+                            order.hasOwnProperty('lastModificationByUser') &&
+                            order['lastModificationByUser'].hasOwnProperty('username') &&
+                            order.hasOwnProperty('lastModificationDate')) {
+                            addOrderInfos(order);
+                        }
+                    }
+                }
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
+function getStoreInfos() {
+    $.post('ajax/getStoreConnected.php')
+        .done(function (data) {
+
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('store')) {
+
+                var store = data['store'];
+
+                if (store.hasOwnProperty('id') &&
+                    store.hasOwnProperty('name') &&
+                    store.hasOwnProperty('phone') &&
+                    store.hasOwnProperty('email') &&
+                    store.hasOwnProperty('address')) {
+                    var address = store['address'];
+
+                    if (address.hasOwnProperty('details') &&
+                        address.hasOwnProperty('city') &&
+                        address.hasOwnProperty('zip') &&
+                        address.hasOwnProperty('state') &&
+                        address['state'].hasOwnProperty('name')) {
+                        updateStoreInfos(store);
+                    }
+                }
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        });
+}
+function confirmOrder(id) {
+    var parameters = {
+        "orderId": id
+    };
+
+    $.post('ajax/confirmOrder.php', parameters)
+        .done(function (data) {
+            if (data.hasOwnProperty('success') &&
+                data['success']) {
+
+                window.location.reload();
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+function cancelOrder(id) {
+    var parameters = {
+        "orderId": id
+    };
+
+    $.post('ajax/cancelOrder.php', parameters)
+        .done(function (data) {
+            if (data.hasOwnProperty('success') &&
+                data['success']) {
+
+                window.location.reload();
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
 /**
  * Ajoute les informations relatives au receveur aux détails de la commande.
  * @param $details
@@ -339,13 +427,14 @@ function addLineInfosToLinesOfOrderDetails($list, line) {
 
 /**
  * Affiche les informations relatives au magasin.
- * @param infos
+ * @param store
  */
-function updateStoreInfos(infos) {
-    $('#storeName').text(infos['name']);
-    $('#storePhone').text(phoneFormat(infos['phone']));
-    $('#storeEmail').text(infos['email']);
-    $('#storeAddress').text(addressFormat(infos['address']));
+function updateStoreInfos(store) {
+    $('#storeInfos').data('id', store['id']);
+    $('#storeName').text(store['name']);
+    $('#storePhone').text(phoneFormat(store['phone']));
+    $('#storeEmail').text(store['email']);
+    $('#storeAddress').text(addressFormat(store['address']));
 }
 
 /**
@@ -373,10 +462,10 @@ function phoneFormat(phone) {
 }
 
 /**
- * Transforme 2013-06-07 10:24:15.227 pour 2013-06-07 10:24:15.
+ * Transforme 2013-06-07 10:24:15.227 pour 2013-06-07 10:24.
  * @param date
  * @returns {string}
  */
 function dateFormat(date) {
-    return date.substring(0, 19);
+    return date.substring(0, 16);
 }

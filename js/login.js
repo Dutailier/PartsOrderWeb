@@ -24,16 +24,9 @@ $(document).ready(function () {
                     if (data.hasOwnProperty('success') &&
                         data['success'] &&
                         data.hasOwnProperty('valid') &&
-                        data['valid'] &&
-                        data.hasOwnProperty('roles')) {
-                        var roles = data['roles'];
+                        data['valid']) {
 
-                        if ($.inArray('Administrator', roles)) {
-                            window.location = 'manage.php';
-                        }
-                        else if ($.inArray('Store', roles)) {
-                            window.location = 'destinations.php';
-                        }
+                        window.location = 'index.php';
 
                     } else if (data.hasOwnProperty('message')) {
                         alert(data['message']);

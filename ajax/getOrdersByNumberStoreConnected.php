@@ -9,15 +9,18 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be authenticated.';
 
 } else {
-    if (empty($_POST['storeId'])) {
-        $data['success'] = false;
-        $data['storeId'] = 'A store must be selected.';
+    if (empty($_POST['number'])) {
+        $data['success'] = true;
+        $data['message'] = 'A number is required.';
+
     } else {
         try {
             $user = Security::getUserConnected();
+            $stores = Stores::FilterByUserId($user->getId());
 
-            $store = Stores::Find($_POST['storeId']);
-            $orders = $store->getOrders();
+            $orders = Orders::FilterByNumberAndStoreId(
+                $_POST['number'],
+                $stores[0]->getId());
 
             $data['orders'] = array();
             foreach ($orders as $order) {
