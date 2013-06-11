@@ -3,7 +3,7 @@ $(document).ready(function () {
         "orderId": $.QueryString['orderId']
     };
 
-    $.post('ajax/getOrderInfos.php', parameters)
+    $.post('ajax/getOrderDetails.php', parameters)
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&

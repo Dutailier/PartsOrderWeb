@@ -81,7 +81,7 @@ function addOrderDetails($order) {
         "orderId": $order.data('id')
     };
 
-    $.post('ajax/getOrderInfos.php', parameters)
+    $.post('ajax/getOrderDetails.php', parameters)
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&

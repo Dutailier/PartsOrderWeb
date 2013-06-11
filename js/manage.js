@@ -79,17 +79,30 @@ $(document).ready(function () {
 $(document).on('click', 'div.order', function () {
 
     var $order = $(this);
+    var $next = $order.next();
 
-    if ($order.next().is('div.orderDetails')) {
-        $order.next().stop().slideToggle();
+    if ($next.is('div.details')) {
+        $next.stop().slideToggle();
     } else {
         addOrderDetails($order);
     }
 });
 
+$(document).on('click', 'div.store', function () {
+
+    var $store = $(this);
+    var $next = $store.next();
+
+    if ($next.is('div.details')) {
+        $next.stop().slideToggle();
+    } else {
+        addStoreDetails($store);
+    }
+});
+
 $(document).on('click', 'input.btnConfirm', function () {
 
-    var $details = $(this).closest('div.orderDetails');
+    var $details = $(this).closest('div.details');
     var $order = $details.prev();
     var $dialog = $('#confirmDialog');
     var $number = $dialog.find('label.orderNumber');
@@ -101,7 +114,7 @@ $(document).on('click', 'input.btnConfirm', function () {
 
 $(document).on('click', 'input.btnCancel', function () {
 
-    var $details = $(this).closest('div.orderDetails');
+    var $details = $(this).closest('div.details');
     var $order = $details.prev();
     var $dialog = $('#cancelDialog');
     var $number = $dialog.find('label.orderNumber');
@@ -206,11 +219,11 @@ function updateBanners() {
                                 $('<option></option>')
                                     .val(banner['id'])
                                     .text(banner['name']));
-
-                            $banners.trigger('change');
                         }
                     }
                 }
+
+                $banners.trigger('change');
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -235,7 +248,7 @@ function updateOrderInfosByNumber() {
                 data['success'] &&
                 data.hasOwnProperty('orders')) {
 
-                $('div.orderDetails').remove();
+                $('div.details').remove();
                 $('div.order').remove();
 
                 var orders = data['orders'];
@@ -278,7 +291,7 @@ function updateStoresByUsername() {
                 data['success'] &&
                 data.hasOwnProperty('stores')) {
 
-                $('div.storeDetails').remove();
+                $('div.details').remove();
                 $('div.store').remove();
 
                 var stores = data['stores'];
@@ -334,8 +347,8 @@ function updateStoresByBannerId() {
                 data['success'] &&
                 data.hasOwnProperty('stores')) {
 
-                $('#stores').show();
                 $('div.store').remove();
+                $('div.details').remove();
 
                 var stores = data['stores'];
 
@@ -390,7 +403,7 @@ function updateOrdersInfosByRangeOfDates() {
                 data['success'] &&
                 data.hasOwnProperty('orders')) {
 
-                $('div.orderDetails').remove();
+                $('div.details').remove();
                 $('div.order').remove();
 
                 var orders = data['orders'];
@@ -423,7 +436,62 @@ function updateOrdersInfosByRangeOfDates() {
 }
 
 /**
- * Retourne les détails d'une commande.
+ * Ajoute les détails d'un magasin.
+ * @param $store
+ */
+function addStoreDetails($store) {
+    var parameters = {
+        "storeId": $store.data('id')
+    };
+
+    $.post('ajax/getStoreDetails.php', parameters)
+        .done(function (data) {
+
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('store')) {
+
+                var store = data['store'];
+                var $details = $('<div class="details"></div>');
+                var $buttons = $('<div class="buttons"></div>');
+
+                if (store.hasOwnProperty('id') &&
+                    store.hasOwnProperty('name') &&
+                    store.hasOwnProperty('phone') &&
+                    store.hasOwnProperty('email') &&
+                    store.hasOwnProperty('user') &&
+                    store.hasOwnProperty('address')) {
+                    var user = store['user'];
+                    var address = store['address'];
+
+                    if (address.hasOwnProperty('details') &&
+                        address.hasOwnProperty('city') &&
+                        address.hasOwnProperty('zip') &&
+                        address.hasOwnProperty('state') &&
+                        address['state'].hasOwnProperty('name') &&
+                        user.hasOwnProperty('id') &&
+                        user.hasOwnProperty('username')) {
+                        addStoreInfosToStoreDetails($details, store);
+                    }
+                }
+
+                $details.append($buttons);
+                $details.hide().insertAfter($store).slideDown();
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
+/**
+ * Ajoute les détails d'une commande.
  * @param $order
  */
 function addOrderDetails($order) {
@@ -431,7 +499,7 @@ function addOrderDetails($order) {
         "orderId": $order.data('id')
     };
 
-    $.post('ajax/getOrderInfos.php', parameters)
+    $.post('ajax/getOrderDetails.php', parameters)
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&
@@ -439,7 +507,7 @@ function addOrderDetails($order) {
                 data.hasOwnProperty('order')) {
 
                 var order = data['order'];
-                var $details = $('<div class="orderDetails"></div>');
+                var $details = $('<div class="details"></div>');
                 var $lines = $('<div class="lines"></div>');
                 var $buttons = $('<div class="buttons"></div>');
 
@@ -528,6 +596,30 @@ function addOrderDetails($order) {
         })
 }
 
+function addStoreInfosToStoreDetails($details, store) {
+    $details.append(
+        '<fieldset class="contactInfos">' +
+            '<legend>Contact Informations</legend>' +
+            '<p>' +
+            '<label class="properties">Name : </label>' +
+            '<label class="values">' + store['name'] + '</label>' +
+            '</p>' +
+            '<p>' +
+            '<label class="properties">Phone : </label>' +
+            '<label class="values">' + phoneFormat(store['phone']) + '</label>' +
+            '</p>' +
+            '<p>' +
+            '<label class="properties">Email : </label>' +
+            '<label class="values">' + store['email'] + '</label>' +
+            '</p>' +
+            '<p>' +
+            '<label class="properties">Address : </label>' +
+            '<label class="values">' + addressFormat(store['address']) + '</label>' +
+            '</p>' +
+            '</fieldset>'
+    );
+}
+
 /**
  * Affiche les informations relatives au magasin.
  * @param $details
@@ -539,19 +631,19 @@ function addStoreInfosToOrderDetails($details, store) {
             '<legend>Store informations</legend>' +
             '<p>' +
             '<label class="properties">Name : </label>' +
-            '<label id="receiverName" class="values">' + store['name'] + '</label>' +
+            '<label class="values">' + store['name'] + '</label>' +
             '</p>' +
             '<p>' +
             '<label class="properties">Phone : </label>' +
-            '<label id="receiverPhone" class="values">' + phoneFormat(store['phone']) + '</label>' +
+            '<label class="values">' + phoneFormat(store['phone']) + '</label>' +
             '</p>' +
             '<p>' +
             '<label class="properties">Email : </label>' +
-            '<label id="receiverEmail" class="values">' + store['email'] + '</label>' +
+            '<label class="values">' + store['email'] + '</label>' +
             '</p>' +
             '<p>' +
             '<label class="properties">Address : </label>' +
-            '<label id="storeAddress" class="values">' + addressFormat(store['address']) + '</label>' +
+            '<label class="values">' + addressFormat(store['address']) + '</label>' +
             '</p>' +
             '</fieldset>'
     );
@@ -568,15 +660,15 @@ function addReceiverInfosToOrderDetails($details, receiver) {
             '<legend>Receiver informations</legend>' +
             '<p>' +
             '<label class="properties">Name : </label>' +
-            '<label id="receiverName" class="values">' + receiver['name'] + '</label>' +
+            '<label class="values">' + receiver['name'] + '</label>' +
             '</p>' +
             '<p>' +
             '<label class="properties">Phone : </label>' +
-            '<label id="receiverPhone" class="values">' + phoneFormat(receiver['phone']) + '</label>' +
+            '<label class="values">' + phoneFormat(receiver['phone']) + '</label>' +
             '</p>' +
             '<p>' +
             '<label class="properties">Email : </label>' +
-            '<label id="receiverEmail" class="values">' + receiver['email'] + '</label>' +
+            '<label class="values">' + receiver['email'] + '</label>' +
             '</p>' +
             '</fieldset>'
     );
@@ -593,7 +685,7 @@ function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
             '<legend>Shipping informations</legend>' +
             '<p>' +
             '<label class="properties">Address : </label>' +
-            '<label id="shippingAddress" class="values">' + addressFormat(shippingAddress) + '</label>' +
+            '<label class="values">' + addressFormat(shippingAddress) + '</label>' +
             '</p>' +
             '</fieldset>'
     );
@@ -638,10 +730,8 @@ function addLineInfosToOrderDetails($list, line) {
 function addStoreInfos(store) {
     $('#stores').append(
         '<div class="store" data-id="' + store['id'] + '">' +
-            '<div class="storeDetails">' +
             '<label class="name">' + store['name'] + '</label>' +
             '<label class="username"> - ' + store['user']['username'] + '</label>' +
-            '</div>' +
             '</div>'
 
     );

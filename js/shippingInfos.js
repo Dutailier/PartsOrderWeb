@@ -12,14 +12,15 @@ $(document).ready(function () {
                     transaction.hasOwnProperty('receiver') &&
                     transaction.hasOwnProperty('store')) {
 
-                    var shippingAddress = data['transaction']['shippingAddress'];
-                    var receiver = data['transaction']['receiver'];
-                    var store = data['transaction']['store'];
+                    var shippingAddress = transaction['shippingAddress'];
+                    var receiver = transaction['receiver'];
+                    var store = transaction['store'];
 
                     if (shippingAddress.hasOwnProperty('details') &&
                         shippingAddress.hasOwnProperty('city') &&
                         shippingAddress.hasOwnProperty('zip') &&
                         shippingAddress.hasOwnProperty('state') &&
+                        shippingAddress['state'].hasOwnProperty('id') &&
                         shippingAddress['state'].hasOwnProperty('name')) {
                         updateShippingAddressinfos(shippingAddress);
                     }
@@ -34,6 +35,7 @@ $(document).ready(function () {
                             address.hasOwnProperty('city') &&
                             address.hasOwnProperty('zip') &&
                             address.hasOwnProperty('state') &&
+                            address['state'].hasOwnProperty('id') &&
                             address['state'].hasOwnProperty('name')) {
                             updateStoreInfos(store);
                         }
