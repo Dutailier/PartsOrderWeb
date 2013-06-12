@@ -4,7 +4,28 @@ $(document).ready(function () {
     });
 
     $('#btnOrders').click(function () {
-        window.location = 'orders.php';
+        $.post('ajax/getStoreConnected.php')
+            .done(function (data) {
+
+                if (data.hasOwnProperty('success') &&
+                    data['success'] &&
+                    data.hasOwnProperty('store')) {
+                    var store = data['store'];
+
+                    if (store.hasOwnProperty('id')) {
+                        window.location = 'orders.php?storeId=' + store['id'];
+                    }
+
+                } else if (data.hasOwnProperty('message')) {
+                    alert(data['message']);
+
+                } else {
+                    alert('The result of the server is unreadable.');
+                }
+            })
+            .fail(function () {
+                alert('Communication with the server failed.');
+            })
     });
 
     $('#btnManage').click(function () {

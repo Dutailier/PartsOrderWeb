@@ -13,21 +13,16 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be connected as administrator.';
 
 } else {
-    if (empty($_POST['bannerId'])) {
+
+    if (empty($_POST['storeId'])) {
         $data['success'] = false;
-        $data['message'] = 'A banner must be selected.';
+        $data['message'] = 'A order must be selected.';
 
     } else {
         try {
-            $user = Security::getUserConnected();
+            $store = Stores::Find($_POST['storeId']);
 
-            $stores = Stores::FilterByBannerId($_POST['bannerId']);
-
-            $data['stores'] = array();
-            foreach ($stores as $store) {
-                $data['stores'][] = $store->getArray();
-            }
-
+            $data['store'] = $store->getArray();
             $data['success'] = true;
 
         } catch (Exception $e) {

@@ -186,10 +186,11 @@ $(document).on('click', 'input.btnCancel', function () {
 function updateOrdersInfosByRangeOfDates() {
     var parameters = {
         'from': $('#from').val(),
-        'to': $('#to').val()
+        'to': $('#to').val(),
+        'storeId': $.QueryString['storeId']
     };
 
-    $.post('ajax/getOrdersByRangeOfDatesStoreConnected.php', parameters)
+    $.post('ajax/getOrdersByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
@@ -229,10 +230,11 @@ function updateOrdersInfosByRangeOfDates() {
 
 function updateOrderInfosByNumber() {
     var parameters = {
-        'number': $('#number').val()
+        'number': $('#number').val(),
+        'storeId': $.QueryString['storeId']
     };
 
-    $.post('ajax/getOrdersByNumberStoreConnected.php', parameters)
+    $.post('ajax/getOrdersByNumberAndStoreId.php', parameters)
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success'] &&
@@ -271,7 +273,11 @@ function updateOrderInfosByNumber() {
 }
 
 function getStoreInfos() {
-    $.post('ajax/getStoreConnected.php')
+    var parameters = {
+        'storeId': $.QueryString['storeId']
+    };
+
+    $.post('ajax/getStoreInfos.php', parameters)
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&
@@ -469,3 +475,16 @@ function phoneFormat(phone) {
 function dateFormat(date) {
     return date.substring(0, 16);
 }
+
+(function ($) {
+    $.QueryString = (function (a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i) {
+            var p = a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);

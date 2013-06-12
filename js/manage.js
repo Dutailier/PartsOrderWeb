@@ -601,10 +601,6 @@ function addStoreInfosToStoreDetails($details, store) {
         '<fieldset class="contactInfos">' +
             '<legend>Contact Informations</legend>' +
             '<p>' +
-            '<label class="properties">Name : </label>' +
-            '<label class="values">' + store['name'] + '</label>' +
-            '</p>' +
-            '<p>' +
             '<label class="properties">Phone : </label>' +
             '<label class="values">' + phoneFormat(store['phone']) + '</label>' +
             '</p>' +
