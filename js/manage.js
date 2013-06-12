@@ -126,6 +126,14 @@ $(document).on('click', 'input.btnCancel', function () {
     $dialog.dialog('open');
 });
 
+$(document).on('click', 'input.btnStoreOrders', function () {
+
+    var $details = $(this).closest('div.details');
+    var $store = $details.find('fieldset.storeInfos');
+
+    window.location = 'orders.php?storeId=' + $store.data('id');
+});
+
 $(document).on('click', 'input.btnDetails', function () {
 
     var $details = $(this).closest('div.details');
@@ -585,6 +593,7 @@ function addOrderDetails($order) {
                             $buttons.append('<input class="btnCancel" type="button" value="Cancel"/>');
                         default:
                             $buttons.append('<input class="btnDetails" type="button" value="More Details"/>');
+                            $buttons.append('<input class="btnStoreOrders" type="button" value="Store Orders"/>');
                     }
                 }
 
@@ -631,7 +640,7 @@ function addStoreInfosToStoreDetails($details, store) {
  */
 function addStoreInfosToOrderDetails($details, store) {
     $details.append(
-        '<fieldset class="storeInfos">' +
+        '<fieldset class="storeInfos" data-id="' + store['id'] + '">' +
             '<legend>Store informations</legend>' +
             '<p>' +
             '<label class="properties">Name : </label>' +
@@ -660,7 +669,7 @@ function addStoreInfosToOrderDetails($details, store) {
  */
 function addReceiverInfosToOrderDetails($details, receiver) {
     $details.append(
-        '<fieldset class="receiverInfos">' +
+        '<fieldset class="receiverInfos" data-id="' + receiver['id'] + '">' +
             '<legend>Receiver informations</legend>' +
             '<p>' +
             '<label class="properties">Name : </label>' +
@@ -685,7 +694,7 @@ function addReceiverInfosToOrderDetails($details, receiver) {
  */
 function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
     $details.append(
-        '<fieldset class="shippingAddressInfos">' +
+        '<fieldset class="shippingAddressInfos" data-id="' + shippingAddress['id'] + '">' +
             '<legend>Shipping informations</legend>' +
             '<p>' +
             '<label class="properties">Address : </label>' +

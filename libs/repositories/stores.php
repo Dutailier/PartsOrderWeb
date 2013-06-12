@@ -59,7 +59,7 @@ class Stores
         $rows = Database::Execute($query);
 
         if (empty($rows)) {
-            throw new Exception('No retailer found.');
+            throw new Exception('No store found.');
         }
 
         $store = new Store(
