@@ -25,9 +25,9 @@ $title = 'Manage';
             <input id="number" name="number" type="text" maxlength="11">
         </div>
         <div id="datesWrapper">
-            <label for="from">from :</label>
+            <label for="from">From :</label>
             <input id="from" class="date" type="text" class="datepicker"/>
-            <label for="to">to : </label>
+            <label for="to">To : </label>
             <input id="to" class="date" type="text" class="datepicker"/>
         </div>
     </div>
