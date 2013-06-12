@@ -24,7 +24,7 @@ class Comment extends Entity
         return array(
             'id' => $this->getId(),
             'orderId' => $this->getOrderId(),
-            'userId' => $this->getUserId(),
+            'user' => $this->getUser()->getArray(),
             'text' => $this->getText(),
             'creationDate' => $this->getCreationDate()
         );

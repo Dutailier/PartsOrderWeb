@@ -123,6 +123,7 @@ input, textarea, select {
 
 a.button, input[type=button], input[type=submit] {
     font-size: 1.1em;
+    cursor: pointer;
 }
 
 .hidden {

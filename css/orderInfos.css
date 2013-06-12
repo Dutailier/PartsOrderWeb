@@ -36,24 +36,21 @@ fieldset > p > label.values {
 }
 
 #orderInfos {
-    width: 938px;
+    width: 898px;
     height: 75px;
-    padding: 10px 0px;
 }
 
 #orderInfos > p {
     clear: none;
-    padding: 0px 20px;
 }
 
 #orderInfos > p:nth-child(odd) {
-    margin-left: 20px;
-    margin-right: 20px;
+    padding: 0px 62px;
 }
 
 hr {
     width: 900px;
-    margin: 0px auto;
+    margin: 5px auto;
 }
 
 #lines {
@@ -99,6 +96,42 @@ hr {
     font-style: italic;
 }
 
+#comments {
+    margin: 20px auto;
+    overflow: hidden; /* Clearfix */
+}
+
+#comments > div.comment {
+    position: relative;
+    border: 1px dotted #484848;
+    padding: 10px;
+    margin: 10px;
+    overflow: hidden; /* Clearfix */
+}
+
+#comments > div.comment > label.text {
+    font-size: 1.2em;
+    line-height: 30px;
+}
+
+#comments > div.comment > div.date {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+    clear: both;
+    font-size: 0.7em;
+    float: right;
+}
+
+#comments > div.comment > div.date > label.username {
+    font-weight: bold;
+}
+
+#comments > div.comment > div.date > label.creationDate {
+    font-style: italic;
+}
+
 #summary {
     margin-top: 10px;
     margin-left: 10px;
@@ -109,6 +142,11 @@ hr {
     margin: 5px;
     float: right;
     font-size: 1.2em;
+}
+
+#comment {
+    width: 100%;
+    height: 150px;
 }
 
 #summary > input {

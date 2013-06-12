@@ -80,9 +80,14 @@ $title = 'Order Informations';
     </p>
 </fieldset>
 
-<hr id="line"/>
+<hr/>
 
 <div id="lines">
+</div>
+
+<hr/>
+
+<div id="comments">
 </div>
 
 <!-- Sommaire des pièces commandées -->
@@ -97,6 +102,12 @@ $title = 'Order Informations';
 
 <div id="confirmDialog" title="Confirmation required" class="dialog">
     Are you sure you want to confirm this order?
+</div>
+
+<div id="addCommentDialog" title="Add Comment" class="dialog">
+    <form id="newComment">
+        <textarea id="comment" name="comment"></textarea>
+    </form>
 </div>
 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>

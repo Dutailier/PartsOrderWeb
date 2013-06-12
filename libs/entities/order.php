@@ -6,6 +6,7 @@ include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/lines.php');
 include_once(ROOT . 'libs/repositories/stores.php');
 include_once(ROOT . 'libs/repositories/orders.php');
+include_once(ROOT . 'libs/repositories/comments.php');
 include_once(ROOT . 'libs/repositories/addresses.php');
 include_once(ROOT . 'libs/repositories/receivers.php');
 
@@ -159,5 +160,10 @@ class Order extends Entity
         }
 
         return Orders::CancelByUserId($this->getId(), Security::getUserConnected()->getId());
+    }
+
+    public function getComments()
+    {
+        return Comments::FilterByOrderId($this->getId());
     }
 }

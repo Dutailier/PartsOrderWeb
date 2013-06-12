@@ -7,9 +7,9 @@ class Comments
 {
     public static function Attach(Comment $comment)
     {
-        $query = 'EXEC [addLine]';
-        $query .= '@orderId = "' . intval($comment->getOrderId()) . '"';
-        $query .= '@userId = "' . intval($comment->getUserId()) . '"';
+        $query = 'EXEC [addComment]';
+        $query .= '@orderId = "' . intval($comment->getOrderId()) . '", ';
+        $query .= '@userId = "' . intval($comment->getUserId()) . '", ';
         $query .= '@text = "' . trim($comment->getText()) . '"';
 
         $rows = Database::Execute($query);

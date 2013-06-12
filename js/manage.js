@@ -126,6 +126,14 @@ $(document).on('click', 'input.btnCancel', function () {
     $dialog.dialog('open');
 });
 
+$(document).on('click', 'input.btnDetails', function () {
+
+    var $details = $(this).closest('div.details');
+    var $order = $details.prev();
+
+    window.location = 'orderInfos.php?orderId=' + $order.data('id');
+});
+
 /**
  * Affiche le contenu de l'onglet : dernières commandes.
  */
@@ -575,7 +583,8 @@ function addOrderDetails($order) {
                             $buttons.append('<input class="btnConfirm" type="button" value="Confirm"/>');
                         case 'Confirmed':
                             $buttons.append('<input class="btnCancel" type="button" value="Cancel"/>');
-                            break;
+                        default:
+                            $buttons.append('<input class="btnDetails" type="button" value="More Details"/>');
                     }
                 }
 

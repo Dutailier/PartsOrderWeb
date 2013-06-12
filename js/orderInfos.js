@@ -1,4 +1,94 @@
 $(document).ready(function () {
+
+    updateOrderDetails();
+    updateComments();
+
+    $('#confirmDialog').dialog({
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        buttons: {
+            "Yes": function () {
+                confirmOrder();
+            },
+            "No": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+    $('#cancelDialog').dialog({
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        buttons: {
+            "Yes": function () {
+                cancelOrder();
+            },
+            "No": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+    $('#addCommentDialog').dialog({
+        autoOpen: false,
+        draggable: true,
+        width: '500px',
+        dialogClass: 'dialog',
+        buttons: {
+            "Submit": function () {
+                addComment();
+                $(this).dialog('close');
+            },
+            "Cancel": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+});
+
+$(document).on('click', '#btnConfirm', function () {
+    $('#confirmDialog').dialog('open');
+});
+
+$(document).on('click', '#btnCancel', function () {
+    $('#cancelDialog').dialog('open');
+});
+
+$(document).on('click', '#btnAddComment', function () {
+    $('#addCommentDialog').dialog('open');
+});
+
+function addComment() {
+    var parameters = {
+        'text': $('#comment').val(),
+        'orderId': $.QueryString['orderId']
+    };
+
+    $.post('ajax/addComment.php', parameters)
+        .done(function (data) {
+            if (data.hasOwnProperty('success') &&
+                data['success']) {
+
+                updateComments();
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+        .always(function () {
+            $('#btnConfirm').removeAttr('disabled');
+        })
+}
+
+function updateOrderDetails() {
     var parameters = {
         "orderId": $.QueryString['orderId']
     };
@@ -24,7 +114,8 @@ $(document).ready(function () {
                             $summary.append('<input id="btnConfirm" name="btnConfirm" type="button" value="Confirm"/>');
                         case 'Confirmed':
                             $summary.append('<input id="btnCancel" name="btnCancel" type="button" value="Cancel"/>');
-                            break;
+                        default:
+                            $summary.append('<input id="btnAddComment" name="btnAddComment" type="button" value="Add comment"/>');
                     }
                 }
 
@@ -91,87 +182,110 @@ $(document).ready(function () {
         .fail(function () {
             alert('Communication with the server failed.');
         });
+}
 
-    $('#confirmDialog').dialog({
-        autoOpen: false,
-        modal: true,
-        dialogClass: 'dialog',
-        buttons: {
-            "Yes": function () {
+function updateComments() {
+    var parameters = {
+        'orderId': $.QueryString['orderId']
+    };
 
-                var parameters = {
-                    "orderId": $.QueryString['orderId']
-                };
+    $.post('ajax/getComments.php', parameters)
+        .done(function (data) {
 
-                $.post('ajax/confirmOrder.php', parameters)
-                    .done(function (data) {
-                        if (data.hasOwnProperty('success') &&
-                            data['success']) {
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('comments')) {
 
-                            window.location = 'confirmation.php';
+                $('div.comment').remove();
+                var comments = data['comments'];
 
-                        } else if (data.hasOwnProperty('message')) {
-                            alert(data['message']);
+                for (var i in comments) {
+                    if (comments.hasOwnProperty(i)) {
+                        var comment = comments[i];
 
-                        } else {
-                            alert('The result of the server is unreadable.');
+                        if (comment.hasOwnProperty('id') &&
+                            comment.hasOwnProperty('orderId') &&
+                            comment.hasOwnProperty('creationDate') &&
+                            comment.hasOwnProperty('text') &&
+                            comment.hasOwnProperty('user') &&
+                            comment['user'].hasOwnProperty('username')) {
+                            addCommentInfos(comment);
                         }
-                    })
-                    .fail(function () {
-                        alert('Communication with the server failed.');
-                    })
-                    .always(function () {
-                        $('#btnConfirm').removeAttr('disabled');
-                    })
-            },
-            "No": function () {
-                $(this).dialog('close');
+                    }
+                }
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
             }
-        }
-    });
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
 
-    $('#cancelDialog').dialog({
-        autoOpen: false,
-        modal: true,
-        dialogClass: 'dialog',
-        buttons: {
-            "Yes": function () {
+function confirmOrder() {
+    var parameters = {
+        "orderId": $.QueryString['orderId']
+    };
 
-                var parameters = {
-                    "orderId": $.QueryString['orderId']
-                };
+    $.post('ajax/confirmOrder.php', parameters)
+        .done(function (data) {
+            if (data.hasOwnProperty('success') &&
+                data['success']) {
 
-                $.post('ajax/cancelOrder.php', parameters)
-                    .done(function (data) {
-                        if (data.hasOwnProperty('success') &&
-                            data['success']) {
-                            window.location = 'destinations.php';
+                window.location = 'confirmation.php';
 
-                        } else if (data.hasOwnProperty('message')) {
-                            alert(data['message']);
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
 
-                        } else {
-                            alert('The result of the server is unreadable.');
-                        }
-                    })
-                    .fail(function () {
-                        alert('Communication with the server failed.');
-                    })
-            },
-            "No": function () {
-                $(this).dialog('close');
+            } else {
+                alert('The result of the server is unreadable.');
             }
-        }
-    });
-});
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+        .always(function () {
+            $('#btnConfirm').removeAttr('disabled');
+        })
+}
 
-$(document).on('click', '#btnConfirm', function () {
-    $('#confirmDialog').dialog('open');
-});
+function cancelOrder() {
+    var parameters = {
+        "orderId": $.QueryString['orderId']
+    };
 
-$(document).on('click', '#btnCancel', function () {
-    $('#cancelDialog').dialog('open');
-});
+    $.post('ajax/cancelOrder.php', parameters)
+        .done(function (data) {
+            if (data.hasOwnProperty('success') &&
+                data['success']) {
+                window.location = 'destinations.php';
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
+function addCommentInfos(comment) {
+    $('#comments').append(
+        '<div class="comment" data-id="' + comment['id'] + '">' +
+            '<label class="text">' + comment['text'] + '</label>' +
+            '<div class="date">' +
+            'By <label class="username">' + comment['user']['username'] + '</label> at <label class="creationDate">' + dateFormat(comment['creationDate']) + '</label>' +
+            '</div>' +
+            '</div>'
+    );
+}
 
 /**
  * Affiche les informations relatives à la commande.
