@@ -262,7 +262,7 @@ div.details > fieldset > p > label.values {
     font-style: italic;
 }
 
-#orders > div.details > div.buttons * {
+div.details > div.buttons * {
     padding: 8px;
     float: right;
     margin: 0px 10px 10px 10px;

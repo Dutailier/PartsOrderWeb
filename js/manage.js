@@ -129,7 +129,7 @@ $(document).on('click', 'input.btnCancel', function () {
 $(document).on('click', 'input.btnStoreOrders', function () {
 
     var $details = $(this).closest('div.details');
-    var $store = $details.find('fieldset.storeInfos');
+    var $store = $details.find('fieldset.contactInfos');
 
     window.location = 'orders.php?storeId=' + $store.data('id');
 });
@@ -490,6 +490,8 @@ function addStoreDetails($store) {
                     }
                 }
 
+                $buttons.append('<input class="btnStoreOrders" type="button" value="Store Orders"/>');
+
                 $details.append($buttons);
                 $details.hide().insertAfter($store).slideDown();
 
@@ -593,7 +595,6 @@ function addOrderDetails($order) {
                             $buttons.append('<input class="btnCancel" type="button" value="Cancel"/>');
                         default:
                             $buttons.append('<input class="btnDetails" type="button" value="More Details"/>');
-                            $buttons.append('<input class="btnStoreOrders" type="button" value="Store Orders"/>');
                     }
                 }
 
@@ -615,7 +616,7 @@ function addOrderDetails($order) {
 
 function addStoreInfosToStoreDetails($details, store) {
     $details.append(
-        '<fieldset class="contactInfos">' +
+        '<fieldset class="contactInfos" data-id="' + store['id'] + '">' +
             '<legend>Contact Informations</legend>' +
             '<p>' +
             '<label class="properties">Phone : </label>' +
