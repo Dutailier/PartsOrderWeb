@@ -65,7 +65,7 @@ $(document).on('click', 'div.order', function () {
 
     var $order = $(this);
 
-    if ($order.next().is('div.orderDetails')) {
+    if ($order.next().is('div.details')) {
         $order.next().stop().slideToggle();
     } else {
         addOrderDetails($order);
@@ -89,7 +89,7 @@ function addOrderDetails($order) {
                 data.hasOwnProperty('order')) {
 
                 var order = data['order'];
-                var $details = $('<div class="orderDetails"></div>');
+                var $details = $('<div class="details"></div>');
                 var $lines = $('<div class="lines"></div>');
                 var $buttons = $('<div class="buttons"></div>');
 
@@ -162,7 +162,7 @@ function addOrderDetails($order) {
 
 $(document).on('click', 'input.btnConfirm', function () {
 
-    var $details = $(this).closest('div.orderDetails');
+    var $details = $(this).closest('div.details');
     var $order = $details.prev();
     var $dialog = $('#confirmDialog');
     var $number = $dialog.find('label.orderNumber');
@@ -174,7 +174,7 @@ $(document).on('click', 'input.btnConfirm', function () {
 
 $(document).on('click', 'input.btnCancel', function () {
 
-    var $details = $(this).closest('div.orderDetails');
+    var $details = $(this).closest('div.details');
     var $order = $details.prev();
     var $dialog = $('#cancelDialog');
     var $number = $dialog.find('label.orderNumber');
@@ -205,7 +205,7 @@ function updateOrdersInfosByRangeOfDates() {
                 data['success'] &&
                 data.hasOwnProperty('orders')) {
 
-                $('div.orderDetails').remove();
+                $('div.details').remove();
                 $('div.order').remove();
 
                 var orders = data['orders'];
@@ -249,7 +249,7 @@ function updateOrderInfosByNumber() {
                 data['success'] &&
                 data.hasOwnProperty('orders')) {
 
-                $('div.orderDetails').remove();
+                $('div.details').remove();
                 $('div.order').remove();
 
                 var orders = data['orders'];

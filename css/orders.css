@@ -85,7 +85,7 @@ fieldset > legend {
     background-color: rgba(0, 170, 0, 0.3);
 }
 
-#orders > div.orderDetails {
+#orders > div.details {
     position: relative;
     top: -1px; /* Pour n'avoir qu'une seule ligne. */
     border: 1px solid #484848;
@@ -93,65 +93,65 @@ fieldset > legend {
     overflow: hidden; /* Clearfix */
 }
 
-#orders > div.orderDetails > fieldset {
+#orders > div.details > fieldset {
     margin: 10px;
     border: 1px solid #484848;
     overflow: hidden; /* Clearfix */
 }
 
-#orders > div.orderDetails > fieldset > legend {
+#orders > div.details > fieldset > legend {
     padding: 0px 10px;
     font-size: 1.2em;
     font-weight: bold;
 }
 
-#orders > div.orderDetails > fieldset.storeInfos {
+#orders > div.details > fieldset.storeInfos {
     clear: both;
 }
 
-#orders > div.orderDetails > fieldset.storeInfos > p {
+#orders > div.details > fieldset.storeInfos > p {
     float: left;
     width: 218px;
     margin: 5px 0px;
     overflow: hidden; /* Clearfix */
 }
 
-#orders > div.orderDetails > fieldset.receiverInfos,
-#orders > div.orderDetails > fieldset.shippingAddressInfos {
+#orders > div.details > fieldset.receiverInfos,
+#orders > div.details > fieldset.shippingAddressInfos {
     float: left;
     width: 411px;
     height: 165px;
 }
 
-#orders > div.orderDetails > fieldset.receiverInfos > p,
-#orders > div.orderDetails > fieldset.shippingAddressInfos > p {
+#orders > div.details > fieldset.receiverInfos > p,
+#orders > div.details > fieldset.shippingAddressInfos > p {
     float: left;
     margin: 5px 0px;
     clear: both;
     overflow: hidden; /* Clearfix */
 }
 
-#orders > div.orderDetails > fieldset > p > label.properties {
+#orders > div.details > fieldset > p > label.properties {
     display: block;
     float: left;
     font-weight: bold;
     clear: both;
 }
 
-#orders > div.orderDetails > fieldset > p > label.values {
+#orders > div.details > fieldset > p > label.values {
     display: block;
     float: left;
     clear: both;
 }
 
-#orders > div.orderDetails > div.lines {
+#orders > div.details > div.lines {
     float: left;
     clear: both;
     margin: 10px auto;
     overflow: hidden; /* clearfix */
 }
 
-#orders > div.orderDetails > div.lines > div.line {
+#orders > div.details > div.lines > div.line {
     padding: 5px;
     border: 1px solid #484848;
     margin: 0px 10px 10px 10px;
@@ -159,38 +159,38 @@ fieldset > legend {
     width: 882px;
 }
 
-#orders > div.orderDetails > div.lines > div.line:nth-child(even) {
+#orders > div.details > div.lines > div.line:nth-child(even) {
     background-color: #FAFAFA;
 }
 
-#orders > div.orderDetails > div.lines > div.line > div.lineDetails {
+#orders > div.details > div.lines > div.line > div.lineDetails {
     display: inline-block;
     overflow: hidden; /* clearfix */
 }
 
-#orders > div.orderDetails > div.lines > div.line > div.lineDetails > label {
+#orders > div.details > div.lines > div.line > div.lineDetails > label {
     display: inline-block;
     line-height: 40px;
     margin: 0px 5px;
     float: left;
 }
 
-#orders > div.orderDetails > div.lines > div.line > div.lineDetails > label.quantity {
+#orders > div.details > div.lines > div.line > div.lineDetails > label.quantity {
     margin-top: 0px;
     font-size: 2.5em;
 }
 
-#orders > div.orderDetails > div.lines > div.line > div.lineDetails > label.name {
+#orders > div.details > div.lines > div.line > div.lineDetails > label.name {
     font-weight: bold;
     font-size: 1.2em;
 }
 
-#orders > div.orderDetails > div.lines > div.line > div.lineDetails > label.serial {
+#orders > div.details > div.lines > div.line > div.lineDetails > label.serial {
     font-size: 0.8em;
     font-style: italic;
 }
 
-#orders > div.orderDetails > div.buttons * {
+#orders > div.details > div.buttons * {
     padding: 8px;
     float: right;
     margin: 0px 10px 10px 10px;
