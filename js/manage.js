@@ -18,6 +18,8 @@ $(document).ready(function () {
     $('#to').datepicker('setDate', '+1d');
 
     selectTabOrders();
+    updateOrdersInfosByRangeOfDates();
+    updateBanners();
 
     $('#btnTabOrders').click(function () {
         selectTabOrders();
@@ -128,25 +130,22 @@ $(document).on('click', 'input.btnCancel', function () {
  * Affiche le contenu de l'onglet : dernières commandes.
  */
 function selectTabOrders() {
+    $('#tabs').find('li').removeClass('selected');
+    $('div.tab').hide();
+
     $('#btnTabOrders').addClass('selected');
     $('#tabOrders').show();
-
-    $('#btnTabStores').removeClass('selected');
-    $('#tabStores').hide();
-
-    updateOrdersInfosByRangeOfDates();
 }
 
 /**
  * Affiche le contenu de l'onglet : magasins.
  */
 function selectTabStores() {
-    $('#btnTabOrders').removeClass('selected');
-    $('#tabOrders').hide();
+    $('#tabs').find('li').removeClass('selected');
+    $('div.tab').hide();
 
     $('#btnTabStores').addClass('selected');
     $('#tabStores').show();
-    updateBanners();
 }
 
 function confirmOrder(id) {
