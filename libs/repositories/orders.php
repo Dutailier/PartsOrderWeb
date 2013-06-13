@@ -32,23 +32,7 @@ class Orders
         $query .= '@orderId = "' . intval($orderId) . '", ';
         $query .= '@userId = "' . intval($userId) . '"';
 
-        $rows = Database::Execute($query);
-
-        if (empty($rows)) {
-            throw new Exception('No order found.');
-        }
-
-        $order = new Order(
-            $rows[0]['shippingAddressId'],
-            $rows[0]['storeId'],
-            $rows[0]['receiverId'],
-            $rows[0]['number'],
-            $rows[0]['creationDate'],
-            $rows[0]['status']
-        );
-        $order->setId($rows[0]['id']);
-
-        return $order;
+        Database::Execute($query);
     }
 
     public static function CancelByUserId($orderId, $userId)
@@ -57,23 +41,7 @@ class Orders
         $query .= '@orderId = "' . intval($orderId) . '", ';
         $query .= '@userId = "' . intval($userId) . '"';
 
-        $rows = Database::Execute($query);
-
-        if (empty($rows)) {
-            throw new Exception('No order found.');
-        }
-
-        $order = new Order(
-            $rows[0]['shippingAddressId'],
-            $rows[0]['storeId'],
-            $rows[0]['receiverId'],
-            $rows[0]['number'],
-            $rows[0]['creationDate'],
-            $rows[0]['status']
-        );
-        $order->setId($rows[0]['id']);
-
-        return $order;
+        Database::Execute($query);
     }
 
     public static function Find($id)

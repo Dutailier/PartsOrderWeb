@@ -12,89 +12,99 @@ $title = 'Order Informations';
 <?php $head = ob_get_contents(); ?>
 <?php ob_clean(); ?>
 
-<!-- Début du contenu. -->
-<fieldset id='orderInfos'>
-    <legend>Order Informations</legend>
+<ul id="tabs">
+    <li id="btnTabOrder">Order</li>
+    <li id="btnTabLogs">Logs</li>
+</ul>
 
-    <p>
-        <label class="properties">Number : </label>
-        <label id="number" class="values"></label>
-    </p>
+<div class="tab" id="tabOrder">
+    <!-- Début du contenu. -->
+    <fieldset id='orderInfos'>
+        <legend>Order Informations</legend>
 
-    <p>
-        <label class="properties">Creation date : </label>
-        <label id="creationDate" class="values"></label>
-    </p>
+        <p>
+            <label class="properties">Number : </label>
+            <label id="number" class="values"></label>
+        </p>
 
-    <p>
-        <label class="properties">Status : </label>
-        <label id="status" class="values"></label>
-    </p>
-</fieldset>
-<fieldset>
-    <legend>Store informations</legend>
+        <p>
+            <label class="properties">Creation date : </label>
+            <label id="creationDate" class="values"></label>
+        </p>
 
-    <p>
-        <label class="properties">Name : </label>
-        <label id="storeName" class="values"></label>
-    </p>
+        <p>
+            <label class="properties">Status : </label>
+            <label id="status" class="values"></label>
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>Store informations</legend>
 
-    <p>
-        <label class="properties">Phone : </label>
-        <label id="storePhone" class="values"></label>
-    </p>
+        <p>
+            <label class="properties">Name : </label>
+            <label id="storeName" class="values"></label>
+        </p>
 
-    <p>
-        <label class="properties">Email : </label>
-        <label id="storeEmail" class="values"></label>
-    </p>
+        <p>
+            <label class="properties">Phone : </label>
+            <label id="storePhone" class="values"></label>
+        </p>
 
-    <p>
-        <label class="properties">Address : </label>
-        <label id="storeAddress" class="values"></label>
-    </p>
-</fieldset>
-<fieldset>
-    <legend>Receiver informations</legend>
+        <p>
+            <label class="properties">Email : </label>
+            <label id="storeEmail" class="values"></label>
+        </p>
 
-    <p>
-        <label class="properties">Name : </label>
-        <label id="receiverName" class="values"></label>
-    </p>
+        <p>
+            <label class="properties">Address : </label>
+            <label id="storeAddress" class="values"></label>
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>Receiver informations</legend>
 
-    <p>
-        <label class="properties">Phone : </label>
-        <label id="receiverPhone" class="values"></label>
-    </p>
+        <p>
+            <label class="properties">Name : </label>
+            <label id="receiverName" class="values"></label>
+        </p>
 
-    <p>
-        <label class="properties">Email : </label>
-        <label id="receiverEmail" class="values"></label>
-    </p>
-</fieldset>
-<fieldset>
-    <legend>Shipping informations</legend>
-    <p>
-        <label class="properties">Address : </label>
-        <label id="shippingAddress" class="values"></label>
-    </p>
-</fieldset>
+        <p>
+            <label class="properties">Phone : </label>
+            <label id="receiverPhone" class="values"></label>
+        </p>
 
-<hr/>
+        <p>
+            <label class="properties">Email : </label>
+            <label id="receiverEmail" class="values"></label>
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>Shipping informations</legend>
+        <p>
+            <label class="properties">Address : </label>
+            <label id="shippingAddress" class="values"></label>
+        </p>
+    </fieldset>
 
-<div id="lines">
+    <hr/>
+
+    <div id="lines">
+    </div>
+
+    <hr/>
+
+    <div id="comments">
+    </div>
+
+    <!-- Sommaire des pièces commandées -->
+    <form id="summary">
+    </form>
+    <!-- Fin -->
 </div>
 
-<hr/>
-
-<div id="comments">
+<div class="tab" id="tabLogs">
+    <div id="logs"></div>
 </div>
-
-<!-- Sommaire des pièces commandées -->
-<form id="summary">
-
-</form>
-<!-- Fin -->
 
 <div id="cancelDialog" title="Cancellation required" class="dialog">
     Are you sure you want to cancel this order?

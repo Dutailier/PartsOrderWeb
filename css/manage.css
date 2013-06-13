@@ -270,3 +270,35 @@ div.details > div.buttons * {
     line-height: 23px;
     width: 150px;
 }
+
+#logs > div.log {
+    position: relative;
+    border: 1px dotted #484848;
+    padding: 10px;
+    margin: 10px;
+    overflow: hidden; /* Clearfix */
+}
+
+#logs > div.log > label.text {
+    font-size: 1.2em;
+    line-height: 30px;
+}
+
+#logs > div.log > div.date {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+    clear: both;
+    font-size: 0.7em;
+    float: right;
+}
+
+#logs > div.log > div.date > label.username,
+#logs > div.log > label.orderNumber {
+    font-weight: bold;
+}
+
+#logs > div.log > div.date > label.creationDate {
+    font-style: italic;
+}

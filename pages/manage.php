@@ -16,6 +16,7 @@ $title = 'Manage';
 <ul id="tabs">
     <li id="btnTabOrders">Orders</li>
     <li id="btnTabStores">Stores</li>
+    <li id="btnTabLogs">Logs</li>
 </ul>
 
 <div class="tab" id="tabOrders">
@@ -48,6 +49,10 @@ $title = 'Manage';
     </div>
     <div id="stores">
     </div>
+</div>
+
+<div class="tab" id="tabLogs">
+    <div id="logs"></div>
 </div>
 
 <div id="confirmDialog">

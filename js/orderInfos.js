@@ -3,6 +3,16 @@ $(document).ready(function () {
     updateOrderDetails();
     updateComments();
 
+    selectTabOrder();
+
+    $('#btnTabOrder').click(function () {
+        selectTabOrder();
+    });
+
+    $('#btnTabLogs').click(function () {
+        selectTabLogs();
+    });
+
     $('#confirmDialog').dialog({
         autoOpen: false,
         modal: true,
@@ -59,6 +69,30 @@ $(document).on('click', '#btnCancel', function () {
 $(document).on('click', '#btnAddComment', function () {
     $('#addCommentDialog').dialog('open');
 });
+
+/**
+ * Affiche le contenu de l'onglet : informations de la commande.
+ */
+function selectTabOrder() {
+    $('#tabs').find('li').removeClass('selected');
+    $('div.tab').hide();
+
+    $('#btnTabOrder').addClass('selected');
+    $('#tabOrder').show();
+}
+
+/**
+ * Affiche le contenu de l'onglet : logs.
+ */
+function selectTabLogs() {
+    $('#tabs').find('li').removeClass('selected');
+    $('div.tab').hide();
+
+    $('#btnTabLogs').addClass('selected');
+    $('#tabLogs').show();
+
+    updateLogs();
+}
 
 function addComment() {
     var parameters = {
@@ -226,6 +260,47 @@ function updateComments() {
         })
 }
 
+function updateLogs() {
+    var parameters = {
+        'orderId': $.QueryString['orderId']
+    };
+
+    $.post('ajax/getLogsByOrderId.php', parameters)
+        .done(function (data) {
+
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('logs')) {
+
+                $('div.log').remove();
+                var logs = data['logs'];
+
+                for (var i in logs) {
+                    if (logs.hasOwnProperty(i)) {
+                        var log = logs[i];
+
+                        if (log.hasOwnProperty('id') &&
+                            log.hasOwnProperty('event') &&
+                            log.hasOwnProperty('datetime') &&
+                            log.hasOwnProperty('user') &&
+                            log['user'].hasOwnProperty('username')) {
+                            addLogInfos(log);
+                        }
+                    }
+                }
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
 function confirmOrder() {
     var parameters = {
         "orderId": $.QueryString['orderId']
@@ -282,6 +357,17 @@ function addCommentInfos(comment) {
             '<label class="text">' + comment['text'] + '</label>' +
             '<div class="date">' +
             'By <label class="username">' + comment['user']['username'] + '</label> at <label class="creationDate">' + dateFormat(comment['creationDate']) + '</label>' +
+            '</div>' +
+            '</div>'
+    );
+}
+
+function addLogInfos(log) {
+    $('#logs').append(
+        '<div class="log" data-id="' + log['id'] + '">' +
+            '<label class="event">' + log['event'] + '</label>' +
+            '<div class="date">' +
+            'By <label class="username">' + log['user']['username'] + '</label> at <label class="creationDate">' + dateFormat(log['datetime']) + '</label>' +
             '</div>' +
             '</div>'
     );

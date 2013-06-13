@@ -29,6 +29,10 @@ $(document).ready(function () {
         selectTabStores();
     });
 
+    $('#btnTabLogs').click(function () {
+        selectTabLogs();
+    });
+
     $('input.date').change(function () {
         updateOrdersInfosByRangeOfDates();
     });
@@ -164,6 +168,19 @@ function selectTabStores() {
     $('#tabStores').show();
 }
 
+/**
+ * Affiche le contenu de l'onglet : logs.
+ */
+function selectTabLogs() {
+    $('#tabs').find('li').removeClass('selected');
+    $('div.tab').hide();
+
+    $('#btnTabLogs').addClass('selected');
+    $('#tabLogs').show();
+
+    updateLogs();
+}
+
 function confirmOrder(id) {
     var parameters = {
         "orderId": id
@@ -239,6 +256,45 @@ function updateBanners() {
                 }
 
                 $banners.trigger('change');
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
+function updateLogs() {
+    $.post('ajax/getLatestLogs.php')
+        .done(function (data) {
+
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('logs')) {
+
+                $('div.log').remove();
+                var logs = data['logs'];
+
+                for (var i in logs) {
+                    if (logs.hasOwnProperty(i)) {
+                        var log = logs[i];
+
+                        if (log.hasOwnProperty('id') &&
+                            log.hasOwnProperty('event') &&
+                            log.hasOwnProperty('datetime') &&
+                            log.hasOwnProperty('order') &&
+                            log['order'].hasOwnProperty('number') &&
+                            log.hasOwnProperty('user') &&
+                            log['user'].hasOwnProperty('username')) {
+                            addLogInfos(log);
+                        }
+                    }
+                }
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -748,6 +804,18 @@ function addStoreInfos(store) {
             '<label class="username"> - ' + store['user']['username'] + '</label>' +
             '</div>'
 
+    );
+}
+
+function addLogInfos(log) {
+    $('#logs').append(
+        '<div class="log" data-id="' + log['id'] + '">' +
+            '<label class="orderNumber">[' + log['order']['number'] + '] </label>' +
+            '<label class="event">' + log['event'] + '</label>' +
+            '<div class="date">' +
+            'By <label class="username">' + log['user']['username'] + '</label> at <label class="creationDate">' + dateFormat(log['datetime']) + '</label>' +
+            '</div>' +
+            '</div>'
     );
 }
 

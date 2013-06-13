@@ -1,3 +1,40 @@
+#tabs {
+    list-style-type: none;
+    padding: 0px;
+    height: 38px;
+    border-bottom: 2px solid #484848;
+    overflow: visible;
+}
+
+#tabs > li {
+    display: block;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 15px;
+    border: 2px solid #484848;
+    line-height: 20px;
+    padding: 8px;
+    width: 100px;
+    background-color: #FAFAFA;
+    overflow: hidden; /* Clearfix */
+}
+
+#tabs > li:hover {
+    background-color: #FFFFFF;
+}
+
+#tabs > li.selected {
+    background-color: #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+    z-index: 999999;
+}
+
+div.tab {
+    margin-bottom: 20px;
+    overflow: hidden; /* Clearfix */
+}
+
 fieldset {
     display: block;
     float: left;
@@ -96,12 +133,14 @@ hr {
     font-style: italic;
 }
 
-#comments {
+#comments,
+#logs {
     margin: 20px auto;
     overflow: hidden; /* Clearfix */
 }
 
-#comments > div.comment {
+#comments > div.comment,
+#logs > div.log {
     position: relative;
     border: 1px dotted #484848;
     padding: 10px;
@@ -109,12 +148,14 @@ hr {
     overflow: hidden; /* Clearfix */
 }
 
-#comments > div.comment > label.text {
+#comments > div.comment > label.text,
+#logs > div.log > label.text {
     font-size: 1.2em;
     line-height: 30px;
 }
 
-#comments > div.comment > div.date {
+#comments > div.comment > div.date,
+#logs > div.log > div.date {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -124,11 +165,13 @@ hr {
     float: right;
 }
 
-#comments > div.comment > div.date > label.username {
+#comments > div.comment > div.date > label.username,
+#logs > div.log > div.date > label.username {
     font-weight: bold;
 }
 
-#comments > div.comment > div.date > label.creationDate {
+#comments > div.comment > div.date > label.creationDate,
+#logs > div.log > div.date > label.creationDate {
     font-style: italic;
 }
 

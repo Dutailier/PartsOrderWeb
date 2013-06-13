@@ -7,11 +7,6 @@ include_once(ROOT . 'libs/repositories/stores.php');
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
-
-} else if (!Security::isInRoleName(ROLE_ADMINISTRATOR)) {
-    $data['success'] = false;
-    $data['message'] = 'You must be connected as administrator.';
-
 } else {
 
     if (empty($_POST['storeId'])) {
@@ -20,11 +15,18 @@ if (!Security::isAuthenticated()) {
 
     } else {
         try {
+            $user = Security::getUserConnected();
             $store = Stores::Find($_POST['storeId']);
 
-            $data['store'] = $store->getArray();
-            $data['success'] = true;
+            if (!Security::isInRoleName(ROLE_ADMINISTRATOR) && $user->getId() != $store->getUserId()) {
+                $data['success'] = false;
+                $data['message'] = 'You must be at the origin of the order.';
 
+            } else {
+
+                $data['store'] = $store->getArray();
+                $data['success'] = true;
+            }
         } catch (Exception $e) {
             $data['success'] = false;
             $data['message'] = $e->getMessage();

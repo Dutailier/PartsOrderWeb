@@ -2,6 +2,7 @@
 
 include_once(ROOT . 'libs/entity.php');
 include_once(ROOT . 'libs/repositories/users.php');
+include_once(ROOT . 'libs/repositories/orders.php');
 
 class Log extends Entity
 {
@@ -21,9 +22,11 @@ class Log extends Entity
     public function getArray()
     {
         return array(
+            'id' => $this->getId(),
             'orderId' => $this->getOrderId(),
             'user' => $this->getUser()->getArray(),
-            'event' => $this->getEvent()
+            'event' => $this->getEvent(),
+            'datetime' => $this->getDatetime()
         );
     }
 
@@ -55,5 +58,10 @@ class Log extends Entity
     public function getUser()
     {
         return Users::Find($this->getUserId());
+    }
+
+    public function getOrder()
+    {
+        return Orders::Find($this->getOrderId());
     }
 }
