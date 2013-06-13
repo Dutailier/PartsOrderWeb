@@ -144,7 +144,7 @@ hr {
     position: relative;
     border: 1px dotted #484848;
     padding: 10px;
-    margin: 10px;
+    margin: 10px 5px;
     overflow: hidden; /* Clearfix */
 }
 

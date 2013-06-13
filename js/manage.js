@@ -854,7 +854,7 @@ function addStoreInfos(store) {
     $('#stores').append(
         '<div class="store" data-id="' + store['id'] + '">' +
             '<label class="name">' + store['name'] + '</label>' +
-            '<label class="username"> - ' + store['user']['username'] + '</label>' +
+            '<label class="username">' + store['user']['username'] + '</label>' +
             '</div>'
 
     );
