@@ -13,14 +13,10 @@ class Address extends Entity
 
     function __construct($details, $city, $zip, $stateId)
     {
-        if (!preg_match(Address::REGEX_ZIP, $zip)) {
-            throw new Exception('The zip code must be 5 digits.');
-        }
-
-        $this->details = trim($details);
-        $this->city = trim($city);
-        $this->zip = trim($zip);
-        $this->stateId = intval($stateId);
+        $this->setDetails($details);
+        $this->setCity($city);
+        $this->setZip($zip);
+        $this->setStateId($stateId);
     }
 
     public function getArray()
@@ -52,6 +48,30 @@ class Address extends Entity
     function getStateId()
     {
         return $this->stateId;
+    }
+
+    public function setCity($city)
+    {
+        $this->city = trim($city);
+    }
+
+    public function setDetails($details)
+    {
+        $this->details = trim($details);
+    }
+
+    public function setStateId($stateId)
+    {
+        $this->stateId = intval($stateId);
+    }
+
+    public function setZip($zip)
+    {
+        if (!preg_match(Address::REGEX_ZIP, $zip)) {
+            throw new Exception('The zip code must be 5 digits.');
+        }
+
+        $this->zip = trim($zip);
     }
 
     public function getState()

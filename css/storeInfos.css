@@ -1,0 +1,59 @@
+form {
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden; /* Clearfix */
+}
+
+fieldset {
+    display: block;
+    margin: 10px 0px 25px 0px;
+    padding: 20px 15px;
+    border: 1px solid #484848;
+}
+
+fieldset > legend {
+    padding: 0px 10px;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+fieldset > p {
+    float: left;
+    width: 375px;
+    margin: 5px 44px;
+    overflow: hidden; /* Clearfix */
+}
+
+fieldset > p >label {
+    float: left;
+    margin: 5px 0px;
+}
+
+fieldset > p > input, textarea, select {
+    float: left;
+    width: 350px;
+    clear: both;
+    resize: none;
+}
+
+#buttons {
+    margin-bottom: 20px;
+    overflow: hidden; /* Clearfix */
+}
+
+#buttons > * {
+    padding: 8px;
+    float: right;
+    font-size: 1.2em;
+}
+
+#btnSubmit {
+    width: 150px;
+    margin-left: 5px;
+}
+
+#btnClear, #btnCancel {
+    cursor: pointer;
+    margin: 0px 5px;
+    text-decoration: underline;
+}

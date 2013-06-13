@@ -13,18 +13,13 @@ if (!Security::isAuthenticated()) {
     $data['message'] = 'You must be connected as administrator.';
 
 } else {
-    if (empty($_POST['username'])) {
-        $data['success'] = true;
-        $data['message'] = 'An username is required.';
+    if (empty($_POST['storeId'])) {
+        $data['success'] = false;
+        $data['message'] = 'The store must be selected.';
 
     } else {
         try {
-            $stores = Stores::FilterByKeyWords($_POST['username']);
-
-            $data['stores'] = array();
-            foreach ($stores as $store) {
-                $data['stores'][] = $store->getArray();
-            }
+            Stores::DeleteById($_POST['storeId']);
 
             $data['success'] = true;
 

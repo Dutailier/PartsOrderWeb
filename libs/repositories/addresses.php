@@ -24,6 +24,24 @@ class Addresses
         return $address;
     }
 
+    public static function Update(Address $address)
+    {
+        $query = 'EXEC [updateAddress]';
+        $query .= '@id = "' . $address->getId() . '", ';
+        $query .= '@details = "' . $address->getDetails() . '", ';
+        $query .= '@city = "' . $address->getCity() . '", ';
+        $query .= '@zip = "' . $address->getZip() . '", ';
+        $query .= '@stateId = "' . $address->getStateId() . '"';
+
+        $rows = Database::Execute($query);
+
+        if (empty($rows)) {
+            throw new Exception('The store wasn\'t updated.');
+        }
+
+        return $address;
+    }
+
     public static function Find($id)
     {
         $query = 'EXEC [getAddressById]';

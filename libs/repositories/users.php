@@ -5,6 +5,23 @@ include_once(ROOT . 'libs/entities/user.php');
 
 class Users
 {
+    public static function Attach(User $user)
+    {
+        $query = 'EXEC [addUser]';
+        $query .= '@username = "' . $user->getUsername() . '", ';
+        $query .= '@password = "' . sha1($user->getUsername() . $user->getUsername()) . '"';
+
+        $rows = Database::Execute($query);
+
+        if (empty($rows)) {
+            throw new Exception('The address wasn\'t added.');
+        }
+
+        $user->setId($rows[0]['id']);
+
+        return $user;
+    }
+
     public static function FindByUsernameAndPassword($username, $password)
     {
         $query = 'EXEC [getUserByUsernameAndPassword]';

@@ -22,7 +22,7 @@ $title = 'Manage';
 <div class="tab" id="tabOrders">
     <div id="orderFilters" class="filters">
         <div id="numberWrapper">
-            <label for="number">Search by number : </label>
+            <label for="number">Search : </label>
             <input id="number" name="number" type="text" maxlength="11">
         </div>
         <div id="datesWrapper">
@@ -38,10 +38,12 @@ $title = 'Manage';
 
 <div class="tab" id="tabStores">
     <div id="storeFilters" class="filters">
-        <div id="usernameWrapper">
-            <label for="username">Search by username : </label>
-            <input id="username" name="username" type="text">
+        <div id="keyWordsWrapper">
+            <label for="keyWords">Search : </label>
+            <input id="keyWords" name="keyWords" type="text">
         </div>
+        <input id="btnAddStore" name="btnAddStore" type="button" value="Add Store"/>
+
         <div id="bannersWrapper">
             <label for="banners">Banner : </label>
             <select id="banners"> </select>

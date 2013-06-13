@@ -8,23 +8,32 @@ if (!Security::isAuthenticated()) {
     $page = 'login';
 
 } else {
-    $page = $_GET['page'];
+    $page = empty($_GET['page']) ? 'index' : $_GET['page'];
 
-    if (empty($page) || $page == 'index') {
-        if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
-            $page = 'manage';
+    switch ($page) {
+        case 'index' :
+            if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
+                $page = 'manage';
+                break;
+            }
 
-        } else if(Security::isInRoleName(ROLE_STORE)) {
-            $page = 'products';
-        }
-    }
+        case 'products':
+        case 'destinations' :
+            $transaction = new SessionTransaction();
 
-    if ($page == 'products') {
-        $transaction = new SessionTransaction();
+            if ($transaction->isOpen()) {
+                $page = 'products';
+            } else {
+                $page = 'destinations';
+            }
+            break;
 
-        if (!$transaction->isOpen()) {
-            $page = 'destinations';
-        }
+        case 'manage' :
+        case 'storeInfos' :
+            if (!Security::isInRoleName(ROLE_ADMINISTRATOR)) {
+                $page = 'error';
+            }
+            break;
     }
 }
 

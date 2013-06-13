@@ -38,15 +38,29 @@ $(document).ready(function () {
     });
 
     $('#number').change(function () {
-        updateOrderInfosByNumber();
+        if ($('#number').val() != '') {
+            updateOrderInfosByNumber();
+        } else {
+            updateOrdersInfosByRangeOfDates();
+        }
     });
 
-    $('#username').change(function () {
-        updateStoresByUsername();
+    $('#keyWords').change(function () {
+        if ($('#keyWords').val() != '') {
+            updateStoresByUsername();
+        } else {
+            updateStoresByBannerId();
+        }
     });
 
     $('#banners').change(function () {
         updateStoresByBannerId();
+    });
+
+    $('#btnAddStore').click(function () {
+        var bannerId = $('#banners').find('option:selected').val();
+
+        window.location = 'storeInfos.php?bannerId=' + bannerId;
     });
 
     $('#confirmDialog').dialog({
@@ -144,6 +158,43 @@ $(document).on('click', 'input.btnDetails', function () {
     var $order = $details.prev();
 
     window.location = 'orderInfos.php?orderId=' + $order.data('id');
+});
+
+$(document).on('click', 'input.btnStoreEdit', function () {
+
+    var $details = $(this).closest('div.details');
+    var $store = $details.find('fieldset.contactInfos');
+    var bannerId = $('#banners').find('option:selected').val();
+
+    window.location = 'storeInfos.php?storeId=' + $store.data('id') + '&bannerId=' + bannerId;
+});
+
+$(document).on('click', 'input.btnStoreDelete', function () {
+    var $details = $(this).closest('div.details');
+    var $store = $details.find('fieldset.contactInfos');
+
+    var parameters = {
+        "storeId": $store.data('id')
+    };
+
+    $.post('ajax/deleteStore.php', parameters)
+        .done(function (data) {
+            if (data.hasOwnProperty('success') &&
+                data['success']) {
+
+                $details.prev().remove();
+                $details.remove();
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
 });
 
 /**
@@ -353,7 +404,7 @@ function updateOrderInfosByNumber() {
 
 function updateStoresByUsername() {
     var parameters = {
-        'username': $('#username').val()
+        'username': $('#keyWords').val()
     };
 
     $.post('ajax/getStoresByUsername.php', parameters)
@@ -546,7 +597,9 @@ function addStoreDetails($store) {
                     }
                 }
 
-                $buttons.append('<input class="btnStoreOrders" type="button" value="Store Orders"/>');
+                $buttons.append('<input class="btnStoreDelete" type="button" value="Delete"/>');
+                $buttons.append('<input class="btnStoreEdit" type="button" value="Edit"/>');
+                $buttons.append('<input class="btnStoreOrders" type="button" value="Orders"/>');
 
                 $details.append($buttons);
                 $details.hide().insertAfter($store).slideDown();

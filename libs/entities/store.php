@@ -9,13 +9,14 @@ class Store extends Entity
 {
     const REGEX_PHONE = '/^[1]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/';
     const REGEX_EMAIL = '/^\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}$/';
+    private $bannerId;
     private $userId;
     private $name;
     private $phone;
     private $email;
     private $addressId;
 
-    function __construct($userId, $name, $phone, $email, $addressId)
+    function __construct($bannerId, $userId, $name, $phone, $email, $addressId)
     {
         if (!preg_match(Store::REGEX_PHONE, $phone)) {
             throw new Exception('The phone number must be standard. (i.e. 123-456-7890)');
@@ -27,6 +28,7 @@ class Store extends Entity
         $phone = preg_replace('/[^\d]/', '', $phone);
         $phone = (strlen($phone) == 10 ? '1' : '') . $phone;
 
+        $this->bannerId = intval($bannerId);
         $this->userId = intval($userId);
         $this->name = trim($name);
         $this->phone = $phone;
@@ -44,6 +46,11 @@ class Store extends Entity
             'email' => $this->getEmail(),
             'address' => $this->getAddress()->getArray()
         );
+    }
+
+    public function getBannerId()
+    {
+        return $this->bannerId;
     }
 
     public function getUserId()
@@ -69,6 +76,21 @@ class Store extends Entity
     public function getAddressId()
     {
         return $this->addressId;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     public function getUser()

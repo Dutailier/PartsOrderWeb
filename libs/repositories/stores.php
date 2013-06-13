@@ -5,6 +5,27 @@ include_once(ROOT . 'libs/entities/store.php');
 
 class Stores
 {
+    public static function Attach(Store $store)
+    {
+        $query = 'EXEC [addStore]';
+        $query .= '@bannerId = "' . $store->getBannerId() . '", ';
+        $query .= '@userId = "' . $store->getUserId() . '", ';
+        $query .= '@name = "' . $store->getName() . '", ';
+        $query .= '@phone = "' . $store->getPhone() . '", ';
+        $query .= '@email = "' . $store->getEmail() . '", ';
+        $query .= '@addressId = "' . $store->getAddressId() . '"';
+
+        $rows = Database::Execute($query);
+
+        if (empty($rows)) {
+            throw new Exception('The store wasn\'t added.');
+        }
+
+        $store->setId($rows[0]['id']);
+
+        return $store;
+    }
+
     public static function FilterByUserId($id)
     {
         $query = 'EXEC [getStoresByUserId]';
@@ -16,6 +37,7 @@ class Stores
         foreach ($rows as $row) {
 
             $store = new Store(
+                $row['bannerId'],
                 $row['userId'],
                 $row['name'],
                 $row['phone'],
@@ -28,10 +50,10 @@ class Stores
         return $stores;
     }
 
-    public static function FilterByUsername($username)
+    public static function FilterByKeyWords($keyWords)
     {
-        $query = 'EXEC [getStoresByUsername]';
-        $query .= '@username = "' . trim($username) . '"';
+        $query = 'EXEC [getStoresByKeyWords]';
+        $query .= '@keyWords = "' . trim($keyWords) . '"';
 
         $rows = Database::Execute($query);
 
@@ -39,6 +61,7 @@ class Stores
         foreach ($rows as $row) {
 
             $store = new Store(
+                $row['bannerId'],
                 $row['userId'],
                 $row['name'],
                 $row['phone'],
@@ -63,12 +86,45 @@ class Stores
         }
 
         $store = new Store(
+            $rows[0]['bannerId'],
             $rows[0]['userId'],
             $rows[0]['name'],
             $rows[0]['phone'],
             $rows[0]['email'],
             $rows[0]['addressId']);
         $store->setId($rows[0]['id']);
+
+        return $store;
+    }
+
+    public static function DeleteById($id)
+    {
+        $query = 'EXEC [deleteStoreById]';
+        $query .= '@id = ' . intval($id);
+
+        $rows = Database::Execute($query);
+
+        if (empty($rows)) {
+            throw new Exception('No store deleted.');
+        }
+    }
+
+    public static function Update(Store $store)
+    {
+        $query = 'EXEC [updateStore]';
+        $query .= '@id = "' . $store->getId() . '", ';
+        $query .= '@bannerId = "' . $store->getBannerId() . '", ';
+        $query .= '@userId = "' . $store->getUserId() . '", ';
+        $query .= '@name = "' . $store->getName() . '", ';
+        $query .= '@phone = "' . $store->getPhone() . '", ';
+        $query .= '@email = "' . $store->getEmail() . '", ';
+        $query .= '@addressId = "' . $store->getAddressId() . '"';
+
+        $rows = Database::Execute($query);
+
+        if (empty($rows)) {
+            throw new Exception('The store wasn\'t updated.');
+        }
 
         return $store;
     }
@@ -84,6 +140,7 @@ class Stores
         foreach ($rows as $row) {
 
             $store = new Store(
+                $row['bannerId'],
                 $row['userId'],
                 $row['name'],
                 $row['phone'],

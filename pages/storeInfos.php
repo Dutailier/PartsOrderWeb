@@ -5,18 +5,26 @@ $title = 'Customers Informations';
 <?php ob_start(); ?>
 
 <!-- Début de l'en-tête. -->
-<link type="text/css" rel="stylesheet" href="css/receiverInfos.css"/>
+<link type="text/css" rel="stylesheet" href="css/storeInfos.css"/>
 <!-- Fin de l'en-tête. -->
 
 <?php $head = ob_get_contents(); ?>
 <?php ob_clean(); ?>
 
 <!-- Début du contenu. -->
-<h1>Receiver informations</h1>
+<h1>Store informations</h1>
 
 <form id="frmOrder" method="post" onsubmit="return false;">
     <ul id="summary"></ul>
-    <fieldset>
+    <fieldset id="userInfos">
+        <legend>User informations</legend>
+        <p>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username"/>
+        </p>
+    </fieldset>
+
+    <fieldset id="contactInfos">
         <legend>Contact informations</legend>
         <p>
             <label for="firstname">Name</label>
@@ -74,7 +82,7 @@ $title = 'Customers Informations';
     </div>
 </form>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="js/receiverInfos.js"></script>
+<script src="js/storeInfos.js"></script>
 <!-- Fin du contenu. -->
 
 <?php $content = ob_get_contents(); ?>
