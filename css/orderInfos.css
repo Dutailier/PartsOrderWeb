@@ -135,7 +135,7 @@ hr {
 
 #comments,
 #logs {
-    margin: 20px auto;
+    margin: 10px auto;
     overflow: hidden; /* Clearfix */
 }
 
@@ -144,7 +144,7 @@ hr {
     position: relative;
     border: 1px dotted #484848;
     padding: 10px;
-    margin: 5px 10px;
+    margin: 10px 10px;
     overflow: hidden; /* Clearfix */
 }
 
