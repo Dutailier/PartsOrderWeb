@@ -25,7 +25,9 @@ $(document).ready(function () {
     });
 
     $('#number').change(function () {
-        updateOrderInfosByNumber();
+        if ($('#number').val() != '') {
+            updateOrderInfosByNumber();
+        }
     });
 
     $('#confirmDialog').dialog({
