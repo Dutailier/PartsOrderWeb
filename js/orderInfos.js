@@ -44,11 +44,13 @@ $(document).ready(function () {
     $('#addCommentDialog').dialog({
         autoOpen: false,
         draggable: true,
+        modal: true,
         width: '500px',
         dialogClass: 'dialog',
         buttons: {
             "Submit": function () {
                 addComment();
+
                 $(this).dialog('close');
             },
             "Cancel": function () {
@@ -105,6 +107,7 @@ function addComment() {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
 
+                $('#comment').val('');
                 updateComments();
 
             } else if (data.hasOwnProperty('message')) {

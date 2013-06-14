@@ -158,7 +158,7 @@ div.details {
 }
 
 div.details > fieldset {
-    margin: 10px 10px 15px 10px;
+    margin: 10px;
     border: 1px solid #484848;
     overflow: hidden; /* Clearfix */
 }
@@ -210,7 +210,7 @@ div.details > fieldset > p > label.values {
 #orders > div.details > div.lines > div.line {
     padding: 5px;
     border: 1px solid #484848;
-    margin: 0px 10px 10px 10px;
+    margin: 5px 10px 5px 10px;
     height: 40px;
     width: 882px;
 }
@@ -249,7 +249,7 @@ div.details > fieldset > p > label.values {
 div.details > div.buttons * {
     padding: 8px;
     float: right;
-    margin: 0px 10px 10px 10px;
+    margin: 5px 10px 10px 10px;
     font-size: 1.2em;
     line-height: 23px;
     width: 150px;

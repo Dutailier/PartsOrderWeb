@@ -198,7 +198,7 @@ $(document).ready(function () {
         });
 
     $('#btnClear').click(function () {
-        $('fieldset').filter('input, textarea').val('');
+        $('fieldset').find('input, textarea').val('');
     });
 
     $('#btnCancel').click(function () {

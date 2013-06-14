@@ -8,14 +8,14 @@ $(document).ready(function () {
     });
 
     $("#to").datepicker({
-        maxDate: '+1d',
+        maxDate: '0',
         onClose: function (selectedDate) {
             $("#from").datepicker("option", "maxDate", selectedDate);
         }
     });
 
     $('#from').datepicker('setDate', '0');
-    $('#to').datepicker('setDate', '+1d');
+    $('#to').datepicker('setDate', '0');
 
     getStoreInfos();
     updateOrdersInfosByRangeOfDates();
