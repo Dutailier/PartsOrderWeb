@@ -14,7 +14,7 @@ if (!Security::isAuthenticated()) {
 
 } else {
     try {
-        $logs = Logs::Top(20);
+        $logs = Logs::Top(10);
 
         $data['logs'] = array();
         foreach ($logs as $log) {

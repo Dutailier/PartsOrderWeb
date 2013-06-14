@@ -5,6 +5,13 @@ $title = 'Confirmation';
 <?php ob_start(); ?>
 
 <!-- Début de l'en-tête. -->
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            window.location = 'destinations.php';
+        }, 3000)
+    });
+</script>
 <!-- Fin de l'en-tête. -->
 
 <?php $head = ob_get_contents(); ?>

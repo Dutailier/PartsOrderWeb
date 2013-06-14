@@ -14,7 +14,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#from').datepicker('setDate', '0');
+    $('#from').datepicker('setDate', '-1m');
     $('#to').datepicker('setDate', '0');
 
     getStoreInfos();
