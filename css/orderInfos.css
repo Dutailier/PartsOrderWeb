@@ -6,7 +6,7 @@
     overflow: visible;
 }
 
-#tabs > li {
+#tabs > ul > li {
     display: block;
     float: left;
     text-align: center;
@@ -20,11 +20,17 @@
     overflow: hidden; /* Clearfix */
 }
 
-#tabs > li:hover {
+#btnBackManage {
+    float: right;
+    text-decoration: underline;
+    padding: 8px;
+}
+
+#tabs > ul > li:hover {
     background-color: #FFFFFF;
 }
 
-#tabs > li.selected {
+#tabs > ul > li.selected {
     background-color: #FFFFFF;
     border-bottom: 2px solid #FFFFFF;
     z-index: 999999;

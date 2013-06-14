@@ -17,7 +17,18 @@ $(document).ready(function () {
     $('#from').datepicker('setDate', '0');
     $('#to').datepicker('setDate', '0');
 
-    selectTabOrders();
+    switch ($.QueryString['tab']) {
+        case 'stores' :
+            selectTabStores();
+            break;
+        case 'logs' :
+            selectTabLogs();
+            break;
+        case 'orders' :
+        default:
+            selectTabOrders();
+    }
+
     updateOrdersInfosByRangeOfDates();
     updateBanners();
 
@@ -904,3 +915,16 @@ function phoneFormat(phone) {
 function dateFormat(date) {
     return date.substring(0, 16);
 }
+
+(function ($) {
+    $.QueryString = (function (a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i) {
+            var p = a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);

@@ -6,7 +6,7 @@
     overflow: visible;
 }
 
-#tabs > li {
+#tabs >ul > li {
     display: block;
     float: left;
     text-align: center;
@@ -20,11 +20,11 @@
     overflow: hidden; /* Clearfix */
 }
 
-#tabs > li:hover {
+#tabs > ul > li:hover {
     background-color: #FFFFFF;
 }
 
-#tabs > li.selected {
+#tabs > ul > li.selected {
     background-color: #FFFFFF;
     border-bottom: 2px solid #FFFFFF;
     z-index: 999999;
@@ -32,6 +32,7 @@
 
 div.tab {
     margin-bottom: 20px;
+    padding: 10px;
     overflow: hidden; /* Clearfix */
 }
 
@@ -183,7 +184,7 @@ div.details > fieldset > p {
 #orders > div.details > fieldset.receiverInfos,
 #orders > div.details > fieldset.storeInfos {
     float: left;
-    width: 412px;
+    width: 402px;
     height: 215px;
 }
 
@@ -212,7 +213,7 @@ div.details > fieldset > p > label.values {
     border: 1px solid #484848;
     margin: 5px 10px 5px 10px;
     height: 40px;
-    width: 882px;
+    width: 862px;
 }
 
 #orders > div.details > div.lines > div.line:nth-child(even) {

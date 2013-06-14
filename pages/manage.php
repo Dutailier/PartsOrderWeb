@@ -13,11 +13,13 @@ $title = 'Manage';
 <?php ob_clean(); ?>
 
 <!-- Début du contenu. -->
-<ul id="tabs">
-    <li id="btnTabOrders">Orders</li>
-    <li id="btnTabStores">Stores</li>
-    <li id="btnTabLogs">Logs</li>
-</ul>
+<div id="tabs">
+    <ul>
+        <li id="btnTabOrders">Orders</li>
+        <li id="btnTabStores">Stores</li>
+        <li id="btnTabLogs">Logs</li>
+    </ul>
+</div>
 
 <div class="tab" id="tabOrders">
     <div id="orderFilters" class="filters">

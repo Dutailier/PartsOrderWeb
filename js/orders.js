@@ -18,7 +18,16 @@ $(document).ready(function () {
     $('#to').datepicker('setDate', '0');
 
     getStoreInfos();
+    selectTabOrder();
     updateOrdersInfosByRangeOfDates();
+
+    $('#btnTabOrders').click(function () {
+        selectTabOrder();
+    });
+
+    $('#btnTabLogs').click(function () {
+        selectTabLogs();
+    });
 
     $('input.date').change(function () {
         updateOrdersInfosByRangeOfDates();
@@ -28,6 +37,10 @@ $(document).ready(function () {
         if ($('#number').val() != '') {
             updateOrderInfosByNumber();
         }
+    });
+
+    $('#btnBackManage').click(function () {
+        window.location = 'manage.php?tab=stores';
     });
 
     $('#confirmDialog').dialog({
@@ -73,6 +86,30 @@ $(document).on('click', 'div.order', function () {
         addOrderDetails($order);
     }
 });
+
+/**
+ * Affiche le contenu de l'onglet : informations de la commande.
+ */
+function selectTabOrder() {
+    $('#tabs').find('li').removeClass('selected');
+    $('div.tab').hide();
+
+    $('#btnTabOrders').addClass('selected');
+    $('#tabOrders').show();
+}
+
+/**
+ * Affiche le contenu de l'onglet : logs.
+ */
+function selectTabLogs() {
+    $('#tabs').find('li').removeClass('selected');
+    $('div.tab').hide();
+
+    $('#btnTabLogs').addClass('selected');
+    $('#tabLogs').show();
+
+    updateLogs();
+}
 
 /**
  * Retourne les détails d'une commande.
@@ -283,6 +320,49 @@ function updateOrderInfosByNumber() {
         })
 }
 
+function updateLogs() {
+    var parameters = {
+        'storeId': $.QueryString['storeId']
+    };
+
+    $.post('ajax/getLogsByStoreId.php', parameters)
+        .done(function (data) {
+
+            if (data.hasOwnProperty('success') &&
+                data['success'] &&
+                data.hasOwnProperty('logs')) {
+
+                $('div.log').remove();
+                var logs = data['logs'];
+
+                for (var i in logs) {
+                    if (logs.hasOwnProperty(i)) {
+                        var log = logs[i];
+
+                        if (log.hasOwnProperty('id') &&
+                            log.hasOwnProperty('event') &&
+                            log.hasOwnProperty('datetime') &&
+                            log.hasOwnProperty('order') &&
+                            log['order'].hasOwnProperty('number') &&
+                            log.hasOwnProperty('user') &&
+                            log['user'].hasOwnProperty('username')) {
+                            addLogInfos(log);
+                        }
+                    }
+                }
+
+            } else if (data.hasOwnProperty('message')) {
+                alert(data['message']);
+
+            } else {
+                alert('The result of the server is unreadable.');
+            }
+        })
+        .fail(function () {
+            alert('Communication with the server failed.');
+        })
+}
+
 function getStoreInfos() {
     var parameters = {
         'storeId': $.QueryString['storeId']
@@ -423,6 +503,18 @@ function addOrderInfos(order) {
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
             '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + dateFormat(order['lastModificationDate']) + '</i></label>' +
+            '</div>'
+    );
+}
+
+function addLogInfos(log) {
+    $('#logs').append(
+        '<div class="log" data-id="' + log['id'] + '">' +
+            '<label class="orderNumber">[' + log['order']['number'] + '] </label>' +
+            '<label class="event">' + log['event'] + '</label>' +
+            '<div class="date">' +
+            'By <label class="username">' + log['user']['username'] + '</label> at <label class="creationDate">' + dateFormat(log['datetime']) + '</label>' +
+            '</div>' +
             '</div>'
     );
 }

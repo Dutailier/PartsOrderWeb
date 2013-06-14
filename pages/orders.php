@@ -37,21 +37,36 @@ $title = 'Orders';
     </p>
 </fieldset>
 
-<h1>Orders</h1>
+<div id="tabs">
+    <ul>
+        <li id="btnTabOrders">Order</li>
+        <li id="btnTabLogs">Logs</li>
+    </ul>
 
-<div id="orderFilters" class="filters">
-    <div id="numberWrapper">
-        <label for="number">Search by number : </label>
-        <input id="number" name="number" type="text" maxlength="11">
+    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) : ?>
+        <a id="btnBackManage" class="button">Back to manager</a>
+    <?php endif ?>
+</div>
+
+<div id="tabOrders" class="tab">
+    <div id="orderFilters" class="filters">
+        <div id="numberWrapper">
+            <label for="number">Search : </label>
+            <input id="number" name="number" type="text" maxlength="11">
+        </div>
+        <div id="datesWrapper">
+            <label for="from">From :</label>
+            <input id="from" class="date" type="text" class="datepicker"/>
+            <label for="to">To : </label>
+            <input id="to" class="date" type="text" class="datepicker"/>
+        </div>
     </div>
-    <div id="datesWrapper">
-        <label for="from">From :</label>
-        <input id="from" class="date" type="text" class="datepicker"/>
-        <label for="to">To : </label>
-        <input id="to" class="date" type="text" class="datepicker"/>
+    <div id="orders">
     </div>
 </div>
-<div id="orders">
+
+<div class="tab" id="tabLogs">
+    <div id="logs"></div>
 </div>
 
 <div id="confirmDialog">

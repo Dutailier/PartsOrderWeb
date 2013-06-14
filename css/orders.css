@@ -1,3 +1,47 @@
+#tabs {
+    list-style-type: none;
+    padding: 0px;
+    height: 38px;
+    border-bottom: 2px solid #484848;
+    overflow: visible;
+}
+
+#tabs > ul > li {
+    display: block;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 15px;
+    border: 2px solid #484848;
+    line-height: 20px;
+    padding: 8px;
+    width: 100px;
+    background-color: #FAFAFA;
+    overflow: hidden; /* Clearfix */
+}
+
+#btnBackManage {
+    float: right;
+    text-decoration: underline;
+    padding: 8px;
+}
+
+#tabs > ul > li:hover {
+    background-color: #FFFFFF;
+}
+
+#tabs > ul > li.selected {
+    background-color: #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+    z-index: 999999;
+}
+
+div.tab {
+    margin-bottom: 20px;
+    padding: 10px;
+    overflow: hidden; /* Clearfix */
+}
+
 #storeInfos {
     margin: 20px 0px;
     border: 2px solid #484848;
@@ -109,21 +153,10 @@ fieldset > legend {
     font-weight: bold;
 }
 
-#orders > div.details > fieldset.storeInfos {
-    clear: both;
-}
-
-#orders > div.details > fieldset.storeInfos > p {
-    float: left;
-    width: 218px;
-    margin: 5px 0px;
-    overflow: hidden; /* Clearfix */
-}
-
 #orders > div.details > fieldset.receiverInfos,
 #orders > div.details > fieldset.shippingAddressInfos {
     float: left;
-    width: 411px;
+    width: 402px;
     height: 165px;
 }
 
@@ -160,7 +193,7 @@ fieldset > legend {
     border: 1px solid #484848;
     margin: 0px 10px 10px 10px;
     height: 40px;
-    width: 882px;
+    width: 862px;
 }
 
 #orders > div.details > div.lines > div.line:nth-child(even) {
@@ -232,4 +265,36 @@ div.filters * {
 #datesWrapper {
     float: right;
     overflow: hidden; /* Clearfix */
+}
+
+#logs > div.log {
+    position: relative;
+    border: 1px dotted #484848;
+    padding: 10px;
+    margin: 10px;
+    overflow: hidden; /* Clearfix */
+}
+
+#logs > div.log > label.text {
+    font-size: 1.2em;
+    line-height: 30px;
+}
+
+#logs > div.log > div.date {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+    clear: both;
+    font-size: 0.7em;
+    float: right;
+}
+
+#logs > div.log > div.date > label.username,
+#logs > div.log > label.orderNumber {
+    font-weight: bold;
+}
+
+#logs > div.log > div.date > label.creationDate {
+    font-style: italic;
 }

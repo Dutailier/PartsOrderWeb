@@ -12,10 +12,16 @@ $title = 'Order Informations';
 <?php $head = ob_get_contents(); ?>
 <?php ob_clean(); ?>
 
-<ul id="tabs">
-    <li id="btnTabOrder">Order</li>
-    <li id="btnTabLogs">Logs</li>
-</ul>
+<div id="tabs">
+    <ul>
+        <li id="btnTabOrder">Order</li>
+        <li id="btnTabLogs">Logs</li>
+    </ul>
+
+    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) : ?>
+        <a id="btnBackManage" class="button">Back to manager</a>
+    <?php endif ?>
+</div>
 
 <div class="tab" id="tabOrder">
     <!-- Début du contenu. -->

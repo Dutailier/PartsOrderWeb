@@ -84,7 +84,7 @@ $(document).ready(function () {
 
                         if (data.hasOwnProperty('success') &&
                             data['success']) {
-                            window.location = 'manage.php';
+                            window.location = 'manage.php?tab=stores';
 
                         } else if (data.hasOwnProperty('message')) {
                             alert(data['message']);
@@ -106,7 +106,7 @@ $(document).ready(function () {
 
                         if (data.hasOwnProperty('success') &&
                             data['success']) {
-                            window.location = 'manage.php';
+                            window.location = 'manage.php?tab=stores';
 
                         } else if (data.hasOwnProperty('message')) {
                             alert(data['message']);
@@ -202,7 +202,7 @@ $(document).ready(function () {
     });
 
     $('#btnCancel').click(function () {
-        window.location = 'manage.php';
+        window.location = 'manage.php?tab=stores';
     });
 });
 

@@ -13,6 +13,10 @@ $(document).ready(function () {
         selectTabLogs();
     });
 
+    $('#btnBackManage').click(function () {
+        window.location = 'manage.php?tab=orders';
+    });
+
     $('#confirmDialog').dialog({
         autoOpen: false,
         modal: true,
