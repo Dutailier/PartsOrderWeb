@@ -86,7 +86,7 @@ class Security
      * @param $name
      * @return bool
      */
-    public static function UserIsInRole(User $user, $name)
+    public static function UserIsInRoleName(User $user, $name)
     {
         foreach ($user->getRoles() as $role) {
             if (strtolower($role->getName()) == strtolower($name)) {
