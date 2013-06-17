@@ -23,15 +23,15 @@ $title = 'Manage';
 
 <div class="tab" id="tabOrders">
     <div id="orderFilters" class="filters">
-        <div id="numberWrapper">
+        <div class="keyWordsWrapper">
             <label for="orderKeyWords">Search : </label>
             <input id="orderKeyWords" name="orderKeyWords" type="text">
         </div>
         <div id="datesWrapper">
-            <label for="from">From :</label>
-            <input id="from" class="date" type="text" class="datepicker"/>
-            <label for="to">To : </label>
-            <input id="to" class="date" type="text" class="datepicker"/>
+            <label for="orderFrom">From :</label>
+            <input id="orderFrom" name="orderFrom" class="date" type="text" class="datepicker"/>
+            <label for="orderTo">To : </label>
+            <input id="orderTo" name="orderTo" class="date" type="text" class="datepicker"/>
         </div>
     </div>
     <div id="orders">
@@ -40,7 +40,7 @@ $title = 'Manage';
 
 <div class="tab" id="tabStores">
     <div id="storeFilters" class="filters">
-        <div id="keyWordsWrapper">
+        <div class="keyWordsWrapper">
             <label for="storeKeyWords">Search : </label>
             <input id="storeKeyWords" name="storeKeyWords" type="text">
         </div>
@@ -56,6 +56,18 @@ $title = 'Manage';
 </div>
 
 <div class="tab" id="tabLogs">
+    <div id="logFilter" class="filters">
+        <div class="keyWordsWrapper">
+            <label for="logKeyWords">Search : </label>
+            <input id="logKeyWords" name="logKeyWords" type="text">
+        </div>
+        <div id="datesWrapper">
+            <label for="logFrom">From :</label>
+            <input id="logFrom" name="logFrom" class="date" type="text" class="datepicker"/>
+            <label for="logTo">To : </label>
+            <input id="logTo" name="logTo" class="date" type="text" class="datepicker"/>
+        </div>
+    </div>
     <div id="logs"></div>
 </div>
 

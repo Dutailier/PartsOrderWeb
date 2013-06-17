@@ -23,7 +23,7 @@ class Log extends Entity
     {
         return array(
             'id' => $this->getId(),
-            'orderId' => $this->getOrderId(),
+            'order' => $this->getOrder()->getArray(),
             'user' => $this->getUser()->getArray(),
             'event' => $this->getEvent(),
             'datetime' => $this->getDatetime()

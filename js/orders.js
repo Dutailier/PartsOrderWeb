@@ -1,25 +1,40 @@
 $(document).ready(function () {
 
-    $("#from").datepicker({
+    $("#orderFrom").datepicker({
         maxDate: '0',
         onClose: function (selectedDate) {
-            $("#to").datepicker("option", "minDate", selectedDate);
+            $("#orderTo").datepicker("option", "minDate", selectedDate);
         }
     });
 
-    $("#to").datepicker({
+    $("#orderTo").datepicker({
         maxDate: '0',
         onClose: function (selectedDate) {
-            $("#from").datepicker("option", "maxDate", selectedDate);
+            $("#orderFrom").datepicker("option", "maxDate", selectedDate);
         }
     });
 
-    $('#from').datepicker('setDate', '-1m');
-    $('#to').datepicker('setDate', '0');
+    $("#logFrom").datepicker({
+        maxDate: '0',
+        onClose: function (selectedDate) {
+            $("#logTo").datepicker("option", "minDate", selectedDate);
+        }
+    });
+
+    $("#logTo").datepicker({
+        maxDate: '0',
+        onClose: function (selectedDate) {
+            $("#logFrom").datepicker("option", "maxDate", selectedDate);
+        }
+    });
+
+    $('#orderFrom, #logFrom').datepicker('setDate', '-1m');
+    $('#orderTo, #logTo').datepicker('setDate', '0');
 
     getStoreInfos();
     selectTabOrder();
     updateOrdersByRangeOfDates();
+    updateLogsByRangeOfDates();
 
     $('#btnTabOrders').click(function () {
         selectTabOrder();
@@ -29,12 +44,20 @@ $(document).ready(function () {
         selectTabLogs();
     });
 
-    $('input.date').change(function () {
+    $('#orderFilter').find('input.date').change(function () {
         updateOrdersByRangeOfDates();
+    });
+
+    $('#logFilter').find('input.date').change(function () {
+        updateLogsByRangeOfDates();
     });
 
     $('#orderKeyWords').keyup(function () {
         filterOrdersByKeyWords();
+    });
+
+    $('#logKeyWords').keyup(function () {
+        filterLogsByKeyWords();
     });
 
     $('#btnBackManage').click(function () {
@@ -106,8 +129,6 @@ function selectTabLogs() {
 
     $('#btnTabLogs').addClass('selected');
     $('#tabLogs').show();
-
-    updateLogs();
 }
 
 /**
@@ -229,8 +250,8 @@ $(document).on('click', 'input.btnDetails', function () {
 
 function updateOrdersByRangeOfDates() {
     var parameters = {
-        'from': $('#from').val(),
-        'to': $('#to').val(),
+        'from': $('#orderFrom').val(),
+        'to': $('#orderTo').val(),
         'storeId': $.QueryString['storeId']
     };
 
@@ -295,12 +316,34 @@ function filterOrdersByKeyWords() {
     });
 }
 
-function updateLogs() {
+function filterLogsByKeyWords() {
+    $('div.log').hide();
+
+    $('div.log label').each(function (index, lbl) {
+        var $lbl = $(lbl);
+        var keyWords = '(' + $('#logKeyWords').val() + ')';
+
+        $lbl.html(
+            $lbl.text().replace(
+                new RegExp(keyWords, "gi"),
+                function (match) {
+                    $lbl.closest('div.log').show();
+                    return '<span class="highlight">' + match + '</span>';
+                }
+            )
+        );
+    });
+}
+
+function updateLogsByRangeOfDates() {
+
     var parameters = {
+        'from': $('#logFrom').val(),
+        'to': $('#logTo').val(),
         'storeId': $.QueryString['storeId']
     };
 
-    $.post('ajax/getLogsByStoreId.php', parameters)
+    $.post('ajax/getLogsByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
 
             if (data.hasOwnProperty('success') &&
@@ -325,6 +368,8 @@ function updateLogs() {
                         }
                     }
                 }
+
+                filterLogsByKeyWords();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);

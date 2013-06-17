@@ -87,7 +87,7 @@ fieldset > legend {
 #orders > div.order > div.infos {
     border: 1px solid #484848;
     padding: 5px 20px;
-    margin: 20px 0px 0px 0px;
+    margin: 20px 10px 0px 10px;
     overflow: hidden; /* Clearfix */
     height: 50px;
     cursor: pointer;
@@ -139,6 +139,7 @@ fieldset > legend {
     border: 1px solid #484848;
     padding: 10px 20px;
     overflow: hidden; /* Clearfix */
+    margin: 0px 10px;
 }
 
 #orders > div.order > div.details > fieldset {
@@ -156,7 +157,7 @@ fieldset > legend {
 #orders > div.order > div.details > fieldset.receiverInfos,
 #orders > div.order > div.details > fieldset.shippingAddressInfos {
     float: left;
-    width: 402px;
+    width: 392px;
     height: 165px;
 }
 
@@ -193,7 +194,7 @@ fieldset > legend {
     border: 1px solid #484848;
     margin: 0px 10px 10px 10px;
     height: 40px;
-    width: 862px;
+    width: 842px;
 }
 
 #orders > div.order > div.details > div.lines > div.line:nth-child(even) {
@@ -246,7 +247,7 @@ div.filters label {
     font-weight: bold;
 }
 
-div.filters input {
+div.filters input, select {
     text-align: center;
     font-size: 1.2em;
     width: 200px;
@@ -257,12 +258,13 @@ div.filters * {
     margin: 0px 5px;
 }
 
-#numberWrapper {
+div.keyWordsWrapper {
     float: left;
     overflow: hidden; /* Clearfix */
 }
 
-#datesWrapper {
+#datesWrapper,
+#bannersWrapper {
     float: right;
     overflow: hidden; /* Clearfix */
 }

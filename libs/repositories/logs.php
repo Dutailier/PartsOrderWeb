@@ -51,10 +51,36 @@ class Logs
         return $logs;
     }
 
-    public static function Top($number)
+    public static function FilterByRangeOfDates($from, $to)
     {
-        $query = 'EXEC [getTopLogs]';
-        $query .= '@number = "' . intval($number) . '"';
+        $query = 'EXEC [getLogsByRangeOfDates]';
+        $query .= '@from = "' . date('Ymd', $from) . '", ';
+        $query .= '@to = "' . date('Ymd', $to) . '"';
+
+        $rows = Database::Execute($query);
+
+        $logs = array();
+        foreach ($rows as $row) {
+
+            $log = new Log(
+                $row['orderId'],
+                $row['userId'],
+                $row['event'],
+                $row['datetime']
+            );
+            $log->setId($row['id']);
+
+            $logs[] = $log;
+        }
+        return $logs;
+    }
+
+    public static function FilterByRangeOfDatesAndStoreId($from, $to, $storeId)
+    {
+        $query = 'EXEC [getLogsByRangeOfDatesAndStoreId]';
+        $query .= '@from = "' . date('Ymd', $from) . '", ';
+        $query .= '@to = "' . date('Ymd', $to) . '", ';
+        $query .= '@storeId = "' . intval($storeId) . '"';
 
         $rows = Database::Execute($query);
 
