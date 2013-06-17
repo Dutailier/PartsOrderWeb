@@ -17,6 +17,7 @@ $(document).ready(function () {
     $('#from').datepicker('setDate', '-1w');
     $('#to').datepicker('setDate', '0');
 
+    //noinspection FallthroughInSwitchStatementJS
     switch ($.QueryString['tab']) {
         case 'stores' :
             selectTabStores();
@@ -29,7 +30,7 @@ $(document).ready(function () {
             selectTabOrders();
     }
 
-    updateOrdersInfosByRangeOfDates();
+    updateOrdersByRangeOfDates();
     updateBanners();
 
     $('#btnTabOrders').click(function () {
@@ -45,14 +46,14 @@ $(document).ready(function () {
     });
 
     $('input.date').change(function () {
-        updateOrdersInfosByRangeOfDates();
+        updateOrdersByRangeOfDates();
     });
 
     $('#number').change(function () {
         if ($('#number').val() != '') {
-            updateOrderInfosByNumber();
+            updateOrderByNumber();
         } else {
-            updateOrdersInfosByRangeOfDates();
+            updateOrdersByRangeOfDates();
         }
     });
 
@@ -107,34 +108,33 @@ $(document).ready(function () {
     });
 });
 
-$(document).on('click', 'div.order', function () {
+$(document).on('click', 'div.order > div.infos', function () {
 
-    var $order = $(this);
-    var $next = $order.next();
+    var $order = $(this).closest('div.order');
+    var $details = $order.children('div.details');
 
-    if ($next.is('div.details')) {
-        $next.stop().slideToggle();
+    if ($details.length > 0) {
+        $details.stop().slideToggle();
     } else {
-        addOrderDetails($order);
+        addDetailsToOrder($order);
     }
 });
 
-$(document).on('click', 'div.store', function () {
+$(document).on('click', 'div.store > div.infos', function () {
 
-    var $store = $(this);
-    var $next = $store.next();
+    var $store = $(this).closest('div.store');
+    var $details = $store.children('div.details');
 
-    if ($next.is('div.details')) {
-        $next.stop().slideToggle();
+    if ($details.length > 0) {
+        $details.stop().slideToggle();
     } else {
-        addStoreDetails($store);
+        addDetailsToStore($store);
     }
 });
 
 $(document).on('click', 'input.btnConfirm', function () {
 
-    var $details = $(this).closest('div.details');
-    var $order = $details.prev();
+    var $order = $(this).closest('div.order');
     var $dialog = $('#confirmDialog');
     var $number = $dialog.find('label.orderNumber');
 
@@ -145,8 +145,7 @@ $(document).on('click', 'input.btnConfirm', function () {
 
 $(document).on('click', 'input.btnCancel', function () {
 
-    var $details = $(this).closest('div.details');
-    var $order = $details.prev();
+    var $order = $(this).closest('div.order');
     var $dialog = $('#cancelDialog');
     var $number = $dialog.find('label.orderNumber');
 
@@ -157,32 +156,28 @@ $(document).on('click', 'input.btnCancel', function () {
 
 $(document).on('click', 'input.btnStoreOrders', function () {
 
-    var $details = $(this).closest('div.details');
-    var $store = $details.find('fieldset.contactInfos');
+    var $store = $(this).closest('div.store');
 
     window.location = 'orders.php?storeId=' + $store.data('id');
 });
 
 $(document).on('click', 'input.btnDetails', function () {
 
-    var $details = $(this).closest('div.details');
-    var $order = $details.prev();
+    var $order = $(this).closest('div.order');
 
     window.location = 'orderInfos.php?orderId=' + $order.data('id');
 });
 
 $(document).on('click', 'input.btnStoreEdit', function () {
 
-    var $details = $(this).closest('div.details');
-    var $store = $details.find('fieldset.contactInfos');
+    var $store = $(this).closest('div.store');
     var bannerId = $('#banners').find('option:selected').val();
 
     window.location = 'storeInfos.php?storeId=' + $store.data('id') + '&bannerId=' + bannerId;
 });
 
 $(document).on('click', 'input.btnStoreDelete', function () {
-    var $details = $(this).closest('div.details');
-    var $store = $details.find('fieldset.contactInfos');
+    var $store = $(this).closest('div.store');
 
     var parameters = {
         "storeId": $store.data('id')
@@ -370,7 +365,7 @@ function updateLogs() {
         })
 }
 
-function updateOrderInfosByNumber() {
+function updateOrderByNumber() {
     var parameters = {
         'number': $('#number').val()
     };
@@ -381,7 +376,6 @@ function updateOrderInfosByNumber() {
                 data['success'] &&
                 data.hasOwnProperty('orders')) {
 
-                $('div.details').remove();
                 $('div.order').remove();
 
                 var orders = data['orders'];
@@ -396,7 +390,9 @@ function updateOrderInfosByNumber() {
                             order.hasOwnProperty('lastModificationByUser') &&
                             order['lastModificationByUser'].hasOwnProperty('username') &&
                             order.hasOwnProperty('lastModificationDate')) {
-                            addOrderInfos(order);
+                            var $order = $('<div class="order" data-id="' + order['id'] + '"></div>');
+                            addInfosToOrder(order, $order);
+                            $order.appendTo('#orders');
                         }
                     }
                 }
@@ -424,7 +420,6 @@ function updateStoresByUsername() {
                 data['success'] &&
                 data.hasOwnProperty('stores')) {
 
-                $('div.details').remove();
                 $('div.store').remove();
 
                 var stores = data['stores'];
@@ -450,7 +445,9 @@ function updateStoresByUsername() {
 
                                 if (user.hasOwnProperty('id') &&
                                     user.hasOwnProperty('username')) {
-                                    addStoreInfos(store);
+                                    var $store = $('<div class="store" data-id="' + store['id'] + '"></div>');
+                                    addInfosToStore(store, $store);
+                                    $store.appendTo('#stores');
                                 }
                             }
                         }
@@ -481,7 +478,6 @@ function updateStoresByBannerId() {
                 data.hasOwnProperty('stores')) {
 
                 $('div.store').remove();
-                $('div.details').remove();
 
                 var stores = data['stores'];
 
@@ -506,7 +502,9 @@ function updateStoresByBannerId() {
 
                                 if (user.hasOwnProperty('id') &&
                                     user.hasOwnProperty('username')) {
-                                    addStoreInfos(store);
+                                    var $store = $('<div class="store" data-id="' + store['id'] + '"></div>');
+                                    addInfosToStore(store, $store);
+                                    $store.appendTo('#stores');
                                 }
                             }
                         }
@@ -524,7 +522,7 @@ function updateStoresByBannerId() {
         })
 }
 
-function updateOrdersInfosByRangeOfDates() {
+function updateOrdersByRangeOfDates() {
     var parameters = {
         'from': $('#from').val(),
         'to': $('#to').val()
@@ -536,7 +534,6 @@ function updateOrdersInfosByRangeOfDates() {
                 data['success'] &&
                 data.hasOwnProperty('orders')) {
 
-                $('div.details').remove();
                 $('div.order').remove();
 
                 var orders = data['orders'];
@@ -551,7 +548,9 @@ function updateOrdersInfosByRangeOfDates() {
                             order.hasOwnProperty('lastModificationByUser') &&
                             order['lastModificationByUser'].hasOwnProperty('username') &&
                             order.hasOwnProperty('lastModificationDate')) {
-                            addOrderInfos(order);
+                            var $order = $('<div class="order" data-id="' + order['id'] + '"></div>');
+                            addInfosToOrder(order, $order);
+                            $order.appendTo('#orders');
                         }
                     }
                 }
@@ -572,7 +571,7 @@ function updateOrdersInfosByRangeOfDates() {
  * Ajoute les détails d'un magasin.
  * @param $store
  */
-function addStoreDetails($store) {
+function addDetailsToStore($store) {
     var parameters = {
         "storeId": $store.data('id')
     };
@@ -613,7 +612,7 @@ function addStoreDetails($store) {
                 $buttons.append('<input class="btnStoreOrders" type="button" value="Orders"/>');
 
                 $details.append($buttons);
-                $details.hide().insertAfter($store).slideDown();
+                $details.hide().appendTo($store).slideDown();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -631,7 +630,7 @@ function addStoreDetails($store) {
  * Ajoute les détails d'une commande.
  * @param $order
  */
-function addOrderDetails($order) {
+function addDetailsToOrder($order) {
     var parameters = {
         "orderId": $order.data('id')
     };
@@ -720,7 +719,7 @@ function addOrderDetails($order) {
 
                 $details.append($lines);
                 $details.append($buttons);
-                $details.hide().insertAfter($order).slideDown();
+                $details.hide().appendTo($order).slideDown();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -826,12 +825,13 @@ function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
 }
 
 /**
- * Ajoute une commande à la liste de commandes.
+ * Ajoute les informations sommaires de la commande à la liste de commandes.
  * @param order
+ * @param $order
  */
-function addOrderInfos(order) {
-    $('#orders').append(
-        '<div class="order ' + order['status'].toLowerCase() + '" data-id="' + order['id'] + '">' +
+function addInfosToOrder(order, $order) {
+    $order.append(
+        '<div class="infos ' + order['status'].toLowerCase() + '">' +
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
             '<label class="lastModification"> ' +
@@ -858,12 +858,13 @@ function addLineInfosToOrderDetails($list, line) {
 }
 
 /**
- * Affiche les informations relatives au magasin.
+ * Ajoute les informations sommaires d'un magasin.
  * @param store
+ * @param $store
  */
-function addStoreInfos(store) {
-    $('#stores').append(
-        '<div class="store" data-id="' + store['id'] + '">' +
+function addInfosToStore(store, $store) {
+    $store.append(
+        '<div class="infos">' +
             '<label class="name">' + store['name'] + '</label>' +
             '<label class="username">' + store['user']['username'] + '</label>' +
             '</div>'

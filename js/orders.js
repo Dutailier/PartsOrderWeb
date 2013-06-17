@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     getStoreInfos();
     selectTabOrder();
-    updateOrdersInfosByRangeOfDates();
+    updateOrdersByRangeOfDates();
 
     $('#btnTabOrders').click(function () {
         selectTabOrder();
@@ -30,12 +30,12 @@ $(document).ready(function () {
     });
 
     $('input.date').change(function () {
-        updateOrdersInfosByRangeOfDates();
+        updateOrdersByRangeOfDates();
     });
 
     $('#number').change(function () {
         if ($('#number').val() != '') {
-            updateOrderInfosByNumber();
+            updateOrderByNumber();
         }
     });
 
@@ -76,14 +76,15 @@ $(document).ready(function () {
     });
 });
 
-$(document).on('click', 'div.order', function () {
+$(document).on('click', 'div.order > div.infos', function () {
 
-    var $order = $(this);
+    var $order = $(this).closest('div.order');
+    var $details = $order.children('div.details');
 
-    if ($order.next().is('div.details')) {
-        $order.next().stop().slideToggle();
+    if ($details.length > 0) {
+        $details.stop().slideToggle();
     } else {
-        addOrderDetails($order);
+        addDetailsToOrder($order);
     }
 });
 
@@ -115,7 +116,7 @@ function selectTabLogs() {
  * Retourne les détails d'une commande.
  * @param $order
  */
-function addOrderDetails($order) {
+function addDetailsToOrder($order) {
     var parameters = {
         "orderId": $order.data('id')
     };
@@ -185,7 +186,7 @@ function addOrderDetails($order) {
 
                 $details.append($lines);
                 $details.append($buttons);
-                $details.hide().insertAfter($order).slideDown();
+                $details.hide().appendTo($order).slideDown();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -201,8 +202,7 @@ function addOrderDetails($order) {
 
 $(document).on('click', 'input.btnConfirm', function () {
 
-    var $details = $(this).closest('div.details');
-    var $order = $details.prev();
+    var $order = $(this).closest('div.order');
     var $dialog = $('#confirmDialog');
     var $number = $dialog.find('label.orderNumber');
 
@@ -213,8 +213,7 @@ $(document).on('click', 'input.btnConfirm', function () {
 
 $(document).on('click', 'input.btnCancel', function () {
 
-    var $details = $(this).closest('div.details');
-    var $order = $details.prev();
+    var $order = $(this).closest('div.order');
     var $dialog = $('#cancelDialog');
     var $number = $dialog.find('label.orderNumber');
 
@@ -225,13 +224,12 @@ $(document).on('click', 'input.btnCancel', function () {
 
 $(document).on('click', 'input.btnDetails', function () {
 
-    var $details = $(this).closest('div.details');
-    var $order = $details.prev();
+    var $order = $(this).closest('div.order');
 
     window.location = 'orderInfos.php?orderId=' + $order.data('id');
 });
 
-function updateOrdersInfosByRangeOfDates() {
+function updateOrdersByRangeOfDates() {
     var parameters = {
         'from': $('#from').val(),
         'to': $('#to').val(),
@@ -259,7 +257,9 @@ function updateOrdersInfosByRangeOfDates() {
                             order.hasOwnProperty('lastModificationByUser') &&
                             order['lastModificationByUser'].hasOwnProperty('username') &&
                             order.hasOwnProperty('lastModificationDate')) {
-                            addOrderInfos(order);
+                            var $order = $('<div class="order" data-id="' + order['id'] + '"></div>');
+                            addInfosToOrder(order, $order);
+                            $order.appendTo('#orders');
                         }
                     }
                 }
@@ -276,7 +276,7 @@ function updateOrdersInfosByRangeOfDates() {
         })
 }
 
-function updateOrderInfosByNumber() {
+function updateOrderByNumber() {
     var parameters = {
         'number': $('#number').val(),
         'storeId': $.QueryString['storeId']
@@ -303,7 +303,9 @@ function updateOrderInfosByNumber() {
                             order.hasOwnProperty('lastModificationByUser') &&
                             order['lastModificationByUser'].hasOwnProperty('username') &&
                             order.hasOwnProperty('lastModificationDate')) {
-                            addOrderInfos(order);
+                            var $order = $('<div class="order" data-id="' + order['id'] + '"></div>');
+                            addInfosToOrder(order, $order);
+                            $order.appendTo('#orders');
                         }
                     }
                 }
@@ -494,12 +496,13 @@ function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
 }
 
 /**
- * Ajoute une commande à la liste de commandes.
+ * Ajoute les informations sommaires d'une commande.
  * @param order
+ * @param $order
  */
-function addOrderInfos(order) {
-    $('#orders').append(
-        '<div class="order ' + order['status'].toLowerCase() + '" data-id="' + order['id'] + '">' +
+function addInfosToOrder(order, $order) {
+    $order.append(
+        '<div class="infos ' + order['status'].toLowerCase() + '">' +
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
             '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + dateFormat(order['lastModificationDate']) + '</i></label>' +

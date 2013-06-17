@@ -6,7 +6,7 @@
     overflow: visible;
 }
 
-#tabs >ul > li {
+#tabs > ul > li {
     display: block;
     float: left;
     text-align: center;
@@ -40,7 +40,7 @@ div.tab {
     float: right;
 }
 
-#stores > div.store {
+#stores > div.store > div.infos {
     border: 1px solid #484848;
     padding: 5px 20px;
     margin: 20px 0px 0px 0px;
@@ -49,18 +49,18 @@ div.tab {
     cursor: pointer;
 }
 
-#stores > div.store * {
+#stores > div.store > div.infos * {
     cursor: pointer;
 }
 
-#stores > div.store > label.name {
+#stores > div.store > div.infos > label.name {
     font-size: 1.7em;
     font-weight: bold;
     line-height: 50px;
     float: left;
 }
 
-#stores > div.store > label.username {
+#stores > div.store > div.infos > label.username {
     line-height: 50px;
     float: left;
     font-style: italic;
@@ -100,7 +100,7 @@ div.filters * {
     overflow: hidden; /* Clearfix */
 }
 
-#orders > div.order {
+#orders > div.order > div.infos {
     border: 1px solid #484848;
     padding: 5px 20px;
     margin: 20px 0px 0px 0px;
@@ -109,44 +109,44 @@ div.filters * {
     cursor: pointer;
 }
 
-#orders > div.order * {
+#orders > div.order > div.infos * {
     cursor: pointer;
 }
 
-#orders > div.order > label.number {
+#orders > div.order > div.infos > label.number {
     font-size: 1.7em;
     font-weight: bold;
     line-height: 50px;
     float: left;
 }
 
-#orders > div.order > label.status,
-#orders > div.order > label.lastModification {
+#orders > div.order > div.infos > label.status,
+#orders > div.order > div.infos > label.lastModification {
     float: right;
     line-height: 25px;
     margin: 0px;
 }
 
-#orders > div.order > label.status {
+#orders > div.order > div.infos > label.status {
     font-size: 1.4em;
     font-weight: bold;
 }
 
-#orders > div.order > label.lastModification {
+#orders > div.order > div.infos > label.lastModification {
     font-size: 0.8em;
     clear: right;
 }
 
-#orders > div.order.canceled {
+#orders > div.order > div.infos.canceled {
     background-color: rgba(255, 0, 0, 0.3);
 }
 
-#orders > div.order.confirmed {
+#orders > div.order > div.infos.confirmed {
     background-color: rgba(0, 170, 0, 0.3);
 }
 
-#orders > div.order.pending,
-#stores > div.store {
+#orders > div.order > div.infos.pending,
+#stores > div.store > div.infos {
     background-color: rgb(250, 250, 250);
 }
 
@@ -170,7 +170,7 @@ div.details > fieldset > legend {
     font-weight: bold;
 }
 
-#orders > div.details > fieldset.storeInfos {
+#orders > div.order > div.details > fieldset.storeInfos {
     clear: both;
 }
 
@@ -181,8 +181,8 @@ div.details > fieldset > p {
     clear: both;
 }
 
-#orders > div.details > fieldset.receiverInfos,
-#orders > div.details > fieldset.storeInfos {
+#orders > div.order > div.details > fieldset.receiverInfos,
+#orders > div.order > div.details > fieldset.storeInfos {
     float: left;
     width: 402px;
     height: 215px;
@@ -201,14 +201,14 @@ div.details > fieldset > p > label.values {
     clear: both;
 }
 
-#orders > div.details > div.lines {
+#orders > div.order > div.details > div.lines {
     float: left;
     clear: both;
     margin: 10px auto;
     overflow: hidden; /* clearfix */
 }
 
-#orders > div.details > div.lines > div.line {
+#orders > div.order > div.details > div.lines > div.line {
     padding: 5px;
     border: 1px solid #484848;
     margin: 5px 10px 5px 10px;
@@ -216,33 +216,33 @@ div.details > fieldset > p > label.values {
     width: 862px;
 }
 
-#orders > div.details > div.lines > div.line:nth-child(even) {
+#orders > div.order > div.details > div.lines > div.line:nth-child(even) {
     background-color: #FAFAFA;
 }
 
-#orders > div.details > div.lines > div.line > div.lineDetails {
+#orders > div.order > div.details > div.lines > div.line > div.lineDetails {
     display: inline-block;
     overflow: hidden; /* clearfix */
 }
 
-#orders > div.details > div.lines > div.line > div.lineDetails > label {
+#orders > div.order > div.details > div.lines > div.line > div.lineDetails > label {
     display: inline-block;
     line-height: 40px;
     margin: 0px 5px;
     float: left;
 }
 
-#orders > div.details > div.lines > div.line > div.lineDetails > label.quantity {
+#orders > div.order > div.details > div.lines > div.line > div.lineDetails > label.quantity {
     margin-top: 0px;
     font-size: 2.5em;
 }
 
-#orders > div.details > div.lines > div.line > div.lineDetails > label.name {
+#orders > div.order > div.details > div.lines > div.line > div.lineDetails > label.name {
     font-weight: bold;
     font-size: 1.2em;
 }
 
-#orders > div.details > div.lines > div.line > div.lineDetails > label.serial {
+#orders > div.order > div.details > div.lines > div.line > div.lineDetails > label.serial {
     font-size: 0.8em;
     font-style: italic;
 }
