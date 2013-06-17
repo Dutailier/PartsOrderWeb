@@ -50,6 +50,7 @@ if (!Security::isAuthenticated()) {
             $user = Users::Attach(new User(
                 $_POST['username']
             ));
+            Security::addUserToRoleName($user, ROLE_STORE);
 
             $address = Addresses::Attach(new Address(
                 $_POST['details'],

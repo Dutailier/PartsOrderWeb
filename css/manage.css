@@ -264,9 +264,16 @@ div.details > div.buttons * {
     overflow: hidden; /* Clearfix */
 }
 
-#logs > div.log > label.text {
-    font-size: 1.2em;
-    line-height: 30px;
+div.date > label.username {
+    font-weight: bold;
+}
+
+label.datetime {
+    font-style: italic;
+}
+
+#logs > div.log > label.event {
+    margin: 0px 10px;
 }
 
 #logs > div.log > div.date {
@@ -279,11 +286,7 @@ div.details > div.buttons * {
     float: right;
 }
 
-div.date > label.username,
 #logs > div.log > label.orderNumber {
+    cursor: pointer;
     font-weight: bold;
-}
-
-label.datetime {
-    font-style: italic;
 }

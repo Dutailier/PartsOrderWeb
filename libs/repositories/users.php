@@ -9,7 +9,7 @@ class Users
     {
         $query = 'EXEC [addUser]';
         $query .= '@username = "' . $user->getUsername() . '", ';
-        $query .= '@password = "' . sha1($user->getUsername() . $user->getUsername()) . '"';
+        $query .= '@password = "' . sha1(strtolower($user->getUsername()) . strtolower($user->getUsername())) . '"';
 
         $rows = Database::Execute($query);
 

@@ -18,9 +18,11 @@ $title = 'Order Informations';
         <li id="btnTabLogs">Logs</li>
     </ul>
 
-    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) : ?>
+    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) { ?>
         <a id="btnBackManage" class="button">Back to manager</a>
-    <?php endif ?>
+    <?php } else if (Security::isInRoleName(ROLE_STORE)) { ?>
+        <a id="btnBackOrders" class="button">Back to orders</a>
+    <?php } ?>
 </div>
 
 <div class="tab" id="tabOrder">

@@ -41,6 +41,19 @@ class Security
         return !empty($user);
     }
 
+
+    /**
+     * Ajoute un utilisateur à un rôle.
+     * @param User $user
+     * @param $name
+     * @throws Exception
+     */
+    public static function addUserToRoleName(User $user, $name)
+    {
+        Roles::addUserToRoleName($user, $name);
+    }
+
+
     /**
      * Retourne vrai si l'utilisateur détient se rôle.
      * @param $name

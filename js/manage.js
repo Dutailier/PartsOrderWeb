@@ -46,6 +46,7 @@ $(document).ready(function () {
 
     updateOrdersByRangeOfDates();
     updateBanners();
+    updateLogsByRangeOfDates();
 
     $('#btnTabOrders').click(function () {
         selectTabOrders();
@@ -190,6 +191,13 @@ $(document).on('click', 'input.btnStoreEdit', function () {
     window.location = 'storeInfos.php?storeId=' + $store.data('id') + '&bannerId=' + bannerId;
 });
 
+$(document).on('click', 'div.log > label.orderNumber', function () {
+
+    var $log = $(this).closest('div.log');
+
+    window.location = 'orderInfos.php?orderId=' + $log.data('order-id');
+});
+
 $(document).on('click', 'input.btnStoreDelete', function () {
     var $store = $(this).closest('div.store');
 
@@ -202,8 +210,7 @@ $(document).on('click', 'input.btnStoreDelete', function () {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
 
-                $details.prev().remove();
-                $details.remove();
+                $store.remove();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -248,8 +255,6 @@ function selectTabLogs() {
 
     $('#btnTabLogs').addClass('selected');
     $('#tabLogs').show();
-
-    updateLogsByRangeOfDates();
 }
 
 function confirmOrder(id) {
@@ -368,7 +373,7 @@ function updateLogsByRangeOfDates() {
                             log['order'].hasOwnProperty('number') &&
                             log.hasOwnProperty('user') &&
                             log['user'].hasOwnProperty('username')) {
-                            addLogInfos(log);
+                            addLog(log);
                         }
                     }
                 }
@@ -856,10 +861,10 @@ function addInfosToStore(store, $store) {
     );
 }
 
-function addLogInfos(log) {
+function addLog(log) {
     $('#logs').append(
-        '<div class="log" data-id="' + log['id'] + '">' +
-            '<label class="orderNumber">[' + log['order']['number'] + '] </label>' +
+        '<div class="log" data-id="' + log['id'] + '" data-order-id="' + log['order']['id'] + '">' +
+            '<label class="orderNumber">' + log['order']['number'] + '</label>' +
             '<label class="event">' + log['event'] + '</label>' +
             '<div class="date">' +
             'By <label class="username">' + log['user']['username'] + '</label> at <label class="datetime">' + dateFormat(log['datetime']) + '</label>' +

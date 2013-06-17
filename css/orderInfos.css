@@ -20,7 +20,8 @@
     overflow: hidden; /* Clearfix */
 }
 
-#btnBackManage {
+#btnBackManage,
+#btnBackOrders {
     float: right;
     text-decoration: underline;
     padding: 8px;

@@ -43,9 +43,9 @@ $title = 'Orders';
         <li id="btnTabLogs">Logs</li>
     </ul>
 
-    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) : ?>
+    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) { ?>
         <a id="btnBackManage" class="button">Back to manager</a>
-    <?php endif ?>
+    <?php } ?>
 </div>
 
 <div id="tabOrders" class="tab">

@@ -109,6 +109,13 @@ $(document).on('click', 'div.order > div.infos', function () {
     }
 });
 
+$(document).on('click', 'div.log > label.orderNumber', function () {
+
+    var $log = $(this).closest('div.log');
+
+    window.location = 'orderInfos.php?orderId=' + $log.data('order-id');
+});
+
 /**
  * Affiche le contenu de l'onglet : informations de la commande.
  */
@@ -364,7 +371,7 @@ function updateLogsByRangeOfDates() {
                             log['order'].hasOwnProperty('number') &&
                             log.hasOwnProperty('user') &&
                             log['user'].hasOwnProperty('username')) {
-                            addLogInfos(log);
+                            addLog(log);
                         }
                     }
                 }
@@ -531,10 +538,10 @@ function addInfosToOrder(order, $order) {
     );
 }
 
-function addLogInfos(log) {
+function addLog(log) {
     $('#logs').append(
-        '<div class="log" data-id="' + log['id'] + '">' +
-            '<label class="orderNumber">[' + log['order']['number'] + '] </label>' +
+        '<div class="log" data-id="' + log['id'] + '" data-order-id="' + log['order']['id'] + '">' +
+            '<label class="orderNumber">' + log['order']['number'] + '</label>' +
             '<label class="event">' + log['event'] + '</label>' +
             '<div class="date">' +
             'By <label class="username">' + log['user']['username'] + '</label> at <label class="creationDate">' + dateFormat(log['datetime']) + '</label>' +

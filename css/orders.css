@@ -277,9 +277,8 @@ div.keyWordsWrapper {
     overflow: hidden; /* Clearfix */
 }
 
-#logs > div.log > label.text {
-    font-size: 1.2em;
-    line-height: 30px;
+#logs > div.log > label.event {
+    margin: 0px 10px;
 }
 
 #logs > div.log > div.date {
@@ -292,11 +291,15 @@ div.keyWordsWrapper {
     float: right;
 }
 
-div.date > label.username,
-#logs > div.log > label.orderNumber {
+div.date > label.username {
     font-weight: bold;
 }
 
 div.date > label.creationDate {
     font-style: italic;
+}
+
+#logs > div.log > label.orderNumber {
+    cursor: pointer;
+    font-weight: bold;
 }
