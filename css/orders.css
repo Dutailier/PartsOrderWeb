@@ -105,7 +105,7 @@ fieldset > legend {
 }
 
 #orders > div.order > div.infos > label.status,
-#orders > div.order > div.infos > label.lastModification {
+#orders > div.order > div.infos > div.date {
     float: right;
     line-height: 25px;
     margin: 0px;
@@ -116,7 +116,7 @@ fieldset > legend {
     font-weight: bold;
 }
 
-#orders > div.order > div.infos > label.lastModification {
+#orders > div.order > div.infos > div.date {
     font-size: 0.8em;
     clear: right;
 }
@@ -290,11 +290,11 @@ div.filters * {
     float: right;
 }
 
-#logs > div.log > div.date > label.username,
+div.date > label.username,
 #logs > div.log > label.orderNumber {
     font-weight: bold;
 }
 
-#logs > div.log > div.date > label.creationDate {
+div.date > label.creationDate {
     font-style: italic;
 }

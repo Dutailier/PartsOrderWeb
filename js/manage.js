@@ -49,20 +49,12 @@ $(document).ready(function () {
         updateOrdersByRangeOfDates();
     });
 
-    $('#number').change(function () {
-        if ($('#number').val() != '') {
-            updateOrderByNumber();
-        } else {
-            updateOrdersByRangeOfDates();
-        }
+    $('#orderKeyWords').keyup(function () {
+        filterOrdersByKeyWords();
     });
 
-    $('#keyWords').change(function () {
-        if ($('#keyWords').val() != '') {
-            updateStoresByUsername();
-        } else {
-            updateStoresByBannerId();
-        }
+    $('#storeKeyWords').keyup(function () {
+        filterStoresByKeyWords();
     });
 
     $('#banners').change(function () {
@@ -365,105 +357,42 @@ function updateLogs() {
         })
 }
 
-function updateOrderByNumber() {
-    var parameters = {
-        'number': $('#number').val()
-    };
+function filterOrdersByKeyWords() {
+    $('div.order').hide();
 
-    $.post('ajax/getOrdersByNumber.php', parameters)
-        .done(function (data) {
-            if (data.hasOwnProperty('success') &&
-                data['success'] &&
-                data.hasOwnProperty('orders')) {
+    $('div.order label').each(function (index, lbl) {
+        var $lbl = $(lbl);
+        var keyWords = '(' + $('#orderKeyWords').val() + ')';
 
-                $('div.order').remove();
-
-                var orders = data['orders'];
-
-                for (var i in orders) {
-                    if (orders.hasOwnProperty(i)) {
-                        var order = orders[i];
-
-                        if (order.hasOwnProperty('status') &&
-                            order.hasOwnProperty('id') &&
-                            order.hasOwnProperty('number') &&
-                            order.hasOwnProperty('lastModificationByUser') &&
-                            order['lastModificationByUser'].hasOwnProperty('username') &&
-                            order.hasOwnProperty('lastModificationDate')) {
-                            var $order = $('<div class="order" data-id="' + order['id'] + '"></div>');
-                            addInfosToOrder(order, $order);
-                            $order.appendTo('#orders');
-                        }
-                    }
+        $lbl.html(
+            $lbl.text().replace(
+                new RegExp(keyWords, "gi"),
+                function (match) {
+                    $lbl.closest('div.order').show();
+                    return '<span class="highlight">' + match + '</span>';
                 }
-
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
-
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        })
+            )
+        );
+    });
 }
 
-function updateStoresByUsername() {
-    var parameters = {
-        'username': $('#keyWords').val()
-    };
+function filterStoresByKeyWords() {
+    $('div.store').hide();
 
-    $.post('ajax/getStoresByUsername.php', parameters)
-        .done(function (data) {
-            if (data.hasOwnProperty('success') &&
-                data['success'] &&
-                data.hasOwnProperty('stores')) {
+    $('div.store label').each(function (index, lbl) {
+        var $lbl = $(lbl);
+        var keyWords = '(' + $('#storeKeyWords').val() + ')';
 
-                $('div.store').remove();
-
-                var stores = data['stores'];
-
-                for (var i in stores) {
-                    if (stores.hasOwnProperty(i)) {
-                        var store = stores[i];
-
-                        if (store.hasOwnProperty('id') &&
-                            store.hasOwnProperty('name') &&
-                            store.hasOwnProperty('phone') &&
-                            store.hasOwnProperty('email') &&
-                            store.hasOwnProperty('address') &&
-                            store.hasOwnProperty('user')) {
-                            var address = store['address'];
-                            var user = store['user'];
-
-                            if (address.hasOwnProperty('details') &&
-                                address.hasOwnProperty('city') &&
-                                address.hasOwnProperty('zip') &&
-                                address.hasOwnProperty('state') &&
-                                address['state'].hasOwnProperty('name')) {
-
-                                if (user.hasOwnProperty('id') &&
-                                    user.hasOwnProperty('username')) {
-                                    var $store = $('<div class="store" data-id="' + store['id'] + '"></div>');
-                                    addInfosToStore(store, $store);
-                                    $store.appendTo('#stores');
-                                }
-                            }
-                        }
-                    }
+        $lbl.html(
+            $lbl.text().replace(
+                new RegExp(keyWords, "gi"),
+                function (match) {
+                    $lbl.closest('div.store').show();
+                    return '<span class="highlight">' + match + '</span>';
                 }
-
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
-
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        })
+            )
+        );
+    });
 }
 function updateStoresByBannerId() {
     var parameters = {
@@ -510,6 +439,9 @@ function updateStoresByBannerId() {
                         }
                     }
                 }
+
+                filterStoresByKeyWords();
+
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
 
@@ -554,6 +486,8 @@ function updateOrdersByRangeOfDates() {
                         }
                     }
                 }
+
+                filterOrdersByKeyWords();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -825,7 +759,7 @@ function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
 }
 
 /**
- * Ajoute les informations sommaires de la commande à la liste de commandes.
+ * Ajoute les informations sommaires de la commande.
  * @param order
  * @param $order
  */
@@ -834,10 +768,10 @@ function addInfosToOrder(order, $order) {
         '<div class="infos ' + order['status'].toLowerCase() + '">' +
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
-            '<label class="lastModification"> ' +
-            'By <b>' + order['lastModificationByUser']['username'] + '</b> ' +
-            'at <i>' + dateFormat(order['lastModificationDate']) +
-            '</i></label>' +
+            '<div class="date"> ' +
+            'By <label class="username">' + order['lastModificationByUser']['username'] + '</label> ' +
+            'at <label class="datetime">' + dateFormat(order['lastModificationDate']) + '</label>' +
+            '</div>' +
             '</div>'
     );
 }
@@ -878,7 +812,7 @@ function addLogInfos(log) {
             '<label class="orderNumber">[' + log['order']['number'] + '] </label>' +
             '<label class="event">' + log['event'] + '</label>' +
             '<div class="date">' +
-            'By <label class="username">' + log['user']['username'] + '</label> at <label class="creationDate">' + dateFormat(log['datetime']) + '</label>' +
+            'By <label class="username">' + log['user']['username'] + '</label> at <label class="datetime">' + dateFormat(log['datetime']) + '</label>' +
             '</div>' +
             '</div>'
     );

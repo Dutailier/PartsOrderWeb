@@ -121,7 +121,7 @@ div.filters * {
 }
 
 #orders > div.order > div.infos > label.status,
-#orders > div.order > div.infos > label.lastModification {
+#orders > div.order > div.infos > div.date {
     float: right;
     line-height: 25px;
     margin: 0px;
@@ -132,9 +132,9 @@ div.filters * {
     font-weight: bold;
 }
 
-#orders > div.order > div.infos > label.lastModification {
-    font-size: 0.8em;
+#orders > div.order > div.infos > div.date {
     clear: right;
+    font-size: 0.8em;
 }
 
 #orders > div.order > div.infos.canceled {
@@ -279,11 +279,11 @@ div.details > div.buttons * {
     float: right;
 }
 
-#logs > div.log > div.date > label.username,
+div.date > label.username,
 #logs > div.log > label.orderNumber {
     font-weight: bold;
 }
 
-#logs > div.log > div.date > label.creationDate {
+label.datetime {
     font-style: italic;
 }

@@ -51,8 +51,8 @@ $title = 'Orders';
 <div id="tabOrders" class="tab">
     <div id="orderFilters" class="filters">
         <div id="numberWrapper">
-            <label for="number">Search : </label>
-            <input id="number" name="number" type="text" maxlength="11">
+            <label for="orderKeyWords">Search : </label>
+            <input id="orderKeyWords" name="orderKeyWords" type="text">
         </div>
         <div id="datesWrapper">
             <label for="from">From :</label>

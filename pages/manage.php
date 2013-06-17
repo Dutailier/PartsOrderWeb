@@ -24,8 +24,8 @@ $title = 'Manage';
 <div class="tab" id="tabOrders">
     <div id="orderFilters" class="filters">
         <div id="numberWrapper">
-            <label for="number">Search : </label>
-            <input id="number" name="number" type="text" maxlength="11">
+            <label for="orderKeyWords">Search : </label>
+            <input id="orderKeyWords" name="orderKeyWords" type="text">
         </div>
         <div id="datesWrapper">
             <label for="from">From :</label>
@@ -41,8 +41,8 @@ $title = 'Manage';
 <div class="tab" id="tabStores">
     <div id="storeFilters" class="filters">
         <div id="keyWordsWrapper">
-            <label for="keyWords">Search : </label>
-            <input id="keyWords" name="keyWords" type="text">
+            <label for="storeKeyWords">Search : </label>
+            <input id="storeKeyWords" name="storeKeyWords" type="text">
         </div>
         <input id="btnAddStore" name="btnAddStore" type="button" value="Add Store"/>
 

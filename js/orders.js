@@ -33,10 +33,8 @@ $(document).ready(function () {
         updateOrdersByRangeOfDates();
     });
 
-    $('#number').change(function () {
-        if ($('#number').val() != '') {
-            updateOrderByNumber();
-        }
+    $('#orderKeyWords').keyup(function () {
+        filterOrdersByKeyWords();
     });
 
     $('#btnBackManage').click(function () {
@@ -264,6 +262,8 @@ function updateOrdersByRangeOfDates() {
                     }
                 }
 
+                filterOrdersByKeyWords();
+
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
 
@@ -276,50 +276,23 @@ function updateOrdersByRangeOfDates() {
         })
 }
 
-function updateOrderByNumber() {
-    var parameters = {
-        'number': $('#number').val(),
-        'storeId': $.QueryString['storeId']
-    };
+function filterOrdersByKeyWords() {
+    $('div.order').hide();
 
-    $.post('ajax/getOrdersByNumberAndStoreId.php', parameters)
-        .done(function (data) {
-            if (data.hasOwnProperty('success') &&
-                data['success'] &&
-                data.hasOwnProperty('orders')) {
+    $('div.order label').each(function (index, lbl) {
+        var $lbl = $(lbl);
+        var keyWords = '(' + $('#orderKeyWords').val() + ')';
 
-                $('div.details').remove();
-                $('div.order').remove();
-
-                var orders = data['orders'];
-
-                for (var i in orders) {
-                    if (orders.hasOwnProperty(i)) {
-                        var order = orders[i];
-
-                        if (order.hasOwnProperty('status') &&
-                            order.hasOwnProperty('id') &&
-                            order.hasOwnProperty('number') &&
-                            order.hasOwnProperty('lastModificationByUser') &&
-                            order['lastModificationByUser'].hasOwnProperty('username') &&
-                            order.hasOwnProperty('lastModificationDate')) {
-                            var $order = $('<div class="order" data-id="' + order['id'] + '"></div>');
-                            addInfosToOrder(order, $order);
-                            $order.appendTo('#orders');
-                        }
-                    }
+        $lbl.html(
+            $lbl.text().replace(
+                new RegExp(keyWords, "gi"),
+                function (match) {
+                    $lbl.closest('div.order').show();
+                    return '<span class="highlight">' + match + '</span>';
                 }
-
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
-
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        })
+            )
+        );
+    });
 }
 
 function updateLogs() {
@@ -496,7 +469,7 @@ function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
 }
 
 /**
- * Ajoute les informations sommaires d'une commande.
+ * Ajoute les informations sommaires de la commande.
  * @param order
  * @param $order
  */
@@ -505,7 +478,10 @@ function addInfosToOrder(order, $order) {
         '<div class="infos ' + order['status'].toLowerCase() + '">' +
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
-            '<label class="lastModification"> By <b>' + order['lastModificationByUser']['username'] + '</b> at <i>' + dateFormat(order['lastModificationDate']) + '</i></label>' +
+            '<div class="date"> ' +
+            'By <label class="username">' + order['lastModificationByUser']['username'] + '</label> ' +
+            'at <label class="datetime">' + dateFormat(order['lastModificationDate']) + '</label>' +
+            '</div>' +
             '</div>'
     );
 }
