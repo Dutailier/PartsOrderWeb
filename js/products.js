@@ -2,6 +2,7 @@ var serial = '';
 
 $('div.infos').hide();
 $('#load').hide();
+$('#btnProceed').attr('disabled', 'disabled');
 
 $('a.btnMoreDetails').click(function () {
     $(this).siblings('a.btnLessDetails').show();
@@ -118,7 +119,7 @@ $(document).ready(function () {
                                 if (product.hasOwnProperty('id') &&
                                     product.hasOwnProperty('name') &&
                                     product.hasOwnProperty('description')) {
-                                    addProductInfos(product);
+                                    addProduct(product);
                                 }
                             }
                         }
@@ -157,7 +158,7 @@ $(document).ready(function () {
 
                         if (filter.hasOwnProperty('id') &&
                             filter.hasOwnProperty('name')) {
-                            addFilterInfos(filter);
+                            addFilter(filter);
                         }
                     }
                 }
@@ -180,8 +181,7 @@ $(document).ready(function () {
                 if (data.hasOwnProperty('success') &&
                     data['success']) {
 
-                    $('div.item').remove();
-                    $('#lblProducts').hide();
+                    updateItems();
 
                 } else if (data.hasOwnProperty('message')) {
                     alert(data['message']);
@@ -261,9 +261,7 @@ $(document).ready(function () {
     });
 
     $('#btnProceed').click(function () {
-        if ($('div.item').length > 0) {
-            $('#proceedDialog').dialog('open');
-        }
+        $('#proceedDialog').dialog('open');
     });
 });
 
@@ -327,8 +325,12 @@ $(document).on('click', 'label.filter', function () {
         var $filter = $(this).closest('label.filter');
 
         var parameters = {
+            "serial": serial,
             "filterIds": [$filter.data('id')]
         };
+
+        $('div.product').hide();
+        $('#load').show();
 
         $.post('ajax/getProducts.php', parameters)
             .done(function (data) {
@@ -346,14 +348,24 @@ $(document).on('click', 'label.filter', function () {
                             if (product.hasOwnProperty('id') &&
                                 product.hasOwnProperty('name') &&
                                 product.hasOwnProperty('description')) {
-                                addProductInfos(product);
+                                addProduct(product);
                             }
                         }
                     }
+                } else if (data.hasOwnProperty('message')) {
+                    alert(data['message']);
+                    $('div.product').show();
+
+                } else {
+                    alert('The result of the server is unreadable.');
+                    $('div.product').show();
                 }
             })
             .fail(function () {
                 alert('Communication with the server failed.');
+            })
+            .always(function () {
+                $('#load').hide();
             })
     }
 });
@@ -443,6 +455,12 @@ function updateItems() {
                     }
                 }
 
+                if ($('div.item').length > 0) {
+                    $('#btnProceed').removeAttr('disabled');
+                } else {
+                    $('#btnProceed').attr('disabled', 'disabled');
+                }
+
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
 
@@ -470,7 +488,7 @@ function addItemInfos(item) {
     $('#items').append($item);
 }
 
-function addProductInfos(product) {
+function addProduct(product) {
 
     var $product = $(
         '<div class="product" data-id="' + product['id'] + '">' +
@@ -485,7 +503,7 @@ function addProductInfos(product) {
     $('#products').append($product);
 }
 
-function addFilterInfos(filter) {
+function addFilter(filter) {
     var $filter = $(
         '<label class="filter" data-id="' + filter['id'] + '">' + filter['name'] + '</label>');
 
