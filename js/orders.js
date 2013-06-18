@@ -31,13 +31,22 @@ $(document).ready(function () {
     $('#orderFrom, #logFrom').datepicker('setDate', '-1m');
     $('#orderTo, #logTo').datepicker('setDate', '0');
 
+    //noinspection FallthroughInSwitchStatementJS
+    switch ($.QueryString['tab']) {
+        case 'logs' :
+            selectTabLogs();
+            break;
+        case 'orders' :
+        default:
+            selectTabOrders();
+    }
+
     getStoreInfos();
-    selectTabOrder();
     updateOrdersByRangeOfDates();
     updateLogsByRangeOfDates();
 
     $('#btnTabOrders').click(function () {
-        selectTabOrder();
+        selectTabOrders();
     });
 
     $('#btnTabLogs').click(function () {
@@ -119,7 +128,7 @@ $(document).on('click', 'div.log > label.orderNumber', function () {
 /**
  * Affiche le contenu de l'onglet : informations de la commande.
  */
-function selectTabOrder() {
+function selectTabOrders() {
     $('#tabs').find('li').removeClass('selected');
     $('div.tab').hide();
 

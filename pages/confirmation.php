@@ -8,7 +8,7 @@ $title = 'Confirmation';
 <script>
     $(document).ready(function () {
         setTimeout(function () {
-            window.location = 'destinations.php';
+            window.location = 'index.php';
         }, 3000)
     });
 </script>

@@ -10,13 +10,17 @@ if (!Security::isAuthenticated()) {
 } else {
     $page = empty($_GET['page']) ? 'index' : $_GET['page'];
 
+    //noinspection FallthroughInSwitchStatementJS
     switch ($page) {
+        // Page d'accueil
+        /** @noinspection PhpMissingBreakStatementInspection */
         case 'index' :
             if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
                 $page = 'manage';
                 break;
             }
 
+        // Pages transactionnelles
         case 'products':
         case 'destinations' :
             $transaction = new SessionTransaction();
@@ -28,6 +32,7 @@ if (!Security::isAuthenticated()) {
             }
             break;
 
+        // Pages administratives
         case 'manage' :
         case 'storeInfos' :
             if (!Security::isInRoleName(ROLE_ADMINISTRATOR)) {
@@ -37,18 +42,19 @@ if (!Security::isAuthenticated()) {
     }
 }
 
-// Chemin de la page demandée.
 $file = ROOT . 'pages/' . $page . '.php';
 
+// Avant d'inclure la page, on doit vérifier quelle existe.
 if (!file_exists($file)) {
-    $file = ROOT . 'pages/' . 'error.php';
+    $file = ROOT . 'pages/' . 'error' . '.php';
 
 } else {
     include_once($file);
-}
 
-if (empty($head) || empty($content)) {
-    include_once(ROOT . 'pages/' . 'error.php');
+    // On doit vérifier que la page est correctement construite.
+    if (empty($title) || empty($head) || empty($content)) {
+        include_once(ROOT . 'pages/' . 'error' . '.php');
+    }
 }
 ?>
 
@@ -74,18 +80,18 @@ if (empty($head) || empty($content)) {
             <img id="logo-dutailier" src="img/dutailier.png">
             <ul id="menu">
 
-                <?php if ($page != 'login') : ?>
-                    <?php if (Security::isInRoleName(ROLE_STORE)) : ?>
+                <?php if (Security::isAuthenticated()) { ?>
+                    <?php if (Security::isInRoleName(ROLE_STORE)) { ?>
                         <li><a id="btnProducts">Products</a></li>
                         <li><a id="btnOrders">Orders</a></li>
-                    <?php endif; ?>
+                    <?php } ?>
 
-                    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) : ?>
+                    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) { ?>
                         <li><a id="btnManage">Manage</a></li>
-                    <?php endif; ?>
+                    <?php } ?>
 
                     <li><a id="btnLogout">Logout</a></li>
-                <?php endif; ?>
+                <?php } ?>
             </ul>
             <img id="logo-babiesRus" src="img/babiesrus.png">
         </div>

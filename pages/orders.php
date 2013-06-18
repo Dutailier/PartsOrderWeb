@@ -39,7 +39,7 @@ $title = 'Orders';
 
 <div id="tabs">
     <ul>
-        <li id="btnTabOrders">Order</li>
+        <li id="btnTabOrders">Orders</li>
         <li id="btnTabLogs">Logs</li>
     </ul>
 

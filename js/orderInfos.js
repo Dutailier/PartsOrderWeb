@@ -1,9 +1,18 @@
 $(document).ready(function () {
 
+    //noinspection FallthroughInSwitchStatementJS
+    switch ($.QueryString['tab']) {
+        case 'logs' :
+            selectTabLogs();
+            break;
+        case 'order' :
+        default:
+            selectTabOrder();
+    }
+
     updateOrderDetails();
     updateComments();
-
-    selectTabOrder();
+    updateLogs();
 
     $('#btnTabOrder').click(function () {
         selectTabOrder();
@@ -121,8 +130,6 @@ function selectTabLogs() {
 
     $('#btnTabLogs').addClass('selected');
     $('#tabLogs').show();
-
-    updateLogs();
 }
 
 function addComment() {
@@ -369,7 +376,8 @@ function cancelOrder() {
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
-                window.location = 'destinations.php';
+
+                window.location = 'index.php';
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);

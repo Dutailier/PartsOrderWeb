@@ -20,7 +20,9 @@ $title = 'Order Informations';
 
     <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) { ?>
         <a id="btnBackManage" class="button">Back to manager</a>
-    <?php } else if (Security::isInRoleName(ROLE_STORE)) { ?>
+    <?php } ?>
+
+    <?php if (Security::isInRoleName(ROLE_STORE)) { ?>
         <a id="btnBackOrders" class="button">Back to orders</a>
     <?php } ?>
 </div>
