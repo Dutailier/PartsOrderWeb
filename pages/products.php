@@ -100,6 +100,11 @@ $title = 'Products';
         <img src="img/serial.png"/>
     </div>
 
+    <div id="load">
+        <label>Please wait...</label>
+        <img id="loader" src="img/loader.gif"/>
+    </div>
+
     <!-- Liste des pièces. -->
     <div id="products">
     </div>

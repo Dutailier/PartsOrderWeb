@@ -1,6 +1,7 @@
 var serial = '';
 
 $('div.infos').hide();
+$('#load').hide();
 
 $('a.btnMoreDetails').click(function () {
     $(this).siblings('a.btnLessDetails').show();
@@ -97,6 +98,10 @@ $(document).ready(function () {
             };
 
             $('div.product').remove();
+            $('#help').hide();
+
+            $('#load').show();
+            $('#search').attr('disabled', 'disabled');
 
             $.post('ajax/getProducts.php', parameters)
                 .done(function (data) {
@@ -105,8 +110,6 @@ $(document).ready(function () {
                         data['success'] &&
                         data.hasOwnProperty('products')) {
                         var products = data['products'];
-
-                        $('#help').hide();
 
                         for (var i in products) {
                             if (products.hasOwnProperty(i)) {
@@ -132,6 +135,10 @@ $(document).ready(function () {
                 .fail(function () {
                     alert('Communication with the server failed.');
                     $('#help').show();
+                })
+                .always(function () {
+                    $('#load').hide();
+                    $('#search').removeAttr('disabled');
                 })
         }
     });

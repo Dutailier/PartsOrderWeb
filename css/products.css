@@ -177,7 +177,8 @@ div.product > div.buttons > input {
     margin: 4px 2px;
 }
 
-#help {
+#help,
+#load {
     width: 482px;
     float: left;
     margin: 20px;
@@ -189,6 +190,12 @@ div.product > div.buttons > input {
 #help > label {
     width: 350px;
     margin: 20px;
+}
+
+#load > img,
+#load > label {
+    display: block;
+    margin: 20px auto;
 }
 
 #buttons {

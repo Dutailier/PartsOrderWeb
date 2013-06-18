@@ -1,3 +1,5 @@
+var storeId;
+
 $(document).ready(function () {
 
     //noinspection FallthroughInSwitchStatementJS
@@ -23,28 +25,7 @@ $(document).ready(function () {
     });
 
     $('#btnBackOrders').click(function () {
-        $.post('ajax/getStoreConnected.php')
-            .done(function (data) {
-
-                if (data.hasOwnProperty('success') &&
-                    data['success'] &&
-                    data.hasOwnProperty('store')) {
-                    var store = data['store'];
-
-                    if (store.hasOwnProperty('id')) {
-                        window.location = 'orders.php?storeId=' + store['id'];
-                    }
-
-                } else if (data.hasOwnProperty('message')) {
-                    alert(data['message']);
-
-                } else {
-                    alert('The result of the server is unreadable.');
-                }
-            })
-            .fail(function () {
-                alert('Communication with the server failed.');
-            })
+        window.location = 'orders.php?storeId=' + storeId;
     });
 
     $('#btnBackManage').click(function () {
@@ -210,7 +191,8 @@ function updateOrderDetails() {
                         updateShippingAddressInfos(shippingAddress);
                     }
 
-                    if (store.hasOwnProperty('name') &&
+                    if (store.hasOwnProperty('id') &&
+                        store.hasOwnProperty('name') &&
                         store.hasOwnProperty('phone') &&
                         store.hasOwnProperty('email') &&
                         store.hasOwnProperty('address')) {
@@ -415,12 +397,12 @@ function addLogInfos(log) {
 
 /**
  * Affiche les informations relatives à la commande.
- * @param infos
+ * @param order
  */
-function updateOrderInfos(infos) {
-    $('#number').text(infos['number']);
-    $('#creationDate').text(dateFormat(infos['creationDate']));
-    $('#status').text(infos['status']);
+function updateOrderInfos(order) {
+    $('#number').text(order['number']);
+    $('#creationDate').text(dateFormat(order['creationDate']));
+    $('#status').text(order['status']);
 }
 
 /**
@@ -433,23 +415,24 @@ function updateShippingAddressInfos(address) {
 
 /**
  * Affiche les informations relatives au magasin.
- * @param infos
+ * @param store
  */
-function updateStoreInfos(infos) {
-    $('#storeName').text(infos['name']);
-    $('#storePhone').text(phoneFormat(infos['phone']));
-    $('#storeEmail').text(infos['email']);
-    $('#storeAddress').text(addressFormat(infos['address']));
+function updateStoreInfos(store) {
+    storeId = store['id'];
+    $('#storeName').text(store['name']);
+    $('#storePhone').text(phoneFormat(store['phone']));
+    $('#storeEmail').text(store['email']);
+    $('#storeAddress').text(addressFormat(store['address']));
 }
 
 /**
  * Affiche les informations relatives au client.
- * @param infos
+ * @param receiver
  */
-function updateReceiverInfos(infos) {
-    $('#receiverName').text(infos['name']);
-    $('#receiverPhone').text(phoneFormat(infos['phone']));
-    $('#receiverEmail').text(infos['email']);
+function updateReceiverInfos(receiver) {
+    $('#receiverName').text(receiver['name']);
+    $('#receiverPhone').text(phoneFormat(receiver['phone']));
+    $('#receiverEmail').text(receiver['email']);
 }
 
 /**
