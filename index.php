@@ -10,7 +10,6 @@ if (!Security::isAuthenticated()) {
 } else {
     $page = empty($_GET['page']) ? 'index' : $_GET['page'];
 
-    //noinspection FallthroughInSwitchStatementJS
     switch ($page) {
         // Page d'accueil
         /** @noinspection PhpMissingBreakStatementInspection */

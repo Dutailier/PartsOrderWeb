@@ -92,7 +92,13 @@ $(document).ready(function () {
             // Récupère le numéro de série afin de le garder valide.
             serial = $('#serial').val();
 
-            $.post('ajax/getProducts.php')
+            var parameters = {
+                'serial': serial
+            };
+
+            $('div.product').remove();
+
+            $.post('ajax/getProducts.php', parameters)
                 .done(function (data) {
 
                     if (data.hasOwnProperty('success') &&
@@ -100,8 +106,7 @@ $(document).ready(function () {
                         data.hasOwnProperty('products')) {
                         var products = data['products'];
 
-                        $('#help').remove();
-                        $('div.product').remove();
+                        $('#help').hide();
 
                         for (var i in products) {
                             if (products.hasOwnProperty(i)) {
@@ -117,13 +122,16 @@ $(document).ready(function () {
 
                     } else if (data.hasOwnProperty('message')) {
                         alert(data['message']);
+                        $('#help').show();
 
                     } else {
                         alert('The result of the server is unreadable.');
+                        $('#help').show();
                     }
                 })
                 .fail(function () {
                     alert('Communication with the server failed.');
+                    $('#help').show();
                 })
         }
     });
