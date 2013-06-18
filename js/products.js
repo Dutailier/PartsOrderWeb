@@ -126,15 +126,18 @@ $(document).ready(function () {
 
                     } else if (data.hasOwnProperty('message')) {
                         alert(data['message']);
+                        $('#serial').focus();
                         $('#help').show();
 
                     } else {
                         alert('The result of the server is unreadable.');
+                        $('#serial').focus();
                         $('#help').show();
                     }
                 })
                 .fail(function () {
                     alert('Communication with the server failed.');
+                    $('#serial').focus();
                     $('#help').show();
                 })
                 .always(function () {

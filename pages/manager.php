@@ -1,11 +1,11 @@
 <?php
-$title = 'Manage';
+$title = 'Manager';
 ?>
 
 <?php ob_start(); ?>
 
 <!-- Début de l'en-tête. -->
-<link type="text/css" rel="stylesheet" href="css/manage.css"/>
+<link type="text/css" rel="stylesheet" href="css/manager.css"/>
 <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
 <!-- Fin de l'en-tête. -->
 
@@ -80,7 +80,7 @@ $title = 'Manage';
 </div>
 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script src="js/manage.js"></script>
+<script src="js/manager.js"></script>
 <!-- Fin du contenu. -->
 
 <?php $content = ob_get_contents(); ?>

@@ -15,7 +15,7 @@ if (!Security::isAuthenticated()) {
         /** @noinspection PhpMissingBreakStatementInspection */
         case 'index' :
             if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
-                $page = 'manage';
+                $page = 'manager';
                 break;
             }
 
@@ -32,7 +32,7 @@ if (!Security::isAuthenticated()) {
             break;
 
         // Pages administratives
-        case 'manage' :
+        case 'manager' :
         case 'storeInfos' :
             if (!Security::isInRoleName(ROLE_ADMINISTRATOR)) {
                 $page = 'error';
@@ -46,14 +46,13 @@ $file = ROOT . 'pages/' . $page . '.php';
 // Avant d'inclure la page, on doit vérifier quelle existe.
 if (!file_exists($file)) {
     $file = ROOT . 'pages/' . 'error' . '.php';
+}
 
-} else {
-    include_once($file);
+include_once($file);
 
-    // On doit vérifier que la page est correctement construite.
-    if (empty($title) || empty($head) || empty($content)) {
-        include_once(ROOT . 'pages/' . 'error' . '.php');
-    }
+// On doit vérifier que la page est correctement construite.
+if (empty($title) || empty($head) || empty($content)) {
+    include_once(ROOT . 'pages/' . 'error' . '.php');
 }
 ?>
 
@@ -86,7 +85,7 @@ if (!file_exists($file)) {
                     <?php } ?>
 
                     <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) { ?>
-                        <li><a id="btnManage">Manage</a></li>
+                        <li><a id="btnManager">Manager</a></li>
                     <?php } ?>
 
                     <li><a id="btnLogout">Logout</a></li>

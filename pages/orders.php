@@ -44,12 +44,12 @@ $title = 'Orders';
     </ul>
 
     <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) { ?>
-        <a id="btnBackManage" class="button">Back to manager</a>
+        <a id="btnBackManager" class="button">Back to manager</a>
     <?php } ?>
 </div>
 
 <div id="tabOrders" class="tab">
-    <div id="orderFilters" class="filters">
+    <div id="ordersFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="orderKeyWords">Search : </label>
             <input id="orderKeyWords" name="orderKeyWords" type="text">
@@ -66,7 +66,7 @@ $title = 'Orders';
 </div>
 
 <div class="tab" id="tabLogs">
-    <div id="logFilter" class="filters">
+    <div id="logsFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="logKeyWords">Search : </label>
             <input id="logKeyWords" name="logKeyWords" type="text">

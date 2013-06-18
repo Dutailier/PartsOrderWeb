@@ -20,7 +20,7 @@
     overflow: hidden; /* Clearfix */
 }
 
-#btnBackManage,
+#btnBackManager,
 #btnBackOrders {
     float: right;
     text-decoration: underline;

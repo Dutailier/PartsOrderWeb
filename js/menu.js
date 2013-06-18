@@ -28,8 +28,8 @@ $(document).ready(function () {
             })
     });
 
-    $('#btnManage').click(function () {
-        window.location = 'manage.php';
+    $('#btnManager').click(function () {
+        window.location = 'manager.php';
     });
 
     $('#btnLogout').click(function () {

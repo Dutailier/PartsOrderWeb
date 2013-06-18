@@ -28,8 +28,8 @@ $(document).ready(function () {
         window.location = 'orders.php?storeId=' + storeId;
     });
 
-    $('#btnBackManage').click(function () {
-        window.location = 'manage.php?tab=orders';
+    $('#btnBackManager').click(function () {
+        window.location = 'manager.php?tab=orders';
     });
 
     $('#confirmDialog').dialog({

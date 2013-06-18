@@ -18,7 +18,7 @@ if (!Security::isAuthenticated()) {
         try {
             if (!Tools::validSerial($_POST['serial'])) {
                 $data['success'] = false;
-                $data['message'] = 'The serial must be valid.';
+                $data['message'] = 'The serial number doesn\'t exists.';
 
             } else {
                 $transaction = new SessionTransaction();

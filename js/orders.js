@@ -53,11 +53,11 @@ $(document).ready(function () {
         selectTabLogs();
     });
 
-    $('#orderFilter').find('input.date').change(function () {
+    $('#ordersFilters').find('input.date').change(function () {
         updateOrdersByRangeOfDates();
     });
 
-    $('#logFilter').find('input.date').change(function () {
+    $('#logsFilters').find('input.date').change(function () {
         updateLogsByRangeOfDates();
     });
 
@@ -69,8 +69,8 @@ $(document).ready(function () {
         filterLogsByKeyWords();
     });
 
-    $('#btnBackManage').click(function () {
-        window.location = 'manage.php?tab=stores';
+    $('#btnBackManager').click(function () {
+        window.location = 'manager.php?tab=stores';
     });
 
     $('#confirmDialog').dialog({
@@ -277,7 +277,6 @@ function updateOrdersByRangeOfDates() {
                 data['success'] &&
                 data.hasOwnProperty('orders')) {
 
-                $('div.details').remove();
                 $('div.order').remove();
 
                 var orders = data['orders'];
