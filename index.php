@@ -19,8 +19,8 @@ if (!Security::isAuthenticated()) {
             }
 
         // Pages transactionnelles
-        case 'types' :
         case 'products' :
+        case 'categories' :
         case 'destinations' :
         case 'shippingInfos' :
             $transaction = new SessionTransaction();
@@ -29,16 +29,16 @@ if (!Security::isAuthenticated()) {
                 case READY:
                     $page = 'destinations';
                     break;
-                case DESTINATION_ISSET:
+                case DESTINATION_IS_SET:
                     $page = 'receiverInfos';
                     break;
-                case SHIPPING_INFOS_ISSET:
+                case SHIPPING_INFOS_IS_SET:
                     $page = 'shippingInfos';
                     break;
                 case IS_OPEN:
-                    $page = 'types';
+                    $page = 'categories';
                     break;
-                case TYPE_ISSET:
+                case CATEGORY_IS_SET:
                     $page = 'products';
                     break;
                 case IS_PROCEED:

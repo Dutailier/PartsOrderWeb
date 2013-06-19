@@ -4,7 +4,7 @@ interface ITransaction
 {
     public function getDestination();
 
-    public function getType();
+    public function getCategory();
 
     public function getShippingAddress();
 

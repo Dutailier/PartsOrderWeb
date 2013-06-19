@@ -3,7 +3,6 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/sessionTransaction.php');
-include_once(ROOT . 'libs/repositories/tools.php');
 include_once(ROOT . 'libs/repositories/products.php');
 
 if (!Security::isAuthenticated()) {
@@ -12,26 +11,21 @@ if (!Security::isAuthenticated()) {
 } else {
     if (empty($_POST['serial'])) {
         $data['success'] = false;
-        $data['message'] = 'A serial number is required.';
+        $data['message'] = 'The serial must be validate.';
 
     } else {
         try {
-            if (!Tools::validSerial($_POST['serial'])) {
-                $data['success'] = false;
-                $data['message'] = 'The serial number doesn\'t exists.';
+            $transaction = new SessionTransaction();
+            $categoryId = $transaction->getCategory()->getId();
+            $typeId = Products::getTypeIdBySerial($_POST['serial']);
+            $products = Products::FilterByCategoryIdAndTypeId($categoryId, $typeId);
 
-            } else {
-                $transaction = new SessionTransaction();
-                $typeId = $transaction->getType()->getId();
-                $products = Products::FilterByTypeId($typeId);
-
-                $data['products'] = array();
-                foreach ($products as $product) {
-                    $data['products'][] = $product->getArray();
-                }
-
-                $data['success'] = true;
+            $data['products'] = array();
+            foreach ($products as $product) {
+                $data['products'][] = $product->getArray();
             }
+
+            $data['success'] = true;
         } catch (Exception $e) {
             $data['success'] = false;
             $data['message'] = $e->getMessage();

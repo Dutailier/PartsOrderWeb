@@ -1,33 +1,33 @@
 <?php
 
 include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/entities/type.php');
+include_once(ROOT . 'libs/entities/category.php');
 
-class Types
+class Categories
 {
     public static function FilterByDestinationId($id)
     {
-        $query = 'EXEC [getTypesByDestinationId]';
+        $query = 'EXEC [getCategoriesByDestinationId]';
         $query .= '@destinationId = "' . intval($id) . '"';
 
         $rows = Database::Execute($query);
 
-        $types = array();
+        $categories = array();
         foreach ($rows as $row) {
 
-            $type = new Type(
+            $category = new Category(
                 $row['name']
             );
-            $type->setId($row['id']);
+            $category->setId($row['id']);
 
-            $types[] = $type;
+            $categories[] = $category;
         }
-        return $types;
+        return $categories;
     }
 
     public static function Find($id)
     {
-        $query = 'EXEC [getTypeById]';
+        $query = 'EXEC [getCategoryById]';
         $query .= '@id = "' . intval($id) . '"';
 
         $rows = Database::Execute($query);
@@ -36,11 +36,11 @@ class Types
             throw new Exception('No type found.');
         }
 
-        $type = new Type(
+        $category = new Category(
             $rows[0]['name']
         );
-        $type->setId($rows[0]['id']);
+        $category->setId($rows[0]['id']);
 
-        return $type;
+        return $category;
     }
 }

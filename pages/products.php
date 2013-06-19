@@ -75,7 +75,7 @@ $title = 'Products';
         </div>
 
         <div id="buttons">
-            <input id="btnProceed" name="btnProceed" type="button" value="Proceed"/>
+            <input id="btnProceed" name="btnProceed" type="button" value="Proceed" disabled="disabled"/>
             <a id="btnClear" class="button">Clear</a>
             <a id="btnCancel" class="button">Cancel</a>
         </div>
@@ -107,11 +107,11 @@ $title = 'Products';
     </div>
     <!-- Fin -->
 
-    <div id="proceedDialog">
+    <div id="proceedDialog" class="dialog">
         You can't change your order later. Do you want to continue?
     </div>
 
-    <div id="cancelDialog">
+    <div id="cancelDialog" class="dialog">
         Are your sure you want to cancel your order?
     </div>
 

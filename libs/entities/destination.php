@@ -1,7 +1,7 @@
 <?php
 
 include_once(ROOT . 'libs/entity.php');
-include_once(ROOT . 'libs/repositories/types.php');
+include_once(ROOT . 'libs/repositories/categories.php');
 
 class Destination extends Entity
 {
@@ -30,8 +30,8 @@ class Destination extends Entity
         return $this->name;
     }
 
-    public function GetTypes()
+    public function getCategories()
     {
-        return Types::FilterByDestinationId($this->getId());
+        return Categories::FilterByDestinationId($this->getId());
     }
 }

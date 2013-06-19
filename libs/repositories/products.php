@@ -5,10 +5,11 @@ include_once(ROOT . 'libs/entities/product.php');
 
 class Products
 {
-    public static function FilterByTypeId($id)
+    public static function FilterByCategoryIdAndTypeId($categoryId, $typeId)
     {
-        $query = 'EXEC [getProductsByTypeId]';
-        $query .= '@typeId = "' . intval($id) . '"';
+        $query = 'EXEC [getProductsByCategoryIdAndTypeId]';
+        $query .= '@categoryId = "' . intval($categoryId) . '", ';
+        $query .= '@typeId = "' . intval($typeId) . '"';
 
         $rows = Database::Execute($query);
 
@@ -44,5 +45,19 @@ class Products
         $product->setId($rows[0]['id']);
 
         return $product;
+    }
+
+    public static function getTypeIdBySerial($serial)
+    {
+        $query = 'EXEC [getTypeIdBySerial]';
+        $query .= '@serial = "' . trim($serial) . '"';
+
+        $rows = Database::Execute($query);
+
+        if (empty($rows)) {
+            throw new Exception('This serial doesn\'t exists.');
+        }
+
+        return $rows[0]['typeId'];
     }
 }

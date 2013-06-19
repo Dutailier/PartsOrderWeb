@@ -3,7 +3,7 @@
 include_once(ROOT . 'libs/entity.php');
 include_once(ROOT . 'libs/repositories/products.php');
 
-class Type extends Entity
+class Category extends Entity
 {
     private $name;
 
@@ -32,6 +32,6 @@ class Type extends Entity
 
     public function getProducts()
     {
-        return Products::FilterByTypeId($this->getId());
+        return Products::FilterByCategoryIdAndTypeId($this->getId());
     }
 }

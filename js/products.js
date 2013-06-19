@@ -1,8 +1,6 @@
 var serial = '';
 
 $('div.infos').hide();
-$('#load').hide();
-$('#btnProceed').attr('disabled', 'disabled');
 
 $('a.btnMoreDetails').click(function () {
     $(this).siblings('a.btnLessDetails').show();

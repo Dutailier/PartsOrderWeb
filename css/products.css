@@ -19,6 +19,7 @@ fieldset {
 }
 
 div.infos {
+    display: none;
     overflow: hidden;
 }
 
@@ -184,6 +185,10 @@ div.product > div.buttons > input {
     margin: 20px;
     text-align: center;
     overflow: hidden;
+}
+
+#load {
+    display: none;
 }
 
 #help > img,

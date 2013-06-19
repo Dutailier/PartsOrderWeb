@@ -3,7 +3,7 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/sessionTransaction.php');
-include_once(ROOT . 'libs/repositories/types.php');
+include_once(ROOT . 'libs/repositories/categories.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -13,11 +13,11 @@ if (!Security::isAuthenticated()) {
     try {
         $transaction = new SessionTransaction();
         $destinationId = $transaction->getDestination()->getId();
-        $types = Types::FilterByDestinationId($destinationId);
+        $categories = Categories::FilterByDestinationId($destinationId);
 
-        $data['types'] = array();
-        foreach ($types as $type) {
-            $data['types'][] = $type->getArray();
+        $data['categories'] = array();
+        foreach ($categories as $category) {
+            $data['categories'][] = $category->getArray();
         }
 
         $data['success'] = true;

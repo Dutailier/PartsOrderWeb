@@ -88,7 +88,7 @@ $(document).ready(function () {
 
                 if (data.hasOwnProperty('success') &&
                     data['success']) {
-                    window.location = 'types.php';
+                    window.location = 'categories.php';
 
                 } else if (data.hasOwnProperty('message')) {
                     alert(data['message']);
