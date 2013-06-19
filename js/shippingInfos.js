@@ -83,7 +83,23 @@ $(document).ready(function () {
     });
 
     $('#btnConfirm').click(function () {
-        window.location = 'products.php';
+        $.post('ajax/openTransaction.php')
+            .done(function (data) {
+
+                if (data.hasOwnProperty('success') &&
+                    data['success']) {
+                    window.location = 'types.php';
+
+                } else if (data.hasOwnProperty('message')) {
+                    alert(data['message']);
+
+                } else {
+                    alert('The result of the server is unreadable.');
+                }
+            })
+            .fail(function () {
+                alert('Communication with the server failed.');
+            })
     });
 });
 

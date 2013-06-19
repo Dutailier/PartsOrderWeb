@@ -22,15 +22,11 @@ if (!Security::isAuthenticated()) {
 
             } else {
                 $transaction = new SessionTransaction();
-
-                $filterIds = array();
-                if (!empty($_POST['filterIds'])) {
-                    $filterIds = $_POST['filterIds'];
-                }
-                $filterIds[] = $transaction->getDefaultFilter()->getId();
+                $typeId = $transaction->getType()->getId();
+                $products = Products::FilterByTypeId($typeId);
 
                 $data['products'] = array();
-                foreach (Products::FilterByFilterIds($filterIds) as $product) {
+                foreach ($products as $product) {
                     $data['products'][] = $product->getArray();
                 }
 

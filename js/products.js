@@ -147,36 +147,6 @@ $(document).ready(function () {
         }
     });
 
-    $.post('ajax/getTypes.php')
-        .done(function (data) {
-
-            if (data.hasOwnProperty('success') &&
-                data['success'] &&
-                data.hasOwnProperty('filters')) {
-                var filters = data['filters'];
-
-                for (var i in filters) {
-                    if (filters.hasOwnProperty(i)) {
-                        var filter = filters[i];
-
-                        if (filter.hasOwnProperty('id') &&
-                            filter.hasOwnProperty('name')) {
-                            addFilter(filter);
-                        }
-                    }
-                }
-
-            } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
-
-            } else {
-                alert('The result of the server is unreadable.');
-            }
-        })
-        .fail(function () {
-            alert('Communication with the server failed.');
-        });
-
     $('#btnClear').click(function () {
         $.post('ajax/clearCart.php')
             .done(function (data) {
@@ -504,11 +474,4 @@ function addProduct(product) {
             '</div>)');
 
     $('#products').append($product);
-}
-
-function addFilter(filter) {
-    var $filter = $(
-        '<label class="filter" data-id="' + filter['id'] + '">' + filter['name'] + '</label>');
-
-    $('#filters').append($filter);
 }

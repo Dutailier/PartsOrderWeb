@@ -2,9 +2,8 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/entities/receiver.php');
 include_once(ROOT . 'libs/sessionTransaction.php');
-include_once(ROOT . 'libs/repositories/filters.php');
+include_once(ROOT . 'libs/repositories/destinations.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -19,16 +18,15 @@ if (!Security::isAuthenticated()) {
         try {
             $transaction = new SessionTransaction();
 
-            $destination = Filters::Find($_POST['destinationId']);
-            $transaction->setDefaultFilter($destination);
+            $destination = Destinations::Find($_POST['destinationId']);
+            $transaction->setDestination($destination);
 
-            $customerInfosAreRequired = $destination->getId() == FILTER_TO_GUEST_ID;
+            $customerInfosAreRequired = $destination->getId() == DESTINATION_TO_GUEST;
 
             if (!$customerInfosAreRequired) {
                 $user = Security::getUserConnected();
                 $store = $user->getStore();
                 $address = $store->getAddress();
-                $address->Detach();
 
                 $receiver = new Receiver(
                     $store->getName(),
@@ -36,7 +34,7 @@ if (!Security::isAuthenticated()) {
                     $store->getEmail()
                 );
 
-                $transaction->Open($address, $store, $receiver);
+                $transaction->setShippingInfos($address, $store, $receiver);
             }
 
             $data['customerInfosAreRequired'] = $customerInfosAreRequired;

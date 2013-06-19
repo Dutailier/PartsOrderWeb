@@ -5,15 +5,10 @@ include_once(ROOT . 'libs/entities/product.php');
 
 class Products
 {
-    public static function FilterByFilterIds(array $ids)
+    public static function FilterByTypeId($id)
     {
-        $list = $ids[0];
-        for ($i = 1; $i < count($ids); $i++) {
-            $list .= ',' . $ids[$i];
-        }
-
-        $query = 'EXEC [getProductsByFilterIds]';
-        $query .= '@ids = "' . $list . '"';
+        $query = 'EXEC [getProductsByTypeId]';
+        $query .= '@typeId = "' . intval($id) . '"';
 
         $rows = Database::Execute($query);
 

@@ -57,11 +57,10 @@ if (!Security::isAuthenticated()) {
                 $_POST['stateId']
             );
 
-            $transaction->Open(
+            $transaction->setShippingInfos(
                 $shippingAddress,
                 $store,
-                $receiver
-            );
+                $receiver);
 
             $data['success'] = true;
 

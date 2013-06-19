@@ -12,7 +12,6 @@ if (!Security::isAuthenticated()) {
 
     switch ($page) {
         // Page d'accueil
-        /** @noinspection PhpMissingBreakStatementInspection */
         case 'index' :
             if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
                 $page = 'manager';
@@ -20,14 +19,31 @@ if (!Security::isAuthenticated()) {
             }
 
         // Pages transactionnelles
-        case 'products':
+        case 'types' :
+        case 'products' :
         case 'destinations' :
+        case 'shippingInfos' :
             $transaction = new SessionTransaction();
 
-            if ($transaction->isOpen()) {
-                $page = 'products';
-            } else {
-                $page = 'destinations';
+            switch ($transaction->getStatus()) {
+                case READY:
+                    $page = 'destinations';
+                    break;
+                case DESTINATION_ISSET:
+                    $page = 'receiverInfos';
+                    break;
+                case SHIPPING_INFOS_ISSET:
+                    $page = 'shippingInfos';
+                    break;
+                case IS_OPEN:
+                    $page = 'types';
+                    break;
+                case TYPE_ISSET:
+                    $page = 'products';
+                    break;
+                case IS_PROCEED:
+                    $page = 'orderInfos';
+                    break;
             }
             break;
 

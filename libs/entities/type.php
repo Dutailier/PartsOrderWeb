@@ -3,15 +3,13 @@
 include_once(ROOT . 'libs/entity.php');
 include_once(ROOT . 'libs/repositories/products.php');
 
-class Filter extends Entity
+class Type extends Entity
 {
     private $name;
-    private $type;
 
-    function __construct($name, $type)
+    function __construct($name)
     {
-        $this->name = $name;
-        $this->type = $type;
+        $this->setName($name);
     }
 
     public function getArray()
@@ -22,13 +20,18 @@ class Filter extends Entity
         );
     }
 
+    public function setName($name)
+    {
+        $this->name = trim($name);
+    }
+
     public function getName()
     {
         return $this->name;
     }
 
-    public function getType()
+    public function getProducts()
     {
-        return $this->type;
+        return Products::FilterByTypeId($this->getId());
     }
 }
