@@ -202,3 +202,47 @@ hr {
 #summary > input {
     width: 150px;
 }
+
+#status.canceled {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+#status.confirmed {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#status.pending {
+    background-color: rgb(250, 250, 250);
+}
+
+#status.canceled {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+#status.confirmed {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#status.processing {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#status.inproduction {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#status.readytoship {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#status.shipped {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#status.delivered {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#status.invoiced {
+    background-color: rgba(0, 170, 0, 0.3);
+}

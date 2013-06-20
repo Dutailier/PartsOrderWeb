@@ -17,7 +17,7 @@ class Logs
 
             $log = new Log(
                 $row['orderId'],
-                $row['userId'],
+                $row['username'],
                 $row['event'],
                 $row['datetime']
             );
@@ -40,7 +40,7 @@ class Logs
 
             $log = new Log(
                 $row['orderId'],
-                $row['userId'],
+                $row['username'],
                 $row['event'],
                 $row['datetime']
             );
@@ -64,7 +64,7 @@ class Logs
 
             $log = new Log(
                 $row['orderId'],
-                $row['userId'],
+                $row['username'],
                 $row['event'],
                 $row['datetime']
             );
@@ -89,7 +89,7 @@ class Logs
 
             $log = new Log(
                 $row['orderId'],
-                $row['userId'],
+                $row['username'],
                 $row['event'],
                 $row['datetime']
             );

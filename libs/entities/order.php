@@ -42,7 +42,7 @@ class Order extends Entity
             'shippingAddressId' => $this->getShippingAddressId(),
             'number' => $this->getNumber(),
             'creationDate' => $this->getCreationDate(),
-            'lastModificationByUser' => $lastLog->getUser()->getArray(),
+            'lastModificationByUsername' => $lastLog->getUsername(),
             'lastModificationDate' => $lastLog->getDatetime(),
             'status' => $this->getStatus()
         );

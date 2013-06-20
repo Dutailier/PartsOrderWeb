@@ -129,8 +129,28 @@ fieldset > legend {
     background-color: rgba(0, 170, 0, 0.3);
 }
 
-#orders > div.order > div.infos.pending {
-    background-color: rgb(250, 250, 250);
+#orders > div.order > div.infos.processing {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#orders > div.order > div.infos.inproduction {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#orders > div.order > div.infos.readytoship {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#orders > div.order > div.infos.shipped {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#orders > div.order > div.infos.delivered {
+    background-color: rgba(0, 170, 0, 0.3);
+}
+
+#orders > div.order > div.infos.invoiced {
+    background-color: rgba(0, 170, 0, 0.3);
 }
 
 #orders > div.order > div.details {

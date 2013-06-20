@@ -7,14 +7,14 @@ include_once(ROOT . 'libs/repositories/orders.php');
 class Log extends Entity
 {
     private $orderId;
-    private $userId;
+    private $username;
     private $datetime;
     private $event;
 
-    function __construct($orderId, $userId, $event, $datetime = null)
+    function __construct($orderId, $username, $event, $datetime = null)
     {
         $this->orderId = $orderId;
-        $this->userId = $userId;
+        $this->username = $username;
         $this->datetime = $datetime;
         $this->event = $event;
     }
@@ -24,7 +24,7 @@ class Log extends Entity
         return array(
             'id' => $this->getId(),
             'order' => $this->getOrder()->getArray(),
-            'user' => $this->getUser()->getArray(),
+            'username' => $this->getUsername(),
             'event' => $this->getEvent(),
             'datetime' => $this->getDatetime()
         );
@@ -35,9 +35,9 @@ class Log extends Entity
         return $this->orderId;
     }
 
-    public function getUserId()
+    public function getUsername()
     {
-        return $this->userId;
+        return $this->username;
     }
 
     public function getEvent()

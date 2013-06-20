@@ -41,9 +41,6 @@ if (!Security::isAuthenticated()) {
                 case CATEGORY_IS_SET:
                     $page = 'products';
                     break;
-                case IS_PROCEED:
-                    $page = 'orderInfos';
-                    break;
             }
             break;
 

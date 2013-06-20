@@ -288,8 +288,7 @@ function updateOrdersByRangeOfDates() {
                         if (order.hasOwnProperty('status') &&
                             order.hasOwnProperty('id') &&
                             order.hasOwnProperty('number') &&
-                            order.hasOwnProperty('lastModificationByUser') &&
-                            order['lastModificationByUser'].hasOwnProperty('username') &&
+                            order.hasOwnProperty('lastModificationByUsername') &&
                             order.hasOwnProperty('lastModificationDate')) {
                             var $order = $('<div class="order" data-id="' + order['id'] + '"></div>');
                             addInfosToOrder(order, $order);
@@ -377,8 +376,7 @@ function updateLogsByRangeOfDates() {
                             log.hasOwnProperty('datetime') &&
                             log.hasOwnProperty('order') &&
                             log['order'].hasOwnProperty('number') &&
-                            log.hasOwnProperty('user') &&
-                            log['user'].hasOwnProperty('username')) {
+                            log.hasOwnProperty('username')) {
                             addLog(log);
                         }
                     }
@@ -539,7 +537,7 @@ function addInfosToOrder(order, $order) {
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
             '<div class="date"> ' +
-            'By <label class="username">' + order['lastModificationByUser']['username'] + '</label> ' +
+            'By <label class="username">' + order['lastModificationByUsername'] + '</label> ' +
             'at <label class="datetime">' + dateFormat(order['lastModificationDate']) + '</label>' +
             '</div>' +
             '</div>'
@@ -552,7 +550,7 @@ function addLog(log) {
             '<label class="orderNumber">' + log['order']['number'] + '</label>' +
             '<label class="event">' + log['event'] + '</label>' +
             '<div class="date">' +
-            'By <label class="username">' + log['user']['username'] + '</label> at <label class="creationDate">' + dateFormat(log['datetime']) + '</label>' +
+            'By <label class="username">' + log['username'] + '</label> at <label class="creationDate">' + dateFormat(log['datetime']) + '</label>' +
             '</div>' +
             '</div>'
     );

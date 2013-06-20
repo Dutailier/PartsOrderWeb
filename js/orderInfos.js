@@ -303,8 +303,7 @@ function updateLogs() {
                         if (log.hasOwnProperty('id') &&
                             log.hasOwnProperty('event') &&
                             log.hasOwnProperty('datetime') &&
-                            log.hasOwnProperty('user') &&
-                            log['user'].hasOwnProperty('username')) {
+                            log.hasOwnProperty('username')) {
                             addLogInfos(log);
                         }
                     }
@@ -389,7 +388,7 @@ function addLogInfos(log) {
         '<div class="log" data-id="' + log['id'] + '">' +
             '<label class="event">' + log['event'] + '</label>' +
             '<div class="date">' +
-            'By <label class="username">' + log['user']['username'] + '</label> at <label class="creationDate">' + dateFormat(log['datetime']) + '</label>' +
+            'By <label class="username">' + log['username'] + '</label> at <label class="creationDate">' + dateFormat(log['datetime']) + '</label>' +
             '</div>' +
             '</div>'
     );
@@ -402,7 +401,7 @@ function addLogInfos(log) {
 function updateOrderInfos(order) {
     $('#number').text(order['number']);
     $('#creationDate').text(dateFormat(order['creationDate']));
-    $('#status').text(order['status']);
+    $('#status').text(order['status']).addClass(order['status']);
 }
 
 /**
