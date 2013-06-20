@@ -26,7 +26,7 @@ class Mail
         $phpmailer = self::getPHPmailer();
 
         $phpmailer->AddAddress($receiver->getEmail(), $receiver->getName());
-        $phpmailer->Subject = 'Parts Order Web - Confirmation';
+        $phpmailer->Subject = 'Parts Order Web - Confirmation #' . $order->getNumber();
         $phpmailer->Body =
             '<a href="http://' . HOST . PROJECT_NAME . 'orderInfos.php?orderId=' . $order->getId() . '">More details</a>';
 
