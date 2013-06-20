@@ -2,6 +2,7 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/mail.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;
@@ -25,6 +26,9 @@ if (!Security::isAuthenticated()) {
 
             } else {
                 $order->Confirm();
+
+                Mail::SendOrderConfirmation($order);
+
                 $data['success'] = true;
             }
         } catch (Exception $e) {

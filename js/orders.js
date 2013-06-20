@@ -532,8 +532,13 @@ function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
  * @param $order
  */
 function addInfosToOrder(order, $order) {
+    var cssClass = order['status']
+        .split(' ')
+        .join('')
+        .toLowerCase();
+
     $order.append(
-        '<div class="infos ' + order['status'].toLowerCase() + '">' +
+        '<div class="infos ' + cssClass + '">' +
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
             '<div class="date"> ' +

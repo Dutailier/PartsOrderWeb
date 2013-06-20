@@ -399,9 +399,14 @@ function addLogInfos(log) {
  * @param order
  */
 function updateOrderInfos(order) {
+    var cssClass = order['status']
+        .split(' ')
+        .join('')
+        .toLowerCase();
+
     $('#number').text(order['number']);
     $('#creationDate').text(dateFormat(order['creationDate']));
-    $('#status').text(order['status']).addClass(order['status']);
+    $('#status').text(order['status']).addClass(cssClass);
 }
 
 /**
