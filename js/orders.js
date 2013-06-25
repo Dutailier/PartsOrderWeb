@@ -1,4 +1,34 @@
+// Évènements définis une fois le document HTML complètement généré.
+
 $(document).ready(function () {
+
+    $('#btnTabOrders').click(function () {
+        selectTabOrders();
+    });
+
+    $('#btnTabLogs').click(function () {
+        selectTabLogs();
+    });
+
+    $('#ordersFilters').find('input.date').change(function () {
+        updateOrdersByRangeOfDates();
+    });
+
+    $('#logsFilters').find('input.date').change(function () {
+        updateLogsByRangeOfDates();
+    });
+
+    $('#orderKeyWords').keyup(function () {
+        filterOrdersByKeyWords();
+    });
+
+    $('#logKeyWords').keyup(function () {
+        filterLogsByKeyWords();
+    });
+
+    $('#btnBackManager').click(function () {
+        window.location = 'manager.php?tab=stores';
+    });
 
     $("#orderFrom").datepicker({
         maxDate: '0',
@@ -31,6 +61,42 @@ $(document).ready(function () {
     $('#orderFrom, #logFrom').datepicker('setDate', '-1m');
     $('#orderTo, #logTo').datepicker('setDate', '0');
 
+    $('#confirmDialog').dialog({
+        title: 'Order confirmation',
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        width: 360,
+        height: 200,
+        buttons: {
+            "Yes": function () {
+                confirmOrder();
+                $(this).dialog('close');
+            },
+            "No": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+
+    $('#cancelDialog').dialog({
+        title: 'Order cancelation',
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        width: 360,
+        height: 200,
+        buttons: {
+            "Yes": function () {
+                cancelOrder();
+                $(this).dialog('close');
+            },
+            "No": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+
     //noinspection FallthroughInSwitchStatementJS
     switch ($.QueryString['tab']) {
         case 'logs' :
@@ -44,67 +110,9 @@ $(document).ready(function () {
     getStoreInfos();
     updateOrdersByRangeOfDates();
     updateLogsByRangeOfDates();
-
-    $('#btnTabOrders').click(function () {
-        selectTabOrders();
-    });
-
-    $('#btnTabLogs').click(function () {
-        selectTabLogs();
-    });
-
-    $('#ordersFilters').find('input.date').change(function () {
-        updateOrdersByRangeOfDates();
-    });
-
-    $('#logsFilters').find('input.date').change(function () {
-        updateLogsByRangeOfDates();
-    });
-
-    $('#orderKeyWords').keyup(function () {
-        filterOrdersByKeyWords();
-    });
-
-    $('#logKeyWords').keyup(function () {
-        filterLogsByKeyWords();
-    });
-
-    $('#btnBackManager').click(function () {
-        window.location = 'manager.php?tab=stores';
-    });
-
-    $('#confirmDialog').dialog({
-        autoOpen: false,
-        modal: true,
-        dialogClass: 'dialog',
-        buttons: {
-            "Yes": function () {
-                var $orderNumber = $(this).find('label.orderNumber');
-                var id = $orderNumber.data('order-id');
-                confirmOrder(id);
-            },
-            "No": function () {
-                $(this).dialog('close');
-            }
-        }
-    });
-
-    $('#cancelDialog').dialog({
-        autoOpen: false,
-        modal: true,
-        dialogClass: 'dialog',
-        buttons: {
-            "Yes": function () {
-                var $orderNumber = $(this).find('label.orderNumber');
-                var id = $orderNumber.data('order-id');
-                cancelOrder(id);
-            },
-            "No": function () {
-                $(this).dialog('close');
-            }
-        }
-    });
 });
+
+// Évènements liés à des éléments générés.
 
 $(document).on('click', 'div.order > div.infos', function () {
 
@@ -119,8 +127,37 @@ $(document).on('click', 'div.log > label.orderNumber', function () {
     window.location = 'orderInfos.php?orderId=' + $log.data('order-id');
 });
 
+$(document).on('click', 'input.btnDetails', function () {
+
+    var $order = $(this).closest('div.order');
+
+    window.location = 'orderInfos.php?orderId=' + $order.data('id');
+});
+
+$(document).on('click', 'input.btnConfirm', function () {
+    var $order = $(this).closest('div.order');
+    var $dialog = $('#confirmDialog');
+    var $orderNumber = $dialog.find('label.orderNumber');
+
+    $('#orders').children('div.order').removeAttr('selected');
+    $order.attr('selected', 'selected');
+    $orderNumber.text($order.find('label.number').text());
+    $dialog.dialog('open');
+});
+
+$(document).on('click', 'input.btnCancel', function () {
+    var $order = $(this).closest('div.order');
+    var $dialog = $('#cancelDialog');
+    var $orderNumber = $dialog.find('label.orderNumber');
+
+    $('#orders').children('div.order').removeAttr('selected');
+    $order.attr('selected', 'selected');
+    $orderNumber.text($order.find('label.number').text());
+    $dialog.dialog('open');
+});
+
 /**
- * Affiche le contenu de l'onglet : informations de la commande.
+ * Affiche le contenu de l'onglet : commandes.
  */
 function selectTabOrders() {
     $('#tabs').find('li').removeClass('selected');
@@ -142,15 +179,18 @@ function selectTabLogs() {
 }
 
 /**
- * Retourne les détails d'une commande.
+ * Ajoute les détails d'une commande.
  * @param $order
  */
 function addDetailsToOrder($order) {
+
+    var $infos = $order.children('div.infos');
+
     var parameters = {
         "orderId": $order.data('id')
     };
 
-    $order.click(false);
+    $infos.click(false);
     $.post('ajax/getOrderDetails.php', parameters)
         .done(function (data) {
 
@@ -229,41 +269,15 @@ function addDetailsToOrder($order) {
             alert('Communication with the server failed.');
         })
         .always(function () {
-            $order.children('div.infos').click(function () {
+            $infos.click(function () {
                 $order.children('div.details').stop().slideToggle();
             })
         })
 }
 
-$(document).on('click', 'input.btnConfirm', function () {
-
-    var $order = $(this).closest('div.order');
-    var $dialog = $('#confirmDialog');
-    var $number = $dialog.find('label.orderNumber');
-
-    $number.text($order.find('label.number').text());
-    $number.data('order-id', $order.data('id'));
-    $dialog.dialog('open');
-});
-
-$(document).on('click', 'input.btnCancel', function () {
-
-    var $order = $(this).closest('div.order');
-    var $dialog = $('#cancelDialog');
-    var $number = $dialog.find('label.orderNumber');
-
-    $number.text($order.find('label.number').text());
-    $number.data('order-id', $order.data('id'));
-    $dialog.dialog('open');
-});
-
-$(document).on('click', 'input.btnDetails', function () {
-
-    var $order = $(this).closest('div.order');
-
-    window.location = 'orderInfos.php?orderId=' + $order.data('id');
-});
-
+/**
+ * Met à jour les commandes par interval de dates.
+ */
 function updateOrdersByRangeOfDates() {
     var parameters = {
         'from': $('#orderFrom').val(),
@@ -311,6 +325,9 @@ function updateOrdersByRangeOfDates() {
         })
 }
 
+/**
+ * Filtre les commandes par mots clés recherchés.
+ */
 function filterOrdersByKeyWords() {
     $('div.order').hide();
 
@@ -330,6 +347,9 @@ function filterOrdersByKeyWords() {
     });
 }
 
+/**
+ * Filtre les logs par mots clés recherchés.
+ */
 function filterLogsByKeyWords() {
     $('div.log').hide();
 
@@ -349,6 +369,9 @@ function filterLogsByKeyWords() {
     });
 }
 
+/**
+ * Filtre les logs par interval de dates.
+ */
 function updateLogsByRangeOfDates() {
 
     var parameters = {
@@ -396,6 +419,9 @@ function updateLogsByRangeOfDates() {
         })
 }
 
+/**
+ * Récupère les informations relatives au magasin.
+ */
 function getStoreInfos() {
     var parameters = {
         'storeId': $.QueryString['storeId']
@@ -437,17 +463,23 @@ function getStoreInfos() {
             alert('Communication with the server failed.');
         });
 }
-function confirmOrder(id) {
+
+/**
+ * Confirme une commande.
+ */
+function confirmOrder() {
+
+    var $order = $('#orders').children('div.order[selected]');
+
     var parameters = {
-        "orderId": id
+        "orderId": $order.data('id')
     };
 
     $.post('ajax/confirmOrder.php', parameters)
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
-
-                window.location.reload();
+                updateOrdersByRangeOfDates();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -460,17 +492,22 @@ function confirmOrder(id) {
             alert('Communication with the server failed.');
         })
 }
-function cancelOrder(id) {
+
+/**
+ * Annule une commande.
+ */
+function cancelOrder() {
+    var $order = $('#orders').children('div.order[selected]');
+
     var parameters = {
-        "orderId": id
+        "orderId": $order.data('id')
     };
 
     $.post('ajax/cancelOrder.php', parameters)
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
-
-                window.location.reload();
+                updateOrdersByRangeOfDates();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -527,7 +564,7 @@ function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
 }
 
 /**
- * Ajoute les informations sommaires de la commande.
+ * Ajoute les informations relatives à la commande aux informations sommaires de la commande.
  * @param order
  * @param $order
  */
@@ -549,6 +586,10 @@ function addInfosToOrder(order, $order) {
     );
 }
 
+/**
+ * Ajoute un log.
+ * @param log
+ */
 function addLog(log) {
     $('#logs').append(
         '<div class="log" data-id="' + log['id'] + '" data-order-id="' + log['order']['id'] + '">' +
@@ -562,7 +603,7 @@ function addLog(log) {
 }
 
 /**
- * Ajoute une ligne à la commande.
+ * Ajoute une ligne aux détails de la commande.
  */
 function addLineInfosToLinesOfOrderDetails($list, line) {
     $list.append(
@@ -577,7 +618,7 @@ function addLineInfosToLinesOfOrderDetails($list, line) {
 }
 
 /**
- * Affiche les informations relatives au magasin.
+ * Met à jour les informations du magasin.
  * @param store
  */
 function updateStoreInfos(store) {
@@ -621,6 +662,9 @@ function dateFormat(date) {
     return date.substring(0, 16);
 }
 
+/**
+ * Ajoute une function de recherche des valeurs passées en GET à l'objet JQuery.
+ */
 (function ($) {
     $.QueryString = (function (a) {
         if (a == "") return {};

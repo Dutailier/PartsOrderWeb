@@ -1,52 +1,6 @@
+// Évènements définis une fois le document HTML complètement généré.
+
 $(document).ready(function () {
-
-    $("#orderFrom").datepicker({
-        maxDate: '0',
-        onClose: function (selectedDate) {
-            $("#orderTo").datepicker("option", "minDate", selectedDate);
-        }
-    });
-
-    $("#orderTo").datepicker({
-        maxDate: '0',
-        onClose: function (selectedDate) {
-            $("#orderFrom").datepicker("option", "maxDate", selectedDate);
-        }
-    });
-
-    $("#logFrom").datepicker({
-        maxDate: '0',
-        onClose: function (selectedDate) {
-            $("#logTo").datepicker("option", "minDate", selectedDate);
-        }
-    });
-
-    $("#logTo").datepicker({
-        maxDate: '0',
-        onClose: function (selectedDate) {
-            $("#logFrom").datepicker("option", "maxDate", selectedDate);
-        }
-    });
-
-    $('#orderFrom, #logFrom').datepicker('setDate', '-1w');
-    $('#orderTo, #logTo').datepicker('setDate', '0');
-
-    //noinspection FallthroughInSwitchStatementJS
-    switch ($.QueryString['tab']) {
-        case 'stores' :
-            selectTabStores();
-            break;
-        case 'logs' :
-            selectTabLogs();
-            break;
-        case 'orders' :
-        default:
-            selectTabOrders();
-    }
-
-    updateOrdersByRangeOfDates();
-    updateBanners();
-    updateLogsByRangeOfDates();
 
     $('#btnTabOrders').click(function () {
         selectTabOrders();
@@ -85,20 +39,52 @@ $(document).ready(function () {
     });
 
     $('#btnAddStore').click(function () {
-        var bannerId = $('#banners').find('option:selected').val();
-
-        window.location = 'storeInfos.php?bannerId=' + bannerId;
+        window.location = 'storeInfos.php?' +
+            'bannerId=' + $('#banners').find('option:selected').val();
     });
 
+    $("#orderFrom").datepicker({
+        maxDate: '0',
+        onClose: function (selectedDate) {
+            $("#orderTo").datepicker("option", "minDate", selectedDate);
+        }
+    });
+
+    $("#orderTo").datepicker({
+        maxDate: '0',
+        onClose: function (selectedDate) {
+            $("#orderFrom").datepicker("option", "maxDate", selectedDate);
+        }
+    });
+
+    $("#logFrom").datepicker({
+        maxDate: '0',
+        onClose: function (selectedDate) {
+            $("#logTo").datepicker("option", "minDate", selectedDate);
+        }
+    });
+
+    $("#logTo").datepicker({
+        maxDate: '0',
+        onClose: function (selectedDate) {
+            $("#logFrom").datepicker("option", "maxDate", selectedDate);
+        }
+    });
+
+    $('#orderFrom, #logFrom').datepicker('setDate', '-1w');
+    $('#orderTo, #logTo').datepicker('setDate', '0');
+
     $('#confirmDialog').dialog({
+        title: 'Order confirmation',
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',
+        width: 360,
+        height: 200,
         buttons: {
             "Yes": function () {
-                var $orderNumber = $(this).find('label.orderNumber');
-                var id = $orderNumber.data('order-id');
-                confirmOrder(id);
+                confirmOrder();
+                $(this).dialog('close');
             },
             "No": function () {
                 $(this).dialog('close');
@@ -107,83 +93,92 @@ $(document).ready(function () {
     });
 
     $('#cancelDialog').dialog({
+        title: 'Order cancelation',
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',
+        width: 360,
+        height: 200,
         buttons: {
             "Yes": function () {
-                var $orderNumber = $(this).find('label.orderNumber');
-                var id = $orderNumber.data('order-id');
-                CancelOrder(id);
+                cancelOrder();
+                $(this).dialog('close');
             },
             "No": function () {
                 $(this).dialog('close');
             }
         }
     });
+
+    //noinspection FallthroughInSwitchStatementJS
+    switch ($.QueryString['tab']) {
+        case 'stores' :
+            selectTabStores();
+            break;
+        case 'logs' :
+            selectTabLogs();
+            break;
+        case 'orders' :
+        default:
+            selectTabOrders();
+    }
+
+    updateOrdersByRangeOfDates();
+    updateBanners();
+    updateLogsByRangeOfDates();
 });
 
-$(document).on('click', 'div.order > div.infos', function () {
+// Évènements liés à des éléments générés.
 
-    var $order = $(this).closest('div.order');
-    addDetailsToOrder($order);
+$(document).on('click', 'div.order > div.infos', function () {
+    addDetailsToOrder($(this).closest('div.order'));
 });
 
 $(document).on('click', 'div.store > div.infos', function () {
+    addDetailsToStore($(this).closest('div.store'));
+});
 
-    var $store = $(this).closest('div.store');
-    addDetailsToStore($store);
+$(document).on('click', 'input.btnStoreOrders', function () {
+    window.location = 'orders.php?' +
+        'storeId=' + $(this).closest('div.store').data('id');
+});
+
+$(document).on('click', 'input.btnDetails', function () {
+    window.location = 'orderInfos.php?' +
+        'orderId=' + $(this).closest('div.order').data('id');
+});
+
+$(document).on('click', 'input.btnStoreEdit', function () {
+    window.location = 'storeInfos.php?' +
+        'storeId=' + $(this).closest('div.store').data('id') +
+        '&bannerId=' + $('#banners').find('option:selected').val();
+});
+
+$(document).on('click', 'div.log > label.orderNumber', function () {
+    window.location = 'orderInfos.php?' +
+        'orderId=' + $(this).closest('div.log').data('order-id');
 });
 
 $(document).on('click', 'input.btnConfirm', function () {
-
     var $order = $(this).closest('div.order');
     var $dialog = $('#confirmDialog');
-    var $number = $dialog.find('label.orderNumber');
+    var $orderNumber = $dialog.find('label.orderNumber');
 
-    $number.text($order.find('label.number').text());
-    $number.data('order-id', $order.data('id'));
+    $('#orders').children('div.order').removeAttr('selected');
+    $order.attr('selected', 'selected');
+    $orderNumber.text($order.find('label.number').text());
     $dialog.dialog('open');
 });
 
 $(document).on('click', 'input.btnCancel', function () {
-
     var $order = $(this).closest('div.order');
     var $dialog = $('#cancelDialog');
-    var $number = $dialog.find('label.orderNumber');
+    var $orderNumber = $dialog.find('label.orderNumber');
 
-    $number.text($order.find('label.number').text());
-    $number.data('order-id', $order.data('id'));
+    $('#orders').children('div.order').removeAttr('selected');
+    $order.attr('selected', 'selected');
+    $orderNumber.text($order.find('label.number').text());
     $dialog.dialog('open');
-});
-
-$(document).on('click', 'input.btnStoreOrders', function () {
-
-    var $store = $(this).closest('div.store');
-
-    window.location = 'orders.php?storeId=' + $store.data('id');
-});
-
-$(document).on('click', 'input.btnDetails', function () {
-
-    var $order = $(this).closest('div.order');
-
-    window.location = 'orderInfos.php?orderId=' + $order.data('id');
-});
-
-$(document).on('click', 'input.btnStoreEdit', function () {
-
-    var $store = $(this).closest('div.store');
-    var bannerId = $('#banners').find('option:selected').val();
-
-    window.location = 'storeInfos.php?storeId=' + $store.data('id') + '&bannerId=' + bannerId;
-});
-
-$(document).on('click', 'div.log > label.orderNumber', function () {
-
-    var $log = $(this).closest('div.log');
-
-    window.location = 'orderInfos.php?orderId=' + $log.data('order-id');
 });
 
 $(document).on('click', 'input.btnStoreDelete', function () {
@@ -197,7 +192,6 @@ $(document).on('click', 'input.btnStoreDelete', function () {
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
-
                 $store.remove();
 
             } else if (data.hasOwnProperty('message')) {
@@ -245,17 +239,22 @@ function selectTabLogs() {
     $('#tabLogs').show();
 }
 
-function confirmOrder(id) {
+/**
+ * Confirme une commande.
+ */
+function confirmOrder() {
+
+    var $order = $('#orders').children('div.order[selected]');
+
     var parameters = {
-        "orderId": id
+        "orderId": $order.data('id')
     };
 
     $.post('ajax/confirmOrder.php', parameters)
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
-
-                window.location.reload();
+                updateOrdersByRangeOfDates();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -269,17 +268,21 @@ function confirmOrder(id) {
         })
 }
 
-function CancelOrder(id) {
+/**
+ * Annule une commande.
+ */
+function cancelOrder() {
+    var $order = $('#orders').children('div.order[selected]');
+
     var parameters = {
-        "orderId": id
+        "orderId": $order.data('id')
     };
 
     $.post('ajax/cancelOrder.php', parameters)
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
-
-                window.location.reload();
+                updateOrdersByRangeOfDates();
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
@@ -293,6 +296,9 @@ function CancelOrder(id) {
         })
 }
 
+/**
+ * Met à jour les différentes bannières disponibles.
+ */
 function updateBanners() {
     $.post('ajax/getBanners.php')
         .done(function (data) {
@@ -333,6 +339,9 @@ function updateBanners() {
         })
 }
 
+/**
+ * Met à jour les logs par interval de dates.
+ */
 function updateLogsByRangeOfDates() {
 
     var parameters = {
@@ -379,6 +388,9 @@ function updateLogsByRangeOfDates() {
         })
 }
 
+/**
+ * Filtre les commandes par les mots clés recherchés.
+ */
 function filterOrdersByKeyWords() {
     $('div.order').hide();
 
@@ -398,6 +410,9 @@ function filterOrdersByKeyWords() {
     });
 }
 
+/**
+ * Filtre les magasins par mots clés recherchés.
+ */
 function filterStoresByKeyWords() {
     $('div.store').hide();
 
@@ -417,6 +432,9 @@ function filterStoresByKeyWords() {
     });
 }
 
+/**
+ * Filtre les logs par mots clés recherchés.
+ */
 function filterLogsByKeyWords() {
     $('div.log').hide();
 
@@ -436,6 +454,9 @@ function filterLogsByKeyWords() {
     });
 }
 
+/**
+ * Met à jour les magasins par bannière.
+ */
 function updateStoresByBannerId() {
     var parameters = {
         'bannerId': $('#banners').find('option:selected').val()
@@ -496,6 +517,9 @@ function updateStoresByBannerId() {
         })
 }
 
+/**
+ * Met à jout les commandes par interval de dates.
+ */
 function updateOrdersByRangeOfDates() {
     var parameters = {
         'from': $('#orderFrom').val(),
@@ -547,11 +571,14 @@ function updateOrdersByRangeOfDates() {
  * @param $store
  */
 function addDetailsToStore($store) {
+
+    var $infos = $store.children('div.infos');
+
     var parameters = {
         "storeId": $store.data('id')
     };
 
-    $store.click(false);
+    $infos.click(false);
     $.post('ajax/getStoreDetails.php', parameters)
         .done(function (data) {
 
@@ -601,7 +628,7 @@ function addDetailsToStore($store) {
             alert('Communication with the server failed.');
         })
         .always(function () {
-            $store.children('div.infos').click(function () {
+            $infos.click(function () {
                 $store.children('div.details').stop().slideToggle();
             })
         })
@@ -612,11 +639,14 @@ function addDetailsToStore($store) {
  * @param $order
  */
 function addDetailsToOrder($order) {
+
+    var $infos = $order.children('div.infos');
+
     var parameters = {
         "orderId": $order.data('id')
     };
 
-    $order.click(false);
+    $infos.click(false);
     $.post('ajax/getOrderDetails.php', parameters)
         .done(function (data) {
 
@@ -714,12 +744,17 @@ function addDetailsToOrder($order) {
             alert('Communication with the server failed.');
         })
         .always(function () {
-            $order.children('div.infos').click(function () {
+            $infos.click(function () {
                 $order.children('div.details').stop().slideToggle();
             })
         })
 }
 
+/**
+ * Ajoute les informations relatives au magasin aux détails du magasin.
+ * @param $details
+ * @param store
+ */
 function addStoreInfosToStoreDetails($details, store) {
     $details.append(
         '<fieldset class="contactInfos" data-id="' + store['id'] + '">' +
@@ -741,7 +776,7 @@ function addStoreInfosToStoreDetails($details, store) {
 }
 
 /**
- * Affiche les informations relatives au magasin.
+ * Ajoute les informations relatives au magasin aux détails de la commande.
  * @param $details
  * @param store
  */
@@ -812,7 +847,7 @@ function addShippingAddressInfosToOrderDetails($details, shippingAddress) {
 }
 
 /**
- * Ajoute les informations sommaires de la commande.
+ * Ajoute les informations relatives à la commandes aux informations sommaires de la commande.
  * @param order
  * @param $order
  */
@@ -835,7 +870,7 @@ function addInfosToOrder(order, $order) {
 }
 
 /**
- * Ajoute une ligne à la commande.
+ * Ajoute une ligne à la commande aux détails de la commande.
  */
 function addLineInfosToOrderDetails($list, line) {
     $list.append(
@@ -850,7 +885,7 @@ function addLineInfosToOrderDetails($list, line) {
 }
 
 /**
- * Ajoute les informations sommaires d'un magasin.
+ * Ajoute les informations relatives au magasin aux informations sommaires du magasin.
  * @param store
  * @param $store
  */
@@ -864,6 +899,10 @@ function addInfosToStore(store, $store) {
     );
 }
 
+/**
+ * Ajoute un log.
+ * @param log
+ */
 function addLog(log) {
     $('#logs').append(
         '<div class="log" data-id="' + log['id'] + '" data-order-id="' + log['order']['id'] + '">' +
@@ -909,6 +948,9 @@ function dateFormat(date) {
     return date.substring(0, 16);
 }
 
+/**
+ * Ajoute une function de recherche des valeurs passées en GET à l'objet JQuery.
+ */
 (function ($) {
     $.QueryString = (function (a) {
         if (a == "") return {};
