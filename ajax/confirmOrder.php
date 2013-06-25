@@ -28,7 +28,12 @@ if (!Security::isAuthenticated()) {
             } else {
                 $order->Confirm();
 
-                Mail::SendOrderConfirmation($order);
+                $receiver = $order->getReceiver();
+
+                Mail::SendOrderConfirmation($order, AGENT_EMAIL, AGENT_NAME);
+                Mail::SendOrderConfirmation($order, $store->getEmail(), $store->getName());
+                Mail::SendOrderConfirmation($order, $receiver->getEmail(), $receiver->getName());
+
 
                 $data['success'] = true;
             }

@@ -32,16 +32,11 @@ class Mail
      * @param $order
      * @throws Exception
      */
-    public static function SendOrderConfirmation($order)
+    public static function SendOrderConfirmation($order, $email, $name)
     {
         $phpmailer = self::getPHPmailer();
 
-        $store = $order->getStore();
-        $receiver = $order->getReceiver();
-
-        $phpmailer->AddAddress(AGENT_EMAIL, AGENT_NAME);
-        $phpmailer->AddAddress($store->getEmail(), $store->getName());
-        $phpmailer->AddAddress($receiver->getEmail(), $receiver->getName());
+        $phpmailer->AddAddress($email, $name);
 
         $phpmailer->Subject = 'Parts Order Web - Confirmation #' . $order->getNumber();
 
