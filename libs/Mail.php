@@ -3,8 +3,16 @@
 require_once('config.php');
 require_once(ROOT . 'phpmailer/class.phpmailer.php');
 
+/**
+ * Class Mail
+ * Gère les méthodes relatives à l'envoi de courriels.
+ */
 class Mail
 {
+    /**
+     * Retourne une instance de PHPmailer.
+     * @return PHPMailer
+     */
     private static function getPHPmailer()
     {
         $phpmailer = new PHPMailer();
@@ -19,6 +27,11 @@ class Mail
         return $phpmailer;
     }
 
+    /**
+     * Envoie une confirmation de la commande.
+     * @param $order
+     * @throws Exception
+     */
     public static function SendOrderConfirmation($order)
     {
         $receiver = $order->getReceiver();

@@ -11,7 +11,7 @@ if (!Security::isAuthenticated()) {
 } else {
     if (empty($_POST['serial'])) {
         $data['success'] = false;
-        $data['message'] = 'The serial must be validate.';
+        $data['message'] = 'The serial is required.';
 
     } else {
         try {

@@ -9,23 +9,22 @@ include_once(ROOT . 'libs/repositories/orders.php');
 include_once(ROOT . 'libs/repositories/stores.php');
 include_once(ROOT . 'libs/repositories/addresses.php');
 include_once(ROOT . 'libs/repositories/receivers.php');
-include_once(ROOT . 'libs/interfaces/itransaction.php');
 include_once(ROOT . 'libs/repositories/destinations.php');
 
 // Définition des différents status de la transaction.
-define('READY', 0);
-define('DESTINATION_IS_SET', 1);
-define('SHIPPING_INFOS_IS_SET', 2);
-define('IS_OPEN', 3);
-define('CATEGORY_IS_SET', 4);
-define('IS_PROCEED', 5);
+define('TRANSACTION_IS_READY', 0);
+define('TRANSACTION_DESTINATION_IS_SELECTED', 1);
+define('TRANSACTION_SHIPPING_INFOS_ARE_SETTED', 2);
+define('TRANSACTION_IS_OPEN', 3);
+define('TRANSACTION_CATEGORY_IS_SELECTED', 4);
+define('TRANSACTION_WAS_PROCEED', 5);
 
 /**
  * Class SessionTransaction
  * Représente une transaction au sein du site.
  * Cette classe encapsule les règles d'affaires.
  */
-class SessionTransaction implements ITransaction
+class SessionTransaction
 {
     const CART_IDENTIFIER = '_CART_';
     const STORE_IDENTIFIER = '_STORE_';
@@ -38,7 +37,7 @@ class SessionTransaction implements ITransaction
     const SHIPPING_ADDRESS_IDENTIFIER = '_SHIPPING_ADDRESS_';
 
     /**
-     * Constructeur par défaut.
+     * Initialise la transaction.
      */
     public function __construct()
     {
@@ -47,7 +46,7 @@ class SessionTransaction implements ITransaction
         }
 
         if (!isset($_SESSION[self::STATUS_IDENTIFIER])) {
-            $_SESSION[self::STATUS_IDENTIFIER] = READY;
+            $_SESSION[self::STATUS_IDENTIFIER] = TRANSACTION_IS_READY;
         }
 
         if (!isset($_SESSION[self::CART_IDENTIFIER])) {
@@ -61,21 +60,6 @@ class SessionTransaction implements ITransaction
 
 
     /**
-     * Permet de copier une autre transaction.
-     * @param ITransaction $transaction
-     */
-    public function Copy(ITransaction $transaction)
-    {
-        $_SESSION[self::CATEGORY_IDENTIFIER] = $transaction->getCategory();
-        $_SESSION[self::STORE_IDENTIFIER] = $transaction->getStore();
-        $_SESSION[self::STATUS_IDENTIFIER] = $transaction->getStatus();
-        $_SESSION[self::RECEIVER_IDENTIFIER] = $transaction->getReceiver();
-        $_SESSION[self::DESTINIATION_IDENTIFIER] = $transaction->getDestination();
-        $_SESSION[self::SHIPPING_ADDRESS_IDENTIFIER] = $transaction->getShippingAddress();
-    }
-
-
-    /**
      * Retourne un tableau contenant les éléments de la transaction.
      * @return array
      */
@@ -84,16 +68,17 @@ class SessionTransaction implements ITransaction
         $array = array();
 
         switch ($this->getStatus()) {
-            case IS_PROCEED:
+            case TRANSACTION_WAS_PROCEED:
                 $array['order'] = $this->getOrder()->getArray();
 
+                $array['lines'] = array();
                 foreach ($this->getLines() as $line) {
                     $array['lines'][] = $line->getArray();
                 }
 
-            case CATEGORY_IS_SET:
-            case IS_OPEN:
-            case SHIPPING_INFOS_IS_SET:
+            case TRANSACTION_CATEGORY_IS_SELECTED:
+            case TRANSACTION_IS_OPEN:
+            case TRANSACTION_SHIPPING_INFOS_ARE_SETTED:
                 $array['store'] = $this->getStore()->getArray();
                 $array['receiver'] = $this->getReceiver()->getArray();
                 $array['shippingAddress'] = $this->getShippingAddress()->getArray();
@@ -109,7 +94,7 @@ class SessionTransaction implements ITransaction
      */
     public function setDestination(Destination $destination)
     {
-        if ($this->getStatus() != READY) {
+        if ($this->getStatus() != TRANSACTION_IS_READY) {
             throw new Exception('The destination is already setted.');
         }
 
@@ -119,7 +104,7 @@ class SessionTransaction implements ITransaction
 
         $_SESSION[self::DESTINIATION_IDENTIFIER] = $destination;
 
-        $this->setStatus(DESTINATION_IS_SET);
+        $this->setStatus(TRANSACTION_DESTINATION_IS_SELECTED);
     }
 
     /**
@@ -131,7 +116,10 @@ class SessionTransaction implements ITransaction
      */
     public function setShippingInfos(Address $shippingAddress, Store $store, Receiver $receiver)
     {
-        if ($this->getStatus() != DESTINATION_IS_SET && $this->getStatus() != SHIPPING_INFOS_IS_SET) {
+        // On accepte de redéfinir les informations au cas ou l'utilisateur voudrait les modifiées.
+        if ($this->getStatus() != TRANSACTION_DESTINATION_IS_SELECTED &&
+            $this->getStatus() != TRANSACTION_SHIPPING_INFOS_ARE_SETTED
+        ) {
             throw new Exception('You cannot modify the shipping informations when the transaction is open.');
         }
 
@@ -139,21 +127,20 @@ class SessionTransaction implements ITransaction
         $_SESSION[self::RECEIVER_IDENTIFIER] = $receiver;
         $_SESSION[self::SHIPPING_ADDRESS_IDENTIFIER] = $shippingAddress;
 
-        $this->setStatus(SHIPPING_INFOS_IS_SET);
+        $this->setStatus(TRANSACTION_SHIPPING_INFOS_ARE_SETTED);
     }
 
     /**
-     * Initie la transaction courrante.
-     * (Après cette étape, il sera impossible de modifier les informations d'expédition.)
+     * Fige les informations d'expédition de la transaction.
      * @throws Exception
      */
     public function Open()
     {
-        if ($this->getStatus() != SHIPPING_INFOS_IS_SET) {
+        if ($this->getStatus() != TRANSACTION_SHIPPING_INFOS_ARE_SETTED) {
             throw new Exception('The shipping informations must be previously setted.');
         }
 
-        $this->setStatus(IS_OPEN);
+        $this->setStatus(TRANSACTION_IS_OPEN);
     }
 
     /**
@@ -163,29 +150,28 @@ class SessionTransaction implements ITransaction
      */
     public function setCategory(Category $category)
     {
-        if ($this->getStatus() != IS_OPEN) {
+        if ($this->getStatus() != TRANSACTION_IS_OPEN) {
             throw new Exception('The transaction must be previously open.');
         }
 
         if (!$category->isAttached()) {
-            throw new Exception('The filter must be attached to a database.');
+            throw new Exception('The category must be attached to a database.');
         }
 
         $_SESSION[self::CATEGORY_IDENTIFIER] = $category;
 
-        $this->setStatus(CATEGORY_IS_SET);
+        $this->setStatus(TRANSACTION_CATEGORY_IS_SELECTED);
     }
 
 
     /**
      * Finalise la transaction.
-     * (Après cette étape, la transaction sera supprimée.)
      * @throws Exception
      */
     public function Proceed()
     {
-        if ($this->getStatus() != CATEGORY_IS_SET) {
-            throw new Exception('The type must be previously setted.');
+        if ($this->getStatus() != TRANSACTION_CATEGORY_IS_SELECTED) {
+            throw new Exception('The category must be previously setted.');
         }
 
         if ($this->getCart()->isEmpty()) {
@@ -206,7 +192,7 @@ class SessionTransaction implements ITransaction
         $_SESSION[self::LINES_IDENTIFIER] = array();
         foreach ($this->getCart()->getItems() as $item) {
             $line = new Line(
-                $_SESSION[self::ORDER_IDENTIFIER]->getId(),
+                $order->getId(),
                 $item->getProduct()->getId(),
                 $item->getQuantity(),
                 $item->getSerial()
@@ -215,7 +201,7 @@ class SessionTransaction implements ITransaction
             $_SESSION[self::LINES_IDENTIFIER][] = Lines::Attach($line);
         }
 
-        $this->setStatus(IS_PROCEED);
+        $this->setStatus(TRANSACTION_WAS_PROCEED);
     }
 
     /**
@@ -236,14 +222,14 @@ class SessionTransaction implements ITransaction
 
 
     /**
-     * Retourne la transaction choisie par le client.
+     * Retourne la destination choisie par le client.
      * @return mixed
      * @throws Exception
      */
     public function getDestination()
     {
-        if ($this->getStatus() < DESTINATION_IS_SET) {
-            throw new Exception('The filter must be previously setted.');
+        if ($this->getStatus() < TRANSACTION_DESTINATION_IS_SELECTED) {
+            throw new Exception('The destination must be previously setted.');
         }
 
         return $_SESSION[self::DESTINIATION_IDENTIFIER];
@@ -251,14 +237,14 @@ class SessionTransaction implements ITransaction
 
 
     /**
-     * Retourne le type de produit choisi par le client.
+     * Retourne la catégorie choisie par le client.
      * @return mixed
      * @throws Exception
      */
     public function getCategory()
     {
-        if ($this->getStatus() < CATEGORY_IS_SET) {
-            throw new Exception('The type must be previously setted.');
+        if ($this->getStatus() < TRANSACTION_CATEGORY_IS_SELECTED) {
+            throw new Exception('The category must be previously setted.');
         }
 
         return $_SESSION[self::CATEGORY_IDENTIFIER];
@@ -266,13 +252,13 @@ class SessionTransaction implements ITransaction
 
 
     /**
-     * Retourne l'addresse d'expédition.
+     * Retourne l'adresse d'expédition.
      * @return mixed
      * @throws Exception
      */
     public function getShippingAddress()
     {
-        if ($this->getStatus() < SHIPPING_INFOS_IS_SET) {
+        if ($this->getStatus() < TRANSACTION_SHIPPING_INFOS_ARE_SETTED) {
             throw new Exception('The shipping address must be previously setted.');
         }
 
@@ -287,7 +273,7 @@ class SessionTransaction implements ITransaction
      */
     public function getStore()
     {
-        if ($this->getStatus() < SHIPPING_INFOS_IS_SET) {
+        if ($this->getStatus() < TRANSACTION_SHIPPING_INFOS_ARE_SETTED) {
             throw new Exception('The store must be previously setted.');
         }
 
@@ -302,7 +288,7 @@ class SessionTransaction implements ITransaction
      */
     public function getReceiver()
     {
-        if ($this->getStatus() < SHIPPING_INFOS_IS_SET) {
+        if ($this->getStatus() < TRANSACTION_SHIPPING_INFOS_ARE_SETTED) {
             throw new Exception('The store must be previously setted.');
         }
 
@@ -317,8 +303,8 @@ class SessionTransaction implements ITransaction
      */
     private function getCart()
     {
-        if ($this->getStatus() < IS_OPEN) {
-            throw new Exception('The transaction must be previously opened.');
+        if ($this->getStatus() < TRANSACTION_CATEGORY_IS_SELECTED) {
+            throw new Exception('The category must be previously setted.');
         }
 
         return $_SESSION[self::CART_IDENTIFIER];
@@ -328,9 +314,14 @@ class SessionTransaction implements ITransaction
      * Ajoute un item à la transaction.
      * @param IItem $item
      * @return mixed
+     * @throws Exception
      */
     public function AddItem(IItem $item)
     {
+        if ($this->getStatus() < TRANSACTION_CATEGORY_IS_SELECTED) {
+            throw new Exception('The category must be previously setted.');
+        }
+
         return $this->getCart()->Add($item);
     }
 
@@ -339,9 +330,14 @@ class SessionTransaction implements ITransaction
      * Retire un item de la transaction.
      * @param IItem $item
      * @return mixed
+     * @throws Exception
      */
     public function RemoveItem(IItem $item)
     {
+        if ($this->getStatus() < TRANSACTION_CATEGORY_IS_SELECTED) {
+            throw new Exception('The category must be previously setted.');
+        }
+
         return $this->getCart()->Remove($item);
     }
 
@@ -353,8 +349,8 @@ class SessionTransaction implements ITransaction
      */
     public function getOrder()
     {
-        if ($this->getStatus() < IS_PROCEED) {
-            throw new Exception('The transaction must be proceed..');
+        if ($this->getStatus() < TRANSACTION_WAS_PROCEED) {
+            throw new Exception('The transaction must be proceed.');
         }
 
         return $_SESSION[self::ORDER_IDENTIFIER];
@@ -368,8 +364,8 @@ class SessionTransaction implements ITransaction
      */
     public function getLines()
     {
-        if ($this->getStatus() < IS_PROCEED) {
-            throw new Exception('The transaction must be proceed..');
+        if ($this->getStatus() < TRANSACTION_WAS_PROCEED) {
+            throw new Exception('The transaction must be proceed.');
         }
 
         return $_SESSION[self::LINES_IDENTIFIER];

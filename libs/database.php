@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class Database
+ * Gère les méthodes d'accès à la base de données du projet.
+ */
 class Database
 {
     /**
@@ -37,7 +41,7 @@ class Database
     }
 
     /**
-     * Retourne l'instance d'une connection ODBC.
+     * Retourne une connexion à la base de données.
      * @return resource
      * @throws Exception
      */

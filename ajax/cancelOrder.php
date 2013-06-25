@@ -2,6 +2,7 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
+include_once(ROOT . 'libs/repositories/orders.php');
 
 if (!Security::isAuthenticated()) {
     $data['success'] = false;

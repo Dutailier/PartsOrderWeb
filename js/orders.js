@@ -109,13 +109,7 @@ $(document).ready(function () {
 $(document).on('click', 'div.order > div.infos', function () {
 
     var $order = $(this).closest('div.order');
-    var $details = $order.children('div.details');
-
-    if ($details.length > 0) {
-        $details.stop().slideToggle();
-    } else {
-        addDetailsToOrder($order);
-    }
+    addDetailsToOrder($order);
 });
 
 $(document).on('click', 'div.log > label.orderNumber', function () {
@@ -156,6 +150,7 @@ function addDetailsToOrder($order) {
         "orderId": $order.data('id')
     };
 
+    $order.click(false);
     $.post('ajax/getOrderDetails.php', parameters)
         .done(function (data) {
 
@@ -232,6 +227,11 @@ function addDetailsToOrder($order) {
         })
         .fail(function () {
             alert('Communication with the server failed.');
+        })
+        .always(function () {
+            $order.children('div.infos').click(function () {
+                $order.children('div.details').stop().slideToggle();
+            })
         })
 }
 

@@ -25,20 +25,22 @@ if (!Security::isAuthenticated()) {
         case 'shippingInfos' :
             $transaction = new SessionTransaction();
 
+            // Redirige l'utilisateur vers une page selon
+            // le statut de la transaction courrante.
             switch ($transaction->getStatus()) {
-                case READY:
+                case TRANSACTION_IS_READY:
                     $page = 'destinations';
                     break;
-                case DESTINATION_IS_SET:
+                case TRANSACTION_DESTINATION_IS_SELECTED:
                     $page = 'receiverInfos';
                     break;
-                case SHIPPING_INFOS_IS_SET:
+                case TRANSACTION_SHIPPING_INFOS_ARE_SETTED:
                     $page = 'shippingInfos';
                     break;
-                case IS_OPEN:
+                case TRANSACTION_IS_OPEN:
                     $page = 'categories';
                     break;
-                case CATEGORY_IS_SET:
+                case TRANSACTION_CATEGORY_IS_SELECTED:
                     $page = 'products';
                     break;
             }

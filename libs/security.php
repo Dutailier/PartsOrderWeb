@@ -2,7 +2,6 @@
 
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/roles.php');
-include_once(ROOT . 'libs/repositories/stores.php');
 
 /**
  * Class Account
@@ -11,12 +10,10 @@ include_once(ROOT . 'libs/repositories/stores.php');
 class Security
 {
     const USER_IDENTIFIER = '_USER_';
-    const RETAILER_IDENTIFIER = '_RETAILER_';
     const ROLES_IDENTIFIER = '_ROLES_';
 
     /**
-     * Tente de connecté l'utilisateur.
-     * Retourne vrai si la connexion réussie.
+     * Retourne vrai si la connexion de l'utilisateur réussie.
      * @param $username
      * @param $password
      * @return bool
@@ -25,7 +22,7 @@ class Security
     public static function TryLogin($username, $password)
     {
         if (self::isAuthenticated()) {
-            throw new Exception('You can\'t login again.');
+            throw new Exception('You\'re already login.');
         }
 
         // Le chiffrement du mot de passe est composé de la
@@ -46,10 +43,13 @@ class Security
      * Ajoute un utilisateur à un rôle.
      * @param User $user
      * @param $name
-     * @throws Exception
      */
     public static function addUserToRoleName(User $user, $name)
     {
+        if(!$user->isAttached()) {
+            throw new Exception('The user must be attached to a database.');
+        }
+
         Roles::addUserToRoleName($user, $name);
     }
 

@@ -102,8 +102,12 @@ $(document).ready(function () {
             $('#load').show();
             $('#search').attr('disabled', 'disabled');
 
-            $.post('ajax/getProducts.php', parameters)
-                .done(function (data) {
+            $.ajax({
+                type: 'POST',
+                url: 'ajax/getProducts.php',
+                data: parameters,
+                timeout: 5000 //5 secondes
+            }).done(function (data) {
 
                     if (data.hasOwnProperty('success') &&
                         data['success'] &&
@@ -134,7 +138,7 @@ $(document).ready(function () {
                     }
                 })
                 .fail(function () {
-                    alert('Communication with the server failed.');
+                    alert('Communication with the server failed. Please try again.');
                     $('#serial').focus();
                     $('#help').show();
                 })

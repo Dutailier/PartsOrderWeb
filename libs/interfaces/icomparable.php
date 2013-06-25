@@ -6,5 +6,10 @@
  */
 interface IComparable
 {
+    /**
+     * Retourne vrai si l'objet passé est égale à l'objet courant.
+     * @param $object
+     * @return mixed
+     */
     public function Equals($object);
 }

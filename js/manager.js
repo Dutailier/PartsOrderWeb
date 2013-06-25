@@ -126,25 +126,13 @@ $(document).ready(function () {
 $(document).on('click', 'div.order > div.infos', function () {
 
     var $order = $(this).closest('div.order');
-    var $details = $order.children('div.details');
-
-    if ($details.length > 0) {
-        $details.stop().slideToggle();
-    } else {
-        addDetailsToOrder($order);
-    }
+    addDetailsToOrder($order);
 });
 
 $(document).on('click', 'div.store > div.infos', function () {
 
     var $store = $(this).closest('div.store');
-    var $details = $store.children('div.details');
-
-    if ($details.length > 0) {
-        $details.stop().slideToggle();
-    } else {
-        addDetailsToStore($store);
-    }
+    addDetailsToStore($store);
 });
 
 $(document).on('click', 'input.btnConfirm', function () {
@@ -563,6 +551,7 @@ function addDetailsToStore($store) {
         "storeId": $store.data('id')
     };
 
+    $store.click(false);
     $.post('ajax/getStoreDetails.php', parameters)
         .done(function (data) {
 
@@ -611,6 +600,11 @@ function addDetailsToStore($store) {
         .fail(function () {
             alert('Communication with the server failed.');
         })
+        .always(function () {
+            $store.children('div.infos').click(function () {
+                $store.children('div.details').stop().slideToggle();
+            })
+        })
 }
 
 /**
@@ -622,6 +616,7 @@ function addDetailsToOrder($order) {
         "orderId": $order.data('id')
     };
 
+    $order.click(false);
     $.post('ajax/getOrderDetails.php', parameters)
         .done(function (data) {
 
@@ -717,6 +712,11 @@ function addDetailsToOrder($order) {
         })
         .fail(function () {
             alert('Communication with the server failed.');
+        })
+        .always(function () {
+            $order.children('div.infos').click(function () {
+                $order.children('div.details').stop().slideToggle();
+            })
         })
 }
 

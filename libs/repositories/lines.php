@@ -20,6 +20,11 @@ class Lines
         }
 
         $line->setSku($rows[0]['sku']);
+        $line->setModel($rows[0]['model']);
+        $line->setFinish($rows[0]['finish']);
+        $line->setFabric($rows[0]['fabric']);
+        $line->setFrame($rows[0]['frame']);
+        $line->setCushion($rows[0]['cushion']);
 
         return $line;
     }

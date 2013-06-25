@@ -164,8 +164,9 @@ div.product > label.name {
 div.product > label.description {
     font-style: italic;
     font-size: 0.8em;
-    line-height: 40px;
+    line-height: 20px;
     width: 200px;
+    height: 40px;
     overflow: hidden;
 }
 

@@ -12,6 +12,10 @@ fieldset {
     height: 80px;
 }
 
+#shippingInfos > p {
+    width: auto;
+}
+
 #storeInfos, #receiverInfos {
     width: 418px;
     height: 230px;

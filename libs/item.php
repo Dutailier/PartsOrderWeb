@@ -26,6 +26,10 @@ class Item implements IItem
         $this->quantity = $quantity;
     }
 
+    /**
+     * Retourne un tableau contenant les informations de l'item.
+     * @return array
+     */
     public function getArray()
     {
         return array(
@@ -35,26 +39,47 @@ class Item implements IItem
         );
     }
 
+    /**
+     * Retourne le produit lié à l'item.
+     * @return Product
+     */
     public function getProduct()
     {
         return $this->product;
     }
 
+    /**
+     * Retourne le numéro de série lié à l'item.
+     * @return mixed
+     */
     public function getSerial()
     {
         return $this->serial;
     }
 
+    /**
+     * Retourne la quantité de l'item.
+     * @return int
+     */
     public function getQuantity()
     {
         return $this->quantity;
     }
 
+    /**
+     * Définit la quantité de l'item.
+     * @param $quantity
+     */
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
     }
 
+    /**
+     * Retourne vrai si l'objet est égale à l'item.
+     * @param $object
+     * @return bool
+     */
     public function Equals($object)
     {
         return

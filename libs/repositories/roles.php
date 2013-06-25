@@ -27,10 +27,6 @@ class Roles
 
     public static function addUserToRoleName(User $user, $name)
     {
-        if (!$user->isAttached()) {
-            throw new Exception('The user must be attached to a database.');
-        }
-
         $query = 'EXEC [addUserToRoleName]';
         $query .= '@userId = "' . $user->getId() . '", ';
         $query .= '@roleName = "' . strtolower($name) . '"';
