@@ -38,9 +38,21 @@ class Lines
 
         $lines = array();
         foreach ($rows as $row) {
-            $lines[] = new Line(
-                $row['orderId'], $row['productId'], $row['quantity'], $row['serial'], $row['sku']
+            $line = new Line(
+                $row['orderId'],
+                $row['productId'],
+                $row['quantity'],
+                $row['serial']
             );
+
+            $line->setSku($row['sku']);
+            $line->setModel($row['model']);
+            $line->setFinish($row['finish']);
+            $line->setFabric($row['fabric']);
+            $line->setFrame($row['frame']);
+            $line->setCushion($row['cushion']);
+
+            $lines[] = $line;
         }
         return $lines;
     }

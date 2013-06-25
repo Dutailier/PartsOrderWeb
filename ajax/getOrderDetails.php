@@ -28,7 +28,6 @@ if (!Security::isAuthenticated()) {
             } else {
                 $receiver = $order->getReceiver();
                 $shippingAddress = $order->getShippingAddress();
-                $lines = $order->getLines();
 
                 $data['order'] = $order->getArray();
                 $data['order']['store'] = $store->getArray();
@@ -36,7 +35,7 @@ if (!Security::isAuthenticated()) {
                 $data['order']['shippingAddress'] = $shippingAddress->getArray();
 
                 $data['order']['lines'] = array();
-                foreach ($lines as $line) {
+                foreach ($order->getLines() as $line) {
                     $data['order']['lines'][] = $line->getArray();
                 }
 

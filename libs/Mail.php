@@ -1,6 +1,5 @@
 <?php
 
-require_once('config.php');
 require_once(ROOT . 'phpmailer/class.phpmailer.php');
 
 /**
@@ -16,6 +15,7 @@ class Mail
     private static function getPHPmailer()
     {
         $phpmailer = new PHPMailer();
+
 
         $phpmailer->IsSMTP();
         $phpmailer->IsHTML(true);
@@ -34,14 +34,20 @@ class Mail
      */
     public static function SendOrderConfirmation($order)
     {
-        $receiver = $order->getReceiver();
-
         $phpmailer = self::getPHPmailer();
 
+        $store = $order->getStore();
+        $receiver = $order->getReceiver();
+
+        $phpmailer->AddAddress(AGENT_EMAIL, AGENT_NAME);
+        $phpmailer->AddAddress($store->getEmail(), $store->getName());
         $phpmailer->AddAddress($receiver->getEmail(), $receiver->getName());
+
         $phpmailer->Subject = 'Parts Order Web - Confirmation #' . $order->getNumber();
-        $phpmailer->Body =
-            '<a href="http://' . HOST . PROJECT_NAME . 'orderInfos.php?orderId=' . $order->getId() . '">More details</a>';
+
+        $document = '';
+        include_once(ROOT . 'documents/orderConfirmation.php');
+        $phpmailer->Body = $document;
 
         if (!$phpmailer->Send()) {
             throw new Exception($phpmailer->ErrorInfo);

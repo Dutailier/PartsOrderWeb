@@ -106,7 +106,7 @@ $(document).ready(function () {
                 type: 'POST',
                 url: 'ajax/getProducts.php',
                 data: parameters,
-                timeout: 5000 //5 secondes
+                timeout: 45000 // 45 secondes
             }).done(function (data) {
 
                     if (data.hasOwnProperty('success') &&
