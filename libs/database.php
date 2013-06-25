@@ -16,6 +16,9 @@ class Database
     {
         $conn = self::getConnection();
 
+        // Définit le délai d'attente à 60 secondes plutôt que 30 secondes.
+        odbc_setoption($conn, 2, 0, 60);
+
         $result = odbc_exec($conn, $query);
 
         if (empty($result)) {
