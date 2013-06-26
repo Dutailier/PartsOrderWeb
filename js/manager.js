@@ -404,9 +404,10 @@ function updateLogsByRangeOfDates() {
  * Filtre les commandes par les mots clés recherchés.
  */
 function filterOrdersByKeyWords() {
-    $('div.order').hide();
+    var $orders = $('div.order');
 
-    $('div.order label').each(function (index, lbl) {
+    $orders.hide();
+    $orders.children('div.infos').find('label').each(function (index, lbl) {
         var $lbl = $(lbl);
         var keyWords = '(' + $('#orderKeyWords').val() + ')';
 
@@ -426,9 +427,10 @@ function filterOrdersByKeyWords() {
  * Filtre les magasins par mots clés recherchés.
  */
 function filterStoresByKeyWords() {
-    $('div.store').hide();
+    var $stores = $('div.store');
 
-    $('div.store label').each(function (index, lbl) {
+    $stores.hide();
+    $stores.children('div.infos').find('label').each(function (index, lbl) {
         var $lbl = $(lbl);
         var keyWords = '(' + $('#storeKeyWords').val() + ')';
 
@@ -448,9 +450,11 @@ function filterStoresByKeyWords() {
  * Filtre les logs par mots clés recherchés.
  */
 function filterLogsByKeyWords() {
-    $('div.log').hide();
+    var $logs = $('div.log');
 
-    $('div.log label').each(function (index, lbl) {
+    $logs.hide();
+
+    $logs.find('label').each(function (index, lbl) {
         var $lbl = $(lbl);
         var keyWords = '(' + $('#logKeyWords').val() + ')';
 
