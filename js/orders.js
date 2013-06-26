@@ -68,15 +68,24 @@ $(document).ready(function () {
         dialogClass: 'dialog',
         width: 360,
         height: 200,
-        buttons: {
-            "Yes": function () {
-                confirmOrder();
-                $(this).dialog('close');
+        buttons: [
+            {
+                id: 'button-yes',
+                text: 'Yes',
+                click: function () {
+                    $('#button-yes').button('disable');
+                    confirmOrder();
+                    $(this).dialog('close');
+                }
             },
-            "No": function () {
-                $(this).dialog('close');
+            {
+                id: 'button-no',
+                text: 'No',
+                click: function () {
+                    $(this).dialog('close');
+                }
             }
-        }
+        ]
     });
 
     $('#cancelDialog').dialog({
@@ -86,15 +95,24 @@ $(document).ready(function () {
         dialogClass: 'dialog',
         width: 360,
         height: 200,
-        buttons: {
-            "Yes": function () {
-                cancelOrder();
-                $(this).dialog('close');
+        buttons: [
+            {
+                id: 'button-yes',
+                text: 'Yes',
+                click: function () {
+                    $('#button-yes').button('disable');
+                    cancelOrder();
+                    $(this).dialog('close');
+                }
             },
-            "No": function () {
-                $(this).dialog('close');
+            {
+                id: 'button-no',
+                text: 'No',
+                click: function () {
+                    $(this).dialog('close');
+                }
             }
-        }
+        ]
     });
 
     //noinspection FallthroughInSwitchStatementJS
@@ -287,6 +305,7 @@ function updateOrdersByRangeOfDates() {
         'storeId': $.QueryString['storeId']
     };
 
+    $('div.order').hide();
     $('#ordersLoader').show();
     $.post('ajax/getOrdersByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
@@ -318,13 +337,16 @@ function updateOrdersByRangeOfDates() {
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
+                $('div.order').show();
 
             } else {
                 alert('The result of the server is unreadable.');
+                $('div.order').show();
             }
         })
         .fail(function () {
             alert('Communication with the server failed.');
+            $('div.order').show();
         })
         .always(function () {
             $('#ordersLoader').hide();
@@ -389,6 +411,7 @@ function updateLogsByRangeOfDates() {
         'storeId': $.QueryString['storeId']
     };
 
+    $('div.log').hide();
     $('#logsLoader').show();
     $.post('ajax/getLogsByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
@@ -419,13 +442,16 @@ function updateLogsByRangeOfDates() {
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
+                $('div.log').show();
 
             } else {
                 alert('The result of the server is unreadable.');
+                $('div.log').show();
             }
         })
         .fail(function () {
             alert('Communication with the server failed.');
+            $('div.log').show();
         })
         .always(function () {
             $('#logsLoader').hide();

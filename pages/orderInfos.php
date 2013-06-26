@@ -116,11 +116,11 @@ $title = 'Order Informations';
     <div id="logs"></div>
 </div>
 
-<div id="cancelDialog" title="Cancellation required" class="dialog">
+<div id="cancelDialog" class="dialog">
     Are you sure you want to cancel this order?
 </div>
 
-<div id="confirmDialog" title="Confirmation required" class="dialog">
+<div id="confirmDialog" class="dialog">
     Are you sure you want to confirm this order?
 </div>
 

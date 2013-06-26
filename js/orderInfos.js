@@ -61,14 +61,23 @@ $(document).ready(function () {
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',
-        buttons: {
-            "Yes": function () {
-                cancelOrder();
+        buttons: [
+            {
+                id: 'button-yes',
+                text: 'Yes',
+                click: function () {
+                    $('#button-yes').button('disable');
+                    cancelOrder();
+                }
             },
-            "No": function () {
-                $(this).dialog('close');
+            {
+                id: 'button-no',
+                text: 'No',
+                click: function () {
+                    $(this).dialog('close');
+                }
             }
-        }
+        ]
     });
 
     $('#addCommentDialog').dialog({
@@ -80,7 +89,6 @@ $(document).ready(function () {
         buttons: {
             "Submit": function () {
                 addComment();
-
                 $(this).dialog('close');
             },
             "Cancel": function () {

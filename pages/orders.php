@@ -90,11 +90,11 @@ $title = 'Orders';
     </div>
 </div>
 
-<div id="confirmDialog">
+<div id="confirmDialog" class="dialog">
     Are your sure you want to confirm the order : <label class="orderNumber"></label>?
 </div>
 
-<div id="cancelDialog">
+<div id="cancelDialog" class="dialog">
     Are your sure you want to cancel the order : <label class="orderNumber"></label>?
 </div>
 

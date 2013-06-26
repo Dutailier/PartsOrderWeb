@@ -108,15 +108,24 @@ $(document).ready(function () {
         dialogClass: 'dialog',
         width: 360,
         height: 200,
-        buttons: {
-            "Yes": function () {
-                cancelOrder();
-                $(this).dialog('close');
+        buttons: [
+            {
+                id: 'button-yes',
+                text: 'Yes',
+                click: function () {
+                    $('#button-yes').button('disable');
+                    cancelOrder();
+                    $(this).dialog('close');
+                }
             },
-            "No": function () {
-                $(this).dialog('close');
+            {
+                id: 'button-no',
+                text: 'No',
+                click: function () {
+                    $(this).dialog('close');
+                }
             }
-        }
+        ]
     });
 
     //noinspection FallthroughInSwitchStatementJS
@@ -358,6 +367,7 @@ function updateLogsByRangeOfDates() {
         'to': $('#logTo').val()
     };
 
+    $('div.log').hide();
     $('#logsLoader').show();
     $.post('ajax/getLogsByRangeOfDates.php', parameters)
         .done(function (data) {
@@ -388,13 +398,16 @@ function updateLogsByRangeOfDates() {
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
+                $('div.log').show();
 
             } else {
                 alert('The result of the server is unreadable.');
+                $('div.log').show();
             }
         })
         .fail(function () {
             alert('Communication with the server failed.');
+            $('div.log').show();
         })
         .always(function () {
             $('#logsLoader').hide();
@@ -479,6 +492,7 @@ function updateStoresByBannerId() {
         'bannerId': $('#banners').find('option:selected').val()
     };
 
+    $('div.store').hide();
     $('#storesLoader').show();
     $.post('ajax/getStoresByBannerId.php', parameters)
         .done(function (data) {
@@ -525,13 +539,16 @@ function updateStoresByBannerId() {
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
+                $('div.store').show();
 
             } else {
                 alert('The result of the server is unreadable.');
+                $('div.store').show();
             }
         })
         .fail(function () {
             alert('Communication with the server failed.');
+            $('div.store').show();
         })
         .always(function () {
             $('#storesLoader').hide();
@@ -547,6 +564,7 @@ function updateOrdersByRangeOfDates() {
         'to': $('#orderTo').val()
     };
 
+    $('div.order').hide();
     $('#ordersLoader').show();
     $.post('ajax/getOrdersByRangeOfDates.php', parameters)
         .done(function (data) {
@@ -578,13 +596,16 @@ function updateOrdersByRangeOfDates() {
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
+                $('div.order').show();
 
             } else {
                 alert('The result of the server is unreadable.');
+                $('div.order').show();
             }
         })
         .fail(function () {
             alert('Communication with the server failed.');
+            $('div.order').show();
         })
         .always(function () {
             $('#ordersLoader').hide();
