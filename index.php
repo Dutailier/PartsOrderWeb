@@ -12,6 +12,7 @@ if (!Security::isAuthenticated()) {
 
     switch ($page) {
         // Page d'accueil
+		case 'login' :
         case 'index' :
             if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
                 $page = 'manager';

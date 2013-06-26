@@ -352,7 +352,7 @@ function confirmOrder() {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
 
-                window.location = 'confirmation.php';
+                //window.location = 'confirmation.php';
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);
