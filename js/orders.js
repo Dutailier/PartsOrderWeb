@@ -70,16 +70,14 @@ $(document).ready(function () {
         height: 200,
         buttons: [
             {
-                id: 'button-yes',
+                id: 'confirmYes',
                 text: 'Yes',
                 click: function () {
-                    $('#button-yes').button('disable');
+                    $('#confirmYes').button('disable');
                     confirmOrder();
-                    $(this).dialog('close');
                 }
             },
             {
-                id: 'button-no',
                 text: 'No',
                 click: function () {
                     $(this).dialog('close');
@@ -97,16 +95,14 @@ $(document).ready(function () {
         height: 200,
         buttons: [
             {
-                id: 'button-yes',
+                id: 'cancelYes',
                 text: 'Yes',
                 click: function () {
-                    $('#button-yes').button('disable');
+                    $('#cancelYes').button('disable');
                     cancelOrder();
-                    $(this).dialog('close');
                 }
             },
             {
-                id: 'button-no',
                 text: 'No',
                 click: function () {
                     $(this).dialog('close');

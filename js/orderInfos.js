@@ -33,21 +33,22 @@ $(document).ready(function () {
     });
 
     $('#confirmDialog').dialog({
-        title: 'Order Confirmation',
+        title: 'Order confirmation',
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',
+        width: 360,
+        height: 200,
         buttons: [
             {
-                id: 'button-yes',
+                id: 'confirmYes',
                 text: 'Yes',
                 click: function () {
-                    $('#button-yes').button('disable');
+                    $('#confirmYes').button('disable');
                     confirmOrder();
                 }
             },
             {
-                id: 'button-no',
                 text: 'No',
                 click: function () {
                     $(this).dialog('close');
@@ -57,21 +58,22 @@ $(document).ready(function () {
     });
 
     $('#cancelDialog').dialog({
-        title: 'Order Cancelation',
+        title: 'Order cancelation',
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',
+        width: 360,
+        height: 200,
         buttons: [
             {
-                id: 'button-yes',
+                id: 'cancelYes',
                 text: 'Yes',
                 click: function () {
-                    $('#button-yes').button('disable');
+                    $('#cancelYes').button('disable');
                     cancelOrder();
                 }
             },
             {
-                id: 'button-no',
                 text: 'No',
                 click: function () {
                     $(this).dialog('close');
