@@ -122,8 +122,6 @@ $(document).ready(function () {
     }
 
     getStoreInfos();
-    updateOrdersByRangeOfDates();
-    updateLogsByRangeOfDates();
 });
 
 // Évènements liés à des éléments générés.
@@ -179,6 +177,11 @@ function selectTabOrders() {
 
     $('#btnTabOrders').addClass('selected');
     $('#tabOrders').show();
+
+    if ($('div.order').length == 0 &&
+        $('#ordersLoader').is(':hidden')) {
+        updateOrdersByRangeOfDates();
+    }
 }
 
 /**
@@ -190,6 +193,11 @@ function selectTabLogs() {
 
     $('#btnTabLogs').addClass('selected');
     $('#tabLogs').show();
+
+    if ($('div.log').length == 0 &&
+        $('#logsLoader').is(':hidden')) {
+        updateLogsByRangeOfDates();
+    }
 }
 
 /**

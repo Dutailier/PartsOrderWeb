@@ -140,10 +140,6 @@ $(document).ready(function () {
         default:
             selectTabOrders();
     }
-
-    updateOrdersByRangeOfDates();
-    updateBanners();
-    updateLogsByRangeOfDates();
 });
 
 // Évènements liés à des éléments générés.
@@ -233,6 +229,11 @@ function selectTabOrders() {
 
     $('#btnTabOrders').addClass('selected');
     $('#tabOrders').show();
+
+    if ($('div.order').length == 0 &&
+        $('#ordersLoader').is(':hidden')) {
+        updateOrdersByRangeOfDates();
+    }
 }
 
 /**
@@ -244,6 +245,11 @@ function selectTabStores() {
 
     $('#btnTabStores').addClass('selected');
     $('#tabStores').show();
+
+    if ($('div.store').length == 0 &&
+        $('#storesLoader').is(':hidden')) {
+        updateBanners();
+    }
 }
 
 /**
@@ -255,6 +261,11 @@ function selectTabLogs() {
 
     $('#btnTabLogs').addClass('selected');
     $('#tabLogs').show();
+
+    if ($('div.log').length == 0 &&
+        $('#logsLoader').is(':hidden')) {
+        updateLogsByRangeOfDates();
+    }
 }
 
 /**
@@ -814,7 +825,7 @@ function addDetailsToOrder($order) {
  */
 function paginate($container, $items, countItemsByPage) {
 
-    if($container.next().first().is('ul.pagination')) {
+    if ($container.next().first().is('ul.pagination')) {
         $container.next().first().remove();
     }
 
