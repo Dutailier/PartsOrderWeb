@@ -815,7 +815,7 @@ function addDetailsToOrder($order) {
 function paginate($container, $items, countItemsByPage) {
 
     if($container.next().first().is('ul.pagination')) {
-        $container.next().remove();
+        $container.next().first().remove();
     }
 
     var countItems = $items.length;
