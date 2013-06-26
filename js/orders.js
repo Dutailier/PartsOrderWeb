@@ -310,6 +310,7 @@ function updateOrdersByRangeOfDates() {
     };
 
     $('div.order').hide();
+    $('#ordersFilters').find('input').attr('disabled', 'disabled');
     $('#ordersLoader').show();
     $.post('ajax/getOrdersByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
@@ -354,6 +355,7 @@ function updateOrdersByRangeOfDates() {
         })
         .always(function () {
             $('#ordersLoader').hide();
+            $('#ordersFilters').find('input').removeAttr('disabled');
         })
 }
 
@@ -380,7 +382,15 @@ function filterOrdersByKeyWords() {
         );
     });
 
-    paginate($('#orders'), $orders.filter(':visible'), 10);
+    var $ordersVisibled = $orders.filter(':visible');
+
+    if ($ordersVisibled.length > 0) {
+        $('#ordersEmpty').hide();
+    } else {
+        $('#ordersEmpty').show();
+    }
+
+    paginate($('#orders'), $ordersVisibled, 10);
 }
 
 /**
@@ -405,7 +415,15 @@ function filterLogsByKeyWords() {
         );
     });
 
-    paginate($('#logs'), $logs.filter(':visible') , 10);
+    var $logsVisibled = $logs.filter(':visible');
+
+    if ($logsVisibled.length > 0) {
+        $('#logsEmpty').hide();
+    } else {
+        $('#logsEmpty').show();
+    }
+
+    paginate($('#logs'), $logsVisibled, 10);
 }
 
 /**
@@ -420,6 +438,7 @@ function updateLogsByRangeOfDates() {
     };
 
     $('div.log').hide();
+    $('#logsFilters').find('input').attr('disabled', 'disabled');
     $('#logsLoader').show();
     $.post('ajax/getLogsByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
@@ -463,6 +482,7 @@ function updateLogsByRangeOfDates() {
         })
         .always(function () {
             $('#logsLoader').hide();
+            $('#logsFilters').find('input').removeAttr('disabled');
         })
 }
 
@@ -576,7 +596,7 @@ function cancelOrder() {
  */
 function paginate($container, $items, countItemsByPage) {
 
-    if($container.next().first().is('ul.pagination')) {
+    if ($container.next().first().is('ul.pagination')) {
         $container.next().first().remove();
     }
 

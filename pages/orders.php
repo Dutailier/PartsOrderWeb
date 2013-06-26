@@ -66,6 +66,9 @@ $title = 'Orders';
             <label>Please wait...</label>
             <img id="loader" src="img/loader.gif"/>
         </div>
+        <div id="ordersEmpty" class="empty hidden">
+            <label>No orders found...</label>
+        </div>
     </div>
 </div>
 
@@ -87,14 +90,17 @@ $title = 'Orders';
             <label>Please wait...</label>
             <img id="loader" src="img/loader.gif"/>
         </div>
+        <div id="logsEmpty" class="empty hidden">
+            <label>No logs found...</label>
+        </div>
     </div>
 </div>
 
-<div id="confirmDialog" class="dialog">
+<div id="confirmDialog" class="hidden">
     Are your sure you want to confirm the order : <label class="orderNumber"></label>?
 </div>
 
-<div id="cancelDialog" class="dialog">
+<div id="cancelDialog" class="hidden">
     Are your sure you want to cancel the order : <label class="orderNumber"></label>?
 </div>
 

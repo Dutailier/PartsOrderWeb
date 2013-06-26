@@ -126,7 +126,7 @@ a.button, input[type=button], input[type=submit] {
     cursor: pointer;
 }
 
-div.dialog {
+.hidden {
     display: none;
 }
 

@@ -22,7 +22,7 @@ $title = 'Manager';
 </div>
 
 <div class="tab" id="tabOrders">
-    <div id="orderFilters" class="filters">
+    <div id="ordersFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="orderKeyWords">Search : </label>
             <input id="orderKeyWords" name="orderKeyWords" type="text">
@@ -39,11 +39,14 @@ $title = 'Manager';
             <label>Please wait...</label>
             <img id="loader" src="img/loader.gif"/>
         </div>
+        <div id="ordersEmpty" class="empty hidden">
+            <label>No orders found...</label>
+        </div>
     </div>
 </div>
 
 <div class="tab" id="tabStores">
-    <div id="storeFilters" class="filters">
+    <div id="storesFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="storeKeyWords">Search : </label>
             <input id="storeKeyWords" name="storeKeyWords" type="text">
@@ -60,11 +63,14 @@ $title = 'Manager';
             <label>Please wait...</label>
             <img id="loader" src="img/loader.gif"/>
         </div>
+        <div id="storesEmpty" class="empty hidden">
+            <label>No stores found...</label>
+        </div>
     </div>
 </div>
 
 <div class="tab" id="tabLogs">
-    <div id="logFilter" class="filters">
+    <div id="logsFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="logKeyWords">Search : </label>
             <input id="logKeyWords" name="logKeyWords" type="text">
@@ -81,14 +87,17 @@ $title = 'Manager';
             <label>Please wait...</label>
             <img id="loader" src="img/loader.gif"/>
         </div>
+        <div id="logsEmpty" class="empty hidden">
+            <label>No logs found...</label>
+        </div>
     </div>
 </div>
 
-<div id="confirmDialog" class="dialog">
+<div id="confirmDialog" class="hidden">
     Are your sure you want to confirm the order : <label class="orderNumber"></label>?
 </div>
 
-<div id="cancelDialog" class="dialog">
+<div id="cancelDialog" class="hidden">
     Are your sure you want to cancel the order : <label class="orderNumber"></label>?
 </div>
 
