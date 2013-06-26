@@ -191,6 +191,7 @@ function addDetailsToOrder($order) {
     };
 
     $infos.click(false);
+    $infos.animate({'opacity': 0.5});
     $.post('ajax/getOrderDetails.php', parameters)
         .done(function (data) {
 
@@ -269,6 +270,7 @@ function addDetailsToOrder($order) {
             alert('Communication with the server failed.');
         })
         .always(function () {
+            $infos.animate({'opacity': 1});
             $infos.click(function () {
                 $order.children('div.details').stop().slideToggle();
             })
@@ -322,6 +324,9 @@ function updateOrdersByRangeOfDates() {
         })
         .fail(function () {
             alert('Communication with the server failed.');
+        })
+        .always(function () {
+            $('#ordersLoader').hide();
         })
 }
 
@@ -416,6 +421,9 @@ function updateLogsByRangeOfDates() {
         })
         .fail(function () {
             alert('Communication with the server failed.');
+        })
+        .always(function () {
+            $('#logsLoader').hide();
         })
 }
 

@@ -323,3 +323,14 @@ div.date > label.creationDate {
     cursor: pointer;
     font-weight: bold;
 }
+
+div.loader {
+    width: 200px;
+    margin: 20px auto;
+}
+
+div.loader * {
+    margin: 5px 0px;
+    float: left;
+    clear: both;
+}

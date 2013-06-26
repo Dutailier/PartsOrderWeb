@@ -386,6 +386,9 @@ function updateLogsByRangeOfDates() {
         .fail(function () {
             alert('Communication with the server failed.');
         })
+        .always(function () {
+            $('#logsLoader').hide();
+        })
 }
 
 /**
@@ -515,6 +518,9 @@ function updateStoresByBannerId() {
         .fail(function () {
             alert('Communication with the server failed.');
         })
+        .always(function () {
+            $('#storesLoader').hide();
+        })
 }
 
 /**
@@ -564,6 +570,9 @@ function updateOrdersByRangeOfDates() {
         .fail(function () {
             alert('Communication with the server failed.');
         })
+        .always(function () {
+            $('#ordersLoader').hide();
+        })
 }
 
 /**
@@ -579,6 +588,7 @@ function addDetailsToStore($store) {
     };
 
     $infos.click(false);
+    $infos.animate({'opacity': 0.5});
     $.post('ajax/getStoreDetails.php', parameters)
         .done(function (data) {
 
@@ -628,6 +638,7 @@ function addDetailsToStore($store) {
             alert('Communication with the server failed.');
         })
         .always(function () {
+            $infos.animate({'opacity': 1});
             $infos.click(function () {
                 $store.children('div.details').stop().slideToggle();
             })
@@ -647,6 +658,7 @@ function addDetailsToOrder($order) {
     };
 
     $infos.click(false);
+    $infos.animate({'opacity': 0.5});
     $.post('ajax/getOrderDetails.php', parameters)
         .done(function (data) {
 
@@ -744,6 +756,7 @@ function addDetailsToOrder($order) {
             alert('Communication with the server failed.');
         })
         .always(function () {
+            $infos.animate({'opacity': 1});
             $infos.click(function () {
                 $order.children('div.details').stop().slideToggle();
             })

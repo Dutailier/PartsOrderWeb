@@ -35,6 +35,10 @@ $title = 'Manager';
         </div>
     </div>
     <div id="orders">
+        <div id="ordersLoader" class="loader">
+            <label>Please wait...</label>
+            <img id="loader" src="img/loader.gif"/>
+        </div>
     </div>
 </div>
 
@@ -52,6 +56,10 @@ $title = 'Manager';
         </div>
     </div>
     <div id="stores">
+        <div id="storesLoader" class="loader">
+            <label>Please wait...</label>
+            <img id="loader" src="img/loader.gif"/>
+        </div>
     </div>
 </div>
 
@@ -68,7 +76,12 @@ $title = 'Manager';
             <input id="logTo" name="logTo" class="date" type="text" class="datepicker"/>
         </div>
     </div>
-    <div id="logs"></div>
+    <div id="logs">
+        <div id="logsLoader" class="loader">
+            <label>Please wait...</label>
+            <img id="loader" src="img/loader.gif"/>
+        </div>
+    </div>
 </div>
 
 <div id="confirmDialog">

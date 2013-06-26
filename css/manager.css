@@ -208,7 +208,7 @@ div.details > fieldset > p {
 #orders > div.order > div.details > fieldset.storeInfos {
     float: left;
     width: 392px;
-    height: 215px;
+    height: 230px;
 }
 
 div.details > fieldset > p > label.properties {
@@ -312,4 +312,15 @@ label.datetime {
 #logs > div.log > label.orderNumber {
     cursor: pointer;
     font-weight: bold;
+}
+
+div.loader {
+    width: 200px;
+    margin: 20px auto;
+}
+
+div.loader * {
+    margin: 5px 0px;
+    float: left;
+    clear: both;
 }
