@@ -287,6 +287,7 @@ function updateOrdersByRangeOfDates() {
         'storeId': $.QueryString['storeId']
     };
 
+    $('#ordersLoader').show();
     $.post('ajax/getOrdersByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
@@ -388,6 +389,7 @@ function updateLogsByRangeOfDates() {
         'storeId': $.QueryString['storeId']
     };
 
+    $('#logsLoader').show();
     $.post('ajax/getLogsByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
 

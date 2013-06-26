@@ -318,6 +318,7 @@ label.datetime {
 div.loader {
     width: 200px;
     margin: 20px auto;
+    display: none;
 }
 
 div.loader * {

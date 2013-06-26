@@ -358,6 +358,7 @@ function updateLogsByRangeOfDates() {
         'to': $('#logTo').val()
     };
 
+    $('#logsLoader').show();
     $.post('ajax/getLogsByRangeOfDates.php', parameters)
         .done(function (data) {
 
@@ -478,6 +479,7 @@ function updateStoresByBannerId() {
         'bannerId': $('#banners').find('option:selected').val()
     };
 
+    $('#storesLoader').show();
     $.post('ajax/getStoresByBannerId.php', parameters)
         .done(function (data) {
 
@@ -545,6 +547,7 @@ function updateOrdersByRangeOfDates() {
         'to': $('#orderTo').val()
     };
 
+    $('#ordersLoader').show();
     $.post('ajax/getOrdersByRangeOfDates.php', parameters)
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
