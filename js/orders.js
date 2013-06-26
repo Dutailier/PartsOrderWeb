@@ -310,8 +310,10 @@ function updateOrdersByRangeOfDates() {
     };
 
     $('div.order').hide();
-    $('#ordersFilters').find('input').attr('disabled', 'disabled');
     $('#ordersLoader').show();
+    $('#tabOrders').find('ul.pagination').remove();
+    $('#ordersFilters').find('input').attr('disabled', 'disabled');
+
     $.post('ajax/getOrdersByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
@@ -385,12 +387,11 @@ function filterOrdersByKeyWords() {
     var $ordersVisibled = $orders.filter(':visible');
 
     if ($ordersVisibled.length > 0) {
+        paginate($('#orders'), $ordersVisibled, 10);
         $('#ordersEmpty').hide();
     } else {
         $('#ordersEmpty').show();
     }
-
-    paginate($('#orders'), $ordersVisibled, 10);
 }
 
 /**
@@ -418,12 +419,11 @@ function filterLogsByKeyWords() {
     var $logsVisibled = $logs.filter(':visible');
 
     if ($logsVisibled.length > 0) {
+        paginate($('#logs'), $logsVisibled, 10);
         $('#logsEmpty').hide();
     } else {
         $('#logsEmpty').show();
     }
-
-    paginate($('#logs'), $logsVisibled, 10);
 }
 
 /**
@@ -438,8 +438,10 @@ function updateLogsByRangeOfDates() {
     };
 
     $('div.log').hide();
-    $('#logsFilters').find('input').attr('disabled', 'disabled');
     $('#logsLoader').show();
+    $('#tabLogs').find('ul.pagination').remove();
+    $('#logsFilters').find('input').attr('disabled', 'disabled');
+
     $.post('ajax/getLogsByRangeOfDatesAndStoreId.php', parameters)
         .done(function (data) {
 
@@ -595,10 +597,6 @@ function cancelOrder() {
  * @param countItemsByPage
  */
 function paginate($container, $items, countItemsByPage) {
-
-    if ($container.next().first().is('ul.pagination')) {
-        $container.next().first().remove();
-    }
 
     var countItems = $items.length;
     var countPages = Math.ceil(countItems / countItemsByPage);
@@ -775,7 +773,7 @@ function dateFormat(date) {
 }
 
 /**
- * Ajoute une function de recherche des valeurs passées en GET à l'objet JQuery.
+ * Ajoute une fonction de recherche des valeurs passées en GET à l'objet JQuery.
  */
 (function ($) {
     $.QueryString = (function (a) {
