@@ -371,6 +371,8 @@ function filterOrdersByKeyWords() {
             )
         );
     });
+
+    paginate($('#orders'), $orders.filter(':visible'), 10);
 }
 
 /**
@@ -394,6 +396,8 @@ function filterLogsByKeyWords() {
             )
         );
     });
+
+    paginate($('#logs'), $logs.filter(':visible') , 10);
 }
 
 /**
@@ -455,8 +459,8 @@ function updateLogsByRangeOfDates() {
 }
 
 /**
-* Récupère les informations relatives au magasin.
-*/
+ * Récupère les informations relatives au magasin.
+ */
 function getStoreInfos() {
     var parameters = {
         'storeId': $.QueryString['storeId']
@@ -557,6 +561,51 @@ function cancelOrder() {
 }
 
 /**
+ * Paginer une liste d'item.
+ * @param $container
+ * @param $items
+ * @param countItemsByPage
+ */
+function paginate($container, $items, countItemsByPage) {
+
+    if($container.next().first().is('ul.pagination')) {
+        $container.next().remove();
+    }
+
+    var countItems = $items.length;
+    var countPages = Math.ceil(countItems / countItemsByPage);
+
+    $($items).hide();
+    $items.slice(0, countItemsByPage).show();
+
+    var $pagination = $('<ul class="pagination"></ul>');
+
+    var currentPage = 0;
+    while (currentPage < countPages) {
+        $pagination.append($('<li>' + ++currentPage + '</li>'))
+    }
+
+    if (countItems > countItemsByPage) {
+        $pagination.insertAfter($container);
+    }
+
+    var $links = $pagination.children('li');
+
+    $links.first().addClass('selected');
+
+    $links.click(function () {
+        $links.removeClass('selected');
+        $(this).addClass('selected');
+
+        var currentPage = parseInt($(this).text());
+        var firstItem = --currentPage * countItemsByPage;
+
+        $items.hide();
+        $items.slice(firstItem, firstItem + countItemsByPage).show();
+    });
+}
+
+/**
  * Ajoute les informations relatives au receveur aux détails de la commande.
  * @param $details
  * @param receiver
@@ -653,9 +702,9 @@ function addLineInfosToLinesOfOrderDetails($list, line) {
 }
 
 /**
-* Met à jour les informations du magasin.
-* @param store
-*/
+ * Met à jour les informations du magasin.
+ * @param store
+ */
 function updateStoreInfos(store) {
     $('#storeInfos').data('id', store['id']);
     $('#storeName').text(store['name']);

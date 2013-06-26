@@ -433,6 +433,8 @@ function filterOrdersByKeyWords() {
             )
         );
     });
+
+    paginate($('#orders'), $orders.filter(':visible'), 10);
 }
 
 /**
@@ -456,6 +458,8 @@ function filterStoresByKeyWords() {
             )
         );
     });
+
+    paginate($('#stores'), $stores.filter(':visible'), 10);
 }
 
 /**
@@ -480,6 +484,8 @@ function filterLogsByKeyWords() {
             )
         );
     });
+
+    paginate($('#logs'), $logs.filter(':visible'), 10);
 }
 
 /**
@@ -796,6 +802,51 @@ function addDetailsToOrder($order) {
                 $order.children('div.details').stop().slideToggle();
             })
         })
+}
+
+/**
+ * Paginer une liste d'item.
+ * @param $container
+ * @param $items
+ * @param countItemsByPage
+ */
+function paginate($container, $items, countItemsByPage) {
+
+    if($container.next().first().is('ul.pagination')) {
+        $container.next().remove();
+    }
+
+    var countItems = $items.length;
+    var countPages = Math.ceil(countItems / countItemsByPage);
+
+    $($items).hide();
+    $items.slice(0, countItemsByPage).show();
+
+    var $pagination = $('<ul class="pagination"></ul>');
+
+    var currentPage = 0;
+    while (currentPage < countPages) {
+        $pagination.append($('<li>' + ++currentPage + '</li>'))
+    }
+
+    if (countItems > countItemsByPage) {
+        $pagination.insertAfter($container);
+    }
+
+    var $links = $pagination.children('li');
+
+    $links.first().addClass('selected');
+
+    $links.click(function () {
+        $links.removeClass('selected');
+        $(this).addClass('selected');
+
+        var currentPage = parseInt($(this).text());
+        var firstItem = --currentPage * countItemsByPage;
+
+        $items.hide();
+        $items.slice(firstItem, firstItem + countItemsByPage).show();
+    });
 }
 
 /**
