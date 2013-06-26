@@ -9,7 +9,7 @@ $title = 'Confirmation';
     $(document).ready(function () {
         setTimeout(function () {
             window.location = 'index.php';
-        }, 3000)
+        }, 5000)
     });
 </script>
 <!-- Fin de l'en-tête. -->
@@ -18,7 +18,9 @@ $title = 'Confirmation';
 <?php ob_clean(); ?>
 
 <!-- Début du contenu. -->
-<h1>Thanks for your order.</h1>
+<h1>Thank you for your order.</h1>
+<h2>A confirmation email has been sent.</h2>
+<p>You will be redirected...</p>
 <!-- Fin du contenu. -->
 
 <?php $content = ob_get_contents(); ?>
