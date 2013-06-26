@@ -86,12 +86,13 @@ $(document).ready(function () {
                 id: 'confirmYes',
                 text: 'Yes',
                 click: function () {
-                    $('#confirmYes').button('disable');
+                    $('#confirmYes, #confirmNo').button('disable');
                     confirmOrder();
                     $(this).dialog('close');
                 }
             },
             {
+                id: 'confirmNo',
                 text: 'No',
                 click: function () {
                     $(this).dialog('close');
@@ -112,12 +113,13 @@ $(document).ready(function () {
                 id: 'cancelYes',
                 text: 'Yes',
                 click: function () {
-                    $('#cancelYes').button('disable');
+                    $('#cancelYes, #cancelNo').button('disable');
                     cancelOrder();
                     $(this).dialog('close');
                 }
             },
             {
+                id: 'cancelNo',
                 text: 'No',
                 click: function () {
                     $(this).dialog('close');
@@ -961,7 +963,7 @@ function addInfosToOrder(order, $order) {
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
             '<div class="date"> ' +
-            'By <label class="username">' + order['lastModificationByUsername'] + '</label> ' +
+            'Last modifications by <label class="username">' + order['lastModificationByUsername'] + '</label> ' +
             'at <label class="datetime">' + dateFormat(order['lastModificationDate']) + '</label>' +
             '</div>' +
             '</div>'

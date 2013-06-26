@@ -44,11 +44,12 @@ $(document).ready(function () {
                 id: 'confirmYes',
                 text: 'Yes',
                 click: function () {
-                    $('#confirmYes').button('disable');
+                    $('#confirmYes, #confirmNo').button('disable');
                     confirmOrder();
                 }
             },
             {
+                id: 'confirmNo',
                 text: 'No',
                 click: function () {
                     $(this).dialog('close');
@@ -69,11 +70,12 @@ $(document).ready(function () {
                 id: 'cancelYes',
                 text: 'Yes',
                 click: function () {
-                    $('#cancelYes').button('disable');
+                    $('#cancelYes, #cancelNo').button('disable');
                     cancelOrder();
                 }
             },
             {
+                id: 'cancelNo',
                 text: 'No',
                 click: function () {
                     $(this).dialog('close');
@@ -352,7 +354,7 @@ function confirmOrder() {
             if (data.hasOwnProperty('success') &&
                 data['success']) {
 
-                //window.location = 'confirmation.php';
+                window.location = 'confirmation.php';
 
             } else if (data.hasOwnProperty('message')) {
                 alert(data['message']);

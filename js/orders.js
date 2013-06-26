@@ -663,7 +663,7 @@ function addInfosToOrder(order, $order) {
             '<label class="number">' + order['number'] + '</label>' +
             '<label class="status">' + order['status'] + '</label>' +
             '<div class="date"> ' +
-            'By <label class="username">' + order['lastModificationByUsername'] + '</label> ' +
+            'Last modifications by <label class="username">' + order['lastModificationByUsername'] + '</label> ' +
             'at <label class="datetime">' + dateFormat(order['lastModificationDate']) + '</label>' +
             '</div>' +
             '</div>'
