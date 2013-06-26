@@ -428,8 +428,8 @@ function updateLogsByRangeOfDates() {
 }
 
 /**
- * Récupère les informations relatives au magasin.
- */
+* Récupère les informations relatives au magasin.
+*/
 function getStoreInfos() {
     var parameters = {
         'storeId': $.QueryString['storeId']
@@ -626,9 +626,9 @@ function addLineInfosToLinesOfOrderDetails($list, line) {
 }
 
 /**
- * Met à jour les informations du magasin.
- * @param store
- */
+* Met à jour les informations du magasin.
+* @param store
+*/
 function updateStoreInfos(store) {
     $('#storeInfos').data('id', store['id']);
     $('#storeName').text(store['name']);

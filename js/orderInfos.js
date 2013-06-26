@@ -33,20 +33,31 @@ $(document).ready(function () {
     });
 
     $('#confirmDialog').dialog({
+        title: 'Order Confirmation',
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',
-        buttons: {
-            "Yes": function () {
-                confirmOrder();
+        buttons: [
+            {
+                id: 'button-yes',
+                text: 'Yes',
+                click: function () {
+                    $('#button-yes').button('disable');
+                    confirmOrder();
+                }
             },
-            "No": function () {
-                $(this).dialog('close');
+            {
+                id: 'button-no',
+                text: 'No',
+                click: function () {
+                    $(this).dialog('close');
+                }
             }
-        }
+        ]
     });
 
     $('#cancelDialog').dialog({
+        title: 'Order Cancelation',
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',

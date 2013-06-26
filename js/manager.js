@@ -81,15 +81,24 @@ $(document).ready(function () {
         dialogClass: 'dialog',
         width: 360,
         height: 200,
-        buttons: {
-            "Yes": function () {
-                confirmOrder();
-                $(this).dialog('close');
+        buttons: [
+            {
+                id: 'button-yes',
+                text: 'Yes',
+                click: function () {
+                    $('#button-yes').button('disable');
+                    confirmOrder();
+                    $(this).dialog('close');
+                }
             },
-            "No": function () {
-                $(this).dialog('close');
+            {
+                id: 'button-no',
+                text: 'No',
+                click: function () {
+                    $(this).dialog('close');
+                }
             }
-        }
+        ]
     });
 
     $('#cancelDialog').dialog({

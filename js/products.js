@@ -132,7 +132,7 @@ $(document).ready(function () {
                         $('#help').show();
 
                     } else {
-                        alert('The result of the server is unreadable.');
+                        alert('The result of the server is unreadable. Please try again.');
                         $('#serial').focus();
                         $('#help').show();
                     }
