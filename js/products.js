@@ -171,33 +171,43 @@ $(document).ready(function () {
     });
 
     $('#cancelDialog').dialog({
+        title: 'Order cancelation',
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',
-        buttons: {
-            "Yes": function () {
-                $.post('ajax/cancelTransaction.php')
-                    .done(function (data) {
+        buttons: [
+            {
+                id: 'cancelYes',
+                text: 'Yes',
+                click: function () {
+                    $('#cancelYes, #cancelNo').button('disable');
 
-                        if (data.hasOwnProperty('success') &&
-                            data['success']) {
-                            window.location = 'destinations.php';
+                    $.post('ajax/cancelTransaction.php')
+                        .done(function (data) {
 
-                        } else if (data.hasOwnProperty('message')) {
-                            alert(data['message']);
+                            if (data.hasOwnProperty('success') &&
+                                data['success']) {
+                                window.location = 'destinations.php';
 
-                        } else {
-                            alert('The result of the server is unreadable.');
-                        }
-                    })
-                    .fail(function () {
-                        alert('Communication with the server failed.');
-                    })
-            },
-            "No": function () {
-                $(this).dialog('close');
+                            } else if (data.hasOwnProperty('message')) {
+                                alert(data['message']);
+
+                            } else {
+                                alert('The result of the server is unreadable.');
+                            }
+                        })
+                        .fail(function () {
+                            alert('Communication with the server failed.');
+                        })
+                }},
+            {
+                id: 'cancelNo',
+                text: 'No',
+                click: function () {
+                    $(this).dialog('close');
+                }
             }
-        }
+        ]
     });
 
     $('#btnCancel').click(function () {
@@ -205,40 +215,51 @@ $(document).ready(function () {
     });
 
     $('#proceedDialog').dialog({
+        title: 'Confirmation required',
         autoOpen: false,
         modal: true,
         dialogClass: 'dialog',
-        buttons: {
-            "Yes": function () {
-                $.post('ajax/proceedTransaction.php')
-                    .done(function (data) {
+        buttons: [
+            {
+                id: 'proceedYes',
+                text: 'Yes',
+                click: function () {
+                    $('#proceedYes, #proceedNo').button('disable');
 
-                        if (data.hasOwnProperty('success') &&
-                            data['success'] &&
-                            data.hasOwnProperty('orderId')) {
-                            window.location = 'orderInfos.php?orderId=' + data['orderId'];
+                    $.post('ajax/proceedTransaction.php')
+                        .done(function (data) {
 
-                        } else if (data.hasOwnProperty('message')) {
-                            alert(data['message']);
+                            if (data.hasOwnProperty('success') &&
+                                data['success'] &&
+                                data.hasOwnProperty('orderId')) {
+                                window.location = 'orderInfos.php?orderId=' + data['orderId'];
 
-                        } else {
-                            alert('The result of the server is unreadable.');
-                        }
-                    })
-                    .fail(function () {
-                        alert('Communication with the server failed.');
-                    })
-            },
-            "No": function () {
-                $(this).dialog('close');
+                            } else if (data.hasOwnProperty('message')) {
+                                alert(data['message']);
+
+                            } else {
+                                alert('The result of the server is unreadable.');
+                            }
+                        })
+                        .fail(function () {
+                            alert('Communication with the server failed.');
+                        })
+                }},
+            {
+                id: 'proceedNo',
+                text: 'No',
+                click: function () {
+                    $(this).dialog('close');
+                }
             }
-        }
+        ]
     });
 
     $('#btnProceed').click(function () {
         $('#proceedDialog').dialog('open');
     });
-});
+})
+;
 
 $(document).on('click', 'input.addCart', function () {
 

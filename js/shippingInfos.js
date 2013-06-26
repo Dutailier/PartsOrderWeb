@@ -59,23 +59,7 @@ $(document).ready(function () {
         });
 
     $('#btnCancel').click(function () {
-        $.post('ajax/cancelTransaction.php')
-            .done(function (data) {
-
-                if (data.hasOwnProperty('success') &&
-                    data['success']) {
-                    window.location = 'destinations.php';
-
-                } else if (data.hasOwnProperty('message')) {
-                    alert(data['message']);
-
-                } else {
-                    alert('The result of the server is unreadable.');
-                }
-            })
-            .fail(function () {
-                alert('Communication with the server failed.');
-            })
+        $('#cancelDialog').dialog('open');
     });
 
     $('#btnEdit').click(function () {
@@ -100,6 +84,46 @@ $(document).ready(function () {
             .fail(function () {
                 alert('Communication with the server failed.');
             })
+    });
+
+    $('#cancelDialog').dialog({
+        title: 'Order cancelation',
+        autoOpen: false,
+        modal: true,
+        dialogClass: 'dialog',
+        buttons: [
+            {
+                id: 'cancelYes',
+                text: 'Yes',
+                click: function () {
+                    $('#cancelYes, #cancelNo').button('disable');
+
+                    $.post('ajax/cancelTransaction.php')
+                        .done(function (data) {
+
+                            if (data.hasOwnProperty('success') &&
+                                data['success']) {
+                                window.location = 'destinations.php';
+
+                            } else if (data.hasOwnProperty('message')) {
+                                alert(data['message']);
+
+                            } else {
+                                alert('The result of the server is unreadable.');
+                            }
+                        })
+                        .fail(function () {
+                            alert('Communication with the server failed.');
+                        })
+                }},
+            {
+                id: 'cancelNo',
+                text: 'No',
+                click: function () {
+                    $(this).dialog('close');
+                }
+            }
+        ]
     });
 });
 
