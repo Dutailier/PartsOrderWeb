@@ -1,5 +1,6 @@
 <?php
 
+require_once(ROOT . 'libs/document.php');
 require_once(ROOT . 'phpmailer/class.phpmailer.php');
 
 /**
@@ -12,43 +13,72 @@ class Mail
      * Retourne une instance de PHPmailer.
      * @return PHPMailer
      */
-    private static function getPHPmailer()
+    private static function getMail()
     {
-        $phpmailer = new PHPMailer();
+        $mail = new PHPMailer();
 
+        $mail->IsSMTP();
+        $mail->Host = SMTP_HOST;
+        $mail->Password = SMTP_PASSWORD;
 
-        $phpmailer->IsSMTP();
-        $phpmailer->IsHTML(true);
-        $phpmailer->Host = SMTP_HOST;
-        $phpmailer->From = SMTP_USERNAME;
-        $phpmailer->Password = SMTP_PASSWORD;
-        $phpmailer->FromName = 'Parts Order Web';
+        $mail->From = SMTP_FROM;
+        $mail->FromName = 'Parts Order Web';
 
-        return $phpmailer;
+        return $mail;
     }
 
     /**
-     * Envoie une confirmation de la commande.
+     * Envoie une confirmation de commande par courriel.
      * @param $order
-     * @throws Exception
      */
-    public static function SendOrderConfirmation($order, $email, $name)
+    public static function SendOrderConfirmation($order)
     {
-        $phpmailer = self::getPHPmailer();
+        $mail = self::getMail();
 
-        $phpmailer->AddAddress($email, $name);
+        $receiver = $order->getReceiver();
+        $store = $order->getStore();
 
-        $phpmailer->Subject = 'Parts Order Web - Confirmation #' . $order->getNumber();
+        $mail->Subject = 'Parts Order Web - Confirmation #' . $order->getNumber();
 
-        $document = '';
-        include_once(ROOT . 'documents/orderConfirmation.php');
-        $phpmailer->Body = $document;
+        $path = ROOT . 'documents/orderConfirmation.php';
 
-        if (!$phpmailer->Send()) {
-            throw new Exception($phpmailer->ErrorInfo);
+        $parameters = array(
+            'order' => $order->getArray(),
+            'receiver' => $receiver->getArray(),
+            'store' => $store->getArray(),
+            'shippingAddress' => $order->getShippingAddress()->getArray(),
+        );
+
+        $parameters['lines'] = array();
+        foreach ($order->getLines() as $line) {
+            $parameters['lines'][] = $line->getArray();
         }
 
-        $phpmailer->SmtpClose();
-        unset($phpmailer);
+        $parameters['comments'] = array();
+        foreach ($order->getComments() as $comment) {
+            $parameters['comments'][] = $comment->getArray();
+        }
+
+        $mail->IsHTML(true);
+        $mail->Body = Document::getContents($path, $parameters);
+
+        // Pour une raison inconnue, on ne peut pas envoyer un courriel à plus
+        // d'une addresse à la fois.
+
+        // Envoie du courriel à l'agent.
+        $mail->AddAddress(AGENT_EMAIL, AGENT_NAME);
+        $mail->Send();
+        $mail->ClearAddresses();
+
+        // Envoie du courriel au magasin.
+        $mail->AddAddress($store->getEmail(), $store->getName());
+        $mail->Send();
+        $mail->ClearAddresses();
+
+        // Envoie du courriel au client final.
+        $mail->AddAddress($receiver->getEmail(), $receiver->getName());
+        $mail->Send();
+
+        $mail->SmtpClose();
     }
 }

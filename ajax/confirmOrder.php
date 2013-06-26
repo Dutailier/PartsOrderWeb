@@ -30,10 +30,7 @@ if (!Security::isAuthenticated()) {
 
                 $receiver = $order->getReceiver();
 
-                Mail::SendOrderConfirmation($order, AGENT_EMAIL, AGENT_NAME);
-                Mail::SendOrderConfirmation($order, $store->getEmail(), $store->getName());
-                Mail::SendOrderConfirmation($order, $receiver->getEmail(), $receiver->getName());
-
+                Mail::SendOrderConfirmation($order);
 
                 $data['success'] = true;
             }
