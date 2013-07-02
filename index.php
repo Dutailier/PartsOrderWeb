@@ -12,7 +12,7 @@ if (!Security::isAuthenticated()) {
 
     switch ($page) {
         // Page d'accueil
-		case 'login' :
+        case 'login' :
         case 'index' :
             if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
                 $page = 'manager';
@@ -48,6 +48,7 @@ if (!Security::isAuthenticated()) {
             break;
 
         // Pages administratives
+        case 'export' :
         case 'manager' :
         case 'storeInfos' :
             if (!Security::isInRoleName(ROLE_ADMINISTRATOR)) {
@@ -67,7 +68,7 @@ if (!file_exists($file)) {
 include_once($file);
 
 // On doit vérifier que la page est correctement construite.
-if (empty($title) || empty($head) || empty($content)) {
+if (!isset($title) || !isset($head) || !isset($content)) {
     include_once(ROOT . 'pages/' . 'error' . '.php');
 }
 ?>
@@ -79,6 +80,9 @@ if (empty($title) || empty($head) || empty($content)) {
     <link type="text/css" rel="stylesheet" href="css/default.css"/>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/noty/jquery.noty.js"></script>
+    <script type="text/javascript" src="js/noty/layouts/topRight.js"></script>
+    <script type="text/javascript" src="js/noty/themes/default.js"></script>
 
     <!-- Début de l'en-tête dynamique. -->
     <?php echo $head; ?>

@@ -17,14 +17,14 @@ $(document).ready(function () {
                     }
 
                 } else if (data.hasOwnProperty('message')) {
-                    alert(data['message']);
+                    noty({layout: 'topRight', type: 'error', text: data['message']});
 
                 } else {
-                    alert('The result of the server is unreadable.');
+                    noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                 }
             })
             .fail(function () {
-                alert('Communication with the server failed.');
+                noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             })
     });
 
@@ -41,14 +41,14 @@ $(document).ready(function () {
                     window.location = 'login.php';
 
                 } else if (data.hasOwnProperty('message')) {
-                    alert(data['message']);
+                    noty({layout: 'topRight', type: 'error', text: data['message']});
 
                 } else {
-                    alert('The result of the server is unreadable.');
+                    noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                 }
             })
             .fail(function () {
-                alert('Communication with the server failed.');
+                noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             })
     });
 });

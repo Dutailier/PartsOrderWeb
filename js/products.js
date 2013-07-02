@@ -64,14 +64,14 @@ $(document).ready(function () {
                     updateItems();
                 }
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         });
 
     $('#frmSearch').validate({
@@ -127,18 +127,18 @@ $(document).ready(function () {
                         }
 
                     } else if (data.hasOwnProperty('message')) {
-                        alert(data['message']);
+                        noty({layout: 'topRight', type: 'error', text: data['message']});
                         $('#serial').focus();
                         $('#help').show();
 
                     } else {
-                        alert('The result of the server is unreadable. Please try again.');
+                        noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable. Please try again.'});
                         $('#serial').focus();
                         $('#help').show();
                     }
                 })
                 .fail(function () {
-                    alert('Communication with the server failed. Please try again.');
+                    noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed. Please try again.'});
                     $('#serial').focus();
                     $('#help').show();
                 })
@@ -159,14 +159,14 @@ $(document).ready(function () {
                     updateItems();
 
                 } else if (data.hasOwnProperty('message')) {
-                    alert(data['message']);
+                    noty({layout: 'topRight', type: 'error', text: data['message']});
 
                 } else {
-                    alert('The result of the server is unreadable.');
+                    noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                 }
             })
             .fail(function () {
-                alert('Communication with the server failed.');
+                noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             })
     });
 
@@ -190,14 +190,14 @@ $(document).ready(function () {
                                 window.location = 'destinations.php';
 
                             } else if (data.hasOwnProperty('message')) {
-                                alert(data['message']);
+                                noty({layout: 'topRight', type: 'error', text: data['message']});
 
                             } else {
-                                alert('The result of the server is unreadable.');
+                                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                             }
                         })
                         .fail(function () {
-                            alert('Communication with the server failed.');
+                            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
                         })
                 }},
             {
@@ -235,14 +235,14 @@ $(document).ready(function () {
                                 window.location = 'orderInfos.php?orderId=' + data['orderId'];
 
                             } else if (data.hasOwnProperty('message')) {
-                                alert(data['message']);
+                                noty({layout: 'topRight', type: 'error', text: data['message']});
 
                             } else {
-                                alert('The result of the server is unreadable.');
+                                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                             }
                         })
                         .fail(function () {
-                            alert('Communication with the server failed.');
+                            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
                         })
                 }},
             {
@@ -277,14 +277,14 @@ $(document).on('click', 'input.addCart', function () {
                 updateItems();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 });
 
@@ -304,14 +304,14 @@ $(document).on('click', 'input.removeCart', function () {
                 updateItems();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 });
 
@@ -349,16 +349,16 @@ $(document).on('click', 'label.filter', function () {
                         }
                     }
                 } else if (data.hasOwnProperty('message')) {
-                    alert(data['message']);
+                    noty({layout: 'topRight', type: 'error', text: data['message']});
                     $('div.product').show();
 
                 } else {
-                    alert('The result of the server is unreadable.');
+                    noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                     $('div.product').show();
                 }
             })
             .fail(function () {
-                alert('Communication with the server failed.');
+                noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             })
             .always(function () {
                 $('#load').hide();
@@ -428,8 +428,9 @@ function updateItems() {
                 data.hasOwnProperty('items')) {
                 var items = data['items'];
                 var $lblProducts = $('#lblProducts');
+                var $items = $('div.item');
 
-                $('div.item').remove();
+                $items.remove();
 
                 if (items.length > 0) {
                     $lblProducts.show();
@@ -451,21 +452,21 @@ function updateItems() {
                     }
                 }
 
-                if ($('div.item').length > 0) {
+                if ($items.length > 0) {
                     $('#btnProceed').removeAttr('disabled');
                 } else {
                     $('#btnProceed').attr('disabled', 'disabled');
                 }
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 }
 

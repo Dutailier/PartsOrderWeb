@@ -25,8 +25,9 @@ $title = 'Manager';
     <div id="ordersFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="orderKeyWords">Search : </label>
-            <input id="orderKeyWords" name="orderKeyWords" type="text">
+            <input id="orderKeyWords" name="orderKeyWords" class="keyWords" type="text">
         </div>
+        <input id="btnExport" name="btnExport" type="button" value="Export"/>
         <div id="datesWrapper">
             <label for="orderFrom">From :</label>
             <input id="orderFrom" name="orderFrom" class="date" type="text" class="datepicker"/>
@@ -49,10 +50,9 @@ $title = 'Manager';
     <div id="storesFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="storeKeyWords">Search : </label>
-            <input id="storeKeyWords" name="storeKeyWords" type="text">
+            <input id="storeKeyWords" name="storeKeyWords" class="keyWords" type="text">
         </div>
         <input id="btnAddStore" name="btnAddStore" type="button" value="Add Store"/>
-
         <div id="bannersWrapper">
             <label for="banners">Banner : </label>
             <select id="banners"> </select>
@@ -73,7 +73,7 @@ $title = 'Manager';
     <div id="logsFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="logKeyWords">Search : </label>
-            <input id="logKeyWords" name="logKeyWords" type="text">
+            <input id="logKeyWords" name="logKeyWords" class="keyWords" type="text">
         </div>
         <div id="datesWrapper">
             <label for="logFrom">From :</label>

@@ -37,7 +37,8 @@ div.tab {
     display: none;
 }
 
-#btnAddStore {
+#btnAddStore,
+#btnExport {
     float: right;
 }
 
@@ -83,6 +84,10 @@ div.filters label {
 div.filters input, select {
     text-align: center;
     font-size: 1.2em;
+    width: 150px;
+}
+
+div.filters input.keyWords {
     width: 200px;
 }
 

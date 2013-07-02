@@ -259,6 +259,10 @@ fieldset > legend {
     width: 150px;
 }
 
+#btnExport {
+    float: right;
+}
+
 div.filters {
     border: 1px solid #484848;
     padding: 8px;
@@ -272,12 +276,16 @@ div.filters label {
 div.filters input, select {
     text-align: center;
     font-size: 1.2em;
-    width: 200px;
+    width: 150px;
 }
 
 div.filters * {
     line-height: 20px;
     margin: 0px 5px;
+}
+
+div.filters input.keyWords {
+    width: 200px;
 }
 
 div.keyWordsWrapper {

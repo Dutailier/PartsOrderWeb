@@ -87,14 +87,14 @@ $(document).ready(function () {
                             window.location = 'manager.php?tab=stores';
 
                         } else if (data.hasOwnProperty('message')) {
-                            alert(data['message']);
+                            noty({layout: 'topRight', type: 'error', text: data['message']});
 
                         } else {
-                            alert('The result of the server is unreadable.');
+                            noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                         }
                     })
                     .fail(function () {
-                        alert('Communication with the server failed.');
+                        noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
                     })
 
             } else if ($.QueryString.hasOwnProperty('bannerId')) {
@@ -109,14 +109,14 @@ $(document).ready(function () {
                             window.location = 'manager.php?tab=stores';
 
                         } else if (data.hasOwnProperty('message')) {
-                            alert(data['message']);
+                            noty({layout: 'topRight', type: 'error', text: data['message']});
 
                         } else {
-                            alert('The result of the server is unreadable.');
+                            noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                         }
                     })
                     .fail(function () {
-                        alert('Communication with the server failed.');
+                        noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
                     })
             }
         }
@@ -152,14 +152,14 @@ $(document).ready(function () {
                     updateStoreInfosAndStoreAddressInfos();
 
                 } else if (data.hasOwnProperty('message')) {
-                    alert(data['message']);
+                    noty({layout: 'topRight', type: 'error', text: data['message']});
 
                 } else {
-                    alert('The result of the server is unreadable.');
+                    noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                 }
             })
             .fail(function () {
-                alert('Communication with the server failed.');
+                noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             })
     });
 
@@ -187,14 +187,14 @@ $(document).ready(function () {
                 $countries.trigger('change');
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         });
 
     $('#btnClear').click(function () {
@@ -276,7 +276,7 @@ function updateStoreInfosAndStoreAddressInfos() {
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         });
 }
 

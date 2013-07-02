@@ -14,6 +14,13 @@ $(document).ready(function () {
         selectTabLogs();
     });
 
+    $('#btnExport').click(function () {
+        var from = $('#orderFrom').val();
+        var to = $('#orderTo').val();
+
+        window.open('export.php?from=' + from + '&to=' + to);
+    });
+
     $('#ordersFilters').find('input.date').change(function () {
         updateOrdersByRangeOfDates();
     });
@@ -209,14 +216,14 @@ $(document).on('click', 'input.btnStoreDelete', function () {
                 $store.remove();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 });
 
@@ -286,14 +293,14 @@ function confirmOrder() {
                 updateOrdersByRangeOfDates();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 }
 
@@ -314,14 +321,14 @@ function cancelOrder() {
                 updateOrdersByRangeOfDates();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 }
 
@@ -329,7 +336,10 @@ function cancelOrder() {
  * Met à jour les différentes bannières disponibles.
  */
 function updateBanners() {
+
+    $('#storesLoader').show();
     $('#storesFilters').find('input').attr('disabled', 'disabled');
+
     $.post('ajax/getBanners.php')
         .done(function (data) {
             if (data.hasOwnProperty('success') &&
@@ -358,14 +368,14 @@ function updateBanners() {
                 $banners.trigger('change');
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 }
 
@@ -412,16 +422,16 @@ function updateLogsByRangeOfDates() {
                 filterLogsByKeyWords();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
                 $('div.log').show();
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                 $('div.log').show();
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             $('div.log').show();
         })
         .always(function () {
@@ -583,16 +593,16 @@ function updateStoresByBannerId() {
                 filterStoresByKeyWords();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
                 $('div.store').show();
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                 $('div.store').show();
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             $('div.store').show();
         })
         .always(function () {
@@ -644,16 +654,16 @@ function updateOrdersByRangeOfDates() {
                 filterOrdersByKeyWords();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
                 $('div.order').show();
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                 $('div.order').show();
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             $('div.order').show();
         })
         .always(function () {
@@ -715,14 +725,14 @@ function addDetailsToStore($store) {
                 $details.hide().appendTo($store).slideDown();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
         .always(function () {
             $infos.animate({'opacity': 1});
@@ -833,14 +843,14 @@ function addDetailsToOrder($order) {
                 $details.hide().appendTo($order).slideDown();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
         .always(function () {
             $infos.animate({'opacity': 1});
@@ -890,6 +900,7 @@ function paginate($container, $items, countItemsByPage) {
         $items.slice(firstItem, firstItem + countItemsByPage).show();
     });
 }
+
 
 /**
  * Ajoute les informations relatives au magasin aux détails du magasin.

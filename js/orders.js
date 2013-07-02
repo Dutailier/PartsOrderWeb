@@ -10,6 +10,13 @@ $(document).ready(function () {
         selectTabLogs();
     });
 
+    $('#btnExport').click(function () {
+        var from = $('#orderFrom').val();
+        var to = $('#orderTo').val();
+
+        window.open('export.php?from=' + from + '&to=' + to);
+    });
+
     $('#ordersFilters').find('input.date').change(function () {
         updateOrdersByRangeOfDates();
     });

@@ -52,8 +52,9 @@ $title = 'Orders';
     <div id="ordersFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="orderKeyWords">Search : </label>
-            <input id="orderKeyWords" name="orderKeyWords" type="text">
+            <input id="orderKeyWords" name="orderKeyWords" class="keyWords" type="text">
         </div>
+        <input id="btnExport" name="btnExport" type="button" value="Export"/>
         <div id="datesWrapper">
             <label for="orderFrom">From :</label>
             <input id="orderFrom" name="orderFrom" class="date" type="text" class="datepicker"/>
@@ -76,7 +77,7 @@ $title = 'Orders';
     <div id="logsFilters" class="filters">
         <div class="keyWordsWrapper">
             <label for="logKeyWords">Search : </label>
-            <input id="logKeyWords" name="logKeyWords" type="text">
+            <input id="logKeyWords" name="logKeyWords" class="keyWords" type="text">
         </div>
         <div id="datesWrapper">
             <label for="logFrom">From :</label>

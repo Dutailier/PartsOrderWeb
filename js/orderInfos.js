@@ -151,14 +151,14 @@ function addComment() {
                 updateComments();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
         .always(function () {
             $('#btnConfirm').removeAttr('disabled');
@@ -251,14 +251,14 @@ function updateOrderDetails() {
                 }
             }
             else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         });
 }
 
@@ -293,14 +293,14 @@ function updateComments() {
                 }
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 }
 
@@ -333,14 +333,14 @@ function updateLogs() {
                 }
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 }
 
@@ -357,14 +357,14 @@ function confirmOrder() {
                 window.location = 'confirmation.php';
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
         .always(function () {
             $('#btnConfirm').removeAttr('disabled');
@@ -384,14 +384,14 @@ function cancelOrder() {
                 window.location = 'index.php';
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 }
 
