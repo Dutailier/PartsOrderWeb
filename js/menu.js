@@ -4,6 +4,7 @@ $(document).ready(function () {
     });
 
     $('#btnOrders').click(function () {
+        $('#btnOrders').attr('disabled', 'disabled');
         $.post('ajax/getStoreConnected.php')
             .done(function (data) {
 
@@ -25,6 +26,9 @@ $(document).ready(function () {
             })
             .fail(function () {
                 noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
+            })
+            .always(function() {
+                $('#btnOrders').removeAttr('disabled');
             })
     });
 
