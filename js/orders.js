@@ -293,14 +293,14 @@ function addDetailsToOrder($order) {
                 $details.hide().appendTo($order).slideDown();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
         .always(function () {
             $infos.animate({'opacity': 1});
@@ -321,6 +321,7 @@ function updateOrdersByRangeOfDates() {
     };
 
     $('div.order').hide();
+    $('#ordersEmpty').hide();
     $('#ordersLoader').show();
     $('#tabOrders').find('ul.pagination').remove();
     $('#ordersFilters').find('input').attr('disabled', 'disabled');
@@ -354,16 +355,16 @@ function updateOrdersByRangeOfDates() {
                 filterOrdersByKeyWords();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
                 $('div.order').show();
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                 $('div.order').show();
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             $('div.order').show();
         })
         .always(function () {
@@ -398,11 +399,12 @@ function filterOrdersByKeyWords() {
     var $ordersVisibled = $orders.filter(':visible');
 
     if ($ordersVisibled.length > 0) {
-        paginate($('#orders'), $ordersVisibled, 10);
         $('#ordersEmpty').hide();
     } else {
         $('#ordersEmpty').show();
     }
+
+    paginate($('#orders'), $ordersVisibled, 10);
 }
 
 /**
@@ -430,11 +432,12 @@ function filterLogsByKeyWords() {
     var $logsVisibled = $logs.filter(':visible');
 
     if ($logsVisibled.length > 0) {
-        paginate($('#logs'), $logsVisibled, 10);
         $('#logsEmpty').hide();
     } else {
         $('#logsEmpty').show();
     }
+
+    paginate($('#logs'), $logsVisibled, 10);
 }
 
 /**
@@ -449,6 +452,7 @@ function updateLogsByRangeOfDates() {
     };
 
     $('div.log').hide();
+    $('#logsEmpty').hide();
     $('#logsLoader').show();
     $('#tabLogs').find('ul.pagination').remove();
     $('#logsFilters').find('input').attr('disabled', 'disabled');
@@ -481,16 +485,16 @@ function updateLogsByRangeOfDates() {
                 filterLogsByKeyWords();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
                 $('div.log').show();
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
                 $('div.log').show();
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
             $('div.log').show();
         })
         .always(function () {
@@ -533,14 +537,14 @@ function getStoreInfos() {
                 }
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         });
 }
 
@@ -562,14 +566,14 @@ function confirmOrder() {
                 updateOrdersByRangeOfDates();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 }
 
@@ -590,14 +594,14 @@ function cancelOrder() {
                 updateOrdersByRangeOfDates();
 
             } else if (data.hasOwnProperty('message')) {
-                alert(data['message']);
+                noty({layout: 'topRight', type: 'error', text: data['message']});
 
             } else {
-                alert('The result of the server is unreadable.');
+                noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
             }
         })
         .fail(function () {
-            alert('Communication with the server failed.');
+            noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
 }
 
@@ -608,6 +612,8 @@ function cancelOrder() {
  * @param countItemsByPage
  */
 function paginate($container, $items, countItemsByPage) {
+
+    $container.find('ul.pagination').remove();
 
     var countItems = $items.length;
     var countPages = Math.ceil(countItems / countItemsByPage);
@@ -623,7 +629,7 @@ function paginate($container, $items, countItemsByPage) {
     }
 
     if (countItems > countItemsByPage) {
-        $pagination.insertAfter($container);
+        $pagination.appendTo($container);
     }
 
     var $links = $pagination.children('li');

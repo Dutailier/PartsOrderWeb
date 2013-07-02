@@ -338,7 +338,7 @@ function cancelOrder() {
 function updateBanners() {
 
     $('#storesLoader').show();
-    $('#storesFilters').find('input').attr('disabled', 'disabled');
+    $('#storesFilters').find('input, select').attr('disabled', 'disabled');
 
     $.post('ajax/getBanners.php')
         .done(function (data) {
@@ -390,6 +390,7 @@ function updateLogsByRangeOfDates() {
     };
 
     $('div.log').hide();
+    $('#logsEmpty').hide();
     $('#logsLoader').show();
     $('#tabLogs').find('ul.pagination').remove();
     $('#logsFilters').find('input').attr('disabled', 'disabled');
@@ -465,11 +466,12 @@ function filterOrdersByKeyWords() {
     var $ordersVisibled = $orders.filter(':visible');
 
     if ($ordersVisibled.length > 0) {
-        paginate($('#orders'), $ordersVisibled, 10);
         $('#ordersEmpty').hide();
     } else {
         $('#ordersEmpty').show();
     }
+
+    paginate($('#orders'), $ordersVisibled, 10);
 }
 
 /**
@@ -497,11 +499,12 @@ function filterStoresByKeyWords() {
     var $storesVisibled = $stores.filter(':visible');
 
     if ($storesVisibled.length > 0) {
-        paginate($('#stores'), $storesVisibled, 10);
         $('#storesEmpty').hide();
     } else {
         $('#storesEmpty').show();
     }
+
+    paginate($('#stores'), $storesVisibled, 10);
 }
 
 /**
@@ -530,11 +533,12 @@ function filterLogsByKeyWords() {
     var $logsVisibled = $logs.filter(':visible');
 
     if ($logsVisibled.length > 0) {
-        paginate($('#logs'), $logsVisibled, 10);
         $('#logsEmpty').hide();
     } else {
         $('#logsEmpty').show();
     }
+
+    paginate($('#logs'), $logsVisibled, 10);
 }
 
 /**
@@ -546,6 +550,7 @@ function updateStoresByBannerId() {
     };
 
     $('div.store').hide();
+    $('storesEmpty').hide();
     $('#storesLoader').show();
     $('#tabStores').find('ul.pagination').remove();
 
@@ -607,7 +612,7 @@ function updateStoresByBannerId() {
         })
         .always(function () {
             $('#storesLoader').hide();
-            $('#storesFilters').find('input').removeAttr('disabled');
+            $('#storesFilters').find('input, select').removeAttr('disabled');
         })
 }
 
@@ -621,6 +626,7 @@ function updateOrdersByRangeOfDates() {
     };
 
     $('div.order').hide();
+    $('#ordersEmpty').hide();
     $('#ordersLoader').show();
     $('#tabOrders').find('ul.pagination').remove();
     $('#ordersFilters').find('input').attr('disabled', 'disabled');
@@ -868,6 +874,8 @@ function addDetailsToOrder($order) {
  */
 function paginate($container, $items, countItemsByPage) {
 
+    $container.find('ul.pagination').remove();
+
     var countItems = $items.length;
     var countPages = Math.ceil(countItems / countItemsByPage);
 
@@ -882,7 +890,7 @@ function paginate($container, $items, countItemsByPage) {
     }
 
     if (countItems > countItemsByPage) {
-        $pagination.insertAfter($container);
+        $pagination.appendTo($container);
     }
 
     var $links = $pagination.children('li');
