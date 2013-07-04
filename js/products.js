@@ -428,15 +428,9 @@ function updateItems() {
                 data.hasOwnProperty('items')) {
                 var items = data['items'];
                 var $lblProducts = $('#lblProducts');
-                var $items = $('div.item');
+                var $items = $('#items').children('div.item');
 
                 $items.remove();
-
-                if (items.length > 0) {
-                    $lblProducts.show();
-                } else {
-                    $lblProducts.hide();
-                }
 
                 for (var i in items) {
                     if (items.hasOwnProperty(i)) {
@@ -452,9 +446,11 @@ function updateItems() {
                     }
                 }
 
-                if ($items.length > 0) {
+                if ($('#items').children('div.item').length > 0) {
+                    $lblProducts.show();
                     $('#btnProceed').removeAttr('disabled');
                 } else {
+                    $lblProducts.hide();
                     $('#btnProceed').attr('disabled', 'disabled');
                 }
 

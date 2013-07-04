@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6b32a347-abc7-4594-bb6a-6b67ff97be27" name="Default" comment="" />
+    <list default="true" id="6b32a347-abc7-4594-bb6a-6b67ff97be27" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/products.js" afterPath="$PROJECT_DIR$/js/products.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="PartsOrderWeb.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372798557317" ignored="false" />
+    <file path="/Dummy.txt" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372951268815" ignored="false" />
     <file path="/manager.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372768560399" ignored="false" />
     <file path="/manager.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372768650630" ignored="false" />
     <file path="/orders.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372768741729" ignored="false" />
@@ -15,7 +18,7 @@
     <file path="/index.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372796371599" ignored="false" />
     <file path="/export.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372777273460" ignored="false" />
     <file path="/.htaccess" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372773757484" ignored="false" />
-    <file path="/products.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372797261642" ignored="false" />
+    <file path="/products.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372951342610" ignored="false" />
     <file path="/menu.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372797493880" ignored="false" />
     <file path="/orders.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372798448862" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -63,13 +66,13 @@
         <option value="$PROJECT_DIR$/js/destinations.js" />
         <option value="$PROJECT_DIR$/js/login.js" />
         <option value="$PROJECT_DIR$/js/orderInfos.js" />
-        <option value="$PROJECT_DIR$/js/products.js" />
         <option value="$PROJECT_DIR$/js/receiverInfos.js" />
         <option value="$PROJECT_DIR$/js/shippingInfos.js" />
         <option value="$PROJECT_DIR$/js/storeInfos.js" />
         <option value="$PROJECT_DIR$/js/menu.js" />
         <option value="$PROJECT_DIR$/js/manager.js" />
         <option value="$PROJECT_DIR$/js/orders.js" />
+        <option value="$PROJECT_DIR$/js/products.js" />
       </list>
     </option>
   </component>
@@ -78,7 +81,7 @@
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -122,7 +125,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -185,6 +187,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -192,8 +195,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -253,15 +256,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46318036" sideWeight="0.6706349" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46851653" sideWeight="0.6706349" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -271,6 +273,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -342,9 +345,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/export.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="37" selection-start="462" selection-end="462" vertical-scroll-proportion="0.4346591">
-          <folding />
-        </state>
+        <state line="18" column="37" selection-start="462" selection-end="462" vertical-scroll-proportion="0.4346591" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/entities/order.php">
@@ -354,41 +355,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/noty/jquery.noty.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/noty/promise.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="73" selection-start="2428" selection-end="2428" vertical-scroll-proportion="0.42212188">
-          <folding />
-        </state>
+        <state line="82" column="73" selection-start="2428" selection-end="2428" vertical-scroll-proportion="0.42212188" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/categories.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="56" selection-start="1530" selection-end="1530" vertical-scroll-proportion="0.3848684">
-          <folding />
-        </state>
+        <state line="45" column="56" selection-start="1530" selection-end="1530" vertical-scroll-proportion="0.3848684" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/destinations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="84" selection-start="1998" selection-end="1998" vertical-scroll-proportion="0.40835267">
-          <folding />
-        </state>
+        <state line="55" column="84" selection-start="1998" selection-end="1998" vertical-scroll-proportion="0.40835267" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/login.js">
@@ -401,13 +388,6 @@
     <entry file="file://$PROJECT_DIR$/js/orderInfos.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="385" column="56" selection-start="12428" selection-end="12428" vertical-scroll-proportion="0.5335689">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/products.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="454" column="26" selection-start="15544" selection-end="15544" vertical-scroll-proportion="0.43816254">
           <folding />
         </state>
       </provider>
@@ -435,9 +415,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/menu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="21" selection-start="648" selection-end="648" vertical-scroll-proportion="0.31758243">
-          <folding />
-        </state>
+        <state line="17" column="21" selection-start="648" selection-end="648" vertical-scroll-proportion="0.31758243" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/manager.js">
@@ -450,6 +428,13 @@
     <entry file="file://$PROJECT_DIR$/js/orders.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="607" column="3" selection-start="18777" selection-end="18777" vertical-scroll-proportion="0.57378983">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/products.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="433" column="0" selection-start="14795" selection-end="14795" vertical-scroll-proportion="0.45552886">
           <folding />
         </state>
       </provider>
