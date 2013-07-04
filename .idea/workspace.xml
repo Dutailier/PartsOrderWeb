@@ -2,22 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b32a347-abc7-4594-bb6a-6b67ff97be27" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/default.css" afterPath="$PROJECT_DIR$/css/default.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/login.css" afterPath="$PROJECT_DIR$/css/login.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/manager.css" afterPath="$PROJECT_DIR$/css/manager.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/manager.js" afterPath="$PROJECT_DIR$/js/manager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/menu.js" afterPath="$PROJECT_DIR$/js/menu.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/orderInfos.css" afterPath="$PROJECT_DIR$/css/orderInfos.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/orders.css" afterPath="$PROJECT_DIR$/css/orders.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/orders.js" afterPath="$PROJECT_DIR$/js/orders.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/products.css" afterPath="$PROJECT_DIR$/css/products.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/products.js" afterPath="$PROJECT_DIR$/js/products.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/orderInfos.js" afterPath="$PROJECT_DIR$/js/orderInfos.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/orderInfos.php" afterPath="$PROJECT_DIR$/pages/orderInfos.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PartsOrderWeb.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372952019590" ignored="false" />
+    <file path="/Dummy.txt" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372965992828" ignored="false" />
     <file path="/manager.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372768560399" ignored="false" />
     <file path="/manager.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372959962947" ignored="false" />
     <file path="/orders.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372959948451" ignored="false" />
@@ -32,10 +24,12 @@
     <file path="/menu.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372797493880" ignored="false" />
     <file path="/orders.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372951833927" ignored="false" />
     <file path="/products.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372961164476" ignored="false" />
-    <file path="/*.regexp" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372959228101" ignored="false" />
+    <file path="/*.regexp" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372966793541" ignored="false" />
     <file path="/login.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372960615365" ignored="false" />
     <file path="/default.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372961053999" ignored="false" />
     <file path="/orderInfos.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372961773426" ignored="false" />
+    <file path="/orderInfos.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372966052356" ignored="false" />
+    <file path="/orderInfos.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372966419879" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,8 +66,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/js/login.js" />
-        <option value="$PROJECT_DIR$/js/orderInfos.js" />
         <option value="$PROJECT_DIR$/js/receiverInfos.js" />
         <option value="$PROJECT_DIR$/js/shippingInfos.js" />
         <option value="$PROJECT_DIR$/js/storeInfos.js" />
@@ -84,10 +76,12 @@
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/css/default.css" />
         <option value="$PROJECT_DIR$/css/products.css" />
-        <option value="$PROJECT_DIR$/css/orderInfos.css" />
         <option value="$PROJECT_DIR$/js/products.js" />
         <option value="$PROJECT_DIR$/js/manager.js" />
         <option value="$PROJECT_DIR$/js/orders.js" />
+        <option value="$PROJECT_DIR$/pages/orderInfos.php" />
+        <option value="$PROJECT_DIR$/css/orderInfos.css" />
+        <option value="$PROJECT_DIR$/js/orderInfos.js" />
       </list>
     </option>
   </component>
@@ -156,6 +150,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -257,19 +265,24 @@
       <created>1372951416640</created>
       <updated>1372951416640</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Corrections esthétiques.">
+      <created>1372965997263</created>
+      <updated>1372965997263</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.47385272" sideWeight="0.6714922" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.47385272" sideWeight="0.671875" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -278,7 +291,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -326,7 +338,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="correction du bug avec le bouton proceed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrections esthétiques." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -344,6 +356,7 @@
     <MESSAGE value="Correction du bug du bouton orders." />
     <MESSAGE value="Correction esthétique." />
     <MESSAGE value="correction du bug avec le bouton proceed." />
+    <MESSAGE value="Corrections esthétiques." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -351,34 +364,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="107" selection-start="1328" selection-end="1328" vertical-scroll-proportion="0.72969836">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/orderInfos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="385" column="56" selection-start="12428" selection-end="12428" vertical-scroll-proportion="0.5335689">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/shippingInfos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="115" column="115" selection-start="4805" selection-end="4805" vertical-scroll-proportion="0.40835267">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/receiverInfos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="259" column="99" selection-start="9485" selection-end="9485" vertical-scroll-proportion="0.8422274">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/storeInfos.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="278" column="99" selection-start="10597" selection-end="10597" vertical-scroll-proportion="0.58584684">
@@ -421,13 +406,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/orderInfos.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="154" column="21" selection-start="2574" selection-end="2574" vertical-scroll-proportion="0.4714038">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/products.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="135" column="0" selection-start="2005" selection-end="2005" vertical-scroll-proportion="-1.7088388">
@@ -442,13 +420,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/manager.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="31" selection-start="2032" selection-end="2032" vertical-scroll-proportion="0.4483945">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/orders.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="398" column="31" selection-start="12391" selection-end="12391" vertical-scroll-proportion="0.6594724">
@@ -458,7 +429,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/manager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="445" column="1" selection-start="12932" selection-end="12932" vertical-scroll-proportion="0.14268585">
+        <state line="230" column="9" selection-start="6484" selection-end="6484" vertical-scroll-proportion="0.3325554">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/manager.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="324" column="0" selection-start="6332" selection-end="6479" vertical-scroll-proportion="0.5372781">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/orderInfos.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="124" column="47" selection-start="3210" selection-end="3210" vertical-scroll-proportion="0.4964455">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/noty/themes/default.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="129" column="40" selection-start="8226" selection-end="8226" vertical-scroll-proportion="0.27531084">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/orderInfos.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="265" column="1" selection-start="4429" selection-end="4429" vertical-scroll-proportion="4.453125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/manager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="41" selection-start="1346" selection-end="1346" vertical-scroll-proportion="0.45454547">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/orderInfos.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="324" column="38" selection-start="10377" selection-end="10377" vertical-scroll-proportion="-0.9662522">
           <folding />
         </state>
       </provider>

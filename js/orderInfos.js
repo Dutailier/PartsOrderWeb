@@ -14,7 +14,6 @@ $(document).ready(function () {
 
     updateOrderDetails();
     updateComments();
-    updateLogs();
 
     $('#btnTabOrder').click(function () {
         selectTabOrder();
@@ -134,6 +133,11 @@ function selectTabLogs() {
 
     $('#btnTabLogs').addClass('selected');
     $('#tabLogs').show();
+
+    if ($('#logs').children('div.log').length == 0 &&
+        $('#logsLoader').is(':hidden')) {
+        updateLogs();
+    }
 }
 
 function addComment() {
@@ -309,6 +313,8 @@ function updateLogs() {
         'orderId': $.QueryString['orderId']
     };
 
+    $('#logsLoader').show();
+
     $.post('ajax/getLogsByOrderId.php', parameters)
         .done(function (data) {
 
@@ -341,6 +347,9 @@ function updateLogs() {
         })
         .fail(function () {
             noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
+        })
+        .always(function () {
+            $('#logsLoader').hide();
         })
 }
 

@@ -113,7 +113,12 @@ $title = 'Order Informations';
 </div>
 
 <div class="tab" id="tabLogs">
-    <div id="logs"></div>
+    <div id="logs">
+        <div id="logsLoader" class="loader">
+            <label>Please wait...</label>
+            <img id="loader" src="img/loader.gif"/>
+        </div>
+    </div>
 </div>
 
 <div id="cancelDialog" class="hidden">

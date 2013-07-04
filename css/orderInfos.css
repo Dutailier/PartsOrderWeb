@@ -252,3 +252,15 @@ hr {
 #status.invoiced {
     background-color: rgba(0, 170, 0, 0.3);
 }
+
+div.loader {
+    width: 200px;
+    margin: 20px auto;
+    display: none;
+}
+
+div.loader * {
+    margin: 5px 0px;
+    float: left;
+    clear: both;
+}
