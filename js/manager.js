@@ -95,7 +95,6 @@ $(document).ready(function () {
                 click: function () {
                     $('#confirmYes, #confirmNo').button('disable');
                     confirmOrder();
-                    $(this).dialog('close');
                 }
             },
             {
@@ -122,7 +121,6 @@ $(document).ready(function () {
                 click: function () {
                     $('#cancelYes, #cancelNo').button('disable');
                     cancelOrder();
-                    $(this).dialog('close');
                 }
             },
             {
@@ -302,6 +300,9 @@ function confirmOrder() {
         .fail(function () {
             noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
         })
+        .always(function () {
+            $('#confirmDialog').dialog('close');
+        })
 }
 
 /**
@@ -329,6 +330,9 @@ function cancelOrder() {
         })
         .fail(function () {
             noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
+        })
+        .always(function () {
+            $('#cancelDialog').dialog('close');
         })
 }
 
@@ -448,6 +452,8 @@ function filterOrdersByKeyWords() {
     var $orders = $('div.order');
 
     $orders.hide();
+    $orders.removeClass('found');
+
     $orders.children('div.infos').find('label').each(function (index, lbl) {
         var $lbl = $(lbl);
         var keyWords = '(' + $('#orderKeyWords').val() + ')';
@@ -456,22 +462,24 @@ function filterOrdersByKeyWords() {
             $lbl.text().replace(
                 new RegExp(keyWords, "gi"),
                 function (match) {
-                    $lbl.closest('div.order').show();
+                    $lbl.closest('div.order').addClass('found');
+
                     return '<span class="highlight">' + match + '</span>';
                 }
             )
         );
     });
 
-    var $ordersVisibled = $orders.filter(':visible');
+    var $found = $('div.order.found');
+    $found.show();
 
-    if ($ordersVisibled.length > 0) {
+    if ($found.length > 0) {
         $('#ordersEmpty').hide();
     } else {
         $('#ordersEmpty').show();
     }
 
-    paginate($('#orders'), $ordersVisibled, 10);
+    paginate($('#orders'), $found, 10);
 }
 
 /**
@@ -481,6 +489,8 @@ function filterStoresByKeyWords() {
     var $stores = $('div.store');
 
     $stores.hide();
+    $stores.removeClass('found');
+
     $stores.children('div.infos').find('label').each(function (index, lbl) {
         var $lbl = $(lbl);
         var keyWords = '(' + $('#storeKeyWords').val() + ')';
@@ -489,22 +499,23 @@ function filterStoresByKeyWords() {
             $lbl.text().replace(
                 new RegExp(keyWords, "gi"),
                 function (match) {
-                    $lbl.closest('div.store').show();
+                    $lbl.closest('div.store').addClass('found');
                     return '<span class="highlight">' + match + '</span>';
                 }
             )
         );
     });
 
-    var $storesVisibled = $stores.filter(':visible');
+    var $found = $('div.store.found');
+    $found.show();
 
-    if ($storesVisibled.length > 0) {
+    if ($found.length > 0) {
         $('#storesEmpty').hide();
     } else {
         $('#storesEmpty').show();
     }
 
-    paginate($('#stores'), $storesVisibled, 10);
+    paginate($('#stores'), $found, 10);
 }
 
 /**
@@ -514,6 +525,7 @@ function filterLogsByKeyWords() {
     var $logs = $('div.log');
 
     $logs.hide();
+    $logs.removeClass('found');
 
     $logs.find('label').each(function (index, lbl) {
         var $lbl = $(lbl);
@@ -523,22 +535,23 @@ function filterLogsByKeyWords() {
             $lbl.text().replace(
                 new RegExp(keyWords, "gi"),
                 function (match) {
-                    $lbl.closest('div.log').show();
+                    $lbl.closest('div.log').addClass('found');
                     return '<span class="highlight">' + match + '</span>';
                 }
             )
         );
     });
 
-    var $logsVisibled = $logs.filter(':visible');
+    var $found = $('div.log.found');
+    $found.show();
 
-    if ($logsVisibled.length > 0) {
+    if ($found.length > 0) {
         $('#logsEmpty').hide();
     } else {
         $('#logsEmpty').show();
     }
 
-    paginate($('#logs'), $logsVisibled, 10);
+    paginate($('#logs'), $found, 10);
 }
 
 /**
@@ -594,6 +607,13 @@ function updateStoresByBannerId() {
                         }
                     }
                 }
+
+                var $banners = $('#banners');
+                var $first = $banners.children('option').first();
+
+                // On doit spécifier l'option à sélectionner ici afin de corrigé le bogue
+                // dans de sélection dans IE 11.
+                $banners.val($first.val());
 
                 filterStoresByKeyWords();
 

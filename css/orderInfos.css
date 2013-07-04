@@ -96,10 +96,13 @@ fieldset > p > label.values {
 hr {
     width: 900px;
     margin: 5px auto;
+    float: left;
 }
 
 #lines {
+    float: left;
     margin: 10px auto;
+    width: 960px;
     overflow: hidden; /* clearfix */
 }
 
@@ -143,6 +146,8 @@ hr {
 
 #comments,
 #logs {
+    width: 960px;
+    float: left;
     margin: 10px auto;
     overflow: hidden; /* Clearfix */
 }

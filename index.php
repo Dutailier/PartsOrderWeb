@@ -73,6 +73,8 @@ if (!isset($title) || !isset($head) || !isset($content)) {
 }
 ?>
 
+<!DOCTYPE HTML>
+
 <html>
 <head>
     <title>Parts Order Web - <?php echo $title; ?></title>

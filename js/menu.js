@@ -33,7 +33,7 @@ $(document).ready(function () {
     });
 
     $('#btnManager').click(function () {
-        window.location = 'manager.php';
+        window.location = 'manager.php?tab=orders';
     });
 
     $('#btnLogout').click(function () {

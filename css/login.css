@@ -30,8 +30,9 @@
 #login > form > p > input {
     display: inline-block;
     float: left;
-    width: 200px;
+    width: 184px;
     margin: 0px;
+    padding: 6px;
 }
 
 #login > form > p > label.error {
@@ -45,5 +46,6 @@
 }
 
 #login > form > p > input[type=submit] {
+    width: 200px;
     float: right;
 }

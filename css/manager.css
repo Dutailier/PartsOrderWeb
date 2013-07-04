@@ -85,10 +85,12 @@ div.filters input, select {
     text-align: center;
     font-size: 1.2em;
     width: 150px;
+    margin: 0px;
 }
 
 div.filters input.keyWords {
     width: 200px;
+    margin: 0px;
 }
 
 div.filters * {

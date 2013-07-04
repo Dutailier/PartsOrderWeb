@@ -428,6 +428,7 @@ function updateItems() {
                 data.hasOwnProperty('items')) {
                 var items = data['items'];
                 var $lblProducts = $('#lblProducts');
+                //noinspection JSJQueryEfficiency
                 var $items = $('#items').children('div.item');
 
                 $items.remove();
@@ -446,6 +447,7 @@ function updateItems() {
                     }
                 }
 
+                //noinspection JSJQueryEfficiency
                 if ($('#items').children('div.item').length > 0) {
                     $lblProducts.show();
                     $('#btnProceed').removeAttr('disabled');
