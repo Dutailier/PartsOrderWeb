@@ -71,11 +71,18 @@ class User extends Entity
 
 
     /**
-     * Retourne le premier magasin de l'utilisateur.
+     * Retourne l'unique magasin de l'utilisateur.
      * @return mixed
+     * @throws Exception
      */
     public function getStore()
     {
-        return Stores::FilterByUserId($this->getId())[0];
+        $stores = Stores::FilterByUserId($this->getId());
+
+        if(empty($stores)) {
+            throw new Exception('This account isn\'t tied to any store.');
+        }
+
+        return $stores[0];
     }
 }

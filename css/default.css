@@ -15,7 +15,7 @@ body {
 
 #wrapper {
     position: relative;
-    min-width: 1280px;
+    min-width: 960px;
     min-height: 100%;
     overflow: auto;
 }
@@ -46,20 +46,11 @@ body {
 #footer-wrapper {
     margin: 0px auto;
     height: 100px;
-    width: 1280px;;
+    width: 960px;
     overflow: hidden; /* Clearfix */
 }
 
 /* En-tête */
-
-#logo-dutailier,
-#menu,
-#logo-babiesRus {
-    display: block;
-    float: left;
-    margin: 5px auto;
-}
-
 #logo-dutailier {
     width: 324px;
     height: 86px;
@@ -67,36 +58,47 @@ body {
 }
 
 #menu {
-
-    height: 90px;
     overflow: hidden;
     padding: 0px;
-    width: 577px;
-    text-align: center;
+    margin: 5px;
+    float: right;
 }
 
 #menu > li {
     display: inline-block;
-    margin: 26px 10px;
-    background-color: #F0F0F0;
-    border: 1px solid white;
-    text-align: center;
+    margin: 12px 0px 12px 19px;
+    border-left: 1px solid #FFFFFF;
+}
+
+#menu > li:first-child {
+    border: none;
 }
 
 #menu > li > a {
     display: block;
-    line-height: 20px;
-    width: 100px;
-    font-weight: bold;
+    line-height: 10px;
     list-style: none;
-    color: black;
-    padding: 8px;
+    font-size: 1.2em;
+    color: #FFFFFF;
+    padding: 8px 0px 8px 20px;
     text-decoration: none;
 }
 
 #menu > li > a:hover {
     cursor: pointer;
-    background-color: #D0D0D0;
+    color: #F0F0F0;
+}
+
+#greeting {
+    margin: 5px 0px;
+    float: right;
+    clear: right;
+    color: #FFFFFF;
+    font-style: italic;
+}
+
+#username {
+    font-weight: bold;
 }
 
 #logo-babiesRus {

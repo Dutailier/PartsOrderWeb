@@ -2,22 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b32a347-abc7-4594-bb6a-6b67ff97be27" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/orderInfos.css" afterPath="$PROJECT_DIR$/css/orderInfos.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/orderInfos.js" afterPath="$PROJECT_DIR$/js/orderInfos.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/orderInfos.php" afterPath="$PROJECT_DIR$/pages/orderInfos.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/default.css" afterPath="$PROJECT_DIR$/css/default.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/setDestination.php" afterPath="$PROJECT_DIR$/ajax/setDestination.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/entities/user.php" afterPath="$PROJECT_DIR$/libs/entities/user.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PartsOrderWeb.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372965992828" ignored="false" />
+    <file path="/Dummy.txt" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372967150730" ignored="false" />
     <file path="/manager.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372768560399" ignored="false" />
     <file path="/manager.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372959962947" ignored="false" />
     <file path="/orders.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372959948451" ignored="false" />
     <file path="/tools.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372774600334" ignored="false" />
     <file path="/exportToXLS.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372771792900" ignored="false" />
-    <file path="/a.dummy" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372959220208" ignored="false" />
+    <file path="/a.dummy" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372970773037" ignored="false" />
     <file path="/manager.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372965635172" ignored="false" />
-    <file path="/index.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372959656412" ignored="false" />
+    <file path="/index.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372970187515" ignored="false" />
     <file path="/export.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372777273460" ignored="false" />
     <file path="/.htaccess" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372773757484" ignored="false" />
     <file path="/products.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372951342610" ignored="false" />
@@ -26,10 +27,12 @@
     <file path="/products.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372961164476" ignored="false" />
     <file path="/*.regexp" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372966793541" ignored="false" />
     <file path="/login.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372960615365" ignored="false" />
-    <file path="/default.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372961053999" ignored="false" />
+    <file path="/default.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372970408225" ignored="false" />
     <file path="/orderInfos.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372961773426" ignored="false" />
     <file path="/orderInfos.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372966052356" ignored="false" />
     <file path="/orderInfos.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372966419879" ignored="false" />
+    <file path="/contactus.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372968577725" ignored="false" />
+    <file path="/user.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372970816070" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,15 +69,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/js/receiverInfos.js" />
-        <option value="$PROJECT_DIR$/js/shippingInfos.js" />
-        <option value="$PROJECT_DIR$/js/storeInfos.js" />
-        <option value="$PROJECT_DIR$/js/menu.js" />
-        <option value="$PROJECT_DIR$/css/orders.css" />
         <option value="$PROJECT_DIR$/css/manager.css" />
         <option value="$PROJECT_DIR$/css/login.css" />
-        <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/css/default.css" />
         <option value="$PROJECT_DIR$/css/products.css" />
         <option value="$PROJECT_DIR$/js/products.js" />
         <option value="$PROJECT_DIR$/js/manager.js" />
@@ -82,6 +78,13 @@
         <option value="$PROJECT_DIR$/pages/orderInfos.php" />
         <option value="$PROJECT_DIR$/css/orderInfos.css" />
         <option value="$PROJECT_DIR$/js/orderInfos.js" />
+        <option value="$PROJECT_DIR$/pages/contactus.php" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/css/default.css" />
+        <option value="$PROJECT_DIR$/libs/entities/user.php" />
+        <option value="$PROJECT_DIR$/ajax/setDestination.php" />
+        <option value="$PROJECT_DIR$/js/destinations.js" />
+        <option value="$PROJECT_DIR$/libs/mail.php" />
       </list>
     </option>
   </component>
@@ -177,7 +180,71 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="repositories" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="entities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -195,6 +262,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ajax" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -209,6 +290,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\PartsOrderWeb\pages" />
       <recent name="D:\Documents\GitHub\PartsOrderWeb\pages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -269,7 +351,11 @@
       <created>1372965997263</created>
       <updated>1372965997263</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Ajout loader dans l'onglets des logs d'une commande.">
+      <created>1372967153884</created>
+      <updated>1372967153884</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -338,7 +424,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corrections esthétiques." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout loader dans l'onglets des logs d'une commande." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -357,6 +443,7 @@
     <MESSAGE value="Correction esthétique." />
     <MESSAGE value="correction du bug avec le bouton proceed." />
     <MESSAGE value="Corrections esthétiques." />
+    <MESSAGE value="Ajout loader dans l'onglets des logs d'une commande." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -364,69 +451,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/storeInfos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="278" column="99" selection-start="10597" selection-end="10597" vertical-scroll-proportion="0.58584684">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/menu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="31" selection-start="1941" selection-end="1941" vertical-scroll-proportion="0.70537263">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/orders.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="277" column="21" selection-start="5733" selection-end="5733" vertical-scroll-proportion="0.39492753">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/login.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="17" selection-start="864" selection-end="864" vertical-scroll-proportion="0.83152175">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/default.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="17" selection-start="75" selection-end="75" vertical-scroll-proportion="0.14731368">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="14" selection-start="2139" selection-end="2139" vertical-scroll-proportion="0.27767694">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/products.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="135" column="0" selection-start="2005" selection-end="2005" vertical-scroll-proportion="-1.7088388">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/products.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="29" selection-start="2151" selection-end="2152" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/orders.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="398" column="31" selection-start="12391" selection-end="12391" vertical-scroll-proportion="0.6594724">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/manager.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="230" column="9" selection-start="6484" selection-end="6484" vertical-scroll-proportion="0.3325554">
@@ -472,6 +496,69 @@
     <entry file="file://$PROJECT_DIR$/js/orderInfos.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="324" column="38" selection-start="10377" selection-end="10377" vertical-scroll-proportion="-0.9662522">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/storeInfos.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/repositories/stores.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="765" selection-end="765" vertical-scroll-proportion="0.25473934">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/entities/user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="50" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.6978673">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/default.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="7" selection-start="796" selection-end="796" vertical-scroll-proportion="0.44942528">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="0" selection-start="3408" selection-end="3408" vertical-scroll-proportion="0.52369666">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajax/setDestination.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="45" selection-start="1315" selection-end="1315" vertical-scroll-proportion="0.78554505">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/destinations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="46" selection-start="689" selection-end="689" vertical-scroll-proportion="0.37126437">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/mail.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="46" selection-start="2128" selection-end="2128" vertical-scroll-proportion="1.5509479">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

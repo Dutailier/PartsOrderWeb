@@ -19,8 +19,6 @@ if (!Security::isAuthenticated()) {
             $transaction = new SessionTransaction();
 
             $destination = Destinations::Find($_POST['destinationId']);
-            $transaction->setDestination($destination);
-
             $customerInfosAreRequired = $destination->getId() == DESTINATION_TO_GUEST;
 
             if (!$customerInfosAreRequired) {
@@ -33,7 +31,13 @@ if (!Security::isAuthenticated()) {
                     $store->getPhone(),
                     $store->getEmail()
                 );
+            }
 
+            // On définit la destination et les informations d'expéditions ici
+            // au cas où une erreur serait levée.
+            $transaction->setDestination($destination);
+
+            if (!$customerInfosAreRequired) {
                 $transaction->setShippingInfos($address, $store, $receiver);
             }
 

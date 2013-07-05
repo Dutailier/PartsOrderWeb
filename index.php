@@ -113,7 +113,11 @@ if (!isset($title) || !isset($head) || !isset($content)) {
                     <li><a id="btnLogout">Logout</a></li>
                 <?php } ?>
             </ul>
-            <img id="logo-babiesRus" src="img/babiesrus.png">
+            <?php if (Security::isAuthenticated()) { ?>
+                <div id="greeting">
+                    Hello, <label id="username"><?php echo Security::getUserConnected()->getUsername(); ?></label>
+                </div>
+            <?php } ?>
         </div>
     </div>
     <!-- Fin de l'en-tête de la page. -->

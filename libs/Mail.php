@@ -75,8 +75,8 @@ class Mail
         $mail->Send();
         $mail->ClearAddresses();
 
+        // Envoie du courriel au client final.
         if ($store->getEmail() != $receiver->getEmail()) {
-            // Envoie du courriel au client final.
             $mail->AddAddress($receiver->getEmail(), $receiver->getName());
             $mail->Send();
         }
