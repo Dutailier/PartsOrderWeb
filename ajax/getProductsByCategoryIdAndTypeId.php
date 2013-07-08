@@ -9,16 +9,20 @@ if (!Security::isAuthenticated()) {
     $data['success'] = false;
     $data['message'] = 'You must be authenticated.';
 } else {
-    if (empty($_POST['serial'])) {
+    if (empty($_POST['typeId'])) {
         $data['success'] = false;
-        $data['message'] = 'The serial is required.';
+        $data['message'] = 'The type is required.';
+
+    } else if (empty($_POST['categoryId'])) {
+        $data['success'] = false;
+        $data['message'] = 'The category is required.';
 
     } else {
         try {
             $transaction = new SessionTransaction();
-            $categoryId = $transaction->getCategory()->getId();
-            $typeId = Products::getTypeIdBySerial($_POST['serial']);
-            $products = Products::FilterByCategoryIdAndTypeId($categoryId, $typeId);
+            $products = Products::FilterByCategoryIdAndTypeId(
+                $_POST['categoryId'],
+                $_POST['typeId']);
 
             $data['products'] = array();
             foreach ($products as $product) {

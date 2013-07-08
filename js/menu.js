@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $('#btnProducts').click(function () {
-        window.location = 'products.php';
+    $('#btnGoShopping').click(function () {
+        window.location = 'shop.php';
     });
 
     $('#btnOrders').click(function () {

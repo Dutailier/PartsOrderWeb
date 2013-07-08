@@ -290,6 +290,10 @@ function addDetailsToOrder($order) {
                 $details.append($buttons);
                 $details.hide().appendTo($order).slideDown();
 
+                $infos.click(function () {
+                    $order.children('div.details').stop().slideToggle();
+                })
+
             } else if (data.hasOwnProperty('message')) {
                 noty({layout: 'topRight', type: 'error', text: data['message']});
 
@@ -302,9 +306,6 @@ function addDetailsToOrder($order) {
         })
         .always(function () {
             $infos.animate({'opacity': 1});
-            $infos.click(function () {
-                $order.children('div.details').stop().slideToggle();
-            })
         })
 }
 

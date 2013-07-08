@@ -20,8 +20,7 @@ if (!Security::isAuthenticated()) {
             }
 
         // Pages transactionnelles
-        case 'products' :
-        case 'categories' :
+        case 'shop' :
         case 'destinations' :
         case 'shippingInfos' :
             $transaction = new SessionTransaction();
@@ -39,10 +38,7 @@ if (!Security::isAuthenticated()) {
                     $page = 'shippingInfos';
                     break;
                 case TRANSACTION_IS_OPEN:
-                    $page = 'categories';
-                    break;
-                case TRANSACTION_CATEGORY_IS_SELECTED:
-                    $page = 'products';
+                    $page = 'shop';
                     break;
             }
             break;
@@ -97,12 +93,13 @@ if (!isset($title) || !isset($head) || !isset($content)) {
     <!-- Début de l'en-tête de la page. -->
     <div id="header-band">
         <div id="header-wrapper">
-            <img id="logo-dutailier" src="img/dutailier.png">
+                    <img id="logo-dutailier" src="img/dutailier.png">
+
             <ul id="menu">
 
                 <?php if (Security::isAuthenticated()) { ?>
                     <?php if (Security::isInRoleName(ROLE_STORE)) { ?>
-                        <li><a id="btnProducts">Products</a></li>
+                        <li><a id="btnGoShopping">Go shopping</a></li>
                         <li><a id="btnOrders">Orders</a></li>
                     <?php } ?>
 

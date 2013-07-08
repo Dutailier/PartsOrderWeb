@@ -72,7 +72,7 @@ $(document).ready(function () {
 
                 if (data.hasOwnProperty('success') &&
                     data['success']) {
-                    window.location = 'categories.php';
+                    window.location = 'shop.php';
 
                 } else if (data.hasOwnProperty('message')) {
                     noty({layout: 'topRight', type: 'error', text: data['message']});

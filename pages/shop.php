@@ -1,11 +1,11 @@
 <?php
-$title = 'Products';
+$title = 'Shop';
 ?>
 
 <?php ob_start(); ?>
 
     <!-- Début de l'en-tête. -->
-    <link type="text/css" rel="stylesheet" href="css/products.css"/>
+    <link type="text/css" rel="stylesheet" href="css/shop.css"/>
     <link type="text/css" rel="stylesheet" href="css/shopping.css"/>
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
     <!-- Fin de l'en-tête. -->
@@ -15,16 +15,9 @@ $title = 'Products';
 
     <div id="transaction">
         <h1>Transaction</h1>
-        <fieldset id="shippingInfos">
-            <legend>Shipping informations</legend>
-            <p>
-                <label class="property">Address : </label>
-                <label id="shippingAddress" class="value"></label>
-            </p>
-        </fieldset>
         <fieldset id="storeInfos">
-            <legend>Store informations</legend>
-            <div class="infos">
+            <legend>Store information</legend>
+            <div class="infos hidden">
                 <p>
                     <label class="property">Name : </label>
                     <label id="storeName" class="value"></label>
@@ -49,8 +42,8 @@ $title = 'Products';
             <a class="btnLessDetails">Close details</a>
         </fieldset>
         <fieldset id="receiverInfos">
-            <legend>Receiver informations</legend>
-            <div class="infos">
+            <legend>Ship To information</legend>
+            <div class="infos hidden">
                 <p>
                     <label class="property">Name : </label>
                     <label id="receiverName" class="value"></label>
@@ -64,6 +57,11 @@ $title = 'Products';
                 <p>
                     <label class="property">Email : </label>
                     <label id="receiverEmail" class="value"></label>
+                </p>
+
+                <p>
+                    <label class="property">Address : </label>
+                    <label id="shippingAddress" class="value"></label>
                 </p>
             </div>
             <a class="btnMoreDetails">More details</a>
@@ -83,11 +81,12 @@ $title = 'Products';
 
     <!-- Début du contenu. -->
     <!-- Entrée du numéro de série d'une chaise. -->
-    <form id="frmSearch" onsubmit="return false;">
+    <form id="frmSerial" onsubmit="return false;">
         <p>
             <label for="serial">Serial</label>
             <input id="serial" name="serial" type="text" maxlength="11"/>
-            <input id="search" name="search" type="submit" value="Search"/>
+            <input id="btnSubmit" name="btnSubmit" type="submit" value="Submit"/>
+            <a id="changeSerial">Command an other item for a different serial.</a>
         </p>
     </form>
     <!-- Fin -->
@@ -103,21 +102,48 @@ $title = 'Products';
     </div>
 
     <!-- Liste des pièces. -->
-    <div id="products">
+    <div id="categories">
     </div>
     <!-- Fin -->
 
-    <div id="proceedDialog" class="dialog">
+    <div id="proceedDialog" class="hidden">
         You can't change your order later. Do you want to continue?
     </div>
 
-    <div id="cancelDialog" class="dialog">
+    <div id="cancelDialog" class="hidden">
         Are your sure you want to cancel your order?
+    </div>
+
+    <div id="anotherItem" class="hidden">
+        Do you want continue shopping or proceed your transaction?
+    </div>
+
+    <div id="sameSerial" class="hidden">
+        With the same Serial?
+    </div>
+
+    <div id="validationDialog" class="hidden">
+        <form id="frmValidation" onsubmit="return false;">
+            <p>
+                <label>Please enter the approximate purchase date and a brief damage description of your
+                    product.</label>
+            </p>
+
+            <p>
+                <label class="field" for="purchaseDate">Purchase date</label>
+                <input id="purchaseDate" name="purchaseDate" class="datepicker"/>
+            </p>
+
+            <p>
+                <label class="field" for="damageDescription">Damage description</label>
+                <textarea id="damageDescription" name="damageDescription"></textarea>
+            </p>
+        </form>
     </div>
 
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script src="js/products.js"></script>
+    <script src="js/shop.js"></script>
     <!-- Fin du contenu. -->
 
 <?php $content = ob_get_contents(); ?>

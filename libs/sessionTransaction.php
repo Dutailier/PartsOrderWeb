@@ -3,21 +3,21 @@
 include_once('config.php');
 include_once(ROOT . 'libs/item.php');
 include_once(ROOT . 'libs/sessionCart.php');
-include_once(ROOT . 'libs/repositories/categories.php');
 include_once(ROOT . 'libs/repositories/lines.php');
 include_once(ROOT . 'libs/repositories/orders.php');
 include_once(ROOT . 'libs/repositories/stores.php');
 include_once(ROOT . 'libs/repositories/addresses.php');
 include_once(ROOT . 'libs/repositories/receivers.php');
+include_once(ROOT . 'libs/repositories/categories.php');
 include_once(ROOT . 'libs/repositories/destinations.php');
+
 
 // Définition des différents status de la transaction.
 define('TRANSACTION_IS_READY', 0);
 define('TRANSACTION_DESTINATION_IS_SELECTED', 1);
 define('TRANSACTION_SHIPPING_INFOS_ARE_SETTED', 2);
 define('TRANSACTION_IS_OPEN', 3);
-define('TRANSACTION_CATEGORY_IS_SELECTED', 4);
-define('TRANSACTION_WAS_PROCEED', 5);
+define('TRANSACTION_WAS_PROCEED', 4);
 
 /**
  * Class SessionTransaction
@@ -32,7 +32,6 @@ class SessionTransaction
     const LINES_IDENTIFIER = '_LINES_';
     const STATUS_IDENTIFIER = '_STATUS_';
     const RECEIVER_IDENTIFIER = '_RECEIVER_';
-    const CATEGORY_IDENTIFIER = '_CATEGORY_';
     const DESTINIATION_IDENTIFIER = '_DESTINATION_';
     const SHIPPING_ADDRESS_IDENTIFIER = '_SHIPPING_ADDRESS_';
 
@@ -76,7 +75,6 @@ class SessionTransaction
                     $array['lines'][] = $line->getArray();
                 }
 
-            case TRANSACTION_CATEGORY_IS_SELECTED:
             case TRANSACTION_IS_OPEN:
             case TRANSACTION_SHIPPING_INFOS_ARE_SETTED:
                 $array['store'] = $this->getStore()->getArray();
@@ -143,26 +141,6 @@ class SessionTransaction
         $this->setStatus(TRANSACTION_IS_OPEN);
     }
 
-    /**
-     * Définit le type de produit choisi par le client. (ex: coussin).
-     * @param Category $category
-     * @throws Exception
-     */
-    public function setCategory(Category $category)
-    {
-        if ($this->getStatus() != TRANSACTION_IS_OPEN) {
-            throw new Exception('The transaction must be previously open.');
-        }
-
-        if (!$category->isAttached()) {
-            throw new Exception('The category must be attached to a database.');
-        }
-
-        $_SESSION[self::CATEGORY_IDENTIFIER] = $category;
-
-        $this->setStatus(TRANSACTION_CATEGORY_IS_SELECTED);
-    }
-
 
     /**
      * Finalise la transaction.
@@ -170,7 +148,7 @@ class SessionTransaction
      */
     public function Proceed()
     {
-        if ($this->getStatus() != TRANSACTION_CATEGORY_IS_SELECTED) {
+        if ($this->getStatus() != TRANSACTION_IS_OPEN) {
             throw new Exception('The category must be previously setted.');
         }
 
@@ -237,21 +215,6 @@ class SessionTransaction
 
 
     /**
-     * Retourne la catégorie choisie par le client.
-     * @return mixed
-     * @throws Exception
-     */
-    public function getCategory()
-    {
-        if ($this->getStatus() < TRANSACTION_CATEGORY_IS_SELECTED) {
-            throw new Exception('The category must be previously setted.');
-        }
-
-        return $_SESSION[self::CATEGORY_IDENTIFIER];
-    }
-
-
-    /**
      * Retourne l'adresse d'expédition.
      * @return mixed
      * @throws Exception
@@ -303,7 +266,7 @@ class SessionTransaction
      */
     private function getCart()
     {
-        if ($this->getStatus() < TRANSACTION_CATEGORY_IS_SELECTED) {
+        if ($this->getStatus() < TRANSACTION_IS_OPEN) {
             throw new Exception('The category must be previously setted.');
         }
 
@@ -318,7 +281,7 @@ class SessionTransaction
      */
     public function AddItem(IItem $item)
     {
-        if ($this->getStatus() < TRANSACTION_CATEGORY_IS_SELECTED) {
+        if ($this->getStatus() < TRANSACTION_IS_OPEN) {
             throw new Exception('The category must be previously setted.');
         }
 
@@ -334,7 +297,7 @@ class SessionTransaction
      */
     public function RemoveItem(IItem $item)
     {
-        if ($this->getStatus() < TRANSACTION_CATEGORY_IS_SELECTED) {
+        if ($this->getStatus() < TRANSACTION_IS_OPEN) {
             throw new Exception('The category must be previously setted.');
         }
 

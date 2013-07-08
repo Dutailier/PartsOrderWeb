@@ -19,7 +19,6 @@ class Orders
         }
 
         $order->setId($rows[0]['id']);
-        $order->setStatus(($rows[0]['status']));
         $order->setNumber($rows[0]['number']);
         $order->setCreationDate($rows[0]['creationDate']);
 
