@@ -6,7 +6,6 @@ include_once(ROOT . 'libs/repositories/logs.php');
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/lines.php');
 include_once(ROOT . 'libs/repositories/stores.php');
-include_once(ROOT . 'libs/repositories/orders.php');
 include_once(ROOT . 'libs/repositories/comments.php');
 include_once(ROOT . 'libs/repositories/addresses.php');
 include_once(ROOT . 'libs/repositories/receivers.php');
@@ -116,28 +115,6 @@ class Order extends Entity
     public function getLines()
     {
         return Lines::FilterByOrderId($this->getId());
-    }
-
-    public function Confirm()
-    {
-        $status = $this->getStatus();
-
-        if ($status != 'Pending') {
-            throw new Exception('You can\'t confirm this order.');
-        }
-
-        return Orders::ConfirmByUserId($this->getId(), Security::getUserConnected()->getId());
-    }
-
-    public function Cancel()
-    {
-        $status = $this->getStatus();
-
-        if ($status != 'Pending' && $status != 'Confirmed') {
-            throw new Exception('You can\'t cancel this order.');
-        }
-
-        return Orders::CancelByUserId($this->getId(), Security::getUserConnected()->getId());
     }
 
     public function getComments()

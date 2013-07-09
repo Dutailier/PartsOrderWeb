@@ -147,10 +147,6 @@ div.item > div.buttons > input {
     cursor: pointer;
 }
 
-#categories > div.category > div.products {
-    text-align: center;
-}
-
 #categories > div.category > div.infos > * {
     float: left;
     height: 40px;

@@ -5,33 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b32a347-abc7-4594-bb6a-6b67ff97be27" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ajax/getTypeIdBySerial.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/shop.js" />
-      <change type="DELETED" beforePath="D:\xampp\htdocs\PartsOrderWeb\css\categories.css" afterPath="" />
-      <change type="DELETED" beforePath="D:\xampp\htdocs\PartsOrderWeb\js\categories.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\xampp\htdocs\PartsOrderWeb\js\products.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\xampp\htdocs\PartsOrderWeb\pages\categories.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/menu.js" afterPath="$PROJECT_DIR$/js/menu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/orders.js" afterPath="$PROJECT_DIR$/js/orders.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/entities/subOrder.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/repositories/subOrders.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/entities/order.php" afterPath="$PROJECT_DIR$/libs/entities/order.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/repositories/orders.php" afterPath="$PROJECT_DIR$/libs/repositories/orders.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/sessionTransaction.php" afterPath="$PROJECT_DIR$/libs/sessionTransaction.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/shippingInfos.js" afterPath="$PROJECT_DIR$/js/shippingInfos.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/shop.css" afterPath="$PROJECT_DIR$/css/shop.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\xampp\htdocs\PartsOrderWeb\ajax\getProducts.php" afterPath="$PROJECT_DIR$/ajax/getProductsByCategoryIdAndTypeId.php" />
-      <change type="MOVED" beforePath="D:\xampp\htdocs\PartsOrderWeb\css\products.css" afterPath="$PROJECT_DIR$/css/shop.css" />
-      <change type="MOVED" beforePath="D:\xampp\htdocs\PartsOrderWeb\pages\products.php" afterPath="$PROJECT_DIR$/pages/shop.php" />
     </list>
     <ignored path="PartsOrderWeb.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1373285155974" ignored="false" />
+    <file path="/Dummy.txt" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1373371834844" ignored="false" />
     <file path="/manager.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372768560399" ignored="false" />
     <file path="/manager.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372959962947" ignored="false" />
     <file path="/orders.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372959948451" ignored="false" />
     <file path="/tools.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372774600334" ignored="false" />
     <file path="/exportToXLS.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372771792900" ignored="false" />
-    <file path="/a.dummy" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372970773037" ignored="false" />
+    <file path="/a.dummy" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1373376198809" ignored="false" />
     <file path="/manager.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372965635172" ignored="false" />
     <file path="/index.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1373309720771" ignored="false" />
     <file path="/export.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1372777273460" ignored="false" />
@@ -60,6 +49,8 @@
     <file path="/shop.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1373314446049" ignored="false" />
     <file path="/shop.css" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1373311376794" ignored="false" />
     <file path="/shop.js" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1373312263636" ignored="false" />
+    <file path="/subOrder.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1373375780631" ignored="false" />
+    <file path="/subOrders.php" changelist="6b32a347-abc7-4594-bb6a-6b67ff97be27" time="1373376180667" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,9 +92,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/ajax/getProducts.php" />
-        <option value="$PROJECT_DIR$/ajax/getProductsBySerialAndCategoryId.php" />
-        <option value="$PROJECT_DIR$/pages/products.php" />
         <option value="$PROJECT_DIR$/js/products.js" />
         <option value="$PROJECT_DIR$/ajax/getProductsByCategoryIdAndTypeId.php" />
         <option value="$PROJECT_DIR$/ajax/getTypeIdBySerial.php" />
@@ -113,10 +101,13 @@
         <option value="$PROJECT_DIR$/js/categories.js" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/js/menu.js" />
-        <option value="$PROJECT_DIR$/css/shop.css" />
-        <option value="$PROJECT_DIR$/libs/repositories/orders.php" />
         <option value="$PROJECT_DIR$/js/shop.js" />
         <option value="$PROJECT_DIR$/pages/shop.php" />
+        <option value="$PROJECT_DIR$/css/shop.css" />
+        <option value="$PROJECT_DIR$/libs/entities/order.php" />
+        <option value="$PROJECT_DIR$/libs/entities/subOrder.php" />
+        <option value="$PROJECT_DIR$/libs/repositories/orders.php" />
+        <option value="$PROJECT_DIR$/libs/repositories/subOrders.php" />
       </list>
     </option>
   </component>
@@ -175,7 +166,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -250,6 +240,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="entities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PartsOrderWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -284,6 +292,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -291,11 +300,12 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\PartsOrderWeb\libs\entities" />
       <recent name="D:\xampp\htdocs\PartsOrderWeb\ajax" />
       <recent name="D:\xampp\htdocs\PartsOrderWeb\pages" />
       <recent name="D:\Documents\GitHub\PartsOrderWeb\pages" />
@@ -362,7 +372,11 @@
       <created>1372967153884</created>
       <updated>1372967153884</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Modification de la navigation et des informations nécessaires au magasinage.">
+      <created>1373314793098</created>
+      <updated>1373314793098</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -390,23 +404,23 @@
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32681563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26757532" sideWeight="0.6703911" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39944133" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2718795" sideWeight="0.6703911" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32681563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39944133" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -451,7 +465,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout loader dans l'onglets des logs d'une commande." />
+    <option name="LAST_COMMIT_MESSAGE" value="Modification de la navigation et des informations nécessaires au magasinage." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -471,6 +485,7 @@
     <MESSAGE value="correction du bug avec le bouton proceed." />
     <MESSAGE value="Corrections esthétiques." />
     <MESSAGE value="Ajout loader dans l'onglets des logs d'une commande." />
+    <MESSAGE value="Modification de la navigation et des informations nécessaires au magasinage." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -478,95 +493,39 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/shippingInfos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="7" selection-start="2865" selection-end="2865" vertical-scroll-proportion="0.02463768">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/sessionTransaction.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="0" selection-start="2352" selection-end="2352" vertical-scroll-proportion="0.5120482">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ajax/getCategories.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/orders.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="12" selection-start="1664" selection-end="1748" vertical-scroll-proportion="0.66566265">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/default.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="7" selection-start="796" selection-end="796" vertical-scroll-proportion="-1.6362319">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/orders.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/manager.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="41" selection-start="954" selection-end="996" vertical-scroll-proportion="0.20451128">
-          <folding />
-        </state>
+        <state line="51" column="41" selection-start="954" selection-end="996" vertical-scroll-proportion="0.20451128" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ajax/getProductsByCategoryIdAndTypeId.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="16" selection-start="772" selection-end="772" vertical-scroll-proportion="0.61445785">
-          <folding />
-        </state>
+        <state line="24" column="16" selection-start="772" selection-end="772" vertical-scroll-proportion="0.61445785" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ajax/getTypeIdBySerial.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="52" selection-start="519" selection-end="519" vertical-scroll-proportion="0.43524095">
-          <folding />
-        </state>
+        <state line="17" column="52" selection-start="519" selection-end="519" vertical-scroll-proportion="0.43524095" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/orders.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="290" column="16" selection-start="8697" selection-end="8742" vertical-scroll-proportion="0.35745937">
-          <folding />
-        </state>
+        <state line="290" column="16" selection-start="8697" selection-end="8742" vertical-scroll-proportion="0.35745937" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="53" selection-start="769" selection-end="769" vertical-scroll-proportion="-2.3333333">
-          <folding />
-        </state>
+        <state line="28" column="53" selection-start="769" selection-end="769" vertical-scroll-proportion="-2.3333333" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/menu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/repositories/orders.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="46" selection-start="652" selection-end="652" vertical-scroll-proportion="0.46084338">
-          <folding />
-        </state>
+        <state line="9" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/shop.js">
@@ -576,16 +535,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/shop.css">
+    <entry file="file://$PROJECT_DIR$/pages/shop.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="20" selection-start="2024" selection-end="2024" vertical-scroll-proportion="0.8028985">
+        <state line="75" column="81" selection-start="2585" selection-end="2585" vertical-scroll-proportion="0.48795182" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/entities/order.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="39" selection-start="862" selection-end="862" vertical-scroll-proportion="0.484985">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/shop.php">
+    <entry file="file://$PROJECT_DIR$/libs/entities/subOrder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="81" selection-start="2585" selection-end="2585" vertical-scroll-proportion="0.48795182">
+        <state line="5" column="14" selection-start="104" selection-end="104" vertical-scroll-proportion="-3.2692308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/repositories/orders.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="0" selection-start="1399" selection-end="2036" vertical-scroll-proportion="0.2807808">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/repositories/subOrders.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="47" selection-start="1319" selection-end="1319" vertical-scroll-proportion="0.4129129">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/sessionTransaction.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="169" column="52" selection-start="5447" selection-end="5447" vertical-scroll-proportion="0.5750751">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajax/proceedTransaction.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="31" selection-start="612" selection-end="612" vertical-scroll-proportion="0.484985">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/shop.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="1" selection-start="2323" selection-end="2323" vertical-scroll-proportion="0.34393063">
           <folding />
         </state>
       </provider>
